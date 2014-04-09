@@ -1,4 +1,3 @@
-package src;
 
 public class Spaceballs {
 	public static void main(String[] args){
