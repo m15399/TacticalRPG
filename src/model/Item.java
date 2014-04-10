@@ -1,6 +1,6 @@
 package src.model;
 
-public abstract class Item {
+public abstract class Item extends GameObject{
 	private String description;
 	
 	public Item(){
