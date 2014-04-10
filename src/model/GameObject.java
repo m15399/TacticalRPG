@@ -1,6 +1,6 @@
 package model;
 
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +57,7 @@ public class GameObject {
 		// override
 	}
 
-	public void draw(Graphics2D g) {
+	public void draw(Graphics g) {
 		// override
 	}
 
@@ -81,7 +81,7 @@ public class GameObject {
 		}
 	}
 
-	public final void drawSelfAndChildren(Graphics2D g) {
+	public final void drawSelfAndChildren(Graphics g) {
 		// draw self
 		draw(g);
 

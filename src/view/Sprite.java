@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -41,15 +42,16 @@ public class Sprite extends GameObject{
 		image = newImage;
 	}
 	
-	public void draw(Graphics2D g){
-		AffineTransform saved = g.getTransform();
+	public void draw(Graphics g){
+		Graphics2D g2 = (Graphics2D) g;
+		AffineTransform saved = g2.getTransform();
 		
-		g.translate((int)position.getX(), (int)position.getY());
-		g.rotate(position.getRotation());
-		g.scale(position.getScaleX()* (position.getMirrored() ? -1 : 1), position.getScaleY());
-		g.drawImage(image, -image.getWidth()/2,-image.getHeight()/2, null);
+		g2.translate((int)position.getX(), (int)position.getY());
+		g2.rotate(position.getRotation());
+		g2.scale(position.getScaleX()* (position.getMirrored() ? -1 : 1), position.getScaleY());
+		g2.drawImage(image, -image.getWidth()/2,-image.getHeight()/2, null);
 		
-		g.setTransform(saved);
+		g2.setTransform(saved);
 	}
 	
 	
