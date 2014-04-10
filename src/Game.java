@@ -1,10 +1,12 @@
+package src;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.*;
 
-import model.GameObject;
-import model.Level;
+import src.model.GameObject;
+import src.model.Level;
 
 
 public class Game extends JPanel implements Runnable {
