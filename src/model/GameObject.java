@@ -27,17 +27,29 @@ public class GameObject {
 	}
 
 	/*
-	 * Remove object from the tree
+	 * Remove object from the tree and destroy all its children
 	 */
 	public final void destroy() {
+		
 		onDestroy();
 		
+		// destroy children 
+		int numChildren = children.size();
+		if (numChildren > 0) {
+			ArrayList<GameObject> childrenCopy = new ArrayList<GameObject>(
+					children);
+			for (int i = 0; i < numChildren; i++) {
+				childrenCopy.get(i).destroy();
+			}
+		}
+
+		// remove from tree
 		if (parent != null) {
 			parent.removeChild(this);
 		}
 	}
-	
-	public void onDestroy(){
+
+	public void onDestroy() {
 		// override
 	}
 
@@ -48,7 +60,7 @@ public class GameObject {
 	public void draw(Graphics g) {
 		// override
 	}
-	
+
 	/*
 	 * Recursively update tree of objects
 	 */
@@ -61,7 +73,8 @@ public class GameObject {
 		if (numChildren > 0) {
 			// its possible for the child to remove itself from the list while
 			// it's updating, so we have to make a copy of the list first
-			ArrayList<GameObject> childrenCopy = new ArrayList<GameObject>(children);
+			ArrayList<GameObject> childrenCopy = new ArrayList<GameObject>(
+					children);
 			for (int i = 0; i < numChildren; i++) {
 				childrenCopy.get(i).updateSelfAndChildren();
 			}
