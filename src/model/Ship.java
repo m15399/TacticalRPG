@@ -6,7 +6,8 @@ import java.util.List;
 
 public class Ship extends GameObject{
 	private Point location;
-	private int health, armor, moves;
+	private int health, moves;
+	private double armor;
 	private List<Item> items;
 	
 	public Ship(Point newLocation){
@@ -47,11 +48,11 @@ public class Ship extends GameObject{
 		health += valueToAdjustHealthBy;
 	}
 	
-	public int getArmor(){
+	public double getArmor(){
 		return armor;
 	}
 	
-	public void setArmor(int newArmorValue){
+	public void setArmor(double newArmorValue){
 		armor = newArmorValue;
 	}
 	

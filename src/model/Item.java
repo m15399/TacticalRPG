@@ -2,9 +2,9 @@ package model;
 
 public abstract class Item extends GameObject{
 	private String description;
-	
-	public Item(){
-		//TODO create the item
+	private String itemName;
+	public Item(String name){
+		itemName = name;
 	}
 	
 	public abstract void useOn(Ship ship);
@@ -16,8 +16,12 @@ public abstract class Item extends GameObject{
 	public String getDescription(){
 		return description;
 	}
+
 	
 	public void setDescription(String newDescription){
 		description = newDescription;
+	}
+	public String getItemName(){
+		return itemName;
 	}
 }
