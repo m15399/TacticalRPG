@@ -1,4 +1,4 @@
-package src.tests;
+package tests;
 
 import static org.junit.Assert.*;
 
@@ -6,7 +6,7 @@ import java.awt.Point;
 
 import org.junit.Test;
 
-import src.model.Ship;
+import model.Ship;
 
 public class ShipTest {
 	

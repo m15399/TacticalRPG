@@ -1,4 +1,4 @@
-package src.view;
+package view;
 
 public class AnimatedSprite extends Sprite{
 	private Size frameSize;
