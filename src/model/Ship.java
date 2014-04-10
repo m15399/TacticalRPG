@@ -17,6 +17,12 @@ public class Ship extends GameObject{
 		items = new ArrayList<Item>();
 	}
 	
+	public boolean isShipDead(){
+		if(health > 0)
+			return false;
+		return true;
+	}
+	
 	/*
 	 * Setters and Getters for private instance variables.  Please add other methods above these so they are easier to find.
 	 */
