@@ -1,11 +1,11 @@
-package src.tests;
+package tests;
 
 import static org.junit.Assert.*;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import src.model.GameObject;
+import model.GameObject;
 
 import org.junit.Test;
 
