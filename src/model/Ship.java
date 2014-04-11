@@ -7,14 +7,17 @@ import java.util.List;
 public class Ship extends GameObject{
 	private Point location;
 	private int moves;
-	private double hull, shielding, maxHull, maxShielding;
+	private double hull, shielding, maxHull, maxShielding, accuracy;
 	private List<Item> items;
 	
 	public Ship(Point newLocation){
 		location = newLocation;
+		moves = 1;
 		hull = 1;
 		shielding = 1;
-		moves = 1;
+		maxHull = 1;
+		maxShielding = 1;
+		accuracy = 1;
 		items = new ArrayList<Item>();
 	}
 	
@@ -106,5 +109,17 @@ public class Ship extends GameObject{
 	
 	public void removeFromItems(Item itemUsed){
 		items.remove(itemUsed);
+	}
+	
+	public void setAccuracy(double newAccuracy){
+		accuracy = newAccuracy;
+	}
+	
+	public double getAccuracy(){
+		return accuracy;
+	}
+	
+	public void updateAccuracy(double valueToAdjustBy){
+		accuracy += valueToAdjustBy;
 	}
 }
