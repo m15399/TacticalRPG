@@ -1,10 +1,14 @@
 package model;
 
 import java.awt.Graphics;
+import model.Observable;
+import model.Observer;
+
+import actions.TimerAction;
 
 import view.Sprite;
 
-public class Level extends GameObject {
+public class Level extends GameObject implements Observer {
 	
 	Sprite testSprite, testSprite2;
 	
@@ -24,6 +28,8 @@ public class Level extends GameObject {
 		
 //		testSprite2.getPosition().setScale(4,4);
 //		testSprite.getPosition().mirror();
+		
+		addChild(new TimerAction(this, 90));
 	}
 	
 	public void update(){
@@ -36,6 +42,10 @@ public class Level extends GameObject {
 	
 	public void draw(Graphics g){
 		
+	}
+
+	public void notified(Observable o){
+		System.out.println("Working");
 	}
 	
 }

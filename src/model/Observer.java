@@ -2,6 +2,6 @@ package model;
 
 public interface Observer {
 
-	public void notified(Object sender);
+	public void notified(Observable sender);
 	
 }
