@@ -1,99 +1,174 @@
 package model;
 
 /*
- * Position class that has info about an objects
- * location, rotation, and scale
+ * Position class that has a lot of info about an objects
+ * location, rotation, and scale, and lets it have a parent 
+ * Position that it follows (might be useful for animation)
  */
-public class Position {
+public class Position extends Observable implements Observer {
 
-	private double x, y;
-	private double sx, sy;
+	private double localX, localY, localZ, globalX, globalY, globalZ;
+	private double localScaleX, localScaleY, globalScaleX, globalScaleY;
+//	private double localRot, globalRot;
+	private boolean localMirrored, globalMirrored;
 	private double rotation;
-	private boolean mirrored;
 	
+	private Position parent;
+
 	public Position(double x, double y) {
 		init();
 		setLocation(x, y);
 	}
-	
-	public Position(Position other){
-		init();
-		setLocation(other.getX(), other.getY());
-		setRotation(other.getRotation());
-		setScale(other.getScaleX(), other.getScaleY());
-		setMirrored(other.getMirrored());
-	}
 
 	private void init() {
-		x = y = 0;
-		sx = sy = 1;
+		localX = localY = localZ = globalX = globalY = globalZ = 0;
+		localScaleX = localScaleY = globalScaleX = globalScaleY = 1;
+//		localRot = globalRot = 0;
+		localMirrored = globalMirrored = false;
 		rotation = 0;
+		parent = null;
 	}
 
 	public double getX(){
-		return x;
+		return globalX;
 	}
 	
 	public double getY(){
-		return y;
+		return globalY;
+	}
+	
+	public double getZ(){
+		return globalZ;
 	}
 	
 	public double getScaleX(){
-		return sx;
+		return globalScaleX;
 	}
 	
 	public double getScaleY(){
-		return sy;
+		return globalScaleY;
 	}
 	
 	public double getRotation(){
+//		return globalRot;
 		return rotation;
 	}
 	
 	public boolean getMirrored(){
-		return mirrored;
+		return globalMirrored;
+	}
+	
+	/*
+	 * update global properties using parent
+	 */
+	private void updated(){
+		if(parent == null){
+			globalX = localX;
+			globalY = localY;
+			globalZ = localZ;
+			globalScaleX = localScaleX;
+			globalScaleY = localScaleY;
+//			globalRot = localRot;
+			globalMirrored = localMirrored;
+		} else {
+			// use parent position to make new coordinates
+			
+			double x = localX;
+			if(parent.getMirrored()) 
+				x *= -1;
+			globalX = x * parent.getScaleX() + parent.getX();
+			globalY = localY * parent.getScaleY() + parent.getY();
+			globalZ = localZ + parent.getZ();
+			
+			globalScaleX = localScaleX * parent.getScaleX();
+			globalScaleY = localScaleY * parent.getScaleY();
+
+//			globalRot = localRot + parent.getRotation();
+			
+			globalMirrored = localMirrored;
+			if(parent.getMirrored())
+				globalMirrored = !globalMirrored;
+		}
+		
+		notifyObservers();
 	}
 	
 	public void setX(double x) {
-		this.x = x;
+		localX = x;
+		updated();
 	}
 
 	public void setY(double y) {
-		this.y = y;
+		localY = y;
+		updated();
+	}
+
+	public void setZ(double z) {
+		localZ = z;
+		updated();
 	}
 
 	public void setLocation(double x, double y) {
-		setX(x);
-		setY(y);
+		localX = x;
+		localY = y;
+		updated();
 	}
 
 	public void moveBy(double x, double y) {
-		setLocation(this.x + x, this.y + y);
+		setLocation(localX + x, localY + y);
 	}
 
 	public void setRotation(double r) {
+//		localRot = r;
 		rotation = r;
+		updated();
 	}
 
 	public void rotateBy(double r) {
+//		setRotation(localRot + r);
 		setRotation(rotation + r);
 	}
 
 	public void setScale(double sx, double sy) {
-		this.sx = sx;
-		this.sy = sy;
+		localScaleX = sx;
+		localScaleY = sy;
+		updated();
 	}
 	
 	public void setMirrored(boolean m){
-		mirrored = m;
+		localMirrored = m;
+		updated();
 	}
 	
 	public void mirror(){
-		mirrored = !mirrored;
+		setMirrored(!localMirrored);
 	}
 
 	public void scaleBy(double sx, double sy) {
-		setScale(this.sx * sx, this.sy * sy);
+		setScale(localScaleX * sx, localScaleY * sy);
+	}
+
+	/*
+	 * Parent position updated so we have to update our global coords
+	 */
+	public void notified(Observable sender) {
+		updated();
+	}
+
+	public Position getParent() {
+		return parent;
+	}
+	
+	public void setParent(Position p){
+		parent = p;
+		p.addObserver(this);
+		updated();
+	}
+	
+	public void removeFromParent(){
+		parent.removeObserver(this);
+		parent = null;
+		updated();
 	}
 
 }
