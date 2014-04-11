@@ -70,9 +70,16 @@ public class Game extends JPanel implements Runnable {
 	}
 	
 	public void paint(Graphics g){
-		
+		//Tiles 64x64
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
+		g.setColor(Color.WHITE);
+		for(int i = 0; i <= 1024; i += 64){
+			g.drawLine(i, 0, i, 768);
+		}
+		for(int i = 0; i <= 768; i += 64){
+			g.drawLine(0, i, 1024, i);
+		}
 		
 		rootObject.drawSelfAndChildren(g);
 	}

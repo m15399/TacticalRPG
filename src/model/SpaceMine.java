@@ -6,14 +6,8 @@ public class SpaceMine extends Item{
 		damage = 100;
 	}
 
-
 	@Override
 	public void useOn(Ship ship) {
-		
 		ship.updateHull(-damage);
-		
 	}
-
-
-
 }
