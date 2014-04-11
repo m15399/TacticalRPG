@@ -3,8 +3,7 @@ package model;
 public abstract class Item extends GameObject{
 	private String description;
 	private String itemName;
-	public Item(String name){
-		itemName = name;
+	public Item(){
 	}
 	
 	public abstract void useOn(Ship ship);
