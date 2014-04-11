@@ -11,7 +11,8 @@ public class Observable {
 	}
 	
 	public void addObserver(Observer observer){
-		observers.add(observer);
+		if(observer != null)
+			observers.add(observer);
 	}
 	
 	public void removeObserver(Observer observer){

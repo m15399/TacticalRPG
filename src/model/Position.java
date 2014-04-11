@@ -15,6 +15,14 @@ public class Position {
 		init();
 		setLocation(x, y);
 	}
+	
+	public Position(Position other){
+		init();
+		setLocation(other.getX(), other.getY());
+		setRotation(other.getRotation());
+		setScale(other.getScaleX(), other.getScaleY());
+		setMirrored(other.getMirrored());
+	}
 
 	private void init() {
 		x = y = 0;

@@ -12,10 +12,12 @@ import model.GameObject;
 public class Action extends GameObject {
 
 	Observable observable;
-
+	boolean started;
+	
 	public Action(Observer observer) {
 		observable = new Observable();
 		addObserver(observer);
+		started = false;
 	}
 	
 	public void addObserver(Observer o){
@@ -23,7 +25,13 @@ public class Action extends GameObject {
 	}
 
 	public void start() {
-		finish();
+		started = true;
+	}
+	
+	public void update(){
+		if(started){
+			finish();
+		}
 	}
 
 	protected void finish() {
