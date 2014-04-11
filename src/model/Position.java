@@ -9,10 +9,10 @@ public class Position extends Observable implements Observer {
 
 	private double localX, localY, localZ, globalX, globalY, globalZ;
 	private double localScaleX, localScaleY, globalScaleX, globalScaleY;
-//	private double localRot, globalRot;
+	// private double localRot, globalRot;
 	private boolean localMirrored, globalMirrored;
 	private double rotation;
-	
+
 	private Position parent;
 
 	public Position(double x, double y) {
@@ -20,79 +20,87 @@ public class Position extends Observable implements Observer {
 		setLocation(x, y);
 	}
 
+	public Position(Position other) {
+		init();
+		setLocation(other.getX(), other.getY());
+		setRotation(other.getRotation());
+		setScale(other.getScaleX(), other.getScaleY());
+		setMirrored(other.getMirrored());
+	}
+
 	private void init() {
 		localX = localY = localZ = globalX = globalY = globalZ = 0;
 		localScaleX = localScaleY = globalScaleX = globalScaleY = 1;
-//		localRot = globalRot = 0;
+		// localRot = globalRot = 0;
 		localMirrored = globalMirrored = false;
 		rotation = 0;
 		parent = null;
 	}
 
-	public double getX(){
+	public double getX() {
 		return globalX;
 	}
-	
-	public double getY(){
+
+	public double getY() {
 		return globalY;
 	}
-	
-	public double getZ(){
+
+	public double getZ() {
 		return globalZ;
 	}
-	
-	public double getScaleX(){
+
+	public double getScaleX() {
 		return globalScaleX;
 	}
-	
-	public double getScaleY(){
+
+	public double getScaleY() {
 		return globalScaleY;
 	}
-	
-	public double getRotation(){
-//		return globalRot;
+
+	public double getRotation() {
+		// return globalRot;
 		return rotation;
 	}
-	
-	public boolean getMirrored(){
+
+	public boolean getMirrored() {
 		return globalMirrored;
 	}
-	
+
 	/*
 	 * update global properties using parent
 	 */
-	private void updated(){
-		if(parent == null){
+	private void updated() {
+		if (parent == null) {
 			globalX = localX;
 			globalY = localY;
 			globalZ = localZ;
 			globalScaleX = localScaleX;
 			globalScaleY = localScaleY;
-//			globalRot = localRot;
+			// globalRot = localRot;
 			globalMirrored = localMirrored;
 		} else {
 			// use parent position to make new coordinates
-			
+
 			double x = localX;
-			if(parent.getMirrored()) 
+			if (parent.getMirrored())
 				x *= -1;
 			globalX = x * parent.getScaleX() + parent.getX();
 			globalY = localY * parent.getScaleY() + parent.getY();
 			globalZ = localZ + parent.getZ();
-			
+
 			globalScaleX = localScaleX * parent.getScaleX();
 			globalScaleY = localScaleY * parent.getScaleY();
 
-//			globalRot = localRot + parent.getRotation();
-			
+			// globalRot = localRot + parent.getRotation();
+
 			globalMirrored = localMirrored;
-			if(parent.getMirrored())
+			if (parent.getMirrored())
 				globalMirrored = !globalMirrored;
 		}
-		
+
 		notifyObservers();
 	}
-	
+
 	public void setX(double x) {
 		localX = x;
 		updated();
@@ -119,13 +127,13 @@ public class Position extends Observable implements Observer {
 	}
 
 	public void setRotation(double r) {
-//		localRot = r;
+		// localRot = r;
 		rotation = r;
 		updated();
 	}
 
 	public void rotateBy(double r) {
-//		setRotation(localRot + r);
+		// setRotation(localRot + r);
 		setRotation(rotation + r);
 	}
 
@@ -134,13 +142,13 @@ public class Position extends Observable implements Observer {
 		localScaleY = sy;
 		updated();
 	}
-	
-	public void setMirrored(boolean m){
+
+	public void setMirrored(boolean m) {
 		localMirrored = m;
 		updated();
 	}
-	
-	public void mirror(){
+
+	public void mirror() {
 		setMirrored(!localMirrored);
 	}
 
@@ -158,14 +166,14 @@ public class Position extends Observable implements Observer {
 	public Position getParent() {
 		return parent;
 	}
-	
-	public void setParent(Position p){
+
+	public void setParent(Position p) {
 		parent = p;
 		p.addObserver(this);
 		updated();
 	}
-	
-	public void removeFromParent(){
+
+	public void removeFromParent() {
 		parent.removeObserver(this);
 		parent = null;
 		updated();
