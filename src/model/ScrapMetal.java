@@ -4,16 +4,16 @@ import model.Item;
 
 public class ScrapMetal extends Item {
 	
-	private int hpBoost;
+	private double hullBoost;
 	
 	public ScrapMetal() {
 
-		hpBoost = 100;
+		hullBoost = 100;
 	}
 
 	@Override
 	public void useOn(Ship ship) {
-	ship.setHealth(ship.getHealth()+hpBoost);
+	ship.updateHull(hullBoost);
 		
 	}
 

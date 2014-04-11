@@ -6,20 +6,20 @@ import java.util.List;
 
 public class Ship extends GameObject{
 	private Point location;
-	private int health, moves;
-	private double armor;
+	private int moves;
+	private double hull, shielding, maxHull, maxShielding;
 	private List<Item> items;
 	
 	public Ship(Point newLocation){
 		location = newLocation;
-		health = 1;
-		armor = 1;
+		hull = 1;
+		shielding = 1;
 		moves = 1;
 		items = new ArrayList<Item>();
 	}
 	
 	public boolean isShipDead(){
-		if(health > 0)
+		if(hull > 0)
 			return false;
 		return true;
 	}
@@ -36,28 +36,52 @@ public class Ship extends GameObject{
 		location = newLocation;
 	}
 	
-	public int getHealth(){
-		return health;
+	public double getHull(){
+		return hull;
 	}
 	
-	public void setHealth(int newHealthTotal){
-		health = newHealthTotal;
+	public void setHull(double newHullTotal){
+		hull = newHullTotal;
 	}
 	
-	public void updateHealth(int valueToAdjustHealthBy){
-		health += valueToAdjustHealthBy;
+	public void updateHull(double valueToAdjustHullBy){
+		hull += valueToAdjustHullBy;
 	}
 	
-	public double getArmor(){
-		return armor;
+	public double getShielding(){
+		return shielding;
 	}
 	
-	public void setArmor(double newArmorValue){
-		armor = newArmorValue;
+	public void setShielding(double newShieldingValue){
+		shielding = newShieldingValue;
 	}
 	
-	public void updateArmor(int valueToAdjustArmorBy){
-		armor += valueToAdjustArmorBy;
+	public void updateShielding(double valueToAdjustShieldingBy){
+		shielding += valueToAdjustShieldingBy;
+	}
+	
+	public double getMaxHull(){
+		return maxHull;
+	}
+	
+	public void setMaxHull(double newMaxHullTotal){
+		maxHull = newMaxHullTotal;
+	}
+	
+	public void updateMaxHull(double valueToAdjustMaxHullBy){
+		maxHull += valueToAdjustMaxHullBy;
+	}
+	
+	public double getMaxShielding(){
+		return maxShielding;
+	}
+	
+	public void setMaxShielding(double newMaxShieldingValue){
+		maxShielding = newMaxShieldingValue;
+	}
+	
+	public void updateMaxShielding(double valueToAdjustMaxShieldingBy){
+		maxShielding += valueToAdjustMaxShieldingBy;
 	}
 	
 	public int getMoves(){

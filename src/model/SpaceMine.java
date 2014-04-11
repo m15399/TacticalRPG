@@ -10,7 +10,7 @@ public class SpaceMine extends Item{
 	@Override
 	public void useOn(Ship ship) {
 		
-		ship.setHealth(ship.getHealth()-damage);
+		ship.updateHull(-damage);
 		
 	}
 

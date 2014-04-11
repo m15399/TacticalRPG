@@ -23,20 +23,20 @@ public class ShipTest {
 	
 	@Test
 	public void testHealth(){
-		assertEquals(1, ship.getHealth());
-		ship.setHealth(4);
-		assertEquals(4, ship.getHealth());
-		ship.updateHealth(-2);
-		assertEquals(2, ship.getHealth());
+		assertEquals(1, ship.getHull(), 1e-12);
+		ship.setHull(4);
+		assertEquals(4, ship.getHull(), 1e-12);
+		ship.updateHull(-2);
+		assertEquals(2, ship.getHull(), 1e-12);
 	}
 	
 	@Test
 	public void testArmor(){
-		assertEquals(1, ship.getArmor(), 0);
-		ship.setArmor(4);
-		assertEquals(4, ship.getArmor(), 0);
-		ship.updateArmor(-2);
-		assertEquals(2, ship.getArmor(), 0);
+		assertEquals(1, ship.getShielding(), 1e-12);
+		ship.setShielding(4);
+		assertEquals(4, ship.getShielding(), 1e-12);
+		ship.updateShielding(-2);
+		assertEquals(2, ship.getShielding(), 1e-12);
 	}
 	
 	@Test
