@@ -32,11 +32,11 @@ public class ShipTest {
 	
 	@Test
 	public void testArmor(){
-		assertEquals(1, ship.getArmor());
+		assertEquals(1, ship.getArmor(), 0);
 		ship.setArmor(4);
-		assertEquals(4, ship.getArmor());
+		assertEquals(4, ship.getArmor(), 0);
 		ship.updateArmor(-2);
-		assertEquals(2, ship.getArmor());
+		assertEquals(2, ship.getArmor(), 0);
 	}
 	
 	@Test
