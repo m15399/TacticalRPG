@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import actions.*;
@@ -68,10 +69,6 @@ public class GraphicsTest extends GameObject implements Observer {
 		testSprite.getPosition().scaleBy(1.002, 1.002);
 //		testSprite.getPosition().mirror();
 
-	}
-	
-	public void draw(Graphics g){
-		
 	}
 
 	public void notified(Observable o){

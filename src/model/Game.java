@@ -17,6 +17,8 @@ public class Game extends JPanel implements Runnable {
 	public static final int WIDTH = 1024;
 	public static final int HEIGHT = 768;
 	
+	public static long frameNumber = 0;
+	
 	private Thread thread;
 	private GameObject rootObject;
 	
@@ -59,6 +61,7 @@ public class Game extends JPanel implements Runnable {
 				        		
 		while (true) {
 			
+			frameNumber++;
 			update();
 			repaint();
 			
