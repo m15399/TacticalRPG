@@ -53,7 +53,7 @@ public class Map extends GameObject {
 	 * @param endLocation
 	 * @return
 	 */
-	public List<Point> ShortestPath(Point currentLocation, Point endLocation){
+	public List<Point> shortestPath(Point currentLocation, Point endLocation){
 		List<Point> listOfMoves = new ArrayList<Point> ();
 		Point temp = currentLocation;
 		while(!temp.equals(endLocation)){
@@ -65,7 +65,7 @@ public class Map extends GameObject {
 				temp.y += 1;
 			else if(temp.y > endLocation.y)
 				temp.y -= 1;
-			listOfMoves.add(temp);
+			listOfMoves.add(new Point(temp.x, temp.y));
 		}
 		return listOfMoves;
 	}
