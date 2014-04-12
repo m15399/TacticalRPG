@@ -58,17 +58,6 @@ public class GraphicsTest extends GameObject implements Observer {
 
 	}
 	
-	public void drawSelfAndChildren(Graphics g){
-		Graphics2D g2 = (Graphics2D) g;
-		AffineTransform saved = g2.getTransform();
-		
-//		g2.scale(3,3);
-		
-		super.drawSelfAndChildren(g);
-		
-		g2.setTransform(saved);		
-	}
-	
 	public void draw(Graphics g){
 		
 	}
