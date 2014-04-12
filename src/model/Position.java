@@ -26,6 +26,7 @@ public class Position extends Observable implements Observer {
 		setRotation(other.getRotation());
 		setScale(other.getScaleX(), other.getScaleY());
 		setMirrored(other.getMirrored());
+		setParent(other.getParent());
 	}
 
 	private void init() {
