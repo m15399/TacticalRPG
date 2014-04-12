@@ -41,7 +41,7 @@ public class GraphicsTest extends GameObject implements Observer {
 		for(int i = 0; i < 10; i++){
 			aq.addAction(new MoveEntityToAction(testSprite2, 
 					new Position((int)(Math.random() * 100)+400,
-					(int)(Math.random() * 100)+200), 10, null));
+					(int)(Math.random() * 100)+200), 40, null));
 			aq.addAction(new MirrorEntityAction(testSprite2, null));
 		}
 		addChild(aq);
