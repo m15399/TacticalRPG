@@ -21,7 +21,7 @@ public class Level extends GameObject  {
 	}
 	
 	public void update(){
-		double s = 0;
+		double s = 4;
 		starfield.scrollBy(s, s);
 	}
 	

@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 
 import actions.*;
 import model.*;
@@ -54,6 +56,17 @@ public class GraphicsTest extends GameObject implements Observer {
 		testSprite.getPosition().scaleBy(1.002, 1.002);
 //		testSprite.getPosition().mirror();
 
+	}
+	
+	public void drawSelfAndChildren(Graphics g){
+		Graphics2D g2 = (Graphics2D) g;
+		AffineTransform saved = g2.getTransform();
+		
+//		g2.scale(3,3);
+		
+		super.drawSelfAndChildren(g);
+		
+		g2.setTransform(saved);		
 	}
 	
 	public void draw(Graphics g){

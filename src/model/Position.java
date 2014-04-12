@@ -174,6 +174,8 @@ public class Position extends Observable implements Observer {
 	}
 
 	public void removeFromParent() {
+		if(parent == null)
+			return;
 		parent.removeObserver(this);
 		parent = null;
 		updated();
