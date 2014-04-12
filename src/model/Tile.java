@@ -1,56 +1,93 @@
 package model;
 
-import java.awt.Image;
 
-/*
+/**
  * Tried to wrap all the Tile classes into one class to simplify things and cut down on the number of overall classes.
- * The Tile stores information about itself
+ * After a ship has moved away from a tile, or if for some other reason a tile becomes empty call setEmpty() to reset the tile back to previous conditions.
+ * A built in alternative to this is just making a new tile.  Several different constructors have been provided to minimize outside method calls.
  */
 
-public class Tile extends Map{
+public class Tile extends GameObject{
 	private boolean isOccupied, isHighlighted, isEdge, isTerrain, hasShip;
 	private Ship ship;
 	
+	/**
+	 * Empty tile constructor
+	 */
 	public Tile(){
-		isOccupied = false;
-		isHighlighted = false;
-		isEdge = false;
-		isTerrain = false;
-		hasShip = false;
+		setEmpty();
+	}
+	
+	/**
+	 * Ship tile constructor.
+	 * @param newShip
+	 */
+	public Tile(Ship newShip){
+		setEmpty();
+		setHasShip(true, newShip);
+	}
+	
+	/**
+	 * Terrain tile constructor
+	 */
+	public Tile(boolean trueIfTileHasTerrain, boolean trueIfTerrainCanBeOccupied){
+		setEmpty();
+		setIsTerrain(trueIfTileHasTerrain, trueIfTerrainCanBeOccupied);
+	}
+	
+	/**
+	 * Edge tile constructor
+	 * @return
+	 */
+	
+	public Tile(boolean trueIfTileIsEdgeTile){
+		setEmpty();
+		setIsEdge(trueIfTileIsEdgeTile);
 	}
 	
 	public boolean getIsOccupied(){
 		return isOccupied;
 	}
 	
-	public void setIsOccupied(boolean value){
-		isOccupied = value;
+	public void setIsOccupied(boolean trueIfTileIsOccupied){
+		isOccupied = trueIfTileIsOccupied;
+		if(!trueIfTileIsOccupied)
+			hasShip = false;
 	}
 	
 	public boolean getIsHighlighted(){
 		return isHighlighted;
 	}
 	
-	public void setIsHighlighted(boolean value){
-		isHighlighted = value;
+	public void setIsHighlighted(boolean trueIfTileIsHighlighted){
+		isHighlighted = trueIfTileIsHighlighted;
 	}
 	
 	public boolean getIsEdge(){
 		return isEdge;
 	}
 	
-	public void setIsEdge(boolean value){
-		isEdge = value;
-		isOccupied = true;
+	/**
+	 * Automatically handles the tile being occupied.
+	 */
+	public void setIsEdge(boolean trueIfTileIsEdgeTile){
+		isEdge = trueIfTileIsEdgeTile;
+		if(trueIfTileIsEdgeTile)
+			isOccupied = true;
+		else
+			isOccupied = false;
 	}
 	
 	public boolean getIsTerrain(){
 		return isTerrain;
 	}
 	
-	public void setIsTerrain(boolean terrainValue, boolean canTerrainBeOccupied, Image newTerrainImage){
-		isTerrain = terrainValue;
-		if(!canTerrainBeOccupied)
+	/**
+	 * Automatically handles the tile being occupied.
+	 */
+	public void setIsTerrain(boolean trueIfTileHasTerrain, boolean trueIfTerrainCanBeOccupied){
+		isTerrain = trueIfTileHasTerrain;
+		if(!trueIfTerrainCanBeOccupied)
 			isOccupied = true;
 	}
 	
@@ -58,10 +95,28 @@ public class Tile extends Map{
 		return hasShip;
 	}
 	
-	public void setHasShip(boolean value, Ship newShip){
-		hasShip = value;
-		ship = newShip;
-		isOccupied = true;
+	/**
+	 * Automatically handles the tile being occupied.
+	 */
+	public void setHasShip(boolean trueIfTileHasShip, Ship theShip){
+		hasShip = trueIfTileHasShip;
+		ship = theShip;
+		if(trueIfTileHasShip)
+			isOccupied = true;
+		else
+			isOccupied = false;
+	}
+	
+	/**
+	 * Resets the tile back to default state.
+	 */
+	public void setEmpty(){
+		ship = null;
+		isOccupied = false;
+		isHighlighted = false;
+		isEdge = false;
+		isTerrain = false;
+		hasShip = false;
 	}
 	
 	public Ship getShip(){
