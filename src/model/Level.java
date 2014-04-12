@@ -4,7 +4,9 @@ import view.Camera;
 import view.GraphicsTest;
 import view.Starfield;
 
-
+/*
+ * Root object for the main gameplay
+ */
 public class Level extends GameObject  {
 	
 	Starfield starfield;

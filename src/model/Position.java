@@ -1,5 +1,9 @@
 package model;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+
 /*
  * Position class that has a lot of info about an objects
  * location, rotation, and scale, and lets it have a parent 
@@ -14,6 +18,9 @@ public class Position extends Observable implements Observer {
 	private double rotation;
 
 	private Position parent;
+	
+	AffineTransform saved;
+
 
 	public Position(double x, double y) {
 		init();
@@ -180,6 +187,24 @@ public class Position extends Observable implements Observer {
 		parent.removeObserver(this);
 		parent = null;
 		updated();
+	}
+	
+	/*
+	 * drawing 
+	 */
+	public void transform(Graphics g){
+		Graphics2D g2 = (Graphics2D) g;
+		saved = g2.getTransform();
+				
+		g2.translate((int)getX(), (int)getY());
+		g2.rotate(getRotation());
+		g2.scale(getScaleX()* (getMirrored() ? -1 : 1), getScaleY());
+		
+	}
+	
+	public void unstransform(Graphics g){
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setTransform(saved);		
 	}
 
 }

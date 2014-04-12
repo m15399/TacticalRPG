@@ -3,6 +3,9 @@ package model;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/*
+ * 2D array of Tiles 
+ */
 public class Map extends GameObject {
 
 	public static final int TILESIZE = 64;
@@ -20,6 +23,7 @@ public class Map extends GameObject {
 			}
 		}
 		
+		// testing highlighting
 		tiles[0][0].setHighlight(Tile.Highlight.BLUE);
 		tiles[1][0].setHighlight(Tile.Highlight.LIGHTBLUE);
 		tiles[2][0].setHighlight(Tile.Highlight.RED);

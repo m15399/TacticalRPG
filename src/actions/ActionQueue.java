@@ -6,6 +6,10 @@ import java.util.Queue;
 import model.Observable;
 import model.Observer;
 
+/*
+ * Queue of Actions, plays the first action, 
+ * when that's done plays the second action, etc
+ */
 public class ActionQueue extends Action implements Observer {
 	
 	Queue<Action> queue; 

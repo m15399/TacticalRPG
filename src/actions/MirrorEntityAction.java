@@ -3,6 +3,9 @@ package actions;
 import model.Entity;
 import model.Observer;
 
+/*
+ * An Action that just mirrors an Entity
+ */
 public class MirrorEntityAction extends Action {
 
 	Entity entity;

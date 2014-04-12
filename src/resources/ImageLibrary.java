@@ -1,17 +1,21 @@
 package resources;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+/*
+ * Loads and stores all images at the start of the 
+ * program and lets you access them by name
+ */
 public class ImageLibrary {
 
-	// files to load
+	// files to load at startup
 	private static final String[] files = {
-		"test.png"
+		"test.png",
+		"smurf_sprite.png"
 		};
 	
 	/*
@@ -42,8 +46,7 @@ public class ImageLibrary {
 
 	private void loadImage(String filename) {
 		try {
-			BufferedImage img = ImageIO.read(new File("images" + File.separator
-					+ filename));
+			BufferedImage img = ImageIO.read(ImageLibrary.class.getResource("/images/" + filename));
 			images.put(filename, img);
 		} catch (IOException e) {
 			System.out.println("Error loading image: " + filename);

@@ -4,6 +4,11 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Superclass for anything that needs to be 
+ * updated and drawn each frame, has a list of children
+ * and can update them and their children recursively
+ */
 public class GameObject {
 	private List<GameObject> children;
 	private GameObject parent;

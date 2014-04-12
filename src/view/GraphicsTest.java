@@ -12,6 +12,7 @@ public class GraphicsTest extends GameObject implements Observer {
 	Sprite testSprite, testSprite2, testSprite3;
 	
 	public GraphicsTest(){
+		// add random sprites
 		for(int i = 0; i < 50; i++){
 			Sprite s = new Sprite("test.png", (int)(Math.random() * Game.WIDTH),
 					(int)(Math.random() * Game.HEIGHT));
@@ -21,6 +22,7 @@ public class GraphicsTest extends GameObject implements Observer {
 			
 		}
 		
+		// test sprites
 		testSprite = new Sprite("test.png", 40,300);
 		testSprite2 = new Sprite("test.png", 400,200);
 		testSprite3 = new Sprite("test.png", 70,20);
@@ -33,10 +35,12 @@ public class GraphicsTest extends GameObject implements Observer {
 		
 		testSprite3.getPosition().setParent(testSprite2.getPosition());
 		
+		// test timer
 		Action a = new TimerAction(90, this);
 		addChild(a);
 		a.start();
 		
+		// test actionqueue
 		ActionQueue aq = new ActionQueue(null);
 		for(int i = 0; i < 10; i++){
 			aq.addAction(new MoveEntityToAction(testSprite2, 
@@ -46,6 +50,16 @@ public class GraphicsTest extends GameObject implements Observer {
 		}
 		addChild(aq);
 		aq.start();
+		
+		// test animated sprites
+		AnimatedSprite as = new AnimatedSprite("smurf_sprite.png", 960, 680);
+		as.getPosition().mirror();
+		as.setDelay(2);
+		as.setFrameSize(128, 128);
+//		int[] indicies = {1, 2, 3, 4, 4, 4, 4, 4, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0};
+//		as.setFrameIndicies(indicies);
+		as.setNumberFrames(16);
+		addChild(as);
 	}
 	
 	public void update(){

@@ -2,7 +2,9 @@ package actions;
 
 import model.Observer;
 
-
+/*
+ * Timer that counts down in frames
+ */
 public class TimerAction extends Action {
 
 	int timeLeft;
@@ -19,7 +21,7 @@ public class TimerAction extends Action {
 			return;
 		
 		timeLeft--;
-		if(timeLeft == 0){
+		if(timeLeft <= 0){
 			finish();
 		}
 	}

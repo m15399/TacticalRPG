@@ -4,6 +4,9 @@ import model.Entity;
 import model.Observer;
 import model.Position;
 
+/*
+ * Moves an Entity to a position over a period of time
+ */
 public class MoveEntityToAction extends Action {
 
 	Entity entity;
@@ -30,11 +33,13 @@ public class MoveEntityToAction extends Action {
 				
 		timeLeft--;
 		
-		if(timeLeft == 0){
+		if(timeLeft <= 0){
+			// if time is over, set to the final location and call finish()
 			entity.getPosition().setLocation(endX, endY);
 			finish();
 			
 		} else {
+			// move towards the end point by distance/timeLeft
 			
 			double currX = entity.getPosition().getX();
 			double currY = entity.getPosition().getY();

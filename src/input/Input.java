@@ -5,9 +5,15 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 
-
+/*
+ * Listens to mouse movement, objects can ask it 
+ * for it's current location and velocity
+ */
 public class Input implements MouseMotionListener, MouseListener {
 	
+	/*
+	 * Singleton class
+	 */
 	private static Input instance = null;
 	public static Input getInstance() {
 		if (instance == null) {
@@ -27,12 +33,14 @@ public class Input implements MouseMotionListener, MouseListener {
 		wasMovedThisFrame = pressed = false;
 	}
 	
-	private void setMouseLocation(double x, double y){
-		prevMouseX = mouseX;
-		prevMouseY = mouseY;
-		mouseX = x;
-		mouseY = y;
-		wasMovedThisFrame = true;
+	
+	
+	public double getX(){
+		return mouseX;
+	}
+	
+	public double getY(){
+		return mouseY;
 	}
 	
 	public double getVelocityX(){
@@ -47,6 +55,15 @@ public class Input implements MouseMotionListener, MouseListener {
 		return pressed;
 	}
 	
+	
+	private void setMouseLocation(double x, double y){
+		prevMouseX = mouseX;
+		prevMouseY = mouseY;
+		mouseX = x;
+		mouseY = y;
+		wasMovedThisFrame = true;
+	}
+	
 	public void update(){
 		if(wasMovedThisFrame){
 			this.draggedX = mouseX - prevMouseX;
@@ -59,6 +76,13 @@ public class Input implements MouseMotionListener, MouseListener {
 		
 	}
 	
+
+	
+	
+	/*
+	 * Mouse listener stuff
+	 */
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -67,13 +91,11 @@ public class Input implements MouseMotionListener, MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		pressed = true;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 		pressed = false;
 	}
 
@@ -91,13 +113,11 @@ public class Input implements MouseMotionListener, MouseListener {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
 		setMouseLocation(e.getPoint().getX(), e.getPoint().getY());
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
 		setMouseLocation(e.getPoint().getX(), e.getPoint().getY());
 	}
 	

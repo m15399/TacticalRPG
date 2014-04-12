@@ -1,6 +1,5 @@
 package view;
 
-import input.Input;
 
 import java.awt.Color;
 import java.awt.Graphics;
