@@ -1,6 +1,8 @@
 package model;
 
 
+import input.Input;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -37,6 +39,9 @@ public class Game extends JPanel implements Runnable {
 		rootObject = null;
 		thread = null;
 		
+		addMouseListener(Input.getInstance());
+		addMouseMotionListener(Input.getInstance());
+		
 		setRoot(new Level());
 
 	}
@@ -66,6 +71,7 @@ public class Game extends JPanel implements Runnable {
 	}
 	
 	public void update(){
+		Input.getInstance().update();
 		rootObject.updateSelfAndChildren();	
 	}
 	

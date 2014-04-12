@@ -64,7 +64,7 @@ public class GameObject {
 	/*
 	 * Recursively update tree of objects
 	 */
-	public final void updateSelfAndChildren() {
+	public void updateSelfAndChildren() {
 		// update self
 		update();
 
@@ -81,7 +81,7 @@ public class GameObject {
 		}
 	}
 
-	public final void drawSelfAndChildren(Graphics g) {
+	public void drawSelfAndChildren(Graphics g) {
 		// draw self
 		draw(g);
 

@@ -28,6 +28,9 @@ public class Action extends GameObject {
 		started = true;
 	}
 	
+	/*
+	 * default Action just finishes
+	 */
 	public void update(){
 		if(started){
 			finish();

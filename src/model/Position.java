@@ -26,6 +26,7 @@ public class Position extends Observable implements Observer {
 		setRotation(other.getRotation());
 		setScale(other.getScaleX(), other.getScaleY());
 		setMirrored(other.getMirrored());
+		setParent(other.getParent());
 	}
 
 	private void init() {
@@ -174,6 +175,8 @@ public class Position extends Observable implements Observer {
 	}
 
 	public void removeFromParent() {
+		if(parent == null)
+			return;
 		parent.removeObserver(this);
 		parent = null;
 		updated();

@@ -16,6 +16,10 @@ public class Entity extends GameObject {
 		position = new Position(x, y);
 	}
 	
+	public void onDestroy(){
+		position.removeFromParent();
+	}
+	
 	public Position getPosition(){
 		return position;
 	}
