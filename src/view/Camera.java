@@ -1,5 +1,7 @@
 package view;
 
+import input.Input;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -11,10 +13,35 @@ import model.GameObject;
  */
 public class Camera extends GameObject {
 
-	private double translateX, translateY;
+	private double translateX, translateY, prevTranslateX, prevTranslateY;
 	
 	public Camera(){
-		translateX = translateY = 0;
+		translateX = translateY = prevTranslateX = prevTranslateY = 0;
+	}
+	
+	public void setPosition(double x, double y){
+		prevTranslateX = translateX;
+		prevTranslateY = translateY;
+		translateX = x;
+		translateY = y;
+	}
+	
+	public double getVelocityX(){
+		return translateX - prevTranslateX;
+	}
+	
+	public double getVelocityY(){
+		return translateY - prevTranslateY;
+	}
+	
+	public void update(){
+		Input input = Input.getInstance();
+		if(input.getPressed()){
+			double multiplier = 2;
+			setPosition(translateX + input.getVelocityX() * multiplier, translateY + input.getVelocityY() * multiplier);
+		} else {
+			setPosition(translateX, translateY);
+		}
 	}
 	
 	public void drawSelfAndChildren(Graphics g){

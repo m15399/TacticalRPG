@@ -15,6 +15,7 @@ public class Level extends GameObject  {
 		camera = new Camera();
 		
 		starfield = new Starfield(Game.WIDTH, Game.HEIGHT, 7, 100, 22, 27, 300);
+		starfield.setCamera(camera);
 		addChild(starfield);
 		
 		camera.addChild(new Map());
@@ -24,11 +25,6 @@ public class Level extends GameObject  {
 		addChild(camera);
 
 		
-	}
-	
-	public void update(){
-		double s = 0;
-		starfield.scrollBy(s, s);
 	}
 	
 	

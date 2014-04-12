@@ -1,5 +1,7 @@
 package view;
 
+import input.Input;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ public class Starfield extends GameObject {
 			this.z = z;
 			this.size = size;
 		}
-
+		
 		public void draw(Graphics g, double offsetX, double offsetY,
 				double offsetZ) {
 			g.setColor(Color.white);
@@ -42,6 +44,8 @@ public class Starfield extends GameObject {
 	double offsetX, offsetY, offsetZ;
 	double width, height;
 	int numStars;
+	
+	Camera camera;
 
 	public Starfield(double width, double height, double minDepth,
 			double maxDepth, double minSize, double maxSize, int numStars) {
@@ -56,6 +60,8 @@ public class Starfield extends GameObject {
 		this.height = height;
 
 		this.numStars = numStars;
+		
+		this.camera = null;
 
 		// plot stars randomly in a frustrum (such math)
 		for (int i = 0; i < numStars; i++) {
@@ -78,6 +84,10 @@ public class Starfield extends GameObject {
 
 	}
 
+	public void setCamera(Camera camera){
+		this.camera = camera;
+	}
+	
 	private double minX(double z) {
 		return -width / 2 * z;
 	}
@@ -127,6 +137,15 @@ public class Starfield extends GameObject {
 			else if (s.y > maxY(z))
 				s.y -= heightAt(z);
 
+		}
+	}
+	
+	public void update(){
+		if(this.camera != null){
+			double multiplier = 1;
+			double translateX = camera.getVelocityX() * multiplier;
+			double translateY = camera.getVelocityY() * multiplier;
+			scrollBy(translateX, translateY);
 		}
 	}
 
