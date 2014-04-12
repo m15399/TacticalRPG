@@ -2,6 +2,9 @@ package model;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * 2D array of Tiles 
@@ -47,9 +50,29 @@ public class Map extends GameObject {
 		}
 	}
 	
-//	public Point[] ShortestPath(Point currentLocation, Point endLocation){
-//		//TODO implement
-//	}
+	/**
+	 * Built for no obstacles at the moment.  Returns a list of all tiles to move to not exclusive of starting tile, and inclusive of ending tile.
+	 * TODO: Build to handle obstacles in path for later.
+	 * @param currentLocation
+	 * @param endLocation
+	 * @return
+	 */
+	public List<Point> shortestPath(Point currentLocation, Point endLocation){
+		List<Point> listOfMoves = new ArrayList<Point> ();
+		Point temp = currentLocation;
+		while(!temp.equals(endLocation)){
+			if(temp.x < endLocation.x)
+				temp.x += 1;
+			else if(temp.x > endLocation.x)
+				temp.x -= 1;
+			else if(temp.y < endLocation.y)
+				temp.y += 1;
+			else if(temp.y > endLocation.y)
+				temp.y -= 1;
+			listOfMoves.add(new Point(temp.x, temp.y));
+		}
+		return listOfMoves;
+	}
 	
 	public Tile getTile(int mapX, int mapY){
 		return tiles[mapX][mapY];
