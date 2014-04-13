@@ -7,7 +7,7 @@ import java.util.List;
 public class Ship extends GameObject{
 	private Point location;
 	private int moves;
-	private double hull, shielding, maxHull, maxShielding, accuracy, minDamage, maxDamage;
+	private double hull, shielding, maxHull, maxShielding, accuracy, minDamage, maxDamage, critChance;
 	private List<Item> items;
 	private String description;
 	
@@ -41,7 +41,7 @@ public class Ship extends GameObject{
 	 */
 	
 	public void constructorAid(int moves, double hull, double shielding, double maxHull, double maxShielding, double accuracy, 
-			List<Item> items, String description, double minDamage, double maxDamage){
+			List<Item> items, String description, double minDamage, double maxDamage, double critChance){
 		setMoves(moves);
 		setHull(hull);
 		setShielding(shielding);
@@ -52,6 +52,7 @@ public class Ship extends GameObject{
 		setDescription(description);
 		setMinDamage(minDamage);
 		setMaxDamage(maxDamage);
+		setCritChance(critChance);
 	}
 	/*
 	 * Setters and Getters for private instance variables.  Please add other methods above these so they are easier to find.
@@ -183,5 +184,17 @@ public class Ship extends GameObject{
 	
 	public void updateMaxDamage(double valueToAdjustBy){
 		maxDamage += valueToAdjustBy;
+	}
+	
+	public void setCritChance(double newCritValue){
+		critChance = newCritValue;
+	}
+	
+	public double getCritChance(){
+		return critChance;
+	}
+	
+	public void updateCritChance(double valueToAdjustBy){
+		critChance += valueToAdjustBy;
 	}
 }

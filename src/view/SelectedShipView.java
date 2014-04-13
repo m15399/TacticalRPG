@@ -58,15 +58,15 @@ public class SelectedShipView extends GameObject {
 		g2.setFont(new Font("Arial", Font.TRUETYPE_FONT, 12));
 		g2.drawString("Hull:                 " + currentShip.getHull(),
 				333 + offsetX, 50 + offsetY);
-		g2.drawString("Shields:          " + currentShip.getMaxShielding(),
+		g2.drawString("Shields:          " + currentShip.getShielding() + "%",
 				333 + offsetX, 65 + offsetY);
 		// need ship.getdmg();
 		g2.drawString("Damage:          " + currentShip.getMinDamage() + "-" + currentShip.getMaxDamage(), 
 				333 + offsetX, 80 + offsetY);
-		g2.drawString("Accuracy:          " + currentShip.getAccuracy(),
+		g2.drawString("Accuracy:          " + currentShip.getAccuracy() + "%",
 				333 + offsetX, 95 + offsetY);
 		// need ship.getCrit()
-		g2.drawString("Crit Chance:          " + "15%", 
+		g2.drawString("Crit Chance:          " + currentShip.getCritChance() + "%", 
 				333 + offsetX, 110 + offsetY);
 		g2.drawString("Speed:          " + currentShip.getMoves(),
 				333 + offsetX, 125 + offsetY);
