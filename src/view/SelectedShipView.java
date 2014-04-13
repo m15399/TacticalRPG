@@ -5,10 +5,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 import model.Game;
 import model.GameObject;
 import model.Ship;
+import model.Scout;
 
 public class SelectedShipView extends GameObject {
 
@@ -19,6 +21,7 @@ public class SelectedShipView extends GameObject {
 
 	public SelectedShipView(Ship selectedShip) {
 		currentShip = selectedShip;
+		currentShip = new Scout(new Point(1,1)); //TODO This is for testing.  Remove at some point
 	}
 
 	private void drawString(Graphics g, String text, int x, int y) {
@@ -49,8 +52,7 @@ public class SelectedShipView extends GameObject {
 		String shipName = "Scout";
 		g2.drawString(shipName, 186 + offsetX, 40 + offsetY);
 		g2.setFont(new Font("Arial", Font.TRUETYPE_FONT, 12));
-		String shipDescription = "Mobile scouting ship,\ngenerates and places\nmines.";
-		drawString(g2, shipDescription, 186 + offsetX, 45 + offsetY);
+		drawString(g2, currentShip.getDescription(), 186 + offsetX, 45 + offsetY);
 		g2.setFont(new Font("Arial", Font.BOLD, 16));
 		g2.drawString("Stats", 333 + offsetX, 30 + offsetY);
 		g2.setFont(new Font("Arial", Font.TRUETYPE_FONT, 12));
@@ -59,7 +61,7 @@ public class SelectedShipView extends GameObject {
 		g2.drawString("Shields:          " + currentShip.getMaxShielding(),
 				333 + offsetX, 65 + offsetY);
 		// need ship.getdmg();
-		g2.drawString("Damage:          " + "30-34", 
+		g2.drawString("Damage:          " + currentShip.getMinDamage() + "-" + currentShip.getMaxDamage(), 
 				333 + offsetX, 80 + offsetY);
 		g2.drawString("Accuracy:          " + currentShip.getAccuracy(),
 				333 + offsetX, 95 + offsetY);
@@ -70,5 +72,4 @@ public class SelectedShipView extends GameObject {
 				333 + offsetX, 125 + offsetY);
 		g2.drawString("Items:", 333 + offsetX, 150 + offsetY);
 	}
-
 }
