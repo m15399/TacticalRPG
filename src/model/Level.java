@@ -30,7 +30,7 @@ public class Level extends GameObject {
 
 		// Camera / Starfield
 		camera = new Camera();
-		camera.setPosition(-100, 0);
+		camera.setPosition(0, 0);
 
 		starfield = new Starfield(Game.WIDTH, Game.HEIGHT, 7, 100, 22, 27, 300);
 		starfield.setCamera(camera);
@@ -39,9 +39,9 @@ public class Level extends GameObject {
 		addChild(camera);
 
 		// Map
-		map = new Map();
+		map = new Map(16, 12);
 		camera.addChild(map);
-		map.getTile(2, 2).setHasShip(true, new Scout(new Point(2, 2)));
+		map.getTile(2, 2).setHasShip(true, new Scout(new Point(2, 2))); // testing
 
 		// Graphics Testing
 		camera.addChild(new GraphicsTest());
@@ -155,7 +155,7 @@ public class Level extends GameObject {
 			camera.moveBy(0, 0);
 
 			// don't accept clicks if the user was trying to drag the camera
-			if (distanceDraggedSinceClick < 2) {
+			if (distanceDraggedSinceClick < 1) {
 				Point mapCoords = mouseToMapCoords();
 				tileClicked((int) mapCoords.getX(), (int) mapCoords.getY());
 			}

@@ -17,7 +17,7 @@ public class MapTest {
 	public void shortestPathTest(){
 		Point currentPoint = new Point(0,0);
 		Point endPoint = new Point(3,3);
-		Map map = new Map();
+		Map map = new Map(10, 10);
 		List<Point> points = new ArrayList<Point>();
 		points = map.shortestPath(currentPoint, endPoint);
 		System.out.println(points.toString());

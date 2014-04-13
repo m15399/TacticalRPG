@@ -16,9 +16,10 @@ public class Map extends GameObject {
 	private Tile[][] tiles;
 	private int width, height;
 
-	public Map() {
-		width = height = 10; // should probably be passed in constructor
-		
+	public Map(int width, int height) {
+		this.width = width;
+		this.height = height;
+
 		// create tiles
 		tiles = new Tile[width][height];
 		for (int i = 0; i < width; i++) {
@@ -38,8 +39,7 @@ public class Map extends GameObject {
 	}
 
 	/*
-	 * Convert the pixel coords to map/tile coords
-	 * e.g. (100, 100) -> (2, 2)
+	 * Convert the pixel coords to map/tile coords e.g. (100, 100) -> (2, 2)
 	 */
 	public static Point pixelToMapCoords(Point p) {
 		int mapX = (int) Math.floor(p.getX() / TILESIZE);
@@ -57,17 +57,15 @@ public class Map extends GameObject {
 	}
 
 	public void draw(Graphics g) {
-		// Tiles 64x64
 		g.setColor(Color.WHITE);
-		int counter1 = 0;
-		int counter2 = 0;
-		for (int i = 0; i <= Game.WIDTH; i += TILESIZE) {
-			g.drawLine(i, 0, i, Game.HEIGHT);
-			counter1++;
+		int pxWidth = width * TILESIZE;
+		int pxHeight = height * TILESIZE;
+
+		for (int i = 0; i <= width; i++) {
+			g.drawLine(i * TILESIZE, 0, i * TILESIZE, pxHeight);
 		}
-		for (int i = 0; i <= Game.HEIGHT; i += TILESIZE) {
-			g.drawLine(0, i, Game.WIDTH, i);
-			counter2++;
+		for (int i = 0; i <= height; i++) {
+			g.drawLine(0, i * TILESIZE, pxWidth, i * TILESIZE);
 		}
 	}
 
@@ -96,18 +94,19 @@ public class Map extends GameObject {
 		}
 		return listOfMoves;
 	}
-	
+
 	/*
-	 * Added two setter methods for Tile.  Just use whichever one is more convenient.
+	 * Added two setter methods for Tile. Just use whichever one is more
+	 * convenient.
 	 */
-	
-	public void setTile(int x, int y, Tile tile){
+
+	public void setTile(int x, int y, Tile tile) {
 		if (x >= 0 && x < width && y >= 0 && y < height) {
 			tiles[x][y] = tile;
 		}
 	}
-	
-	public void setTile(Point point, Tile tile){
+
+	public void setTile(Point point, Tile tile) {
 		setTile(point.x, point.y, tile);
 	}
 
