@@ -52,14 +52,17 @@ public class SelectedShipView extends GameObject {
 		g.drawLine(offsetX, offsetY, WIDTH + offsetX, offsetY);
 		g.drawLine(WIDTH + offsetX, offsetY, WIDTH + offsetX, HEIGHT + offsetY);
 
+		
+		int leftColumn = 152;
+		
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(2));
 		g2.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		g2.setColor(Color.white);
-		String shipName = "Scout";
-		g2.drawString(shipName, 186 + offsetX, 40 + offsetY);
+		String shipName = currentShip.getName();
+		g2.drawString(shipName, leftColumn + offsetX, 40 + offsetY);
 		g2.setFont(new Font("Arial", Font.TRUETYPE_FONT, 12));
-		drawString(g2, currentShip.getDescription(), 186 + offsetX, 45 + offsetY);
+		drawString(g2, currentShip.getDescription(), leftColumn + offsetX, 45 + offsetY);
 		g2.setFont(new Font("Arial", Font.BOLD, 16));
 		g2.drawString("Stats", 333 + offsetX, 30 + offsetY);
 		g2.setFont(new Font("Arial", Font.TRUETYPE_FONT, 12));

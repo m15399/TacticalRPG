@@ -10,10 +10,10 @@ public class Ship extends GameObject {
 	private double hull, shielding, maxHull, maxShielding, accuracy, minDamage,
 			maxDamage, critChance;
 	private List<Item> items;
-	private String description;
+	private String description, name;
 
 	public Ship(Point newLocation) {
-		constructorAid(1, 1, 1, 1, 1, 1, new ArrayList<Item>(),
+		constructorAid("DefaultShip", 1, 1, 1, 1, 1, 1, new ArrayList<Item>(),
 				"No description available", 1, 1, 1);
 	}
 
@@ -27,6 +27,7 @@ public class Ship extends GameObject {
 	 * Helps remind whoever is making a new class of all the values that should
 	 * be declared to avoid them being default
 	 * 
+	 * @param name
 	 * @param moves
 	 * @param hull
 	 * @param shielding
@@ -37,10 +38,11 @@ public class Ship extends GameObject {
 	 * @param description
 	 */
 
-	public void constructorAid(int moves, double hull, double shielding,
-			double maxHull, double maxShielding, double accuracy,
-			List<Item> items, String description, double minDamage,
-			double maxDamage, double critChance) {
+	public void constructorAid(String name, int moves, double hull,
+			double shielding, double maxHull, double maxShielding,
+			double accuracy, List<Item> items, String description,
+			double minDamage, double maxDamage, double critChance) {
+		setName(name);
 		setMoves(moves);
 		setHull(hull);
 		setShielding(shielding);
@@ -59,6 +61,14 @@ public class Ship extends GameObject {
 	 * methods above these so they are easier to find.
 	 */
 
+	public String getName(){
+		return name;
+	}
+	
+	public void setName(String newName){
+		name = newName;
+	}
+	
 	public Point getLocation() {
 		return location;
 	}
