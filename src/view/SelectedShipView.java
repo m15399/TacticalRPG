@@ -31,16 +31,16 @@ public class SelectedShipView extends GameObject {
 		// I added these offsets to all the coordinates so that we can move it
 		// around more easily
 		int offsetX = 0;
-		int offsetY = Game.HEIGHT - 180;
+		int offsetY = Game.HEIGHT - HEIGHT;
 
 		// Draw a black rect first
 		g.setColor(Color.black);
-		g.fillRect(offsetX, offsetY, offsetX + 500, offsetY + 180);
+		g.fillRect(offsetX, offsetY, offsetX + WIDTH, offsetY + HEIGHT);
 
 		// Draw a border (I just put the top right half for now)
 		g.setColor(Color.white);
-		g.drawLine(offsetX, offsetY, 500 + offsetX, offsetY);
-		g.drawLine(500 + offsetX, offsetY, 500 + offsetX, 180 + offsetY);
+		g.drawLine(offsetX, offsetY, WIDTH + offsetX, offsetY);
+		g.drawLine(WIDTH + offsetX, offsetY, WIDTH + offsetX, HEIGHT + offsetY);
 
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(2));
@@ -59,13 +59,13 @@ public class SelectedShipView extends GameObject {
 		g2.drawString("Shields:          " + currentShip.getMaxShielding(),
 				333 + offsetX, 65 + offsetY);
 		// need ship.getdmg();
-		g2.drawString("Damage:          " + "30-34", 333 + offsetX,
-				80 + offsetY);
+		g2.drawString("Damage:          " + "30-34", 
+				333 + offsetX, 80 + offsetY);
 		g2.drawString("Accuracy:          " + currentShip.getAccuracy(),
 				333 + offsetX, 95 + offsetY);
 		// need ship.getCrit()
-		g2.drawString("Crit Chance:          " + "15%", 333 + offsetX,
-				110 + offsetY);
+		g2.drawString("Crit Chance:          " + "15%", 
+				333 + offsetX, 110 + offsetY);
 		g2.drawString("Speed:          " + currentShip.getMoves(),
 				333 + offsetX, 125 + offsetY);
 		g2.drawString("Items:", 333 + offsetX, 150 + offsetY);
