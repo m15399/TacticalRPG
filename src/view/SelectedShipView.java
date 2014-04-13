@@ -33,9 +33,9 @@ public class SelectedShipView extends GameObject {
 		int offsetX = 0;
 		int offsetY = Game.HEIGHT - HEIGHT;
 
-		// Draw a black rect first
+		// Draw a black rect first as a background
 		g.setColor(Color.black);
-		g.fillRect(offsetX, offsetY, offsetX + WIDTH, offsetY + HEIGHT);
+		g.fillRect(offsetX, offsetY, WIDTH, HEIGHT);
 
 		// Draw a border (I just put the top right half for now)
 		g.setColor(Color.white);
