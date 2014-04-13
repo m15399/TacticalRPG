@@ -93,11 +93,13 @@ public class Map extends GameObject {
 	 */
 	
 	public void setTile(int x, int y, Tile tile){
-		tiles[x][y] = tile;
+		if (x >= 0 && x < width && y >= 0 && y < height) {
+			tiles[x][y] = tile;
+		}
 	}
 	
 	public void setTile(Point point, Tile tile){
-		tiles[point.x][point.y] = tile;
+		setTile(point.x, point.y, tile);
 	}
 
 	public Tile getTile(int mapX, int mapY) {
