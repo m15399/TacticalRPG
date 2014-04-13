@@ -2,8 +2,8 @@ package model;
 
 import input.Button;
 import input.Input;
+import input.TestButton;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
@@ -40,6 +40,7 @@ public class Level extends GameObject  {
 		levelButton = new LevelButton();
 		Input.getInstance().addButton(levelButton);
 		
+		Input.getInstance().addButton(new TestButton(0,0,100,100));
 	}
 	
 	public void onDestroy(){

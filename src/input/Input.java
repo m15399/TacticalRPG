@@ -120,7 +120,7 @@ public class Input implements MouseMotionListener, MouseListener {
 	public void update() {
 		Button currButton;
 
-		if (!pressed) {
+		if (!pressed && !wasReleasedThisFrame) {
 			// switch buttons if needed
 			currButton = getButtonUnderMouse();
 			if (currButton != lastButton) {
@@ -149,7 +149,9 @@ public class Input implements MouseMotionListener, MouseListener {
 			wasPressedThisFrame = false;
 
 		} else if (wasReleasedThisFrame) {
-			currButton.mouseReleased();
+			// make sure the mouse is still on the button 
+			if(getButtonUnderMouse() == currButton)
+				currButton.mouseReleased();
 			wasReleasedThisFrame = false;
 
 		} else if (pressed) {
