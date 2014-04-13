@@ -87,6 +87,18 @@ public class Map extends GameObject {
 		}
 		return listOfMoves;
 	}
+	
+	/*
+	 * Added two setter methods for Tile.  Just use whichever one is more convenient.
+	 */
+	
+	public void setTile(int x, int y, Tile tile){
+		tiles[x][y] = tile;
+	}
+	
+	public void setTile(Point point, Tile tile){
+		tiles[point.x][point.y] = tile;
+	}
 
 	public Tile getTile(int mapX, int mapY) {
 		if (mapX >= 0 && mapX < width && mapY >= 0 && mapY < height) {
