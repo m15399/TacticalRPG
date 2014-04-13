@@ -6,7 +6,6 @@ import input.TestButton;
 
 import java.awt.Point;
 
-import model.Tile.Highlight;
 import utils.Observable;
 import utils.Observer;
 import view.Camera;
