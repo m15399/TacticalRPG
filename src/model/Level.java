@@ -7,6 +7,8 @@ import input.TestButton;
 import java.awt.Point;
 
 import model.Tile.Highlight;
+import utils.Observable;
+import utils.Observer;
 import view.Camera;
 import view.GraphicsTest;
 import view.SelectedShipView;
@@ -20,10 +22,12 @@ public class Level extends GameObject {
 	private Map map;
 	private Starfield starfield;
 	private Camera camera;
-	private Button levelButton;
+	private LevelButton levelButton;
 
 	private Ship selectedShip;
 	private SelectedShipView selectedShipView;
+
+	Observer enableInputObserver;
 
 	public Level() {
 		selectedShip = null;
@@ -41,7 +45,6 @@ public class Level extends GameObject {
 		// Map
 		map = new Map(16, 12);
 		camera.addChild(map);
-		map.getTile(2, 2).setHasShip(true, new Scout(new Point(2, 2))); // testing
 
 		// Graphics Testing
 		camera.addChild(new GraphicsTest());
@@ -51,8 +54,10 @@ public class Level extends GameObject {
 		 */
 
 		// Selected Ship View
-		selectedShipView = new SelectedShipView(new Ship(new Point(1, 1)));
+		selectedShipView = new SelectedShipView();
 		addChild(selectedShipView);
+
+		addShipToMap(new Scout(new Point(2, 2)));
 
 		// Background button for mouse input on the map
 		levelButton = new LevelButton();
@@ -62,6 +67,13 @@ public class Level extends GameObject {
 		TestButton tb = new TestButton(0, 0, 100, 100);
 		Input.getInstance().addButton(tb);
 		Input.getInstance().removeButton(tb);
+
+		// Enable input observer
+		enableInputObserver = new Observer() {
+			public void notified(Observable sender) {
+				levelButton.enable();
+			}
+		};
 	}
 
 	private void tileClicked(int x, int y) {
@@ -79,13 +91,38 @@ public class Level extends GameObject {
 
 		} else {
 			// tile is either terrain or edge
-			selectShip(null);
+			// selectShip(null);
+			if (selectedShip != null) {
+				moveSelectedShipTo(x, y);
+			}
 		}
 	}
 
 	public void selectShip(Ship ship) {
 		selectedShip = ship;
 		selectedShipView.setShip(ship);
+	}
+
+	public void moveSelectedShipTo(int mapX, int mapY) {
+		// disable mouse input whiel moving
+		levelButton.disable();
+
+		// update map
+		Tile oldTile = map.getTile(selectedShip.getLocation());
+		Tile newTile = map.getTile(mapX, mapY);
+		oldTile.setEmpty();
+		newTile.setHasShip(true, selectedShip);
+
+		// move the ship and pass in the observer
+		selectedShip.moveWithDirections(enableInputObserver, mapX, mapY,
+				map.shortestPath(selectedShip.getLocation(), new Point(mapX,
+						mapY)));
+
+	}
+
+	public void addShipToMap(Ship ship) {
+		map.getTile(ship.getLocation()).setHasShip(true, ship); // testing
+		camera.addChild(ship);
 	}
 
 	public void onDestroy() {

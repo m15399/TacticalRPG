@@ -177,7 +177,8 @@ public class Position extends Observable implements Observer {
 
 	public void setParent(Position p) {
 		parent = p;
-		p.addObserver(this);
+		if(p != null)
+			p.addObserver(this);
 		updated();
 	}
 

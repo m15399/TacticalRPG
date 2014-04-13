@@ -20,7 +20,7 @@ public class GraphicsTest extends GameObject implements Observer {
 					(int)(Math.random() * Game.HEIGHT));
 			s.getPosition().setMirrored(true);
 			s.getPosition().setScale(.5, .5);
-			addChild(s);
+//			addChild(s);
 			
 		}
 		
@@ -28,7 +28,7 @@ public class GraphicsTest extends GameObject implements Observer {
 		testSprite = new Sprite("test.png", 40,300);
 		testSprite2 = new Sprite("test.png", 400,200);
 		testSprite3 = new Sprite("test.png", 70,20);
-		addChild(testSprite);
+//		addChild(testSprite);
 		addChild(testSprite2);
 		addChild(testSprite3);
 		testSprite2.getPosition().setScale(1,1);
@@ -61,6 +61,7 @@ public class GraphicsTest extends GameObject implements Observer {
 //		as.setFrameIndicies(indicies);
 		as.setNumberFrames(16);
 		addChild(as);
+		
 	}
 	
 	public void update(){

@@ -8,14 +8,29 @@ import utils.Position;
 public class Button {
 	
 	private Position position;
+	private boolean enabled;
 	
 	public Button(){
 		position = new Position(0,0);
+		enabled = true;
 	}
 	
 	public Button(int x, int y, int width, int height){
 		position = new Position(x, y);
 		position.setScale(width, height);
+		enabled = true;
+	}
+	
+	public boolean getEnabled(){
+		return enabled;
+	}
+	
+	public void enable(){
+		enabled = true;
+	}
+	
+	public void disable(){
+		enabled = false;
 	}
 	
 	public Position getPosition(){

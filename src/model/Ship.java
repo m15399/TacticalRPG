@@ -4,6 +4,10 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import shipVisuals.ShipVisual;
+import utils.Direction;
+import utils.Observer;
+
 public class Ship extends GameObject {
 	private Point location;
 	private int moves;
@@ -11,10 +15,14 @@ public class Ship extends GameObject {
 			maxDamage, critChance;
 	private List<Item> items;
 	private String description, name;
+	
+	private ShipVisual visual;
 
 	public Ship(Point newLocation) {
+		location = new Point(newLocation);
 		constructorAid("DefaultShip", 1, 1, 1, 1, 1, 1, new ArrayList<Item>(),
 				"No description available", 1, 1, 1);
+		visual = null;
 	}
 
 	public boolean isShipDead() {
@@ -55,12 +63,34 @@ public class Ship extends GameObject {
 		setMaxDamage(maxDamage);
 		setCritChance(critChance);
 	}
+	
+	/*
+	 * Plays the move animation 
+	 */
+	public void moveWithDirections(Observer notifyWhenDone, int x, int y, List<Direction> directions){
+		setLocation(new Point(x, y));
+		ShipVisual visual = getVisual();
+		if(visual != null){
+			visual.moveWithDirections(notifyWhenDone, directions);
+		}
+	}
 
 	/*
 	 * Setters and Getters for private instance variables. Please add other
 	 * methods above these so they are easier to find.
 	 */
 
+	public void setVisual(ShipVisual newVisual){
+		if(visual != null)
+			visual.destroy();
+		addChild(newVisual);
+		visual = newVisual;
+	}
+	
+	public ShipVisual getVisual(){
+		return visual;
+	}
+	
 	public String getName(){
 		return name;
 	}

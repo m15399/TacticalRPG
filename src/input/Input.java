@@ -9,7 +9,6 @@ import java.util.Collections;
 
 import utils.Position;
 
-
 /*
  * Listens to mouse movement, objects can ask it 
  * for it's current location and velocity, and it keeps
@@ -77,9 +76,6 @@ public class Input implements MouseMotionListener, MouseListener {
 
 	}
 
-	
-	
-	
 	private void setMouseLocation(double x, double y) {
 		prevMouseX = mouseX;
 		prevMouseY = mouseY;
@@ -114,7 +110,8 @@ public class Input implements MouseMotionListener, MouseListener {
 
 			if (mouseX > x && mouseX < x + sx) {
 				if (mouseY > y && mouseY < y + sy) {
-					return b;
+					if (b.getEnabled())
+						return b;
 				}
 			}
 		}
@@ -129,11 +126,12 @@ public class Input implements MouseMotionListener, MouseListener {
 		if (!pressed && !wasReleasedThisFrame) {
 			currButton = getButtonUnderMouse();
 			if (currButton != lastButton) {
-				lastButton.mouseExited();
+				if (lastButton.getEnabled())
+					lastButton.mouseExited();
 				lastButton = currButton;
 			}
 
-		} else { 
+		} else {
 			currButton = lastButton;
 		}
 
@@ -150,22 +148,28 @@ public class Input implements MouseMotionListener, MouseListener {
 
 		// Check if mouse was pressed, released, hovered, or dragged this frame
 		if (wasPressedThisFrame) {
-			currButton.mousePressed();
+			if (currButton.getEnabled())
+				currButton.mousePressed();
 			wasPressedThisFrame = false;
 
 		} else if (wasReleasedThisFrame) {
-			// make sure the mouse is still on the button 
-			if(getButtonUnderMouse() == currButton)
-				currButton.mouseReleased();
-			else
-				currButton.mouseReleasedOutsideButton();
+			// make sure the mouse is still on the button
+			if (getButtonUnderMouse() == currButton) {
+				if (currButton.getEnabled())
+					currButton.mouseReleased();
+			} else {
+				if (currButton.getEnabled())
+					currButton.mouseReleasedOutsideButton();
+			}
 			wasReleasedThisFrame = false;
 
 		} else if (pressed) {
-			currButton.mouseDragged();
+			if (currButton.getEnabled())
+				currButton.mouseDragged();
 
 		} else {
-			currButton.mouseHovered();
+			if (currButton.getEnabled())
+				currButton.mouseHovered();
 		}
 
 	}

@@ -6,6 +6,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import utils.Direction;
+
 /*
  * 2D array of Tiles 
  */
@@ -78,19 +80,23 @@ public class Map extends GameObject {
 	 * @param endLocation
 	 * @return
 	 */
-	public List<Point> shortestPath(Point currentLocation, Point endLocation) {
-		List<Point> listOfMoves = new ArrayList<Point>();
+	public List<Direction> shortestPath(Point currentLocation, Point endLocation) {
+		List<Direction> listOfMoves = new ArrayList<Direction>();
 		Point temp = currentLocation;
 		while (!temp.equals(endLocation)) {
-			if (temp.x < endLocation.x)
+			if (temp.x < endLocation.x) {
 				temp.x += 1;
-			else if (temp.x > endLocation.x)
+				listOfMoves.add(Direction.RIGHT);
+			} else if (temp.x > endLocation.x) {
 				temp.x -= 1;
-			else if (temp.y < endLocation.y)
+				listOfMoves.add(Direction.LEFT);
+			} else if (temp.y < endLocation.y) {
 				temp.y += 1;
-			else if (temp.y > endLocation.y)
+				listOfMoves.add(Direction.DOWN);
+			} else if (temp.y > endLocation.y) {
 				temp.y -= 1;
-			listOfMoves.add(new Point(temp.x, temp.y));
+				listOfMoves.add(Direction.UP);
+			}
 		}
 		return listOfMoves;
 	}

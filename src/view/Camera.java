@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
 
+import utils.Position;
+
 import model.GameObject;
 
 /*
