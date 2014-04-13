@@ -10,7 +10,7 @@ import utils.Observer;
 
 public class Ship extends GameObject {
 	private Point location;
-	private int moves;
+	private int moves, range;
 	private double hull, shielding, maxHull, maxShielding, accuracy, minDamage,
 			maxDamage, critChance;
 	private List<Item> items;
@@ -21,7 +21,7 @@ public class Ship extends GameObject {
 	public Ship(Point newLocation) {
 		location = new Point(newLocation);
 		constructorAid("DefaultShip", 1, 1, 1, 1, 1, 1, new ArrayList<Item>(),
-				"No description available", 1, 1, 1);
+				"No description available", 1, 1, 1, 1);
 		visual = null;
 	}
 
@@ -49,7 +49,7 @@ public class Ship extends GameObject {
 	public void constructorAid(String name, int moves, double hull,
 			double shielding, double maxHull, double maxShielding,
 			double accuracy, List<Item> items, String description,
-			double minDamage, double maxDamage, double critChance) {
+			double minDamage, double maxDamage, double critChance, int range) {
 		setName(name);
 		setMoves(moves);
 		setHull(hull);
@@ -62,6 +62,7 @@ public class Ship extends GameObject {
 		setMinDamage(minDamage);
 		setMaxDamage(maxDamage);
 		setCritChance(critChance);
+		setRange(range);
 	}
 	
 	/*
@@ -237,5 +238,17 @@ public class Ship extends GameObject {
 
 	public void updateCritChance(double valueToAdjustBy) {
 		critChance += valueToAdjustBy;
+	}
+	
+	public int getRange(){
+		return range;
+	}
+	
+	public void setRange(int newRange){
+		range = newRange;
+	}
+	
+	public void updateRange(int valueToAdjustBy){
+		range += valueToAdjustBy;
 	}
 }
