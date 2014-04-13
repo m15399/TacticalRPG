@@ -1,4 +1,4 @@
-package model;
+package utils;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;

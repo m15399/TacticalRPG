@@ -1,5 +1,7 @@
 package model;
 
+import utils.Position;
+
 
 /*
  * GameObject with a Position

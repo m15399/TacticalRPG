@@ -3,8 +3,9 @@ package actions;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import model.Observable;
-import model.Observer;
+import utils.Observable;
+import utils.Observer;
+
 
 /*
  * Queue of Actions, plays the first action, 

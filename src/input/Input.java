@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Collections;
 
-import model.Position;
+import utils.Position;
+
 
 /*
  * Listens to mouse movement, objects can ask it 
@@ -76,6 +77,9 @@ public class Input implements MouseMotionListener, MouseListener {
 
 	}
 
+	
+	
+	
 	private void setMouseLocation(double x, double y) {
 		prevMouseX = mouseX;
 		prevMouseY = mouseY;
@@ -120,15 +124,16 @@ public class Input implements MouseMotionListener, MouseListener {
 	public void update() {
 		Button currButton;
 
+		// Figure out what the current button is
+		// The current button only changes if the mouse isn't pressed
 		if (!pressed && !wasReleasedThisFrame) {
-			// switch buttons if needed
 			currButton = getButtonUnderMouse();
 			if (currButton != lastButton) {
 				lastButton.mouseExited();
 				lastButton = currButton;
 			}
 
-		} else { // don't switch buttons if mouse is being dragged
+		} else { 
 			currButton = lastButton;
 		}
 
@@ -152,6 +157,8 @@ public class Input implements MouseMotionListener, MouseListener {
 			// make sure the mouse is still on the button 
 			if(getButtonUnderMouse() == currButton)
 				currButton.mouseReleased();
+			else
+				currButton.mouseReleasedOutsideButton();
 			wasReleasedThisFrame = false;
 
 		} else if (pressed) {

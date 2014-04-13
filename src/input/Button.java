@@ -1,6 +1,6 @@
 package input;
 
-import model.Position;
+import utils.Position;
 
 /*
  * Bounding box that can receive mouse inputs
@@ -27,6 +27,10 @@ public class Button {
 	}
 	
 	public void mouseReleased(){
+		
+	}
+	
+	public void mouseReleasedOutsideButton(){
 		
 	}
 	

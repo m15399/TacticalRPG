@@ -1,6 +1,6 @@
 package actions;
 
-import model.Observer;
+import utils.Observer;
 
 /*
  * Timer that counts down in frames

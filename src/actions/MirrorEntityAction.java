@@ -1,7 +1,7 @@
 package actions;
 
+import utils.Observer;
 import model.Entity;
-import model.Observer;
 
 /*
  * An Action that just mirrors an Entity

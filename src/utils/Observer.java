@@ -1,4 +1,4 @@
-package model;
+package utils;
 
 public interface Observer {
 

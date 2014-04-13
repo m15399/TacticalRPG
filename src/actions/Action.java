@@ -1,7 +1,7 @@
 package actions;
 
-import model.Observable;
-import model.Observer;
+import utils.Observable;
+import utils.Observer;
 
 import model.GameObject;
 

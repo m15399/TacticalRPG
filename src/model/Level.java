@@ -2,9 +2,7 @@ package model;
 
 import input.Button;
 import input.Input;
-import input.TestButton;
 
-import java.awt.Graphics;
 import java.awt.Point;
 
 import model.Tile.Highlight;
@@ -25,36 +23,44 @@ public class Level extends GameObject  {
 
 	public Level(){
 		
+		// Camera / Starfield
 		camera = new Camera();
+		camera.setPosition(-100, 0);
 		
 		starfield = new Starfield(Game.WIDTH, Game.HEIGHT, 7, 100, 22, 27, 300);
 		starfield.setCamera(camera);
 		addChild(starfield);
+
+		addChild(camera);
 		
+		// Map
 		map = new Map();
 		camera.addChild(map);
 		
+		// Graphics Testing
 		camera.addChild(new GraphicsTest());
 		
-		addChild(camera);
 		
+		/*
+		 *  Add more stuff here
+		 */
 		
+		// Selected Ship View
 		addChild(new SelectedShipView(new Ship(new Point(1, 1))));
 
 
-		// background button
+		
+		
+		// Background button for mouse input on the map
 		levelButton = new LevelButton();
 		Input.getInstance().addButton(levelButton);
 		
-		Input.getInstance().addButton(new TestButton(0,0,100,100));
+		// Test Button
+//		Input.getInstance().addButton(new TestButton(0,0,0,0));
 	}
 	
 	public void onDestroy(){
 		Input.getInstance().removeButton(levelButton);
-	}
-	
-	public void draw(Graphics g){
-		
 	}
 	
 	/*
@@ -68,6 +74,9 @@ public class Level extends GameObject  {
 			
 		}
 		
+		/*
+		 * Lets the Tile we're mousing over that it's being moused over
+		 */
 		public void mouseHovered(){
 			// get mouse location on screen
 			Input input = Input.getInstance();
@@ -86,15 +95,25 @@ public class Level extends GameObject  {
 				tile.setMousedOver();
 		}
 		
+		/*
+		 * Scroll the camera
+		 */
 		public void mouseDragged(){
 			// move the camera by the velocity of the mouse
 			Input input = Input.getInstance();
-			double multiplier = 2;
+			double multiplier = -2;
 			camera.moveBy(input.getVelocityX() * multiplier, input.getVelocityY() * multiplier);
 		}
 		
+		/*
+		 * Move the camera by 0 so that it's velocity goes back to 0
+		 */
 		public void mouseReleased(){
 			camera.moveBy(0,0);
+		}
+		
+		public void mouseReleasedOutsideButton(){
+			camera.moveBy(0, 0);
 		}
 		
 	}

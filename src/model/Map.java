@@ -17,7 +17,9 @@ public class Map extends GameObject {
 	private int width, height;
 
 	public Map() {
-		width = height = 10;
+		width = height = 10; // should probably be passed in constructor
+		
+		// create tiles
 		tiles = new Tile[width][height];
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
@@ -35,12 +37,19 @@ public class Map extends GameObject {
 		tiles[5][0].setHighlight(Tile.Highlight.GREEN);
 	}
 
+	/*
+	 * Convert the pixel coords to map/tile coords
+	 * e.g. (100, 100) -> (2, 2)
+	 */
 	public static Point pixelToMapCoords(Point p) {
 		int mapX = (int) Math.floor(p.getX() / TILESIZE);
 		int mapY = (int) Math.floor(p.getY() / TILESIZE);
 		return new Point(mapX, mapY);
 	}
 
+	/*
+	 * Convert the map coords to pixel coords
+	 */
 	public static Point mapToPixelCoords(Point p) {
 		int x = (int) p.getX() * Map.TILESIZE;
 		int y = (int) p.getY() * Map.TILESIZE;
