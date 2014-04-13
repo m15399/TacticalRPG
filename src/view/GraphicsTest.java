@@ -1,6 +1,8 @@
 package view;
 
 
+import java.awt.Point;
+
 import actions.*;
 import model.*;
 
@@ -28,7 +30,6 @@ public class GraphicsTest extends GameObject implements Observer {
 		addChild(testSprite);
 		addChild(testSprite2);
 		addChild(testSprite3);
-		
 		testSprite2.getPosition().setScale(1,1);
 		testSprite2.getPosition().mirror();
 		

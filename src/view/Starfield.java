@@ -50,7 +50,7 @@ public class Starfield extends GameObject {
 			double maxDepth, double minSize, double maxSize, int numStars) {
 		
 		stars = new ArrayList<Star>();
-
+//		this.add(new SelectedViewShip(new Ship(1,1)));
 		offsetX = width / 2;
 		offsetY = height / 2;
 		offsetZ = 0;
