@@ -5,12 +5,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 
 import model.Game;
 import model.GameObject;
 import model.Ship;
-import model.Scout;
 
 public class SelectedShipView extends GameObject {
 
@@ -19,17 +17,26 @@ public class SelectedShipView extends GameObject {
 
 	private Ship currentShip;
 
+	public SelectedShipView(){
+		currentShip = null;
+	}
+	
 	public SelectedShipView(Ship selectedShip) {
 		currentShip = selectedShip;
-		currentShip = new Scout(new Point(1,1)); //TODO This is for testing.  Remove at some point
 	}
-
+	
+	public void setShip(Ship ship){
+		currentShip = ship;
+	}
+	
 	private void drawString(Graphics g, String text, int x, int y) {
 		for (String line : text.split("\n"))
 			g.drawString(line, x, y += g.getFontMetrics().getHeight());
 	}
 
 	public void draw(Graphics g) {
+		if(currentShip == null)
+			return;
 
 		// I added these offsets to all the coordinates so that we can move it
 		// around more easily

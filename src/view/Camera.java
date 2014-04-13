@@ -37,8 +37,8 @@ public class Camera extends GameObject {
 	 * Converts a point to what it would be after translating/scaling
 	 */
 	public Point convertToCameraSpace(Point p) {
-		double x = (p.getX() - positionX);
-		double y = (p.getY() - positionY);
+		double x = (p.getX() + positionX);
+		double y = (p.getY() + positionY);
 
 		Point ret = new Point();
 		ret.setLocation(x, y);
@@ -49,8 +49,8 @@ public class Camera extends GameObject {
 	 * Converts a translated/scaled point back to normal coords
 	 */
 	public Point convertFromCameraSpace(Point p) {
-		double x = (p.getX() + positionX);
-		double y = (p.getY() + positionY);
+		double x = (p.getX() - positionX);
+		double y = (p.getY() - positionY);
 
 		Point ret = new Point();
 		ret.setLocation(x, y);
