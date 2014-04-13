@@ -5,75 +5,70 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.Point;
 
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
+import model.Game;
 import model.GameObject;
 import model.Ship;
 
-public class SelectedShipView extends JFrame{
+public class SelectedShipView extends GameObject {
 
-	public static void main(String[] args){
-		JFrame panel = new SelectedShipView();
-		panel.setVisible(true);
-	}
-	public SelectedShipView(){
-		final int WIDTHOFWINDOW =  500;
-		final int HEIGHTOFWINDOW = 180;
+	static final int WIDTH = 500;
+	static final int HEIGHT = 180;
 
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(WIDTHOFWINDOW, HEIGHTOFWINDOW);
-		this.setLocation(50, 25);
-		this.setResizable(false);
-		this.add(new SelectedShipPanel(new Ship(new Point(1,1))));
-	}
-	private class SelectedShipPanel extends JPanel{
 	private Ship currentShip;
-	
-	
-	public SelectedShipPanel(Ship selectedShip){
+
+	public SelectedShipView(Ship selectedShip) {
 		currentShip = selectedShip;
-		this.setSize(500, 180);
-		this.setBackground(Color.BLACK);
-		this.setBorder(BorderFactory.createLineBorder(Color.white, 5, false));
-		
 	}
+
 	private void drawString(Graphics g, String text, int x, int y) {
-        for (String line : text.split("\n"))
-            g.drawString(line, x, y += g.getFontMetrics().getHeight());
-    }
-	
-	//Method ship.getName() , ship.getDescription(),
-	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
+		for (String line : text.split("\n"))
+			g.drawString(line, x, y += g.getFontMetrics().getHeight());
+	}
+
+	public void draw(Graphics g) {
+
+		// I added these offsets to all the coordinates so that we can move it
+		// around more easily
+		int offsetX = 0;
+		int offsetY = Game.HEIGHT - 180;
+
+		// Draw a black rect first
+		g.setColor(Color.black);
+		g.fillRect(offsetX, offsetY, offsetX + 500, offsetY + 180);
+
+		// Draw a border (I just put the top right half for now)
+		g.setColor(Color.white);
+		g.drawLine(offsetX, offsetY, 500 + offsetX, offsetY);
+		g.drawLine(500 + offsetX, offsetY, 500 + offsetX, 180 + offsetY);
+
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(2));
 		g2.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		g2.setColor(Color.white);
 		String shipName = "Scout";
-		g2.drawString(shipName, 186, 40);
+		g2.drawString(shipName, 186 + offsetX, 40 + offsetY);
 		g2.setFont(new Font("Arial", Font.TRUETYPE_FONT, 12));
 		String shipDescription = "Mobile scouting ship,\ngenerates and places\nmines.";
-		drawString(g2, shipDescription, 186, 45 );
+		drawString(g2, shipDescription, 186 + offsetX, 45 + offsetY);
 		g2.setFont(new Font("Arial", Font.BOLD, 16));
-		g2.drawString("Stats", 333, 30);
+		g2.drawString("Stats", 333 + offsetX, 30 + offsetY);
 		g2.setFont(new Font("Arial", Font.TRUETYPE_FONT, 12));
-		g2.drawString("Hull:                 " + currentShip.getHull(), 333, 50);
-		g2.drawString("Shields:          " + currentShip.getMaxShielding(), 333, 65);
-		//need ship.getdmg();
-		g2.drawString("Damage:          " + "30-34", 333, 80);
-		g2.drawString("Accuracy:          " + currentShip.getAccuracy(), 333, 95);
-		//need ship.getCrit()
-		g2.drawString("Crit Chance:          " + "15%", 333, 110);
-		g2.drawString("Speed:          " + currentShip.getMoves(), 333, 125);
-		g2.drawString("Items:" ,333, 150);
+		g2.drawString("Hull:                 " + currentShip.getHull(),
+				333 + offsetX, 50 + offsetY);
+		g2.drawString("Shields:          " + currentShip.getMaxShielding(),
+				333 + offsetX, 65 + offsetY);
+		// need ship.getdmg();
+		g2.drawString("Damage:          " + "30-34", 333 + offsetX,
+				80 + offsetY);
+		g2.drawString("Accuracy:          " + currentShip.getAccuracy(),
+				333 + offsetX, 95 + offsetY);
+		// need ship.getCrit()
+		g2.drawString("Crit Chance:          " + "15%", 333 + offsetX,
+				110 + offsetY);
+		g2.drawString("Speed:          " + currentShip.getMoves(),
+				333 + offsetX, 125 + offsetY);
+		g2.drawString("Items:", 333 + offsetX, 150 + offsetY);
 	}
-	
-	}
-	
+
 }

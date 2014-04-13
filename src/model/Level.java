@@ -9,6 +9,7 @@ import java.awt.Point;
 
 import view.Camera;
 import view.GraphicsTest;
+import view.SelectedShipView;
 import view.Starfield;
 
 /*
@@ -35,6 +36,10 @@ public class Level extends GameObject  {
 		camera.addChild(new GraphicsTest());
 		
 		addChild(camera);
+		
+		
+		addChild(new SelectedShipView(new Ship(new Point(1, 1))));
+
 
 		// background button
 		levelButton = new LevelButton();
