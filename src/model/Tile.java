@@ -39,7 +39,15 @@ public class Tile extends GameObject {
 			highlightAlpha);
 
 	/**
-	 * Empty tile constructor
+	 * Empty Tile constructor.  Default
+	 */
+	
+	public Tile(){
+		setEmpty();
+	}
+	
+	/**
+	 * Empty tile constructor for creation at certain coordinates.
 	 */
 	public Tile(int mapX, int mapY) {
 		setEmpty();
@@ -120,8 +128,7 @@ public class Tile extends GameObject {
 	/**
 	 * Automatically handles the tile being occupied.
 	 */
-	public void setIsTerrain(boolean trueIfTileHasTerrain,
-			boolean trueIfTerrainCanBeOccupied) {
+	public void setIsTerrain(boolean trueIfTileHasTerrain, boolean trueIfTerrainCanBeOccupied) {
 		isTerrain = trueIfTileHasTerrain;
 		if (!trueIfTerrainCanBeOccupied)
 			isOccupied = true;
@@ -197,5 +204,29 @@ public class Tile extends GameObject {
 			g.fillRect((int) px.getX(), (int) px.getY(), Map.TILESIZE,
 					Map.TILESIZE);
 		}
+	}
+	
+	public String toString(){
+		String result = "";
+		if(isEdge){
+			result += "E";
+		}
+		else if(hasShip && ship instanceof Scout){
+			result += "S";
+		}
+		else if(isTerrain && !isOccupied){
+			result += "B";
+		}
+		else if(isTerrain && isOccupied){
+			result += "T";
+		}
+		else if(!isOccupied){
+			result += "0";
+		}
+		else{
+			System.out.println("Some error happened reading this Tile.  Placed 1 in for spot.");
+			result += "1";
+		}
+		return result;
 	}
 }
