@@ -6,6 +6,7 @@ import input.TestButton;
 
 import java.awt.Point;
 
+import model.Tile.Highlight;
 import view.Camera;
 import view.GraphicsTest;
 import view.SelectedShipView;
