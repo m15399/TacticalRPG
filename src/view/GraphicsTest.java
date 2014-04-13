@@ -1,8 +1,9 @@
 package view;
 
 
-import java.awt.Point;
-
+import utils.Observable;
+import utils.Observer;
+import utils.Position;
 import actions.*;
 import model.*;
 

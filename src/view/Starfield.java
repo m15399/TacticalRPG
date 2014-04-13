@@ -140,7 +140,7 @@ public class Starfield extends GameObject {
 	
 	public void update(){
 		if(this.camera != null){
-			double multiplier = 1;
+			double multiplier = -1;
 			double translateX = camera.getVelocityX() * multiplier;
 			double translateY = camera.getVelocityY() * multiplier;
 			scrollBy(translateX, translateY);

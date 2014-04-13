@@ -41,28 +41,33 @@ public class AnimatedSprite extends Sprite {
 	}
 	
 	public void draw(Graphics g){
+		// transform to draw Sprite correctly
 		getPosition().transform(g);
 		
+		// figure out which frame to draw
 		int index;
-		if(frameIndicies != null){
+		if(frameIndicies != null){ // use frameIndicies array if available
 			index = frameIndicies[currentFrame];
-		} else {
+		} else { // otherwise just use the current frame number
 			index = currentFrame;
 		}
 		
+		// figure out where in the image the frame is located
 		int srcStartX = frameSize.width * index;
 		int srcStartY = 0;
-		
 		while(srcStartX >= image.getWidth()){
 			srcStartX -= image.getWidth();
 			srcStartY += frameSize.height;
 		}
 		
+		// draw the frame from the image
 		g.drawImage(image, -frameSize.width/2, -frameSize.height/2,
 				frameSize.width/2, frameSize.height/2,
 				srcStartX, srcStartY, 
 				srcStartX + frameSize.width, srcStartY + frameSize.height, null);
 		
+		
+		// untransform 
 		getPosition().unstransform(g);
 	}
 

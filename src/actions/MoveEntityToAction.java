@@ -1,8 +1,8 @@
 package actions;
 
+import utils.Observer;
+import utils.Position;
 import model.Entity;
-import model.Observer;
-import model.Position;
 
 /*
  * Moves an Entity to a position over a period of time
