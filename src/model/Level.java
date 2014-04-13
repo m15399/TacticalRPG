@@ -57,6 +57,7 @@ public class Level extends GameObject {
 		addChild(selectedShipView);
 
 		addShipToMap(new Scout(new Point(2, 2)));
+		addShipToMap(new Scout(new Point(4, 4)));
 
 		// Background button for mouse input on the map
 		levelButton = new LevelButton();

@@ -3,6 +3,7 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import shipVisuals.ShipVisual;
 import utils.Direction;
@@ -74,6 +75,16 @@ public class Ship extends GameObject {
 		if(visual != null){
 			visual.moveWithDirections(notifyWhenDone, directions);
 		}
+	}
+	
+	/*
+	 * Returns a random damage amount between the min and max damage values.
+	 * Remember nextInt returns a value between 0 inclusive and some value exclusive.
+	 */
+	
+	public double getDamage(){
+		double dmgModifier = Math.random();
+		return (maxDamage-minDamage)*dmgModifier + minDamage;
 	}
 
 	/*
