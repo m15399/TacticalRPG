@@ -108,6 +108,7 @@ public class Map extends GameObject {
 	 */
 	
 	public void highlightPossibleMoves(Ship ship){
+		System.out.println(toString());
 		if(ship.getMoves() >= 1){
 			if(checkIfTileExists(new Point(ship.getLocation().x+1, ship.getLocation().y))){
 			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x+1, ship.getLocation().y), ship.getMoves(), 1);
@@ -138,7 +139,7 @@ public class Map extends GameObject {
 	}
 	
 	private boolean checkIfTileExists(Point point){
-		if(point.x >= 0 && point.x < tiles[0].length && point.y >= 0 && point.y < tiles.length){
+		if(point.x >= 0 && point.x < tiles.length && point.y >= 0 && point.y < tiles[0].length){
 			return true;
 		}
 		return false;
@@ -179,6 +180,17 @@ public class Map extends GameObject {
 
 	public Tile getTile(Point p) {
 		return getTile((int) p.getX(), (int) p.getY());
+	}
+	
+	public String toString(){
+		String result = "";
+		for(int r = 0; r < tiles.length; r++){
+			for(int c = 0; c < tiles[r].length; c++){
+				result += tiles[r][c].toString();
+			}
+			result += "\n";
+		}
+		return result + "\n";
 	}
 
 }
