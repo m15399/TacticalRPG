@@ -182,11 +182,15 @@ public class Map extends GameObject {
 		return getTile((int) p.getX(), (int) p.getY());
 	}
 	
+	
+	/**
+	 * TODO: Fix toString.  Currently displays x as y and y as x.
+	 */
 	public String toString(){
 		String result = "";
-		for(int r = 0; r < tiles.length; r++){
-			for(int c = 0; c < tiles[r].length; c++){
-				result += tiles[r][c].toString();
+		for(int x = 0; x < tiles.length; x++){
+			for(int y = 0; y < tiles[y].length; y++){
+				result += tiles[x][y].toString();
 			}
 			result += "\n";
 		}
