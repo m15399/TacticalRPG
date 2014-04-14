@@ -10,7 +10,7 @@ import model.Tile;
 public class testBuildTileMapFromTextFile {
 	
 	@Test
-	public void testBuildTileMapFromTextFile(){
+	public void testBuildTileMapFromTextFile1(){
 		String fileName = "testTileMap";
 		BuildTileMapFromTextFile builder = new BuildTileMapFromTextFile(fileName);
 		Tile[][] tiles = builder.getTiles();

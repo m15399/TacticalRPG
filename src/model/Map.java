@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Tile.Highlight;
 import utils.Direction;
 
 /*
@@ -99,6 +100,58 @@ public class Map extends GameObject {
 			}
 		}
 		return listOfMoves;
+	}
+	
+	/**
+	 *TODO: When we have enemies and friends this method will need to take a Ship to know which side it's on so it can highlight appropriately.
+	 * @param ship
+	 */
+	
+	public void highlightPossibleMoves(Ship ship){
+		if(ship.getMoves() >= 1){
+			if(checkIfTileExists(new Point(ship.getLocation().x+1, ship.getLocation().y))){
+			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x+1, ship.getLocation().y), ship.getMoves(), 1);
+			}
+			if(checkIfTileExists(new Point(ship.getLocation().x-1, ship.getLocation().y))){
+				privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x-1, ship.getLocation().y), ship.getMoves(), 1);
+			}
+			if(checkIfTileExists(new Point(ship.getLocation().x, ship.getLocation().y+1))){
+				privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x, ship.getLocation().y+1), ship.getMoves(), 1);
+			}
+			if(checkIfTileExists(new Point(ship.getLocation().x, ship.getLocation().y-1))){
+				privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x, ship.getLocation().y-1), ship.getMoves(), 1);
+			}
+		}
+	}
+	
+	private void privateHelperForHighlightPossibleMoves(Ship ship, Point location, int numberOfMoves, int currentMoves){
+		if(checkIfTileExists(location) && numberOfMoves >= currentMoves){
+			if(!tiles[location.x][location.y].getIsOccupied()){
+				tiles[location.x][location.y].setHighlight(Highlight.BLUE);
+			}
+			privateHelperForHighlightPossibleMoves(ship, new Point(location.x+1, location.y), numberOfMoves, currentMoves + 1);
+			privateHelperForHighlightPossibleMoves(ship, new Point(location.x-1, location.y), numberOfMoves, currentMoves + 1);
+			privateHelperForHighlightPossibleMoves(ship, new Point(location.x, location.y+1), numberOfMoves, currentMoves + 1);
+			privateHelperForHighlightPossibleMoves(ship, new Point(location.x, location.y-1), numberOfMoves, currentMoves + 1);
+		}
+		
+	}
+	
+	private boolean checkIfTileExists(Point point){
+		if(point.x >= 0 && point.x < tiles[0].length && point.y >= 0 && point.y < tiles.length){
+			return true;
+		}
+		return false;
+	}
+	
+	public void clearHighLights(){
+		for(int r = 0; r < tiles.length; r++){
+			for(int c = 0; c < tiles[r].length; c++){
+				if(tiles[r][c].getHighlight() != Highlight.NONE){
+					tiles[r][c].setHighlight(Highlight.NONE);
+				}
+			}
+		}
 	}
 
 	/*

@@ -82,13 +82,14 @@ public class Level extends GameObject {
 		// clicked outside map
 		if (tile == null) {
 			selectShip(null);
+			map.clearHighLights();
 			return;
 		}
 
 		// select ship clicked on, or unselect if clicked on empty space
 		if (tile.getHasShip()) {
 			selectShip(tile.getShip());
-
+			map.highlightPossibleMoves(selectedShip);
 		} else {
 			// tile is either terrain or edge
 			// selectShip(null);
@@ -113,6 +114,8 @@ public class Level extends GameObject {
 		oldTile.setEmpty();
 		newTile.setHasShip(true, selectedShip);
 
+		map.clearHighLights();
+		
 		// move the ship and pass in the observer
 		selectedShip.moveWithDirections(enableInputObserver, mapX, mapY,
 				map.shortestPath(selectedShip.getLocation(), new Point(mapX,
