@@ -3,7 +3,6 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import shipVisuals.ShipVisual;
 import utils.Direction;
@@ -16,6 +15,7 @@ public class Ship extends GameObject {
 			maxDamage, critChance;
 	private List<Item> items;
 	private String description, name;
+	private boolean movesLeft, hasAttacked, canMove, canUseAbility;
 	
 	private ShipVisual visual;
 
@@ -45,6 +45,10 @@ public class Ship extends GameObject {
 	 * @param accuracy
 	 * @param items
 	 * @param description
+	 * @param minDamage
+	 * @param maxDamage
+	 * @param critChance
+	 * @param range
 	 */
 
 	public void constructorAid(String name, int moves, double hull,
@@ -65,6 +69,7 @@ public class Ship extends GameObject {
 		setCritChance(critChance);
 		setRange(range);
 	}
+
 	
 	/*
 	 * Plays the move animation 
@@ -261,5 +266,37 @@ public class Ship extends GameObject {
 	
 	public void updateRange(int valueToAdjustBy){
 		range += valueToAdjustBy;
+	}
+
+	public Boolean getMovesLeft() {
+		return movesLeft;
+	}
+
+	public void setMovesLeft(boolean movesLeft) {
+		this.movesLeft = movesLeft;
+	}
+
+	public Boolean getHasAttacked() {
+		return hasAttacked;
+	}
+
+	public void setHasAttacked(boolean hasAttacked) {
+		this.hasAttacked = hasAttacked;
+	}
+
+	public Boolean getCanMove() {
+		return canMove;
+	}
+
+	public void setCanMove(boolean canMove) {
+		this.canMove = canMove;
+	}
+
+	public Boolean getCanUseAbility() {
+		return canUseAbility;
+	}
+
+	public void setCanUseAbility(boolean canUseAbility) {
+		this.canUseAbility = canUseAbility;
 	}
 }

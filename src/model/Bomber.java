@@ -17,4 +17,6 @@ public class Bomber extends Ship{
 		
 		setVisual(new ScoutVisual(this));
 	}
+	
+	
 }
