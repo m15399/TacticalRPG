@@ -10,6 +10,7 @@ import utils.Observable;
 import utils.Observer;
 import view.Camera;
 import view.GraphicsTest;
+import view.SelectedEnemyShip;
 import view.SelectedShipView;
 import view.Starfield;
 
@@ -25,6 +26,7 @@ public class Level extends GameObject {
 
 	private Ship selectedShip;
 	private SelectedShipView selectedShipView;
+	private SelectedEnemyShip enemyShipView;
 
 	Observer enableInputObserver;
 
@@ -55,6 +57,8 @@ public class Level extends GameObject {
 		// Selected Ship View
 		selectedShipView = new SelectedShipView();
 		addChild(selectedShipView);
+		enemyShipView = new SelectedEnemyShip();
+		addChild(enemyShipView);
 
 		addShipToMap(new Scout(new Point(2, 2)));
 		addShipToMap(new Scout(new Point(4, 4)));
@@ -102,6 +106,7 @@ public class Level extends GameObject {
 	public void selectShip(Ship ship) {
 		selectedShip = ship;
 		selectedShipView.setShip(ship);
+		enemyShipView.setShip(ship);
 	}
 
 	public void moveSelectedShipTo(int mapX, int mapY) {
