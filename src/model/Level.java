@@ -9,7 +9,6 @@ import java.awt.Point;
 import utils.Observable;
 import utils.Observer;
 import view.Camera;
-import view.GraphicsTest;
 import view.SelectedEnemyShip;
 import view.SelectedShipView;
 import view.Starfield;
