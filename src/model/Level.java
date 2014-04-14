@@ -48,7 +48,7 @@ public class Level extends GameObject {
 		camera.addChild(map);
 
 		// Graphics Testing
-		camera.addChild(new GraphicsTest());
+//		camera.addChild(new GraphicsTest());
 
 		/*
 		 * Add more stuff here
