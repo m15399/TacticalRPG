@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import shipVisuals.ShipVisual;
+import shipVisuals.ScoutVisual;
 
 public class Fighter extends Ship{
 
@@ -15,6 +15,6 @@ public class Fighter extends Ship{
 		items.add(new SpaceMine());
 		this.constructorAid("Fighter", 3, 75, 25, 75, 25, 80, items, description, 40, 50, 25, 2);
 		
-		setVisual(new ShipVisual(this));
+		setVisual(new ScoutVisual(this));
 	}
 }

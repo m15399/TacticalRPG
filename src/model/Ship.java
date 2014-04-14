@@ -3,7 +3,6 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import shipVisuals.ShipVisual;
 import utils.Direction;
