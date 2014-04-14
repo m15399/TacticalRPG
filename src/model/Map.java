@@ -32,13 +32,6 @@ public class Map extends GameObject {
 			}
 		}
 
-		// testing highlighting
-		tiles[0][0].setHighlight(Tile.Highlight.BLUE);
-		tiles[1][0].setHighlight(Tile.Highlight.BLUE);
-		tiles[2][0].setHighlight(Tile.Highlight.RED);
-		tiles[3][0].setHighlight(Tile.Highlight.RED);
-		tiles[4][0].setHighlight(Tile.Highlight.GREEN);
-		tiles[5][0].setHighlight(Tile.Highlight.GREEN);
 	}
 
 	/*

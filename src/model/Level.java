@@ -9,7 +9,6 @@ import java.awt.Point;
 import utils.Observable;
 import utils.Observer;
 import view.Camera;
-import view.GraphicsTest;
 import view.SelectedEnemyShip;
 import view.SelectedShipView;
 import view.Starfield;
@@ -48,7 +47,7 @@ public class Level extends GameObject {
 		camera.addChild(map);
 
 		// Graphics Testing
-		camera.addChild(new GraphicsTest());
+//		camera.addChild(new GraphicsTest());
 
 		/*
 		 * Add more stuff here
@@ -61,7 +60,8 @@ public class Level extends GameObject {
 		addChild(enemyShipView);
 
 		addShipToMap(new Scout(new Point(2, 2)));
-		addShipToMap(new Scout(new Point(4, 4)));
+		addShipToMap(new Bomber(new Point(4, 4)));
+		addShipToMap(new Fighter(new Point(4, 2)));
 
 		// Background button for mouse input on the map
 		levelButton = new LevelButton();
@@ -86,14 +86,12 @@ public class Level extends GameObject {
 		// clicked outside map
 		if (tile == null) {
 			selectShip(null);
-			map.clearHighLights();
 			return;
 		}
 
 		// select ship clicked on, or unselect if clicked on empty space
 		if (tile.getHasShip()) {
 			selectShip(tile.getShip());
-			map.highlightPossibleMoves(selectedShip);
 		} else {
 			// tile is either terrain or edge
 			// selectShip(null);
@@ -107,6 +105,11 @@ public class Level extends GameObject {
 		selectedShip = ship;
 		selectedShipView.setShip(ship);
 		enemyShipView.setShip(ship);
+		
+		map.clearHighLights();
+		if(selectedShip != null)
+			map.highlightPossibleMoves(selectedShip);
+
 	}
 
 	public void moveSelectedShipTo(int mapX, int mapY) {
