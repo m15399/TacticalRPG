@@ -108,7 +108,6 @@ public class Map extends GameObject {
 	 */
 	
 	public void highlightPossibleMoves(Ship ship){
-		System.out.println(toString());
 		if(ship.getMoves() >= 1){
 			if(checkIfTileExists(new Point(ship.getLocation().x+1, ship.getLocation().y))){
 			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x+1, ship.getLocation().y), ship.getMoves(), 1);
