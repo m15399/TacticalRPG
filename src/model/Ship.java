@@ -83,6 +83,13 @@ public class Ship extends GameObject {
 	}
 	
 	/*
+	 * Attack
+	 */
+	public void attack(Ship target) {
+		
+	}
+	
+	/*
 	 * Returns a random damage amount between the min and max damage values.
 	 * Remember nextInt returns a value between 0 inclusive and some value exclusive.
 	 */
@@ -90,6 +97,14 @@ public class Ship extends GameObject {
 	public double getDamage(){
 		double dmgModifier = Math.random();
 		return (maxDamage-minDamage)*dmgModifier + minDamage;
+	}
+	
+	/*
+	 * Returns final damage after basic shielding calculations
+	 */
+	
+	public double getFinalDamage(double initialDamage){
+		return initialDamage - shielding;
 	}
 
 	/*

@@ -20,14 +20,15 @@ public class Scout extends Ship {
 	}
 
 	/*
-	 * Ship basic attack
+	 * Ship basic attack.
 	 */
+	@Override
 	public void attack(Ship target) {
-		//ship.setEnergy(ship.getEnergy() - 150);
-		if (target.getMaxHull() - target.getHull() >= 150)
-			target.setHull(target.getHull() + 150);
+		double damage = this.getDamage();
+		if (target.getHull() - target.getFinalDamage(damage) > 0)
+			target.setHull(target.getHull() - target.getFinalDamage(damage));
 		else
-			target.setHull(target.getMaxHull());
+			target.setHull(0);
 		this.setMoves(this.getMoves() - 1);
 	}
 
@@ -35,25 +36,27 @@ public class Scout extends Ship {
 	 * Ship special ability
 	 */
 	public void special(Ship target) {
-		//ship.setEnergy(ship.getEnergy() - 200);
 		// possibly be untargetable for one turn
-		target.setMoves(target.getMoves() + 1);
+		target.setAccuracy(100);
+		this.setCanUseAbility(false);
 		this.setMoves(this.getMoves() - 1);
 	}
 
 	public void move() {
-		//this.setCanMove(false);
+		this.setCanMove(false);
 	}
 
 	
-	public void trade(Ship ally) {
+	public void trade(Ship ally, Item item) {
 		// set gui screen for trading
-
+		this.removeFromItems(item);
+		ally.addToItems(item);
 	}
 	
 	
-	public void useItem() {
-		
+	public void useItem(Ship target, Item item) {
+		item.useOn(target);
+		this.setMoves(this.getMoves() - 1);
 	}
 
 	/*
