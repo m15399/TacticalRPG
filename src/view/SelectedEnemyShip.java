@@ -7,14 +7,15 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import model.Game;
 import model.GameObject;
 import model.Ship;
 
 public class SelectedEnemyShip extends GameObject {
 
-	static final int WIDTH = 210	;
+	static final int WIDTH = 210;
 	static final int HEIGHT = 325;
+	
+	private int x, y;
 
 	private Ship currentShip;
 
@@ -30,6 +31,11 @@ public class SelectedEnemyShip extends GameObject {
 		currentShip = ship;
 	}
 	
+	public void setLocation(int x, int y){
+		this.x = x;
+		this.y = y;
+	}
+	
 	private void drawString(Graphics g, String text, int x, int y) {
 		for (String line : text.split("\n"))
 			g.drawString(line, x, y += g.getFontMetrics().getHeight());
@@ -41,25 +47,26 @@ public class SelectedEnemyShip extends GameObject {
 
 		// I added these offsets to all the coordinates so that we can move it
 		// around more easily
-		int offsetX = 750;
-		int offsetY = Game.HEIGHT - 650;
+		int offsetX = x + 16;
+		int offsetY = y + 16;
 
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setStroke(new BasicStroke(2));
+		
 		// Draw a black rect first as a background
-		g.setColor(Color.black);
-		g.fillRect(offsetX, offsetY, WIDTH, HEIGHT);
+		g2.setColor(Color.black);
+		g2.fillRect(offsetX, offsetY, WIDTH, HEIGHT);
 
 		// Draw a border (I just put the top right half for now)
-		g.setColor(Color.white);
-		g.drawLine(offsetX, offsetY, WIDTH+offsetX, offsetY);
-		g.drawLine(WIDTH + offsetX, offsetY, WIDTH + offsetX, HEIGHT+offsetY);
-		g.drawLine(offsetX, offsetY, offsetX, offsetY+HEIGHT);
-		g.drawLine(offsetX, offsetY+HEIGHT, WIDTH + offsetX, HEIGHT+offsetY);
+		g2.setColor(Color.white);
+		g2.drawLine(offsetX, offsetY, WIDTH+offsetX, offsetY);
+		g2.drawLine(WIDTH + offsetX, offsetY, WIDTH + offsetX, HEIGHT+offsetY);
+		g2.drawLine(offsetX, offsetY, offsetX, offsetY+HEIGHT);
+		g2.drawLine(offsetX, offsetY+HEIGHT, WIDTH + offsetX, HEIGHT+offsetY);
 
 		
 		int leftColumn = offsetX+20;
 		
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setStroke(new BasicStroke(2));
 		g2.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		g2.setColor(Color.white);
 		String shipName = currentShip.getName();
@@ -84,5 +91,7 @@ public class SelectedEnemyShip extends GameObject {
 		g2.drawString("Speed:          " + currentShip.getMoves(),
 				leftColumn, 220 + offsetY);
 		g2.drawString("Items:", leftColumn, 250 + offsetY);
+		
+		g2.setStroke(new BasicStroke());
 	}
 }

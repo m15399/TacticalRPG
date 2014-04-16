@@ -1,7 +1,9 @@
 package model;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,17 +54,27 @@ public class Map extends GameObject {
 		return new Point(x, y);
 	}
 
-	public void draw(Graphics g) {
-		g.setColor(Color.WHITE);
+	public void draw(Graphics g1) {
+		Graphics2D g = (Graphics2D) g1;
+		
+		float v = 1.0f;
+		g.setColor(new Color(v, v, v, .25f));
+		
 		int pxWidth = width * TILESIZE;
 		int pxHeight = height * TILESIZE;
 
+//		float dash[] = {2f};
+//		g.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.CAP_BUTT, 10.0f, dash, 0.0f));
+		g.setStroke(new BasicStroke(2));
+		
 		for (int i = 0; i <= width; i++) {
 			g.drawLine(i * TILESIZE, 0, i * TILESIZE, pxHeight);
 		}
 		for (int i = 0; i <= height; i++) {
 			g.drawLine(0, i * TILESIZE, pxWidth, i * TILESIZE);
 		}
+		
+		g.setStroke(new BasicStroke());
 	}
 
 	/**

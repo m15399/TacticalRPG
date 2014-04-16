@@ -10,6 +10,8 @@ import utils.Observable;
 import utils.Observer;
 import view.Camera;
 import view.SelectedEnemyShip;
+import view.SelectedShipBorder;
+import view.SelectedShipBorder.SelectionType;
 import view.SelectedShipView;
 import view.Starfield;
 
@@ -23,15 +25,22 @@ public class Level extends GameObject {
 	private Camera camera;
 	private LevelButton levelButton;
 
+	private GameObject ships;
+	
+	Tile tileHovered;
+	
 	private Ship selectedShip;
 	private SelectedShipView selectedShipView;
-	private SelectedEnemyShip enemyShipView;
+	private SelectedEnemyShip hoveredShipView;
+	private SelectedShipBorder selectedShipBorder;
+	private SelectedShipBorder hoveredShipBorder;
 
 	Observer enableInputObserver;
 
 	public Level() {
 		selectedShip = null;
-
+		tileHovered = null;
+		
 		// Camera / Starfield
 		camera = new Camera();
 		camera.setPosition(0, 0);
@@ -49,18 +58,33 @@ public class Level extends GameObject {
 		// Graphics Testing
 //		camera.addChild(new GraphicsTest());
 
-		/*
-		 * Add more stuff here
-		 */
 
 		// Selected Ship View
 		selectedShipView = new SelectedShipView();
 		addChild(selectedShipView);
-		enemyShipView = new SelectedEnemyShip();
-		addChild(enemyShipView);
+		hoveredShipView = new SelectedEnemyShip();
+		addChild(hoveredShipView);
 
-		addShipToMap(new Scout(new Point(2, 2)));
-		addShipToMap(new Bomber(new Point(4, 4)));
+		// Ship Borders
+		selectedShipBorder = new SelectedShipBorder();
+		camera.addChild(selectedShipBorder);
+		hoveredShipBorder = new SelectedShipBorder();
+		camera.addChild(selectedShipBorder);
+		hoveredShipBorder.setSelectionType(SelectionType.SELECTED);
+		
+		
+		// Ships Holder
+		ships = new GameObject();
+		camera.addChild(ships);
+
+		// Ship Testing
+		Scout scout = new Scout(new Point(2, 2)); 
+		scout.updateHull(-30);
+		addShipToMap(scout);
+		
+		Bomber bomber = new Bomber(new Point(4, 4));
+		bomber.setTeam(1);
+		addShipToMap(bomber);
 		addShipToMap(new Fighter(new Point(4, 2)));
 
 		// Background button for mouse input on the map
@@ -100,11 +124,42 @@ public class Level extends GameObject {
 			}
 		}
 	}
+	
+	private void tileHovered(int x, int y){
+		Tile tile = map.getTile(x, y);
+
+		// mouse moved out of last tile hovered over
+		if(tileHovered != tile){
+			if(tileHovered != null)
+				tileHovered.setMousedOver(false);
+			
+			tileHovered = tile;
+			if(tileHovered != null)
+				tileHovered.setMousedOver(true);
+		}
+		
+		// place hover view if it's a ship tile
+		hoveredShipView.setShip(null);
+		if(tile != null && tile.getHasShip() == true){
+			Ship ship = tile.getShip();
+			
+			if(ship != selectedShip){
+				hoveredShipView.setShip(ship);
+				
+				Point p = camera.convertFromCameraSpace(Map.mapToPixelCoords(new Point(x+1, y)));
+				
+				hoveredShipView.setLocation((int)p.getX(),(int)p.getY());
+			}
+			
+		}
+
+	}
 
 	public void selectShip(Ship ship) {
 		selectedShip = ship;
 		selectedShipView.setShip(ship);
-		enemyShipView.setShip(ship);
+		
+		selectedShipBorder.setShip(ship);
 		
 		map.clearHighLights();
 		if(selectedShip != null)
@@ -133,7 +188,7 @@ public class Level extends GameObject {
 
 	public void addShipToMap(Ship ship) {
 		map.getTile(ship.getLocation()).setHasShip(true, ship); // testing
-		camera.addChild(ship);
+		ships.addChild(ship);
 	}
 
 	public void onDestroy() {
@@ -173,12 +228,9 @@ public class Level extends GameObject {
 		 */
 		public void mouseHovered() {
 
-			Tile tile = map.getTile(mouseToMapCoords());
-
-			// tell the tile it's being moused over
-			if (tile != null)
-				tile.setMousedOver();
-
+			Point p = mouseToMapCoords();
+			tileHovered((int)p.getX(), (int)p.getY());
+			
 		}
 
 		/*
@@ -215,6 +267,10 @@ public class Level extends GameObject {
 			camera.moveBy(0, 0);
 			distanceDraggedSinceClick = 0;
 
+		}
+		
+		public void mouseExited(){
+			tileHovered(-1, -1); // pretend we moused off the board to unhiglight tiles
 		}
 
 	}

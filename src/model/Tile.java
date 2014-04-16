@@ -102,8 +102,8 @@ public class Tile extends GameObject {
 		highlight = newHighlight;
 	}
 
-	public void setMousedOver() {
-		mousedOver = true;
+	public void setMousedOver(boolean b) {
+		mousedOver = b;
 	}
 
 	public boolean getIsEdge() {
@@ -197,8 +197,6 @@ public class Tile extends GameObject {
 
 		}
 		
-		mousedOver = false; // switch off after drawing
-
 		if (highlight != Highlight.NONE) {
 			Point px = Map.mapToPixelCoords(new Point(mapX, mapY));
 			g.fillRect((int) px.getX(), (int) px.getY(), Map.TILESIZE,

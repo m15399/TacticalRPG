@@ -16,6 +16,7 @@ public class Ship extends GameObject {
 	private List<Item> items;
 	private String description, name;
 	private boolean movesLeft, hasAttacked, canMove, canUseAbility;
+	private int team;
 	
 	private ShipVisual visual;
 
@@ -24,6 +25,7 @@ public class Ship extends GameObject {
 		constructorAid("DefaultShip", 1, 1, 1, 1, 1, 1, new ArrayList<Item>(),
 				"No description available", 1, 1, 1, 1);
 		visual = null;
+		team = 0;
 	}
 
 	public boolean isShipDead() {
@@ -111,6 +113,14 @@ public class Ship extends GameObject {
 	 * Setters and Getters for private instance variables. Please add other
 	 * methods above these so they are easier to find.
 	 */
+	
+	public void setTeam(int newTeam){
+		team = newTeam;
+	}
+	
+	public int getTeam(){
+		return team;
+	}
 
 	public void setVisual(ShipVisual newVisual){
 		if(visual != null)

@@ -1,5 +1,8 @@
 package view;
 
+import input.Button;
+import input.Input;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -16,13 +19,12 @@ public class SelectedShipView extends GameObject {
 	static final int HEIGHT = 180;
 
 	private Ship currentShip;
+	private Button button;
 
 	public SelectedShipView(){
 		currentShip = null;
-	}
-	
-	public SelectedShipView(Ship selectedShip) {
-		currentShip = selectedShip;
+		button = new Button(0, Game.HEIGHT - HEIGHT, WIDTH, HEIGHT);
+		Input.getInstance().addButton(button);
 	}
 	
 	public void setShip(Ship ship){
@@ -32,6 +34,14 @@ public class SelectedShipView extends GameObject {
 	private void drawString(Graphics g, String text, int x, int y) {
 		for (String line : text.split("\n"))
 			g.drawString(line, x, y += g.getFontMetrics().getHeight());
+	}
+	
+	public void update(){
+		if(currentShip == null){
+			button.disable();
+		} else {
+			button.enable();
+		}
 	}
 
 	public void draw(Graphics g) {
@@ -43,20 +53,22 @@ public class SelectedShipView extends GameObject {
 		int offsetX = 0;
 		int offsetY = Game.HEIGHT - HEIGHT;
 
-		// Draw a black rect first as a background
-		g.setColor(Color.black);
-		g.fillRect(offsetX, offsetY, WIDTH, HEIGHT);
-
-		// Draw a border (I just put the top right half for now)
-		g.setColor(Color.white);
-		g.drawLine(offsetX, offsetY, WIDTH + offsetX, offsetY);
-		g.drawLine(WIDTH + offsetX, offsetY, WIDTH + offsetX, HEIGHT + offsetY);
-
-		
-		int leftColumn = 152;
 		
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(2));
+		
+		// Draw a black rect first as a background
+		g2.setColor(Color.black);
+		g2.fillRect(offsetX, offsetY, WIDTH, HEIGHT);
+
+		// Draw a border (I just put the top right half for now)
+		g2.setColor(Color.white);
+		g2.drawLine(offsetX, offsetY, WIDTH + offsetX, offsetY);
+		g2.drawLine(WIDTH + offsetX, offsetY, WIDTH + offsetX, HEIGHT + offsetY);
+
+		
+		int leftColumn = 152;
+	
 		g2.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		g2.setColor(Color.white);
 		String shipName = currentShip.getName();
@@ -81,5 +93,7 @@ public class SelectedShipView extends GameObject {
 		g2.drawString("Speed:          " + currentShip.getMoves(),
 				333 + offsetX, 125 + offsetY);
 		g2.drawString("Items:", 333 + offsetX, 150 + offsetY);
+		
+		g2.setStroke(new BasicStroke());
 	}
 }

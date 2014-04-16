@@ -1,7 +1,9 @@
 package shipVisuals;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.List;
 
@@ -87,17 +89,34 @@ public class ShipVisual extends Entity {
 		// override
 	}
 	
-	public void draw(Graphics g){
-		
+	public void draw(Graphics g1){
+
 		// health bar
+		Graphics2D g = (Graphics2D) g1;
+		g.setStroke(new BasicStroke(0));
+		
+		// size
 		int width = Map.TILESIZE-6;
-		int height = 4;
+		int height = 3;
 		
+		// position
 		int ox = (int)(getPosition().getX());
-		int oy = (int)(getPosition().getY() + Map.TILESIZE/2 - height - 1);
+		int oy = (int)(getPosition().getY() + Map.TILESIZE/2 - height + 3);
 		
-		g.setColor(new Color(0f, .8f, .2f));
-		g.fillRect(ox -width/2, oy -height/2, width, height);
+		// border
+		g.setColor(Color.white);
+		g.drawRect(ox -width/2-1, oy -height/2-1, width+2, height+2);
+		
+		// color
+		Color red = new Color(1.0f, .25f, .15f);
+		Color green = new Color(0f, .8f, .0f);
+		if(ship.getTeam() == 0){
+			g.setColor(green);			
+		} else {
+			g.setColor(red);
+		}
+		
+		g.fillRect(ox -width/2, oy -height/2, (int)(width * ship.getHull() / ship.getMaxHull())+1, height+1);
 	}
 	
 	
