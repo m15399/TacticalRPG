@@ -110,18 +110,13 @@ public class Map extends GameObject {
 //			System.out.println(curr.toString() + tiles[endLocation.x][endLocation.y].getDistance());
 			if(checkIfTileExists(new Point(curr.x+1, curr.y)) && !tiles[curr.x+1][curr.y].getIsOccupied() && tiles[curr.x+1][curr.y].getDistance() == 10000){
 				tiles[curr.x+1][curr.y].setDistance(tiles[curr.x][curr.y].getDistance()+1);
-				if(tiles[curr.x][curr.y].getDistance() < moves){
-					tiles[curr.x+1][curr.y].setHighlight(Highlight.BLUE);
-				}
+
 				tilesLeft.remove(tiles[curr.x+1][curr.y]);
 				tiles[curr.x+1][curr.y].setPreviousTile(tiles[curr.x][curr.y]);
 				pointsToCheck.add(new Point(curr.x+1,curr.y));
 			}
 			if(checkIfTileExists(new Point(curr.x, curr.y+1)) && !tiles[curr.x][curr.y+1].getIsOccupied() && tiles[curr.x][curr.y+1].getDistance() == 10000){
 				tiles[curr.x][curr.y+1].setDistance(tiles[curr.x][curr.y].getDistance()+1);
-				if(tiles[curr.x][curr.y].getDistance() < moves){
-					tiles[curr.x][curr.y+1].setHighlight(Highlight.BLUE);
-				}
 				
 				tilesLeft.remove(tiles[curr.x][curr.y+1]);
 				tiles[curr.x][curr.y+1].setPreviousTile(tiles[curr.x][curr.y]);
@@ -129,9 +124,6 @@ public class Map extends GameObject {
 			}
 			if(checkIfTileExists(new Point(curr.x-1, curr.y)) && !tiles[curr.x-1][curr.y].getIsOccupied() && tiles[curr.x-1][curr.y].getDistance() == 10000){
 				tiles[curr.x-1][curr.y].setDistance(tiles[curr.x][curr.y].getDistance()+1);
-				if(tiles[curr.x][curr.y].getDistance() < moves){
-					tiles[curr.x-1][curr.y].setHighlight(Highlight.BLUE);
-				}
 				
 				tilesLeft.remove(tiles[curr.x-1][curr.y]);
 				tiles[curr.x-1][curr.y].setPreviousTile(tiles[curr.x][curr.y]);
@@ -139,9 +131,6 @@ public class Map extends GameObject {
 			}
 			if(checkIfTileExists(new Point(curr.x, curr.y-1)) && !tiles[curr.x][curr.y-1].getIsOccupied() && tiles[curr.x][curr.y-1].getDistance() == 10000){
 				tiles[curr.x][curr.y-1].setDistance(tiles[curr.x][curr.y].getDistance()+1);
-				if(tiles[curr.x][curr.y].getDistance() < moves){
-					tiles[curr.x][curr.y-1].setHighlight(Highlight.BLUE);
-				}
 				
 				tilesLeft.remove(tiles[curr.x][curr.y-1]);
 				tiles[curr.x][curr.y-1].setPreviousTile(tiles[curr.x][curr.y]);
