@@ -6,7 +6,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import model.Tile.Highlight;
 import utils.Direction;
@@ -86,25 +88,113 @@ public class Map extends GameObject {
 	 * @param endLocation
 	 * @return
 	 */
-	public List<Direction> shortestPath(Point currentLocation, Point endLocation) {
-		List<Direction> listOfMoves = new ArrayList<Direction>();
-		Point temp = currentLocation;
-		while (!temp.equals(endLocation)) {
-			if (temp.x < endLocation.x) {
-				temp.x += 1;
-				listOfMoves.add(Direction.RIGHT);
-			} else if (temp.x > endLocation.x) {
-				temp.x -= 1;
-				listOfMoves.add(Direction.LEFT);
-			} else if (temp.y < endLocation.y) {
-				temp.y += 1;
-				listOfMoves.add(Direction.DOWN);
-			} else if (temp.y > endLocation.y) {
-				temp.y -= 1;
-				listOfMoves.add(Direction.UP);
+//	public List<Direction> shortestPath(Point currentLocation, Point endLocation) {
+//		List<Direction> listOfMoves = new ArrayList<Direction>();
+//		Point temp = currentLocation;
+//		while (!temp.equals(endLocation)) {
+//			if (temp.x < endLocation.x) {
+//				temp.x += 1;
+//				listOfMoves.add(Direction.RIGHT);
+//			} else if (temp.x > endLocation.x) {
+//				temp.x -= 1;
+//				listOfMoves.add(Direction.LEFT);
+//			} else if (temp.y < endLocation.y) {
+//				temp.y += 1;
+//				listOfMoves.add(Direction.DOWN);
+//			} else if (temp.y > endLocation.y) {
+//				temp.y -= 1;
+//				listOfMoves.add(Direction.UP);
+//			}
+//		}
+//		return listOfMoves;
+//	}
+	
+	
+	public List<Direction> shortestPath(Point curr, Point endLocation, int moves){
+		System.out.println(curr.toString() + endLocation.toString() + "  " + moves);
+		Point beginning = curr;
+		PriorityQueue<Tile> tilesLeft = new PriorityQueue<Tile>();
+		List<Point> pointsToCheck = new ArrayList<Point>();
+		for(int x = 0; x < tiles.length; x++){
+			for(int y = 0; y < tiles[x].length; y++){
+				tiles[x][y].setDistance(10000);
+				tiles[x][y].setPreviousTile(null);
+				tilesLeft.add(tiles[x][y]);
 			}
 		}
-		return listOfMoves;
+		tiles[curr.x][curr.y].setDistance(0);
+		tilesLeft.remove(tiles[curr.x][curr.y]);
+		while(tiles[endLocation.x][endLocation.y].getDistance() == 10000){
+			System.out.println(curr.toString() + tiles[endLocation.x][endLocation.y].getDistance());
+				if(checkIfTileExists(new Point(curr.x+1, curr.y)) && !tiles[curr.x+1][curr.y].getIsOccupied() && tiles[curr.x+1][curr.y].getDistance() == 10000){
+					tiles[curr.x+1][curr.y].setDistance(tiles[curr.x][curr.y].getDistance()+1);
+					if(tiles[curr.x][curr.y].getDistance() < moves){
+						tiles[curr.x+1][curr.y].setHighlight(Highlight.RED);
+					}
+					
+					tilesLeft.remove(tiles[curr.x+1][curr.y]);
+					tiles[curr.x+1][curr.y].setPreviousTile(tiles[curr.x][curr.y]);
+					pointsToCheck.add(new Point(curr.x+1,curr.y));
+				}
+				if(checkIfTileExists(new Point(curr.x, curr.y+1)) && !tiles[curr.x][curr.y+1].getIsOccupied() && tiles[curr.x][curr.y+1].getDistance() == 10000){
+					tiles[curr.x][curr.y+1].setDistance(tiles[curr.x][curr.y].getDistance()+1);
+					if(tiles[curr.x][curr.y].getDistance() < moves){
+						tiles[curr.x][curr.y+1].setHighlight(Highlight.RED);
+					}
+					
+					tilesLeft.remove(tiles[curr.x][curr.y+1]);
+					tiles[curr.x][curr.y+1].setPreviousTile(tiles[curr.x][curr.y]);
+					pointsToCheck.add(new Point(curr.x,curr.y+1));
+				}
+				if(checkIfTileExists(new Point(curr.x-1, curr.y)) && !tiles[curr.x-1][curr.y].getIsOccupied() && tiles[curr.x-1][curr.y].getDistance() == 10000){
+					tiles[curr.x-1][curr.y].setDistance(tiles[curr.x][curr.y].getDistance()+1);
+					if(tiles[curr.x][curr.y].getDistance() < moves){
+						tiles[curr.x-1][curr.y].setHighlight(Highlight.RED);
+					}
+					
+					tilesLeft.remove(tiles[curr.x-1][curr.y]);
+					tiles[curr.x-1][curr.y].setPreviousTile(tiles[curr.x][curr.y]);
+					pointsToCheck.add(new Point(curr.x-1,curr.y));
+				}
+				if(checkIfTileExists(new Point(curr.x, curr.y-1)) && !tiles[curr.x][curr.y-1].getIsOccupied() && tiles[curr.x][curr.y-1].getDistance() == 10000){
+					tiles[curr.x][curr.y-1].setDistance(tiles[curr.x][curr.y].getDistance()+1);
+					if(tiles[curr.x][curr.y].getDistance() < moves){
+						tiles[curr.x][curr.y-1].setHighlight(Highlight.RED);
+					}
+					
+					tilesLeft.remove(tiles[curr.x][curr.y-1]);
+					tiles[curr.x][curr.y-1].setPreviousTile(tiles[curr.x][curr.y]);
+					pointsToCheck.add(new Point(curr.x,curr.y-1));
+				}
+				if(pointsToCheck.size() > 0){
+					curr = pointsToCheck.get(0);
+					pointsToCheck.remove(0);
+				}
+		}
+		return buildDirectionsList(endLocation, beginning);
+	}
+	
+	private List<Direction> buildDirectionsList(Point end, Point beginning){
+		List<Direction> list = new ArrayList<Direction>();
+		while(!end.equals(beginning)){
+			if(checkIfTileExists(new Point(end.x+1 , end.y)) && !end.equals(beginning) && tiles[end.x][end.y].getPreviousTile().equals(tiles[end.x+1][end.y])){
+				list.add(Direction.LEFT);
+				end = new Point(end.x+1, end.y);
+			}
+			if(checkIfTileExists(new Point(end.x-1 , end.y)) && !end.equals(beginning) && tiles[end.x][end.y].getPreviousTile().equals(tiles[end.x-1][end.y])){
+				list.add(Direction.RIGHT);
+				end = new Point(end.x-1, end.y);
+			}
+			if(checkIfTileExists(new Point(end.x , end.y+1)) && !end.equals(beginning) && tiles[end.x][end.y].getPreviousTile().equals(tiles[end.x][end.y+1])){
+				list.add(Direction.UP);
+				end = new Point(end.x, end.y+1);
+			}
+			if(checkIfTileExists(new Point(end.x , end.y-1)) && !end.equals(beginning) && tiles[end.x][end.y].getPreviousTile().equals(tiles[end.x][end.y-1])){
+				list.add(Direction.DOWN);
+				end = new Point(end.x, end.y-1);
+			}
+		}
+		return list;
 	}
 	
 	/**
@@ -114,32 +204,21 @@ public class Map extends GameObject {
 	
 	public void highlightPossibleMoves(Ship ship){
 		if(ship.getMoves() >= 1){
-			if(checkIfTileExists(new Point(ship.getLocation().x+1, ship.getLocation().y))){
 			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x+1, ship.getLocation().y), ship.getMoves(), 1);
-			}
-			if(checkIfTileExists(new Point(ship.getLocation().x-1, ship.getLocation().y))){
-				privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x-1, ship.getLocation().y), ship.getMoves(), 1);
-			}
-			if(checkIfTileExists(new Point(ship.getLocation().x, ship.getLocation().y+1))){
-				privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x, ship.getLocation().y+1), ship.getMoves(), 1);
-			}
-			if(checkIfTileExists(new Point(ship.getLocation().x, ship.getLocation().y-1))){
-				privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x, ship.getLocation().y-1), ship.getMoves(), 1);
-			}
+			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x-1, ship.getLocation().y), ship.getMoves(), 1);
+			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x, ship.getLocation().y+1), ship.getMoves(), 1);
+			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x, ship.getLocation().y-1), ship.getMoves(), 1);
 		}
 	}
 	
 	private void privateHelperForHighlightPossibleMoves(Ship ship, Point location, int numberOfMoves, int currentMoves){
-		if(checkIfTileExists(location) && numberOfMoves >= currentMoves){
-			if(!tiles[location.x][location.y].getIsOccupied()){
-				tiles[location.x][location.y].setHighlight(Highlight.BLUE);
-			}
+		if(checkIfTileExists(location) && numberOfMoves >= currentMoves && !tiles[location.x][location.y].getIsOccupied()){
+			tiles[location.x][location.y].setHighlight(Highlight.BLUE);
 			privateHelperForHighlightPossibleMoves(ship, new Point(location.x+1, location.y), numberOfMoves, currentMoves + 1);
 			privateHelperForHighlightPossibleMoves(ship, new Point(location.x-1, location.y), numberOfMoves, currentMoves + 1);
 			privateHelperForHighlightPossibleMoves(ship, new Point(location.x, location.y+1), numberOfMoves, currentMoves + 1);
 			privateHelperForHighlightPossibleMoves(ship, new Point(location.x, location.y-1), numberOfMoves, currentMoves + 1);
 		}
-		
 	}
 	
 	private boolean checkIfTileExists(Point point){
@@ -193,7 +272,7 @@ public class Map extends GameObject {
 	public String toString(){
 		String result = "";
 		for(int x = 0; x < tiles[0].length; x++){
-			for(int y = 0; y < tiles[y].length; y++){
+			for(int y = 0; y < tiles.length; y++){
 				result += tiles[y][x].toString();
 			}
 			result += "\n";

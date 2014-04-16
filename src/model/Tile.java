@@ -13,14 +13,18 @@ import java.awt.Point;
  * minimize outside method calls.
  */
 
-public class Tile extends GameObject {
+public class Tile extends GameObject implements Comparable<Tile>{
 
 	private boolean isOccupied, isEdge, isTerrain, hasShip;
 	private Highlight highlight;
 	private boolean mousedOver;
 	private Ship ship;
 	private int mapX, mapY;
-
+	
+	//Variables for shortestPath algorithm
+	private Tile prev;
+	private int distance;
+	
 	/*
 	 * highlight colors
 	 */
@@ -227,4 +231,42 @@ public class Tile extends GameObject {
 		}
 		return result;
 	}
+	
+	/*
+	 * Methods for shortestPath algorithm.
+	 */
+	
+	public void setDistance(int newDistance){
+		distance = newDistance;
+	}
+	
+	public int getDistance(){
+		return distance;
+	}
+	
+	public void setPreviousTile(Tile aTile){
+		prev = aTile;
+	}
+	
+	public Tile getPreviousTile(){
+		return prev;
+	}
+
+	@Override
+	public int compareTo(Tile other) {
+		if(this.distance == other.getDistance())
+			return 0;
+		else if(this.distance > other.getDistance())
+			return 1;
+		else if(this.distance < other.getDistance())
+			return -1;
+		else{
+			System.out.println("Something went wrong with the comparator!");
+			return -999;
+		}
+	}
+	
+	/*
+	 * End of methods for shortestPath algorithm
+	 */
 }

@@ -52,7 +52,7 @@ public class Level extends GameObject {
 		addChild(camera);
 
 		// Map
-		map = new Map(16, 12);
+		map = new Map(6, 6);
 		camera.addChild(map);
 
 		// Graphics Testing
@@ -82,10 +82,10 @@ public class Level extends GameObject {
 		scout.updateHull(-30);
 		addShipToMap(scout);
 		
-		Bomber bomber = new Bomber(new Point(4, 4));
-		bomber.setTeam(1);
-		addShipToMap(bomber);
-		addShipToMap(new Fighter(new Point(4, 2)));
+//		Bomber bomber = new Bomber(new Point(4, 4));
+//		bomber.setTeam(1);
+//		addShipToMap(bomber);
+//		addShipToMap(new Fighter(new Point(4, 2)));
 
 		// Background button for mouse input on the map
 		levelButton = new LevelButton();
@@ -184,7 +184,7 @@ public class Level extends GameObject {
 		// move the ship and pass in the observer
 		selectedShip.moveWithDirections(enableInputObserver, mapX, mapY,
 				map.shortestPath(selectedShip.getLocation(), new Point(mapX,
-						mapY)));
+						mapY), selectedShip.getMoves()));
 
 	}
 
@@ -259,6 +259,7 @@ public class Level extends GameObject {
 			// don't accept clicks if the user was trying to drag the camera
 			if (distanceDraggedSinceClick < 1) {
 				Point mapCoords = mouseToMapCoords();
+				System.out.println((int) mapCoords.getX() + (int) mapCoords.getY());
 				tileClicked((int) mapCoords.getX(), (int) mapCoords.getY());
 			}
 
