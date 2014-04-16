@@ -94,8 +94,6 @@ public class Tile extends GameObject implements Comparable<Tile>{
 
 	public void setIsOccupied(boolean trueIfTileIsOccupied) {
 		isOccupied = trueIfTileIsOccupied;
-		if (!trueIfTileIsOccupied)
-			hasShip = false;
 	}
 
 	public Highlight getHighlight() {
@@ -119,10 +117,6 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	 */
 	public void setIsEdge(boolean trueIfTileIsEdgeTile) {
 		isEdge = trueIfTileIsEdgeTile;
-		if (trueIfTileIsEdgeTile)
-			isOccupied = true;
-		else
-			isOccupied = false;
 	}
 
 	public boolean getIsTerrain() {
@@ -134,8 +128,8 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	 */
 	public void setIsTerrain(boolean trueIfTileHasTerrain, boolean trueIfTerrainCanBeOccupied) {
 		isTerrain = trueIfTileHasTerrain;
-		if (!trueIfTerrainCanBeOccupied)
-			isOccupied = true;
+		if (trueIfTileHasTerrain && !trueIfTerrainCanBeOccupied)
+			setIsOccupied(true);
 	}
 
 	public boolean getHasShip() {
@@ -145,25 +139,21 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	/**
 	 * Automatically handles the tile being occupied.
 	 */
-	public void setHasShip(boolean trueIfTileHasShip, Ship theShip) {
-		hasShip = trueIfTileHasShip;
+	public void setHasShip(boolean newHasShip, Ship theShip) {
+		hasShip = newHasShip;
 		ship = theShip;
-		if (trueIfTileHasShip)
-			isOccupied = true;
-		else
-			isOccupied = false;
+		setIsOccupied(newHasShip);
 	}
 
 	/**
 	 * Resets the tile back to default state.
 	 */
 	public void setEmpty() {
-		ship = null;
-		isOccupied = false;
-		isEdge = false;
-		isTerrain = false;
-		highlight = Highlight.NONE;
-		hasShip = false;
+		setHasShip(false, null);
+		setIsOccupied(false);
+		setIsEdge(false);
+		setIsTerrain(false, false);
+		setHighlight(Highlight.NONE);
 	}
 
 	public Ship getShip() {
