@@ -115,15 +115,16 @@ public class Map extends GameObject {
 		Point beginning = curr;
 		PriorityQueue<Tile> tilesLeft = new PriorityQueue<Tile>();
 		List<Point> pointsToCheck = new ArrayList<Point>();
-		for(int x = 0; x < tiles.length; x++){
+		for(int y = 0; y < tiles[0].length; y++){
 			System.out.print("\nnew line: ");
-			for(int y = 0; y < tiles[x].length; y++){
+			for(int x = 0; x < tiles.length; x++){
 				tiles[x][y].setDistance(10000);
 				tiles[x][y].setPreviousTile(null);
 				tilesLeft.add(tiles[x][y]);
 				System.out.print(tiles[x][y].getIsOccupied() + " ");
 			}
 		}
+		System.out.println();
 		tiles[curr.x][curr.y].setDistance(0);
 		tilesLeft.remove(tiles[curr.x][curr.y]);
 		while(tiles[endLocation.x][endLocation.y].getDistance() == 10000){
@@ -179,19 +180,19 @@ public class Map extends GameObject {
 		List<Direction> list = new ArrayList<Direction>();
 		while(!end.equals(beginning)){
 			if(checkIfTileExists(new Point(end.x+1 , end.y)) && !end.equals(beginning) && tiles[end.x][end.y].getPreviousTile().equals(tiles[end.x+1][end.y])){
-				list.add(Direction.LEFT);
+				list.add(0,Direction.LEFT);
 				end = new Point(end.x+1, end.y);
 			}
 			if(checkIfTileExists(new Point(end.x-1 , end.y)) && !end.equals(beginning) && tiles[end.x][end.y].getPreviousTile().equals(tiles[end.x-1][end.y])){
-				list.add(Direction.RIGHT);
+				list.add(0,Direction.RIGHT);
 				end = new Point(end.x-1, end.y);
 			}
 			if(checkIfTileExists(new Point(end.x , end.y+1)) && !end.equals(beginning) && tiles[end.x][end.y].getPreviousTile().equals(tiles[end.x][end.y+1])){
-				list.add(Direction.UP);
+				list.add(0,Direction.UP);
 				end = new Point(end.x, end.y+1);
 			}
 			if(checkIfTileExists(new Point(end.x , end.y-1)) && !end.equals(beginning) && tiles[end.x][end.y].getPreviousTile().equals(tiles[end.x][end.y-1])){
-				list.add(Direction.DOWN);
+				list.add(0,Direction.DOWN);
 				end = new Point(end.x, end.y-1);
 			}
 		}
@@ -271,10 +272,10 @@ public class Map extends GameObject {
 	 * TODO: Fix toString.  Currently displays x as y and y as x.
 	 */
 	public String toString(){
-		String result = "";
-		for(int x = 0; x < tiles[0].length; x++){
-			for(int y = 0; y < tiles.length; y++){
-				result += tiles[y][x].toString();
+		String result = "";		
+		for(int y = 0; y < tiles[0].length; y++){
+			for(int x = 0; x < tiles.length; x++){
+				result += tiles[x][y].toString();
 			}
 			result += "\n";
 		}

@@ -40,7 +40,7 @@ public class Level extends GameObject {
 
 	Observer enableInputObserver;
 
-	public Level() {
+	public Level(int width, int height) {
 		selectedShip = null;
 		tileHovered = null;
 
@@ -55,7 +55,7 @@ public class Level extends GameObject {
 		addChild(camera);
 
 		// Map
-		map = new Map(16, 12);
+		map = new Map(width, height);
 		camera.addChild(map);
 
 		// Ships Holder
