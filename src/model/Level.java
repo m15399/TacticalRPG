@@ -2,7 +2,6 @@ package model;
 
 import input.Button;
 import input.Input;
-import input.TestButton;
 
 import java.awt.Point;
 
@@ -12,6 +11,7 @@ import view.Camera;
 import view.SelectedEnemyShip;
 import view.SelectedShipBorder;
 import view.SelectedShipBorder.SelectionType;
+import view.SelectedShipButtons;
 import view.SelectedShipView;
 import view.Starfield;
 
@@ -23,17 +23,21 @@ public class Level extends GameObject {
 	private Map map;
 	private Starfield starfield;
 	private Camera camera;
-	private LevelButton levelButton;
+	private LevelBackgroundButton levelButton;
 
-	private GameObject ships;
+	private GameObject shipHolder; // parent object for the ships
 	
 	Tile tileHovered;
 	
 	private Ship selectedShip;
+	
 	private SelectedShipView selectedShipView;
 	private SelectedEnemyShip hoveredShipView;
+	
 	private SelectedShipBorder selectedShipBorder;
 	private SelectedShipBorder hoveredShipBorder;
+	
+	private SelectedShipButtons shipButtons;
 
 	Observer enableInputObserver;
 
@@ -54,11 +58,12 @@ public class Level extends GameObject {
 		// Map
 		map = new Map(6, 6);
 		camera.addChild(map);
+		
+		// Ships Holder
+		shipHolder = new GameObject();
+		camera.addChild(shipHolder);
 
-		// Graphics Testing
-//		camera.addChild(new GraphicsTest());
-
-
+		
 		// Selected Ship View
 		selectedShipView = new SelectedShipView();
 		addChild(selectedShipView);
@@ -72,31 +77,21 @@ public class Level extends GameObject {
 		camera.addChild(hoveredShipBorder);
 		hoveredShipBorder.setSelectionType(SelectionType.HOVER);
 		
-		
-		// Ships Holder
-		ships = new GameObject();
-		camera.addChild(ships);
-
-		// Ship Testing
-		Scout scout = new Scout(new Point(2, 2)); 
-		scout.updateHull(-30);
-		addShipToMap(scout);
+		// Ship buttons
+		shipButtons = new SelectedShipButtons();
+		camera.addChild(shipButtons);
 		
 //		Bomber bomber = new Bomber(new Point(4, 4));
 //		bomber.setTeam(1);
 //		addShipToMap(bomber);
 //		addShipToMap(new Fighter(new Point(4, 2)));
 
+
 		// Background button for mouse input on the map
-		levelButton = new LevelButton();
+		levelButton = new LevelBackgroundButton(this);
 		Input.getInstance().addButton(levelButton);
 
-		// Test Button
-		TestButton tb = new TestButton(0, 0, 100, 100);
-		Input.getInstance().addButton(tb);
-		Input.getInstance().removeButton(tb);
-
-		// Enable input observer
+		// Enable input observer - enables input when notified
 		enableInputObserver = new Observer() {
 			public void notified(Observable sender) {
 				levelButton.enable();
@@ -104,7 +99,7 @@ public class Level extends GameObject {
 		};
 	}
 
-	private void tileClicked(int x, int y) {
+	protected void tileClicked(int x, int y) {
 		Tile tile = map.getTile(x, y);
 
 		// clicked outside map
@@ -120,15 +115,19 @@ public class Level extends GameObject {
 			// tile is either terrain or edge
 			// selectShip(null);
 			if (selectedShip != null) {
-				moveSelectedShipTo(x, y);
+				if(tile.getHighlight() == Tile.Highlight.BLUE){
+					moveSelectedShipTo(x, y);
+				}
 			}
 		}
 	}
 	
-	private void tileHovered(int x, int y){
+	protected void tileHovered(int x, int y){
 		Tile tile = map.getTile(x, y);
 
-		// mouse moved out of last tile hovered over
+		// if mouse moved to a different tile, 
+		// let the old tile know it's not moused over
+		// and let the new tile know it is moused over
 		if(tileHovered != tile){
 			if(tileHovered != null)
 				tileHovered.setMousedOver(false);
@@ -138,21 +137,17 @@ public class Level extends GameObject {
 				tileHovered.setMousedOver(true);
 		}
 		
-		// place hover view if it's a ship tile
+		// place hover view next to ship if tile is a ship tile
 		hoveredShipView.setShip(null);
 		hoveredShipBorder.setShip(null);
 		if(tile != null && tile.getHasShip() == true){
 			Ship ship = tile.getShip();
-			
 			if(ship != selectedShip){
 				hoveredShipView.setShip(ship);
-				
 				Point p = camera.convertFromCameraSpace(Map.mapToPixelCoords(new Point(x+1, y)));
-				
 				hoveredShipView.setLocation((int)p.getX(),(int)p.getY());
 				hoveredShipBorder.setShip(ship);
 			}
-			
 		}
 
 	}
@@ -160,13 +155,11 @@ public class Level extends GameObject {
 	public void selectShip(Ship ship) {
 		selectedShip = ship;
 		selectedShipView.setShip(ship);
-		
 		selectedShipBorder.setShip(ship);
 		
 		map.clearHighLights();
 		if(selectedShip != null)
 			map.highlightPossibleMoves(selectedShip);
-
 	}
 
 	public void moveSelectedShipTo(int mapX, int mapY) {
@@ -190,11 +183,15 @@ public class Level extends GameObject {
 
 	public void addShipToMap(Ship ship) {
 		map.getTile(ship.getLocation()).setHasShip(true, ship); // testing
-		ships.addChild(ship);
+		shipHolder.addChild(ship);
 	}
 
 	public void onDestroy() {
 		Input.getInstance().removeButton(levelButton);
+	}
+	
+	public Camera getCamera(){
+		return camera;
 	}
 
 	/*
@@ -275,6 +272,7 @@ public class Level extends GameObject {
 		public void mouseExited(){
 			tileHovered(-1, -1); // pretend we moused off the board to unhiglight tiles
 		}
-
+	
+		
 	}
 }

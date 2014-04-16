@@ -8,6 +8,9 @@ import java.awt.Graphics;
 
 import javax.swing.*;
 
+import levels.TestLevel;
+
+
 
 
 public class Game extends JPanel implements Runnable {
@@ -44,7 +47,7 @@ public class Game extends JPanel implements Runnable {
 		addMouseListener(Input.getInstance());
 		addMouseMotionListener(Input.getInstance());
 		
-		setRoot(new Level());
+		setRoot(new TestLevel());
 
 	}
 	
