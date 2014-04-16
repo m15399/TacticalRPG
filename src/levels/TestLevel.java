@@ -10,7 +10,7 @@ import model.Scout;
 public class TestLevel extends Level {
 
 	public TestLevel() {
-		super(5, 3);
+		super(16, 12);
 		
 		// Ship Testing
 		Scout scout = new Scout(new Point(2, 2));

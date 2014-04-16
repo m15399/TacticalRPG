@@ -87,48 +87,27 @@ public class Map extends GameObject {
 	 * @param endLocation
 	 * @return
 	 */
-//	public List<Direction> shortestPath(Point currentLocation, Point endLocation) {
-//		List<Direction> listOfMoves = new ArrayList<Direction>();
-//		Point temp = currentLocation;
-//		while (!temp.equals(endLocation)) {
-//			if (temp.x < endLocation.x) {
-//				temp.x += 1;
-//				listOfMoves.add(Direction.RIGHT);
-//			} else if (temp.x > endLocation.x) {
-//				temp.x -= 1;
-//				listOfMoves.add(Direction.LEFT);
-//			} else if (temp.y < endLocation.y) {
-//				temp.y += 1;
-//				listOfMoves.add(Direction.DOWN);
-//			} else if (temp.y > endLocation.y) {
-//				temp.y -= 1;
-//				listOfMoves.add(Direction.UP);
-//			}
-//		}
-//		return listOfMoves;
-//	}
-	
-	
+
 	public List<Direction> shortestPath(Point curr, Point endLocation, int moves){
-		System.out.println(curr.toString() + endLocation.toString() + "  " + moves);
-		System.out.println(this.toString());
+//		System.out.println(curr.toString() + endLocation.toString() + "  " + moves);
+//		System.out.println(this.toString());
 		Point beginning = curr;
 		PriorityQueue<Tile> tilesLeft = new PriorityQueue<Tile>();
 		List<Point> pointsToCheck = new ArrayList<Point>();
 		for(int y = 0; y < tiles[0].length; y++){
-			System.out.print("\nnew line: ");
+//			System.out.print("\nnew line: ");
 			for(int x = 0; x < tiles.length; x++){
 				tiles[x][y].setDistance(10000);
 				tiles[x][y].setPreviousTile(null);
 				tilesLeft.add(tiles[x][y]);
-				System.out.print(tiles[x][y].getIsOccupied() + " ");
+//				System.out.print(tiles[x][y].getIsOccupied() + " ");
 			}
 		}
-		System.out.println();
+//		System.out.println();
 		tiles[curr.x][curr.y].setDistance(0);
 		tilesLeft.remove(tiles[curr.x][curr.y]);
 		while(tiles[endLocation.x][endLocation.y].getDistance() == 10000){
-			System.out.println(curr.toString() + tiles[endLocation.x][endLocation.y].getDistance());
+//			System.out.println(curr.toString() + tiles[endLocation.x][endLocation.y].getDistance());
 			if(checkIfTileExists(new Point(curr.x+1, curr.y)) && !tiles[curr.x+1][curr.y].getIsOccupied() && tiles[curr.x+1][curr.y].getDistance() == 10000){
 				tiles[curr.x+1][curr.y].setDistance(tiles[curr.x][curr.y].getDistance()+1);
 				if(tiles[curr.x][curr.y].getDistance() < moves){
