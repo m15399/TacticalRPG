@@ -21,55 +21,68 @@ public class Fighter extends Ship {
 
 	/*
 	 * Ship basic attack.
-	 * Half damage against non-mothership
+	 * 1.5 damage against bombers
 	 */
 	@Override
 	public void attack(Ship target) {
 		double damage = this.getDamage();
-		if (!target.getName().equals("Mothership")) {
+		if (!target.getName().equals("Bomber")) {
+			damage *= 1.5;
 			if (target.getHull() - target.getFinalDamage(damage) > 0)
 				target.setHull(target.getHull() - target.getFinalDamage(damage));
 			else
 				target.setHull(0);
 		} else {
-			if (target.getHull() - target.getFinalDamage(damage/2) > 0)
-				target.setHull(target.getHull() - target.getFinalDamage(damage/2));
+			if (target.getHull() - target.getFinalDamage(damage) > 0)
+				target.setHull(target.getHull() - target.getFinalDamage(damage));
 			else
 				target.setHull(0);
 		}
-		this.setMoves(this.getMoves() - 1);
+		this.setCanAttack(false);
 	}
 
 	/*
 	 * Ship special ability
 	 */
+	
 	public void special(Ship target) {
-		// deal true damage to target mothership
-		//target.setHull
+		// able to move twice
 		this.setCanUseAbility(false);
-		this.setMoves(this.getMoves() - 1);
 	}
+
+	/*
+	 * Ship moves
+	 */
 
 	public void move() {
 		this.setCanMove(false);
 	}
+	
+	/*
+	 * Ship trades item
+	 */
 
 	public void trade(Ship ally, Item item) {
 		// set gui screen for trading
 		this.removeFromItems(item);
 		ally.addToItems(item);
 	}
-
+	
+	/*
+	 * Ship uses item
+	 */
+	
 	public void useItem(Ship target, Item item) {
+		this.setCanAttack(false);
+		this.setCanUseAbility(false);
+		this.setCanUseItem(false);
 		item.useOn(target);
-		this.setMoves(this.getMoves() - 1);
 	}
 
 	/*
 	 * Ship waits turn
 	 */
 	public void waitTurn() {
-		this.setMoves(this.getMoves() - 1);
 	}
 
 }

@@ -15,7 +15,7 @@ public class Ship extends GameObject {
 			maxDamage, critChance;
 	private List<Item> items;
 	private String description, name;
-	private boolean movesLeft, hasAttacked, canMove, canUseAbility;
+	private boolean movesLeft, canAttack, canMove, canUseAbility, canUseItem;
 	private int team;
 	
 	private ShipVisual visual;
@@ -106,7 +106,10 @@ public class Ship extends GameObject {
 	 */
 	
 	public double getFinalDamage(double initialDamage){
-		return initialDamage - shielding;
+		if (initialDamage - shielding <= 0)
+			return 0;
+		else
+			return initialDamage - shielding;
 	}
 
 	/*
@@ -301,12 +304,12 @@ public class Ship extends GameObject {
 		this.movesLeft = movesLeft;
 	}
 
-	public Boolean getHasAttacked() {
-		return hasAttacked;
+	public Boolean getCanAttack() {
+		return canAttack;
 	}
 
-	public void setHasAttacked(boolean hasAttacked) {
-		this.hasAttacked = hasAttacked;
+	public void setCanAttack(boolean canAttack) {
+		this.canAttack = canAttack;
 	}
 
 	public Boolean getCanMove() {
@@ -323,5 +326,13 @@ public class Ship extends GameObject {
 
 	public void setCanUseAbility(boolean canUseAbility) {
 		this.canUseAbility = canUseAbility;
+	}
+
+	public boolean isCanUseItem() {
+		return canUseItem;
+	}
+
+	public void setCanUseItem(boolean canUseItem) {
+		this.canUseItem = canUseItem;
 	}
 }

@@ -29,41 +29,52 @@ public class Scout extends Ship {
 			target.setHull(target.getHull() - target.getFinalDamage(damage));
 		else
 			target.setHull(0);
-		this.setMoves(this.getMoves() - 1);
+		this.setCanAttack(false);
 	}
 
 	/*
 	 * Ship special ability
 	 */
+	
 	public void special(Ship target) {
 		// possibly be untargetable for one turn
 		target.setAccuracy(100);
 		this.setCanUseAbility(false);
-		this.setMoves(this.getMoves() - 1);
 	}
+	
+	/*
+	 * Ship moves
+	 */
 
 	public void move() {
 		this.setCanMove(false);
 	}
-
 	
+	/*
+	 * Ship trades item
+	 */
+
 	public void trade(Ship ally, Item item) {
 		// set gui screen for trading
 		this.removeFromItems(item);
 		ally.addToItems(item);
 	}
 	
+	/*
+	 * Ship uses item
+	 */
 	
 	public void useItem(Ship target, Item item) {
+		this.setCanAttack(false);
+		this.setCanUseAbility(false);
+		this.setCanUseItem(false);
 		item.useOn(target);
-		this.setMoves(this.getMoves() - 1);
 	}
 
 	/*
 	 * Ship waits turn
 	 */
 	public void waitTurn() {
-		this.setMoves(this.getMoves() - 1);
 	}
 
 }
