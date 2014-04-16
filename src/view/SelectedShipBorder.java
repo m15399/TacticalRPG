@@ -53,7 +53,11 @@ public class SelectedShipBorder extends GameObject {
 		int oy = (int)(p.getY())+border;
 		
 		// border
-		g.setColor(Color.green);
+		if(type == SelectionType.SELECTED){
+			g.setColor(Color.green);
+		} else {
+			g.setColor(Color.gray);
+		}
 		g.drawRect(ox, oy, width-border*2, height-border*2);
 	}
 	

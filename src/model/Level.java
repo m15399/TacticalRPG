@@ -69,8 +69,8 @@ public class Level extends GameObject {
 		selectedShipBorder = new SelectedShipBorder();
 		camera.addChild(selectedShipBorder);
 		hoveredShipBorder = new SelectedShipBorder();
-		camera.addChild(selectedShipBorder);
-		hoveredShipBorder.setSelectionType(SelectionType.SELECTED);
+		camera.addChild(hoveredShipBorder);
+		hoveredShipBorder.setSelectionType(SelectionType.HOVER);
 		
 		
 		// Ships Holder
@@ -140,6 +140,7 @@ public class Level extends GameObject {
 		
 		// place hover view if it's a ship tile
 		hoveredShipView.setShip(null);
+		hoveredShipBorder.setShip(null);
 		if(tile != null && tile.getHasShip() == true){
 			Ship ship = tile.getShip();
 			
@@ -149,6 +150,7 @@ public class Level extends GameObject {
 				Point p = camera.convertFromCameraSpace(Map.mapToPixelCoords(new Point(x+1, y)));
 				
 				hoveredShipView.setLocation((int)p.getX(),(int)p.getY());
+				hoveredShipBorder.setShip(ship);
 			}
 			
 		}
