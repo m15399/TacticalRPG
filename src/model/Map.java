@@ -192,9 +192,9 @@ public class Map extends GameObject {
 	 */
 	public String toString(){
 		String result = "";
-		for(int x = 0; x < tiles.length; x++){
+		for(int x = 0; x < tiles[0].length; x++){
 			for(int y = 0; y < tiles[y].length; y++){
-				result += tiles[x][y].toString();
+				result += tiles[y][x].toString();
 			}
 			result += "\n";
 		}
