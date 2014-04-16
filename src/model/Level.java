@@ -56,7 +56,7 @@ public class Level extends GameObject {
 		addChild(camera);
 
 		// Map
-		map = new Map(6, 6);
+		map = new Map(16, 12);
 		camera.addChild(map);
 		
 		// Ships Holder
@@ -81,10 +81,10 @@ public class Level extends GameObject {
 		shipButtons = new SelectedShipButtons();
 		camera.addChild(shipButtons);
 		
-//		Bomber bomber = new Bomber(new Point(4, 4));
-//		bomber.setTeam(1);
-//		addShipToMap(bomber);
-//		addShipToMap(new Fighter(new Point(4, 2)));
+		Bomber bomber = new Bomber(new Point(4, 4));
+		bomber.setTeam(1);
+		addShipToMap(bomber);
+		addShipToMap(new Fighter(new Point(4, 2)));
 
 
 		// Background button for mouse input on the map
@@ -169,8 +169,7 @@ public class Level extends GameObject {
 		// update map
 		Tile oldTile = map.getTile(selectedShip.getLocation());
 		Tile newTile = map.getTile(mapX, mapY);
-		oldTile.setEmpty();
-		newTile.setHasShip(true, selectedShip);
+		
 
 		map.clearHighLights();
 		
@@ -178,7 +177,8 @@ public class Level extends GameObject {
 		selectedShip.moveWithDirections(enableInputObserver, mapX, mapY,
 				map.shortestPath(selectedShip.getLocation(), new Point(mapX,
 						mapY), selectedShip.getMoves()));
-
+		oldTile.setEmpty();
+		newTile.setHasShip(true, selectedShip);
 	}
 
 	public void addShipToMap(Ship ship) {

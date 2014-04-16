@@ -112,64 +112,66 @@ public class Map extends GameObject {
 	
 	public List<Direction> shortestPath(Point curr, Point endLocation, int moves){
 		System.out.println(curr.toString() + endLocation.toString() + "  " + moves);
+		System.out.println(this.toString());
 		Point beginning = curr;
 		PriorityQueue<Tile> tilesLeft = new PriorityQueue<Tile>();
 		List<Point> pointsToCheck = new ArrayList<Point>();
 		for(int x = 0; x < tiles.length; x++){
+			System.out.print("\nnew line: ");
 			for(int y = 0; y < tiles[x].length; y++){
 				tiles[x][y].setDistance(10000);
 				tiles[x][y].setPreviousTile(null);
 				tilesLeft.add(tiles[x][y]);
+				System.out.print(tiles[x][y].getIsOccupied() + " ");
 			}
 		}
 		tiles[curr.x][curr.y].setDistance(0);
 		tilesLeft.remove(tiles[curr.x][curr.y]);
 		while(tiles[endLocation.x][endLocation.y].getDistance() == 10000){
 			System.out.println(curr.toString() + tiles[endLocation.x][endLocation.y].getDistance());
-				if(checkIfTileExists(new Point(curr.x+1, curr.y)) && !tiles[curr.x+1][curr.y].getIsOccupied() && tiles[curr.x+1][curr.y].getDistance() == 10000){
-					tiles[curr.x+1][curr.y].setDistance(tiles[curr.x][curr.y].getDistance()+1);
-					if(tiles[curr.x][curr.y].getDistance() < moves){
-						tiles[curr.x+1][curr.y].setHighlight(Highlight.RED);
-					}
-					
-					tilesLeft.remove(tiles[curr.x+1][curr.y]);
-					tiles[curr.x+1][curr.y].setPreviousTile(tiles[curr.x][curr.y]);
-					pointsToCheck.add(new Point(curr.x+1,curr.y));
+			if(checkIfTileExists(new Point(curr.x+1, curr.y)) && !tiles[curr.x+1][curr.y].getIsOccupied() && tiles[curr.x+1][curr.y].getDistance() == 10000){
+				tiles[curr.x+1][curr.y].setDistance(tiles[curr.x][curr.y].getDistance()+1);
+				if(tiles[curr.x][curr.y].getDistance() < moves){
+					tiles[curr.x+1][curr.y].setHighlight(Highlight.BLUE);
 				}
-				if(checkIfTileExists(new Point(curr.x, curr.y+1)) && !tiles[curr.x][curr.y+1].getIsOccupied() && tiles[curr.x][curr.y+1].getDistance() == 10000){
-					tiles[curr.x][curr.y+1].setDistance(tiles[curr.x][curr.y].getDistance()+1);
-					if(tiles[curr.x][curr.y].getDistance() < moves){
-						tiles[curr.x][curr.y+1].setHighlight(Highlight.RED);
-					}
-					
-					tilesLeft.remove(tiles[curr.x][curr.y+1]);
-					tiles[curr.x][curr.y+1].setPreviousTile(tiles[curr.x][curr.y]);
-					pointsToCheck.add(new Point(curr.x,curr.y+1));
+				tilesLeft.remove(tiles[curr.x+1][curr.y]);
+				tiles[curr.x+1][curr.y].setPreviousTile(tiles[curr.x][curr.y]);
+				pointsToCheck.add(new Point(curr.x+1,curr.y));
+			}
+			if(checkIfTileExists(new Point(curr.x, curr.y+1)) && !tiles[curr.x][curr.y+1].getIsOccupied() && tiles[curr.x][curr.y+1].getDistance() == 10000){
+				tiles[curr.x][curr.y+1].setDistance(tiles[curr.x][curr.y].getDistance()+1);
+				if(tiles[curr.x][curr.y].getDistance() < moves){
+					tiles[curr.x][curr.y+1].setHighlight(Highlight.BLUE);
 				}
-				if(checkIfTileExists(new Point(curr.x-1, curr.y)) && !tiles[curr.x-1][curr.y].getIsOccupied() && tiles[curr.x-1][curr.y].getDistance() == 10000){
-					tiles[curr.x-1][curr.y].setDistance(tiles[curr.x][curr.y].getDistance()+1);
-					if(tiles[curr.x][curr.y].getDistance() < moves){
-						tiles[curr.x-1][curr.y].setHighlight(Highlight.RED);
-					}
-					
-					tilesLeft.remove(tiles[curr.x-1][curr.y]);
-					tiles[curr.x-1][curr.y].setPreviousTile(tiles[curr.x][curr.y]);
-					pointsToCheck.add(new Point(curr.x-1,curr.y));
+				
+				tilesLeft.remove(tiles[curr.x][curr.y+1]);
+				tiles[curr.x][curr.y+1].setPreviousTile(tiles[curr.x][curr.y]);
+				pointsToCheck.add(new Point(curr.x,curr.y+1));
+			}
+			if(checkIfTileExists(new Point(curr.x-1, curr.y)) && !tiles[curr.x-1][curr.y].getIsOccupied() && tiles[curr.x-1][curr.y].getDistance() == 10000){
+				tiles[curr.x-1][curr.y].setDistance(tiles[curr.x][curr.y].getDistance()+1);
+				if(tiles[curr.x][curr.y].getDistance() < moves){
+					tiles[curr.x-1][curr.y].setHighlight(Highlight.BLUE);
 				}
-				if(checkIfTileExists(new Point(curr.x, curr.y-1)) && !tiles[curr.x][curr.y-1].getIsOccupied() && tiles[curr.x][curr.y-1].getDistance() == 10000){
-					tiles[curr.x][curr.y-1].setDistance(tiles[curr.x][curr.y].getDistance()+1);
-					if(tiles[curr.x][curr.y].getDistance() < moves){
-						tiles[curr.x][curr.y-1].setHighlight(Highlight.RED);
-					}
-					
-					tilesLeft.remove(tiles[curr.x][curr.y-1]);
-					tiles[curr.x][curr.y-1].setPreviousTile(tiles[curr.x][curr.y]);
-					pointsToCheck.add(new Point(curr.x,curr.y-1));
+				
+				tilesLeft.remove(tiles[curr.x-1][curr.y]);
+				tiles[curr.x-1][curr.y].setPreviousTile(tiles[curr.x][curr.y]);
+				pointsToCheck.add(new Point(curr.x-1,curr.y));
+			}
+			if(checkIfTileExists(new Point(curr.x, curr.y-1)) && !tiles[curr.x][curr.y-1].getIsOccupied() && tiles[curr.x][curr.y-1].getDistance() == 10000){
+				tiles[curr.x][curr.y-1].setDistance(tiles[curr.x][curr.y].getDistance()+1);
+				if(tiles[curr.x][curr.y].getDistance() < moves){
+					tiles[curr.x][curr.y-1].setHighlight(Highlight.BLUE);
 				}
-				if(pointsToCheck.size() > 0){
-					curr = pointsToCheck.get(0);
-					pointsToCheck.remove(0);
-				}
+				
+				tilesLeft.remove(tiles[curr.x][curr.y-1]);
+				tiles[curr.x][curr.y-1].setPreviousTile(tiles[curr.x][curr.y]);
+				pointsToCheck.add(new Point(curr.x,curr.y-1));
+			}
+			if(pointsToCheck.size() > 0){
+				curr = pointsToCheck.get(0);
+				pointsToCheck.remove(0);
+			}
 		}
 		return buildDirectionsList(endLocation, beginning);
 	}
