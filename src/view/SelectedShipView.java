@@ -78,7 +78,7 @@ public class SelectedShipView extends GameObject {
 		g2.setFont(new Font("Arial", Font.BOLD, 16));
 		g2.drawString("Stats", 333 + offsetX, 30 + offsetY);
 		g2.setFont(new Font("Arial", Font.TRUETYPE_FONT, 12));
-		g2.drawString("Hull:                 " + currentShip.getHull(),
+		g2.drawString("Hull:            " + currentShip.getHull() + " / " + currentShip.getMaxHull(),
 				333 + offsetX, 50 + offsetY);
 		g2.drawString("Shields:          " + currentShip.getShielding() + "%",
 				333 + offsetX, 65 + offsetY);

@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import model.Game;
 import model.GameObject;
 import model.Ship;
 
@@ -32,6 +33,17 @@ public class SelectedEnemyShip extends GameObject {
 	}
 	
 	public void setLocation(int x, int y){
+		x += 16;
+		y += 16;
+		
+		int maxX = Game.WIDTH - WIDTH - 5;
+		int maxY = Game.HEIGHT - HEIGHT - 27;
+		
+		if(x > maxX)
+			x = maxX;
+		if(y > maxY)
+			y = maxY;
+		
 		this.x = x;
 		this.y = y;
 	}
@@ -47,8 +59,8 @@ public class SelectedEnemyShip extends GameObject {
 
 		// I added these offsets to all the coordinates so that we can move it
 		// around more easily
-		int offsetX = x + 16;
-		int offsetY = y + 16;
+		int offsetX = x;
+		int offsetY = y;
 
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(2));
@@ -76,7 +88,7 @@ public class SelectedEnemyShip extends GameObject {
 		g2.setFont(new Font("Arial", Font.BOLD, 16));
 		g2.drawString("Stats", leftColumn, 120 + offsetY);
 		g2.setFont(new Font("Arial", Font.TRUETYPE_FONT, 12));
-		g2.drawString("Hull:                 " + currentShip.getHull(),
+		g2.drawString("Hull:            " + currentShip.getHull() + " / " + currentShip.getMaxHull(),
 				leftColumn, 145 + offsetY);
 		g2.drawString("Shields:          " + currentShip.getShielding() + "%",
 				leftColumn, 160 + offsetY);
