@@ -1,4 +1,4 @@
-package specificic_ships_items;
+package specific_ships_items;
 
 import model.Item;
 import model.Ship;

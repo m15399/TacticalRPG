@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
-import specificic_ships_items.Scout;
+import specific_ships_items.Scout;
 
 /**
  * Tried to wrap all the Tile classes into one class to simplify things and cut

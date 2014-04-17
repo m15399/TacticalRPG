@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
-import specificic_ships_items.Scout;
+import specific_ships_items.Scout;
 
 public class BuildTileMapFromTextFile {
 	

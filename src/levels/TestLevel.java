@@ -2,9 +2,9 @@ package levels;
 
 import java.awt.Point;
 
-import specificic_ships_items.Bomber;
-import specificic_ships_items.Fighter;
-import specificic_ships_items.Scout;
+import specific_ships_items.Bomber;
+import specific_ships_items.Fighter;
+import specific_ships_items.Scout;
 import model.Level;
 
 public class TestLevel extends Level {

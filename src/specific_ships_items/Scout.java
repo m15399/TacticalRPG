@@ -1,4 +1,4 @@
-package specificic_ships_items;
+package specific_ships_items;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -6,20 +6,21 @@ import java.util.List;
 
 import model.Item;
 import model.Ship;
-import shipVisuals.ShipVisual;
+import shipVisuals.ScoutVisual;
 
-public class Mothership extends Ship{
+public class Scout extends Ship {
 
-	public Mothership(Point newLocation) {
+	public Scout(Point newLocation) {
 		super(newLocation);
-		String description = "Grand mothership,\nstationary and capable\nof unit production.";
+		String description = "Mobile scouting ship,\ngenerates and places\nmines.";
 		List<Item> items = new ArrayList<Item>();
 		items.add(new SpaceMine());
-		this.constructorAid("Mothership", 0, 500, 50, 500, 50, 100, items, description, 0, 0, 0, 1);
-		
-		setVisual(new ShipVisual(this));
+		this.constructorAid("Scout", 5, 50, 20, 50, 20, 60, items, description,
+				30, 35, 15, 3);
+
+		setVisual(new ScoutVisual(this));
 	}
-	
+
 	/*
 	 * Ship basic attack.
 	 */
@@ -38,7 +39,8 @@ public class Mothership extends Ship{
 	 */
 	
 	public void special(Ship target) {
-		// possibly create scout or other unit
+		// possibly be untargetable for one turn
+		target.setAccuracy(100);
 		this.setCanUseAbility(false);
 	}
 	
