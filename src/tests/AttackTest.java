@@ -4,10 +4,11 @@ import static org.junit.Assert.*;
 
 import java.awt.Point;
 
-import model.Scout;
 import model.Ship;
 
 import org.junit.Test;
+
+import specificic_ships_items.Scout;
 
 public class AttackTest {
 

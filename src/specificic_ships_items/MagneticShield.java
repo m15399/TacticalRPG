@@ -1,4 +1,7 @@
-package model;
+package specificic_ships_items;
+
+import model.Item;
+import model.Ship;
 
 public class MagneticShield extends Item{
 	private double shieldingBoost ;

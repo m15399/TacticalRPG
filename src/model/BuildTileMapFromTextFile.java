@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
+import specificic_ships_items.Scout;
+
 public class BuildTileMapFromTextFile {
 	
 	private Tile[][] tiles;

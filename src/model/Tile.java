@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
+import specificic_ships_items.Scout;
+
 /**
  * Tried to wrap all the Tile classes into one class to simplify things and cut
  * down on the number of overall classes. After a ship has moved away from a

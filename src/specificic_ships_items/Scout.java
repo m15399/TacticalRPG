@@ -1,43 +1,36 @@
-package model;
+package specificic_ships_items;
 
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Item;
+import model.Ship;
 import shipVisuals.ScoutVisual;
 
-public class Fighter extends Ship {
+public class Scout extends Ship {
 
-	public Fighter(Point newLocation) {
+	public Scout(Point newLocation) {
 		super(newLocation);
-		String description = "Anti-air fighter,\ncapable of long\nrange attacks.";
+		String description = "Mobile scouting ship,\ngenerates and places\nmines.";
 		List<Item> items = new ArrayList<Item>();
 		items.add(new SpaceMine());
-		this.constructorAid("Fighter", 3, 75, 25, 75, 25, 80, items,
-				description, 40, 50, 25, 2);
+		this.constructorAid("Scout", 5, 50, 20, 50, 20, 60, items, description,
+				30, 35, 15, 3);
 
 		setVisual(new ScoutVisual(this));
 	}
 
 	/*
 	 * Ship basic attack.
-	 * 1.5 damage against bombers
 	 */
 	@Override
 	public void attack(Ship target) {
 		double damage = this.getDamage();
-		if (!target.getName().equals("Bomber")) {
-			damage *= 1.5;
-			if (target.getHull() - target.getFinalDamage(damage) > 0)
-				target.setHull(target.getHull() - target.getFinalDamage(damage));
-			else
-				target.setHull(0);
-		} else {
-			if (target.getHull() - target.getFinalDamage(damage) > 0)
-				target.setHull(target.getHull() - target.getFinalDamage(damage));
-			else
-				target.setHull(0);
-		}
+		if (target.getHull() - target.getFinalDamage(damage) > 0)
+			target.setHull(target.getHull() - target.getFinalDamage(damage));
+		else
+			target.setHull(0);
 		this.setCanAttack(false);
 	}
 
@@ -46,10 +39,11 @@ public class Fighter extends Ship {
 	 */
 	
 	public void special(Ship target) {
-		// able to move twice
+		// possibly be untargetable for one turn
+		target.setAccuracy(100);
 		this.setCanUseAbility(false);
 	}
-
+	
 	/*
 	 * Ship moves
 	 */
