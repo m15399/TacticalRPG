@@ -15,7 +15,7 @@ public class Ship extends GameObject {
 			maxDamage, critChance;
 	private List<Item> items;
 	private String description, name;
-	private boolean movesLeft, canAttack, canMove, canUseAbility, canUseItem;
+	private boolean canAttack, canMove, canUseAbility, canUseItem, isWaiting;
 	private int team;
 	
 	private ShipVisual visual;
@@ -33,6 +33,7 @@ public class Ship extends GameObject {
 			return false;
 		return true;
 	}
+
 
 	/**
 	 * Helps remind whoever is making a new class of all the values that should
@@ -73,6 +74,12 @@ public class Ship extends GameObject {
 	}
 
 	
+	public void startTurn(){
+		setMoves(range);
+		canAttack = true;
+		isWaiting = false;
+	}
+	
 	/*
 	 * Plays the move animation 
 	 */
@@ -82,6 +89,7 @@ public class Ship extends GameObject {
 		if(visual != null){
 			visual.moveWithDirections(notifyWhenDone, directions);
 		}
+		setMoves(moves - directions.size());
 	}
 	
 	/*
@@ -89,6 +97,23 @@ public class Ship extends GameObject {
 	 */
 	public void attack(Ship target) {
 		
+	}
+	
+	public void setIsWaiting(boolean b){
+		isWaiting = b;
+	}
+	
+	public boolean getIsWaiting(){
+		if(isWaiting){
+			return true;
+		} else {
+			if(!canMove && !canAttack && !canUseAbility && !canUseItem){
+				setIsWaiting(true);
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 	
 	/*
@@ -206,6 +231,11 @@ public class Ship extends GameObject {
 
 	public void setMoves(int newMoveTotal) {
 		moves = newMoveTotal;
+		if(moves > 0){
+			setCanMove(true);
+		} else {
+			setCanMove(false);
+		}
 	}
 
 	public void updateMoves(int valueToAdjustMovesBy) {
@@ -295,15 +325,7 @@ public class Ship extends GameObject {
 	public void updateRange(int valueToAdjustBy){
 		range += valueToAdjustBy;
 	}
-
-	public Boolean getMovesLeft() {
-		return movesLeft;
-	}
-
-	public void setMovesLeft(boolean movesLeft) {
-		this.movesLeft = movesLeft;
-	}
-
+	
 	public Boolean getCanAttack() {
 		return canAttack;
 	}

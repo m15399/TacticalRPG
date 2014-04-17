@@ -172,27 +172,48 @@ public class Map extends GameObject {
 	 * @param ship
 	 */
 	
-	public void highlightPossibleMoves(Ship ship){
-		if(ship.getMoves() >= 1){
-			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x+1, ship.getLocation().y), ship.getMoves(), 1);
-			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x-1, ship.getLocation().y), ship.getMoves(), 1);
-			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x, ship.getLocation().y+1), ship.getMoves(), 1);
-			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x, ship.getLocation().y-1), ship.getMoves(), 1);
-		}
+	public void highlightTilesAroundShip(Ship ship, int radius, boolean accountForTerrain, Highlight highlightColor){
+		int x = ship.getLocation().x;
+		int y = ship.getLocation().y;
+		tiles[x][y].setHighlight(highlightColor);
+		privateHelperForHighlightTiles(new Point(x + 1, y), radius, accountForTerrain, highlightColor);
+		privateHelperForHighlightTiles(new Point(x - 1, y), radius, accountForTerrain, highlightColor);
+		privateHelperForHighlightTiles(new Point(x, y + 1), radius, accountForTerrain, highlightColor);
+		privateHelperForHighlightTiles(new Point(x, y - 1), radius, accountForTerrain, highlightColor);
 	}
 	
-	private void privateHelperForHighlightPossibleMoves(Ship ship, Point location, int numberOfMoves, int currentMoves){
-		if(checkIfTileExists(location) && numberOfMoves >= currentMoves && !tiles[location.x][location.y].getIsOccupied()){
-			if(ship.getTeam() == 0)
-				tiles[location.x][location.y].setHighlight(Highlight.BLUE);
-			else if(ship.getTeam() == 1)
-				tiles[location.x][location.y].setHighlight(Highlight.RED);
-			else if(ship.getTeam() == 2) //For allies if we include them
-				tiles[location.x][location.y].setHighlight(Highlight.GREEN);
-			privateHelperForHighlightPossibleMoves(ship, new Point(location.x+1, location.y), numberOfMoves, currentMoves + 1);
-			privateHelperForHighlightPossibleMoves(ship, new Point(location.x-1, location.y), numberOfMoves, currentMoves + 1);
-			privateHelperForHighlightPossibleMoves(ship, new Point(location.x, location.y+1), numberOfMoves, currentMoves + 1);
-			privateHelperForHighlightPossibleMoves(ship, new Point(location.x, location.y-1), numberOfMoves, currentMoves + 1);
+//	public void highlightPossibleMoves(Ship ship){
+//		if(ship.getMoves() >= 1){
+//			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x+1, ship.getLocation().y), ship.getMoves(), 1);
+//			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x-1, ship.getLocation().y), ship.getMoves(), 1);
+//			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x, ship.getLocation().y+1), ship.getMoves(), 1);
+//			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x, ship.getLocation().y-1), ship.getMoves(), 1);
+//		}
+//	}
+	
+	private void privateHelperForHighlightTiles(Point location, int radius, boolean accountForTerrain, Highlight highlightColor){
+		if(!checkIfTileExists(location))
+			return;
+		
+		int x = location.x;
+		int y = location.y;
+		
+		if(radius <= 0)
+			return;
+		
+		if(!accountForTerrain || !tiles[location.x][location.y].getIsOccupied()){
+			tiles[x][y].setHighlight(highlightColor);
+			
+//			if(ship.getTeam() == 0)
+//				tiles[location.x][location.y].setHighlight(Highlight.BLUE);
+//			else if(ship.getTeam() == 1)
+//				tiles[location.x][location.y].setHighlight(Highlight.RED);
+//			else if(ship.getTeam() == 2) //For allies if we include them
+//				tiles[location.x][location.y].setHighlight(Highlight.GREEN);
+			privateHelperForHighlightTiles(new Point(x+1, y), radius-1, accountForTerrain, highlightColor);
+			privateHelperForHighlightTiles(new Point(x-1, y), radius-1, accountForTerrain, highlightColor);
+			privateHelperForHighlightTiles(new Point(x, y+1), radius-1, accountForTerrain, highlightColor);
+			privateHelperForHighlightTiles(new Point(x, y-1), radius-1, accountForTerrain, highlightColor);
 		}
 	}
 	
@@ -204,7 +225,7 @@ public class Map extends GameObject {
 	}
 	
 	public List<Point> listPossibleMoves(Ship ship){
-		highlightPossibleMoves(ship);
+		highlightTilesAroundShip(ship, ship.getMoves(), true, Highlight.RED);
 		List<Point> possibleMoves = new ArrayList<Point>();
 		for(int y = 0; y < tiles[0].length; y++){
 			for(int x = 0; x < tiles.length; x++){

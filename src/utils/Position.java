@@ -44,6 +44,14 @@ public class Position extends Observable implements Observer {
 		rotation = 0;
 		parent = null;
 	}
+	
+	public double getLocalX(){
+		return localX;
+	}
+	
+	public double getLocalY(){
+		return localY;
+	}
 
 	public double getX() {
 		return globalX;

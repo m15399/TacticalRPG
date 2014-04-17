@@ -108,8 +108,8 @@ public class Input implements MouseMotionListener, MouseListener {
 			double sx = p.getScaleX();
 			double sy = p.getScaleY();
 
-			if (mouseX > x && mouseX < x + sx) {
-				if (mouseY > y && mouseY < y + sy) {
+			if (mouseX >= x && mouseX < x + sx) {
+				if (mouseY >= y && mouseY < y + sy) {
 					if (b.getEnabled())
 						return b;
 				}

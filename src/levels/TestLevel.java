@@ -17,10 +17,11 @@ public class TestLevel extends Level {
 		scout.updateHull(-30);
 		addShipToMap(scout);
 
-		Bomber bomber = new Bomber(new Point(3, 0));
-		bomber.setTeam(1);
-		addShipToMap(bomber);
+		Bomber bomber = new Bomber(new Point(4, 4));
+		addEnemyShipToMap(bomber);
 		addShipToMap(new Fighter(new Point(4, 2)));
+		
+		startTurn(0);
 	}
 
 }
