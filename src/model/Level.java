@@ -138,7 +138,7 @@ public class Level extends GameObject {
 			Ship s = (Ship) o;
 			s.startTurn();
 		}
-		selectShip(getNextShipWithMoves());
+		selectNextShip();
 	}
 
 	public Ship getNextShipWithMoves() {
