@@ -183,7 +183,12 @@ public class Map extends GameObject {
 	
 	private void privateHelperForHighlightPossibleMoves(Ship ship, Point location, int numberOfMoves, int currentMoves){
 		if(checkIfTileExists(location) && numberOfMoves >= currentMoves && !tiles[location.x][location.y].getIsOccupied()){
-			tiles[location.x][location.y].setHighlight(Highlight.BLUE);
+			if(ship.getTeam() == 0)
+				tiles[location.x][location.y].setHighlight(Highlight.BLUE);
+			else if(ship.getTeam() == 1)
+				tiles[location.x][location.y].setHighlight(Highlight.RED);
+			else if(ship.getTeam() == 2) //For allies if we include them
+				tiles[location.x][location.y].setHighlight(Highlight.GREEN);
 			privateHelperForHighlightPossibleMoves(ship, new Point(location.x+1, location.y), numberOfMoves, currentMoves + 1);
 			privateHelperForHighlightPossibleMoves(ship, new Point(location.x-1, location.y), numberOfMoves, currentMoves + 1);
 			privateHelperForHighlightPossibleMoves(ship, new Point(location.x, location.y+1), numberOfMoves, currentMoves + 1);
@@ -196,6 +201,31 @@ public class Map extends GameObject {
 			return true;
 		}
 		return false;
+	}
+	
+	public List<Point> listPossibleMoves(Ship ship){
+		highlightPossibleMoves(ship);
+		List<Point> possibleMoves = new ArrayList<Point>();
+		for(int y = 0; y < tiles[0].length; y++){
+			for(int x = 0; x < tiles.length; x++){
+				if(tiles[x][y].getHighlight() == Highlight.RED){
+					possibleMoves.add(new Point(x, y));
+				}
+			}
+		}
+		return possibleMoves;
+	}
+	
+	public List<Ship> shipsWithinRange(Point location, int range){
+		List<Ship> targetList = new ArrayList<Ship>();
+		for(int y = location.y-range; y < location.y+range; y++){
+			for(int x = location.x-range; x < location.x+range; x++){
+				if(checkIfTileExists(new Point(x,y)) && tiles[x][y].getHasShip() && tiles[x][y].getShip().getTeam() == 0){
+					targetList.add(tiles[x][y].getShip());
+				}
+			}
+		}
+		return targetList;
 	}
 	
 	public void clearHighLights(){

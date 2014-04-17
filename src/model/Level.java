@@ -187,5 +187,9 @@ public class Level extends GameObject {
 	public Camera getCamera() {
 		return camera;
 	}
+	
+	public Map getMap(){
+		return map;
+	}
 
 }
