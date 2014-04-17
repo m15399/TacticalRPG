@@ -23,10 +23,7 @@ public class RandomStrategy implements Strategy{
 				potentialMoves.remove(randomMove);
 			}
 		}
-		else if(targets.size() == 1){
-			ship.attack(targets.get(0));
-		}
-		else if(targets.size() > 1){
+		else if(targets.size() >= 1){
 			int randomShip = random.nextInt(targets.size());
 			ship.attack(targets.get(randomShip));
 		}
