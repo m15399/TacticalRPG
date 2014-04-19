@@ -4,8 +4,11 @@ import input.Button;
 import input.Input;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 
+import strategies.RandomStrategy;
+import strategies.Strategy;
 import utils.Observable;
 import utils.Observer;
 import view.Camera;
@@ -37,6 +40,7 @@ public class Level extends GameObject {
 	private GameObject enemyShipHolder;
 
 	private int currentTeam;
+	private int numHumans;
 
 	private Tile tileHovered;
 
@@ -53,11 +57,14 @@ public class Level extends GameObject {
 	private Observer enterDefaultStateObserver;
 
 	private TurnState state;
+	
+	private Strategy aiStrategy;
 
 	public Level(int width, int height) {
 		selectedShip = null;
 		tileHovered = null;
 		currentTeam = 0;
+		numHumans = 1;
 
 		// Camera / Starfield
 		camera = new Camera();
@@ -99,6 +106,9 @@ public class Level extends GameObject {
 		// Background button for mouse input on the map
 		levelButton = new LevelBackgroundButton(this);
 		Input.getInstance().addButton(levelButton);
+		
+		// AI 
+		aiStrategy = new RandomStrategy();
 
 		enterDefaultStateObserver = new Observer() {
 			public void notified(Observable sender) {
@@ -110,6 +120,11 @@ public class Level extends GameObject {
 	}
 
 	public void update() {
+		
+		if(isAITurn() && state == TurnState.DEFAULT){
+			takeNextAIMove();
+		}
+		
 		// keep the buttons in the right place
 		if (selectedShip != null) {
 			int x = selectedShip.getLocation().x;
@@ -120,31 +135,110 @@ public class Level extends GameObject {
 		}
 
 	}
-
-	public List<GameObject> getShips(int team) {
+	
+	public List<Ship> getShips(int team) {
 		List<GameObject> ships;
 		if (team == 0) {
 			ships = shipHolder.getChildren();
 		} else {
 			ships = enemyShipHolder.getChildren();
 		}
-		return ships;
+		
+		List<Ship> list = new ArrayList<Ship>();
+		
+		for(GameObject o : ships){
+			Ship s = (Ship) o;
+			list.add(s);
+		}
+		
+		return list;
+	}
+	
+	public List<Ship> getShips(){
+		List<Ship> ships;
+		List<Ship> list = new ArrayList<Ship>();
+		
+		for(int i = 0; i < 2; i++){
+			ships = getShips(i);
+			
+			for(Ship s : ships){
+				list.add(s);
+			}
+		}		
+		
+		return list;
+	}
+	
+	public boolean isAITurn(){
+		return currentTeam >= numHumans;
 	}
 
 	public void startTurn(int team) {
 		currentTeam = team;
-		List<GameObject> ships = getShips(team);
-		for (GameObject o : ships) {
-			Ship s = (Ship) o;
+		List<Ship> ships = getShips(team);
+		for (Ship s : ships) {
 			s.startTurn();
 		}
-		selectNextShip();
+		
+		if(!isAITurn()){
+			selectNextShip();
+		} else {
+			takeNextAIMove();
+		}
+	}
+	
+	public void endTurn(){
+		int nextTeam = currentTeam + 1;
+		if (nextTeam > 1)
+			nextTeam = 0;
+		startTurn(nextTeam);
+	}
+	
+	public void takeNextAIMove(){
+		for(Ship s : getShips()){
+			if(!s.getIsWaiting()){
+				s.setIsWaiting(true);
+				aiStrategy.doNextAction(s, this);
+				return;
+			}
+		}
+	}
+	
+	public List<Ship> getPossibleTargetsForAI(Ship s){
+		selectShip(s);
+		enterAttackState();
+		List<Ship> enemies = getShips(0); // get player's ships
+		List<Ship> targets = new ArrayList<Ship>();
+		
+		for(Ship e : enemies){
+			if(map.getTile(e.getLocation()).getHighlight() == Tile.Highlight.RED){
+				targets.add(e);
+			}
+		}
+		
+		return targets;
+	}
+	
+	public List<Point> getPossibleMovesForAI(Ship s){
+		selectShip(s);
+		enterMoveState();
+		
+		List<Point> moves = new ArrayList<Point>();
+		
+		for(int x = 0; x < map.getWidth(); x++){
+			for(int y = 0; y < map.getHeight(); y++){
+				Tile t = map.getTile(x, y);
+				if(t.getHighlight() == Tile.Highlight.BLUE){
+					moves.add(new Point(x, y));
+				}
+			}
+		}
+		
+		return moves;
 	}
 
 	public Ship getNextShipWithMoves() {
-		List<GameObject> ships = getShips(currentTeam);
-		for (GameObject o : ships) {
-			Ship s = (Ship) o;
+		for (Ship s : getShips(currentTeam)) {
 			if (!s.getIsWaiting()) {
 				return s;
 			}
@@ -158,15 +252,27 @@ public class Level extends GameObject {
 			selectShip(nextShip);
 			
 		} else { // no more ships, turn is over
-			int nextTeam = currentTeam + 1;
-			if (nextTeam > 1)
-				nextTeam = 0;
-			startTurn(nextTeam);
+			endTurn();
 		}
 		return;
 
 	}
+	
+	public void checkForDestroyedUnits(){
+		for(Ship s: getShips()){
+			if(s.isShipDead()){
+				s.destroy();
+			}
+		}
+	}
 
+	public void printAllUnits(){
+		System.out.println("\n\nSTATUS:\n");
+		for(Ship s: getShips()){
+			System.out.println(s.toString());
+		}
+	}
+	
 	/*
 	 * 
 	 * States
@@ -208,6 +314,11 @@ public class Level extends GameObject {
 
 		map.clearHighLights();
 		state = TurnState.DEFAULT;
+		
+		if(isAITurn() && getNextShipWithMoves() == null){
+			endTurn();
+		}
+		
 	}
 
 	/*
@@ -286,26 +397,31 @@ public class Level extends GameObject {
 		enterDefaultState();
 	}
 
-	public void moveSelectedShipTo(int mapX, int mapY) {
+	public void moveShipTo(Ship ship, int mapX, int mapY) {
 		enterAnimatingState();
 
 		// update map
-		Tile oldTile = map.getTile(selectedShip.getLocation());
+		Tile oldTile = map.getTile(ship.getLocation());
 		Tile newTile = map.getTile(mapX, mapY);
 
 		// move the ship and pass in the observer
-		selectedShip.moveWithDirections(enterDefaultStateObserver, mapX, mapY,
-				map.shortestPath(selectedShip.getLocation(), new Point(mapX,
-						mapY), selectedShip.getMoves()));
+		ship.moveWithDirections(enterDefaultStateObserver, mapX, mapY,
+				map.shortestPath(ship.getLocation(), new Point(mapX,
+						mapY), ship.getMoves()));
 
 		oldTile.setEmpty();
-		newTile.setHasShip(true, selectedShip);
+		newTile.setHasShip(true, ship);
+		
+		printAllUnits();
 	}
 
-	public void attackShipAt(int mapX, int mapY) {
+	public void attackShip(Ship attacker, Ship defender) {
 		enterAnimatingState();
 
-		selectedShip.attack(map.getTile(mapX, mapY).getShip());
+		attacker.attack(defender);
+		
+		checkForDestroyedUnits();
+		printAllUnits();
 
 		// play animation - TODO
 		enterDefaultState();
@@ -350,7 +466,7 @@ public class Level extends GameObject {
 			} else {
 				if (state == TurnState.ATTACKING
 						&& tile.getHighlight() != Tile.Highlight.NONE) {
-					attackShipAt(x, y);
+					attackShip(selectedShip, ship);
 				} else {
 					enterDefaultState();
 				}
@@ -363,7 +479,7 @@ public class Level extends GameObject {
 				// clicking on empty tile
 				unselectShip();
 			} else if (state == TurnState.MOVING) {
-				moveSelectedShipTo(x, y);
+				moveShipTo(selectedShip, x, y);
 			} else if (state == TurnState.ATTACKING) {
 				enterDefaultState();
 			}

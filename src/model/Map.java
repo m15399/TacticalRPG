@@ -224,30 +224,30 @@ public class Map extends GameObject {
 		return false;
 	}
 	
-	public List<Point> listPossibleMoves(Ship ship){
-		highlightTilesAroundShip(ship, ship.getMoves(), true, Highlight.RED);
-		List<Point> possibleMoves = new ArrayList<Point>();
-		for(int y = 0; y < tiles[0].length; y++){
-			for(int x = 0; x < tiles.length; x++){
-				if(tiles[x][y].getHighlight() == Highlight.RED){
-					possibleMoves.add(new Point(x, y));
-				}
-			}
-		}
-		return possibleMoves;
-	}
-	
-	public List<Ship> shipsWithinRange(Point location, int range){
-		List<Ship> targetList = new ArrayList<Ship>();
-		for(int y = location.y-range; y < location.y+range; y++){
-			for(int x = location.x-range; x < location.x+range; x++){
-				if(checkIfTileExists(new Point(x,y)) && tiles[x][y].getHasShip() && tiles[x][y].getShip().getTeam() == 0){
-					targetList.add(tiles[x][y].getShip());
-				}
-			}
-		}
-		return targetList;
-	}
+//	public List<Point> listPossibleMoves(Ship ship){
+//		highlightTilesAroundShip(ship, ship.getMoves(), true, Highlight.RED);
+//		List<Point> possibleMoves = new ArrayList<Point>();
+//		for(int y = 0; y < tiles[0].length; y++){
+//			for(int x = 0; x < tiles.length; x++){
+//				if(tiles[x][y].getHighlight() == Highlight.RED){
+//					possibleMoves.add(new Point(x, y));
+//				}
+//			}
+//		}
+//		return possibleMoves;
+//	}
+//	
+//	public List<Ship> shipsWithinRange(Point location, int range){
+//		List<Ship> targetList = new ArrayList<Ship>();
+//		for(int y = location.y-range; y < location.y+range; y++){
+//			for(int x = location.x-range; x < location.x+range; x++){
+//				if(checkIfTileExists(new Point(x,y)) && tiles[x][y].getHasShip() && tiles[x][y].getShip().getTeam() == 0){
+//					targetList.add(tiles[x][y].getShip());
+//				}
+//			}
+//		}
+//		return targetList;
+//	}
 	
 	public void clearHighLights(){
 		for(int r = 0; r < tiles.length; r++){
@@ -284,6 +284,18 @@ public class Map extends GameObject {
 
 	public Tile getTile(Point p) {
 		return getTile((int) p.getX(), (int) p.getY());
+	}
+	
+	public Tile[][] getTiles(){
+		return tiles;
+	}
+	
+	public int getWidth(){
+		return width;
+	}
+	
+	public int getHeight(){
+		return height;
 	}
 	
 	
