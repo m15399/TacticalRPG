@@ -18,9 +18,13 @@ public class RandomStrategy implements Strategy{
 			
 			while(potentialMoves.size() > 0){
 				int randomMove = random.nextInt(potentialMoves.size());
+				Point move = potentialMoves.get(randomMove);
+				
 				if(randomMove == ship.getMoves() || potentialMoves.size() == 1){
-					level.moveShipTo(ship, potentialMoves.get(randomMove).x, potentialMoves.get(randomMove).y);
-					break;
+					if(!ship.getLocation().equals(move)){ // don't move to the tile the ship is already on
+						level.moveShipTo(ship, move.x, move.y);
+						break;
+					}	
 				}
 				potentialMoves.remove(randomMove);
 			}
