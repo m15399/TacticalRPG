@@ -6,7 +6,7 @@ import java.util.List;
 
 import model.Item;
 import model.Ship;
-import shipVisuals.ScoutVisual;
+import shipVisuals.BomberVisual;
 
 public class Bomber extends Ship{
 
@@ -17,7 +17,7 @@ public class Bomber extends Ship{
 		items.add(new SpaceMine());
 		this.constructorAid("Bomber", 3, 100, 30, 100, 30, 75, items, description, 40, 45, 15, 1);
 		
-		setVisual(new ScoutVisual(this));
+		setVisual(new BomberVisual(this));
 	}
 	
 	/*

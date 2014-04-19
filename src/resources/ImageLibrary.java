@@ -15,6 +15,7 @@ public class ImageLibrary {
 	// files to load at startup
 	private static final String[] files = {
 		"test.png",
+		"test2.png",
 		"smurf_sprite.png"
 		};
 	
