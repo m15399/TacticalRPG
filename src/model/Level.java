@@ -261,7 +261,7 @@ public class Level extends GameObject {
 	public void checkForDestroyedUnits(){
 		for(Ship s: getShips()){
 			if(s.isShipDead()){
-				s.destroy();
+				removeShipFromMap(s);
 			}
 		}
 	}
@@ -427,6 +427,11 @@ public class Level extends GameObject {
 		enterDefaultState();
 	}
 
+	public void removeShipFromMap(Ship ship){
+		map.getTile(ship.getLocation()).setEmpty();
+		ship.destroy();
+	}
+	
 	public void addShipToMap(Ship ship) {
 		ship.setTeam(0);
 		map.getTile(ship.getLocation()).setHasShip(true, ship); // testing
