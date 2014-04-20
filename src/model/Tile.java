@@ -22,6 +22,7 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	private boolean mousedOver;
 	private Ship ship;
 	private int mapX, mapY;
+	private Terrain terrain;
 	
 	//Variables for shortestPath algorithm
 	private Tile prev;
@@ -74,9 +75,9 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	/**
 	 * Terrain tile constructor
 	 */
-	public Tile(boolean trueIfTileHasTerrain, boolean trueIfTerrainCanBeOccupied) {
+	public Tile(boolean trueIfTerrainCanBeOccupied, Terrain newTerrain) {
 		setEmpty();
-		setIsTerrain(trueIfTileHasTerrain, trueIfTerrainCanBeOccupied);
+		setTerrain(trueIfTerrainCanBeOccupied, newTerrain);
 	}
 
 	/**
@@ -125,13 +126,25 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		return isTerrain;
 	}
 
+	public Terrain getTerrain(){
+		return terrain;
+	}
+	
 	/**
 	 * Automatically handles the tile being occupied.
 	 */
-	public void setIsTerrain(boolean trueIfTileHasTerrain, boolean trueIfTerrainCanBeOccupied) {
-		isTerrain = trueIfTileHasTerrain;
-		if (trueIfTileHasTerrain && !trueIfTerrainCanBeOccupied)
+	public void setTerrain(boolean trueIfTerrainCanBeOccupied, Terrain newTerrain) {
+		isTerrain = true;
+		terrain = newTerrain;
+		if (!trueIfTerrainCanBeOccupied)
 			setIsOccupied(true);
+	}
+	
+	public void removeTerrain(){
+		isTerrain = false;
+		terrain = null;
+		if(!hasShip)
+			isOccupied = false;
 	}
 
 	public boolean getHasShip() {
@@ -154,7 +167,7 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		setHasShip(false, null);
 		setIsOccupied(false);
 		setIsEdge(false);
-		setIsTerrain(false, false);
+		removeTerrain();
 		setHighlight(Highlight.NONE);
 	}
 

@@ -81,12 +81,13 @@ public class BuildTileMapFromTextFile {
 				if(temp == 'E'){
 					tiles[r][c] = new Tile(true);
 				}
-				else if(temp == 'T'){
-					tiles[r][c] = new Tile(true, false);
-				}
-				else if(temp == 'B'){
-					tiles[r][c] = new Tile(true, true);
-				}
+				//TODO adjust to new changes regarding terrain.  Fix comments above.
+//				else if(temp == 'T'){
+//					tiles[r][c] = new Tile(false);
+//				}
+//				else if(temp == 'B'){
+//					tiles[r][c] = new Tile(true);
+//				}
 				else if(temp == 'S'){
 					Ship ship = new Scout(new Point(r, c));
 					tiles[r][c] = new Tile(ship);
