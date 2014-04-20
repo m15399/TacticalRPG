@@ -182,15 +182,6 @@ public class Map extends GameObject {
 		privateHelperForHighlightTiles(new Point(x, y - 1), radius, accountForTerrain, highlightColor);
 	}
 	
-//	public void highlightPossibleMoves(Ship ship){
-//		if(ship.getMoves() >= 1){
-//			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x+1, ship.getLocation().y), ship.getMoves(), 1);
-//			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x-1, ship.getLocation().y), ship.getMoves(), 1);
-//			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x, ship.getLocation().y+1), ship.getMoves(), 1);
-//			privateHelperForHighlightPossibleMoves(ship, new Point(ship.getLocation().x, ship.getLocation().y-1), ship.getMoves(), 1);
-//		}
-//	}
-	
 	private void privateHelperForHighlightTiles(Point location, int radius, boolean accountForTerrain, Highlight highlightColor){
 		if(!checkIfTileExists(location))
 			return;
@@ -204,12 +195,6 @@ public class Map extends GameObject {
 		if(!accountForTerrain || !tiles[location.x][location.y].getIsOccupied()){
 			tiles[x][y].setHighlight(highlightColor);
 			
-//			if(ship.getTeam() == 0)
-//				tiles[location.x][location.y].setHighlight(Highlight.BLUE);
-//			else if(ship.getTeam() == 1)
-//				tiles[location.x][location.y].setHighlight(Highlight.RED);
-//			else if(ship.getTeam() == 2) //For allies if we include them
-//				tiles[location.x][location.y].setHighlight(Highlight.GREEN);
 			privateHelperForHighlightTiles(new Point(x+1, y), radius-1, accountForTerrain, highlightColor);
 			privateHelperForHighlightTiles(new Point(x-1, y), radius-1, accountForTerrain, highlightColor);
 			privateHelperForHighlightTiles(new Point(x, y+1), radius-1, accountForTerrain, highlightColor);

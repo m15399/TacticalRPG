@@ -15,12 +15,12 @@ public class TestLevel extends Level {
 		
 		// Ship Testing
 		Scout scout = new Scout(new Point(2, 2));
-		scout.updateHull(-scout.getHull()+1);
+//		scout.updateHull(-scout.getHull()+1);
 		scout.addToItems(new ScrapMetal());
 		addShipToMap(scout);
 
 		Bomber bomber = new Bomber(new Point(4, 4));
-		bomber.updateHull(-bomber.getHull()+1);
+//		bomber.updateHull(-bomber.getHull()+1);
 		addEnemyShipToMap(bomber);
 		addShipToMap(new Fighter(new Point(4, 2)));
 		

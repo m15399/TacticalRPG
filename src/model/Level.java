@@ -342,7 +342,7 @@ public class Level extends GameObject {
 		// highlight tiles
 		map.clearHighLights();
 		if (selectedShip != null) {
-			map.highlightTilesAroundShip(selectedShip, selectedShip.getMoves(),
+			map.highlightTilesAroundShip(selectedShip, selectedShip.getMovesLeft(),
 					true, Tile.Highlight.BLUE);
 		}
 		
@@ -407,7 +407,7 @@ public class Level extends GameObject {
 		// move the ship and pass in the observer
 		ship.moveWithDirections(enterDefaultStateObserver, mapX, mapY,
 				map.shortestPath(ship.getLocation(), new Point(mapX,
-						mapY), ship.getMoves()));
+						mapY), ship.getMovesLeft()));
 
 		oldTile.setEmpty();
 		newTile.setHasShip(true, ship);

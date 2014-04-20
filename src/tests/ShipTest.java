@@ -44,8 +44,6 @@ public class ShipTest {
 		assertEquals(1, ship.getMoves());
 		ship.setMoves(4);
 		assertEquals(4, ship.getMoves());
-		ship.updateMoves(-2);
-		assertEquals(2, ship.getMoves());
 	}
 	
 	@Test

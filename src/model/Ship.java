@@ -10,7 +10,7 @@ import utils.Observer;
 
 public class Ship extends GameObject {
 	private Point location;
-	private int moves, range;
+	private int moves, movesLeft, range;
 	private double hull, shielding, maxHull, maxShielding, accuracy, minDamage,
 			maxDamage, critChance;
 	private List<Item> items;
@@ -75,7 +75,7 @@ public class Ship extends GameObject {
 
 	
 	public void startTurn(){
-		setMoves(range);
+		setMovesLeft(moves);
 		canAttack = true;
 		isWaiting = false;
 	}
@@ -89,7 +89,7 @@ public class Ship extends GameObject {
 		if(visual != null){
 			visual.moveWithDirections(notifyWhenDone, directions);
 		}
-		setMoves(moves - directions.size());
+		updateMovesLeft(-directions.size());
 	}
 	
 	/*
@@ -231,15 +231,23 @@ public class Ship extends GameObject {
 
 	public void setMoves(int newMoveTotal) {
 		moves = newMoveTotal;
-		if(moves > 0){
+	}
+	
+	public int getMovesLeft(){
+		return movesLeft;
+	}
+	
+	public void setMovesLeft(int newMovesLeft){
+		movesLeft = newMovesLeft;
+		if(movesLeft > 0){
 			setCanMove(true);
 		} else {
 			setCanMove(false);
 		}
 	}
-
-	public void updateMoves(int valueToAdjustMovesBy) {
-		moves += valueToAdjustMovesBy;
+	
+	public void updateMovesLeft(int valueToAdjustBy){
+		setMovesLeft(getMovesLeft() + valueToAdjustBy);
 	}
 
 	public List<Item> getItems() {
