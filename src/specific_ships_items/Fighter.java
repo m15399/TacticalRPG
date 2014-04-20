@@ -28,7 +28,7 @@ public class Fighter extends Ship {
 	@Override
 	public void attack(Ship target) {
 		double damage = this.getDamage();
-		if (!target.getName().equals("Bomber")) {
+		if (target.getName().equals("Bomber")) {
 			damage *= 1.5;
 			if (target.getHull() - target.getFinalDamage(damage) > 0)
 				target.setHull(target.getHull() - target.getFinalDamage(damage));

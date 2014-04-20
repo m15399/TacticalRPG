@@ -40,7 +40,7 @@ public class Ship extends GameObject {
 	 * be declared to avoid them being default
 	 * 
 	 * @param name
-	 * @param moves
+	 * @param moves - meant as max movement range
 	 * @param hull
 	 * @param shielding
 	 * @param maxHull
@@ -51,7 +51,7 @@ public class Ship extends GameObject {
 	 * @param minDamage
 	 * @param maxDamage
 	 * @param critChance
-	 * @param range
+	 * @param range - meant as ship's attack range
 	 */
 
 	public void constructorAid(String name, int moves, double hull,
