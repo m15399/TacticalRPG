@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Point;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,10 +132,10 @@ public class Ship extends GameObject {
 	 */
 	
 	public double getFinalDamage(double initialDamage){
-		if (initialDamage - shielding <= 0)
+		if (initialDamage * ((100 - shielding) / 100) <= 0)
 			return 0;
 		else
-			return initialDamage - shielding;
+			return (initialDamage * ((100 - shielding) / 100));
 	}
 
 	/*
@@ -178,6 +179,8 @@ public class Ship extends GameObject {
 	}
 
 	public double getHull() {
+		DecimalFormat df = new DecimalFormat("#.#");      
+		hull = Double.valueOf(df.format(hull));
 		return hull;
 	}
 
