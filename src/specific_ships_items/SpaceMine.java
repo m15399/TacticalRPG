@@ -6,6 +6,7 @@ import model.Ship;
 public class SpaceMine extends Item{
 	private int damage;
 	public SpaceMine() {
+		this.constructorAid("Space Mine", "The ship drops a space mine in a specific location that will be detonated by any enemy ship that passes through.");
 		damage = 100;
 	}
 
@@ -13,4 +14,5 @@ public class SpaceMine extends Item{
 	public void useOn(Ship ship) {
 		ship.updateHull(-damage);
 	}
+	
 }

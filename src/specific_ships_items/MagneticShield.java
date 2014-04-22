@@ -5,8 +5,10 @@ import model.Ship;
 
 public class MagneticShield extends Item{
 	private double shieldingBoost ;
+	private String name;
 	public MagneticShield() {
 		shieldingBoost = 1.15;
+		this.constructorAid("Magnetic Shield", "Gives the ship a shield boost of 15%");
 	}
 
 	@Override
@@ -14,5 +16,6 @@ public class MagneticShield extends Item{
 		ship.updateShielding(ship.getShielding()*shieldingBoost);
 		
 	}
+
 
 }

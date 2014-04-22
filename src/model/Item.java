@@ -6,6 +6,11 @@ public abstract class Item extends GameObject{
 	public Item(){
 	}
 	
+	public void constructorAid(String name, String descriptionConstructor){
+		itemName = name;
+		setDescription(descriptionConstructor);
+	}
+	
 	public abstract void useOn(Ship ship);
 	
 	/*
@@ -15,12 +20,12 @@ public abstract class Item extends GameObject{
 	public String getDescription(){
 		return description;
 	}
-
+	
+	public String getName(){
+		return itemName;
+	}
 	
 	public void setDescription(String newDescription){
 		description = newDescription;
-	}
-	public String getItemName(){
-		return itemName;
 	}
 }

@@ -368,4 +368,23 @@ public class Ship extends GameObject {
 	public void setCanUseItem(boolean canUseItem) {
 		this.canUseItem = canUseItem;
 	}
+	public List<Item> getItemsList(){
+		return items;
+	}
+	public String itemsToString(){
+		String itemsString = "";
+		for(int i = 0; i < items.size(); i++){
+			if(i == items.size()-1){
+				itemsString += items.get(i).getName();
+			}
+			else{
+			itemsString += items.get(i).getName() + ", ";
+			}
+		}
+		return itemsString;
+	}
+	
+	public void shipSatus(){
+		System.out.print(""+ this.getName() + "\n" + this.getHull() + "\n" + this.getMaxShielding() + "\n" + this.getDamage() + "\n" + this.itemsToString() );
+	}
 }

@@ -6,9 +6,9 @@ import model.Ship;
 public class ScrapMetal extends Item {
 	
 	private double hullBoost;
-	
-	public ScrapMetal() {
 
+	public ScrapMetal() {
+		this.constructorAid("Scrap Metal", "Heals the ship's hull for 100 points");
 		hullBoost = 100;
 	}
 
@@ -17,6 +17,7 @@ public class ScrapMetal extends Item {
 	ship.updateHull(hullBoost);
 		
 	}
+
 
 
 }

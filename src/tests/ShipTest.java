@@ -6,6 +6,10 @@ import java.awt.Point;
 
 import org.junit.Test;
 
+import specific_ships_items.Bomber;
+import specific_ships_items.MagneticShield;
+import specific_ships_items.ScrapMetal;
+import specific_ships_items.SpaceMine;
 import model.Ship;
 
 public class ShipTest {
@@ -51,4 +55,15 @@ public class ShipTest {
 		//TODO new a class that extends Item to implement
 		//TODO must test getItems, addToItems, removeFromItems
 	}
+	
+	@Test
+	public void testToString(){
+		Ship bomber = new Bomber(new Point(1,1));
+	
+		bomber.addToItems(new ScrapMetal());
+		bomber.addToItems(new SpaceMine());
+		bomber.addToItems(new MagneticShield());
+		bomber.shipSatus();
+	}
+	
 }
