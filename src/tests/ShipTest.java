@@ -63,7 +63,7 @@ public class ShipTest {
 		bomber.addToItems(new ScrapMetal());
 		bomber.addToItems(new SpaceMine());
 		bomber.addToItems(new MagneticShield());
-		System.out.print(bomber.shipSatus());
+		System.out.print(bomber.shipStatus());
 	}
 	
 }
