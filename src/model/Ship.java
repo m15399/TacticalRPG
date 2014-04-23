@@ -384,7 +384,18 @@ public class Ship extends GameObject {
 		return itemsString;
 	}
 	
-	public void shipSatus(){
-		System.out.print(""+ this.getName() + "\n" + this.getHull() + "\n" + this.getMaxShielding() + "\n" + this.getDamage() + "\n" + this.itemsToString() );
+	public String shipSatus(){
+		String shipStatus = "";
+		shipStatus += this.getName();
+		shipStatus += "\n";
+		shipStatus += this.getHull();
+		shipStatus += "\n";
+		shipStatus += this.getMaxShielding();
+		shipStatus += "\n";
+		shipStatus += this.getDamage();
+		shipStatus += "\n";
+		shipStatus += this.itemsToString();
+		
+		return shipStatus;
 	}
 }
