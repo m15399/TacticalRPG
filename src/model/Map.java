@@ -172,33 +172,45 @@ public class Map extends GameObject {
 	 * @param ship
 	 */
 	
-	public void highlightTilesAroundShip(Ship ship, int radius, boolean accountForTerrain, Highlight highlightColor){
-		int x = ship.getLocation().x;
-		int y = ship.getLocation().y;
-		tiles[x][y].setHighlight(highlightColor);
-		privateHelperForHighlightTiles(new Point(x + 1, y), radius, accountForTerrain, highlightColor);
-		privateHelperForHighlightTiles(new Point(x - 1, y), radius, accountForTerrain, highlightColor);
-		privateHelperForHighlightTiles(new Point(x, y + 1), radius, accountForTerrain, highlightColor);
-		privateHelperForHighlightTiles(new Point(x, y - 1), radius, accountForTerrain, highlightColor);
+	public List<Tile> getTilesWithinRange(Point source, int range, boolean accountForTerrain){
+		int x = source.x;
+		int y = source.y;
+		
+		List<Tile> list = new ArrayList<Tile>();
+		list.add(tiles[x][y]);
+		
+		helperForGetTilesWithinRange(new Point(x + 1, y), range, accountForTerrain, list);
+		helperForGetTilesWithinRange(new Point(x - 1, y), range, accountForTerrain, list);
+		helperForGetTilesWithinRange(new Point(x, y + 1), range, accountForTerrain, list);
+		helperForGetTilesWithinRange(new Point(x, y - 1), range, accountForTerrain, list);
+		
+		return list;
 	}
 	
-	private void privateHelperForHighlightTiles(Point location, int radius, boolean accountForTerrain, Highlight highlightColor){
+	private void helperForGetTilesWithinRange(Point location, int range, boolean accountForTerrain, List<Tile> list){
 		if(!checkIfTileExists(location))
+			return;
+		
+		if(range <= 0)
 			return;
 		
 		int x = location.x;
 		int y = location.y;
 		
-		if(radius <= 0)
-			return;
-		
-		if(!accountForTerrain || !tiles[location.x][location.y].getIsOccupied()){
-			tiles[x][y].setHighlight(highlightColor);
+		if(!accountForTerrain || !tiles[x][y].getIsOccupied()){
+			list.add(tiles[x][y]);
 			
-			privateHelperForHighlightTiles(new Point(x+1, y), radius-1, accountForTerrain, highlightColor);
-			privateHelperForHighlightTiles(new Point(x-1, y), radius-1, accountForTerrain, highlightColor);
-			privateHelperForHighlightTiles(new Point(x, y+1), radius-1, accountForTerrain, highlightColor);
-			privateHelperForHighlightTiles(new Point(x, y-1), radius-1, accountForTerrain, highlightColor);
+			helperForGetTilesWithinRange(new Point(x+1, y), range-1, accountForTerrain, list);
+			helperForGetTilesWithinRange(new Point(x-1, y), range-1, accountForTerrain, list);
+			helperForGetTilesWithinRange(new Point(x, y+1), range-1, accountForTerrain, list);
+			helperForGetTilesWithinRange(new Point(x, y-1), range-1, accountForTerrain, list);
+		}
+	}
+	
+	public void highlightTiles(List<Tile> tileList, Highlight color){
+		clearHighLights();
+		for(Tile t : tileList){
+			t.setHighlight(color);
 		}
 	}
 	

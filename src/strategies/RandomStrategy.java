@@ -9,32 +9,31 @@ import model.Ship;
 
 public class RandomStrategy implements Strategy{
 	public void doNextAction(Ship ship, Level level){		
-		Random random = new Random();
+		Random random = new Random();		
 		
-		List<Ship> targets = level.getPossibleTargetsForAI(ship);
-		
-		if(targets.size() == 0){
+		if(ship.getCanMove()){
 			List<Point> potentialMoves = level.getPossibleMovesForAI(ship);
 			
 			while(potentialMoves.size() > 0){
 				int randomMove = random.nextInt(potentialMoves.size());
 				Point move = potentialMoves.get(randomMove);
 				
-				if(randomMove == ship.getMoves() || potentialMoves.size() == 1){
-					if(!ship.getLocation().equals(move)){ // don't move to the tile the ship is already on
-						level.moveShipTo(ship, move.x, move.y);
-						break;
-					}	
-				}
+				if(!ship.getLocation().equals(move)){ // don't move to the tile the ship is already on
+					level.moveShipTo(ship, move.x, move.y);
+					ship.setCanMove(false);
+					break;
+				}	
 				potentialMoves.remove(randomMove);
 			}
+			
+		} else if(ship.getCanAttack()){
+			List<Ship> targets = level.getPossibleTargetsForAI(ship);
+			if(targets.size() >= 1){
+				int randomShip = random.nextInt(targets.size());
+				level.attackShip(ship, targets.get(randomShip));
+			}
+			ship.setIsWaiting(true);
 		}
-		else if(targets.size() >= 1){
-			int randomShip = random.nextInt(targets.size());
-			level.attackShip(ship, targets.get(randomShip));
-		}
-		else{
-			System.out.println("Something went wrong selecting a move.");
-		}
+		
 	}
 }

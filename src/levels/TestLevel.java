@@ -68,10 +68,10 @@ public class TestLevel extends Level {
 		Bomber ebomber = new Bomber(new Point(15, 11));
 		ebomber.addToItems(new MagneticShield());
 		addEnemyShipToMap(ebomber);
-		
+				
 		startTurn(0);
 	}
-	
+		
 	public void update(){
 		super.update();
 		

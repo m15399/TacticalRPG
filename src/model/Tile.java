@@ -45,13 +45,6 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	private static Color lightGreenColor = new Color(.5f, 1f, .5f,
 			highlightAlpha);
 
-	/**
-	 * Empty Tile constructor.  Default
-	 */
-	
-	public Tile(){
-		setEmpty();
-	}
 	
 	/**
 	 * Empty tile constructor for creation at certain coordinates.
@@ -257,6 +250,10 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		return prev;
 	}
 
+	public Point getLocation(){
+		return new Point(mapX, mapY);
+	}
+	
 	@Override
 	public int compareTo(Tile other) {
 		if(this.distance == other.getDistance())

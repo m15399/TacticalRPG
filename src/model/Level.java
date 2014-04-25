@@ -30,7 +30,9 @@ public class Level extends GameObject {
 	private enum TurnState {
 		DEFAULT, ANIMATING, MOVING, ATTACKING;
 	}
-
+	
+	private TurnState state;
+	
 	private Map map;
 	private Starfield starfield;
 	private Camera camera;
@@ -46,17 +48,14 @@ public class Level extends GameObject {
 
 	private Ship selectedShip;
 
+	// UI elements
 	private SelectedShipView selectedShipView;
 	private SelectedEnemyShip hoveredShipView;
-
 	private SelectedShipBorder selectedShipBorder;
 	private SelectedShipBorder hoveredShipBorder;
-
 	private SelectedShipButtons shipButtons;
 
 	private Observer enterDefaultStateObserver;
-
-	private TurnState state;
 	
 	private Strategy aiStrategy;
 
@@ -118,12 +117,24 @@ public class Level extends GameObject {
 
 		enterDefaultState();
 	}
+	
+	
+	
+	public void onDestroy() {
+		Input.getInstance().removeButton(levelButton);
+	}
 
 	public void update() {
 		
-		if(isAITurn() && state == TurnState.DEFAULT){
-			takeNextAIMove();
+		if(isAITurn()){
+			if(state == TurnState.DEFAULT){
+				if(getNextShipWithMoves() == null)
+					endTurn();
+				else
+					takeNextAIMove();
+			}
 		}
+		
 		
 		// keep the buttons in the right place
 		if (selectedShip != null) {
@@ -136,38 +147,13 @@ public class Level extends GameObject {
 
 	}
 	
-	public List<Ship> getShips(int team) {
-		List<GameObject> ships;
-		if (team == 0) {
-			ships = shipHolder.getChildren();
-		} else {
-			ships = enemyShipHolder.getChildren();
-		}
-		
-		List<Ship> list = new ArrayList<Ship>();
-		
-		for(GameObject o : ships){
-			Ship s = (Ship) o;
-			list.add(s);
-		}
-		
-		return list;
-	}
 	
-	public List<Ship> getShips(){
-		List<Ship> ships;
-		List<Ship> list = new ArrayList<Ship>();
-		
-		for(int i = 0; i < 2; i++){
-			ships = getShips(i);
-			
-			for(Ship s : ships){
-				list.add(s);
-			}
-		}		
-		
-		return list;
-	}
+	
+	/*
+	 * 
+	 * Turn logic
+	 * 
+	 */
 	
 	public boolean isAITurn(){
 		return currentTeam >= numHumans;
@@ -180,82 +166,21 @@ public class Level extends GameObject {
 			s.startTurn();
 		}
 		
+		enterDefaultState();
+
 		if(!isAITurn()){
 			selectNextShip();
-		} else {
-			takeNextAIMove();
-		}
+		} 
 	}
 	
 	public void endTurn(){
+		unselectShip();
+		
 		int nextTeam = currentTeam + 1;
 		if (nextTeam > 1)
 			nextTeam = 0;
+		
 		startTurn(nextTeam);
-	}
-	
-	public void takeNextAIMove(){
-		for(Ship s : getShips()){
-			if(!s.getIsWaiting()){
-				s.setIsWaiting(true);
-				aiStrategy.doNextAction(s, this);
-				return;
-			}
-		}
-	}
-	
-	public List<Ship> getPossibleTargetsForAI(Ship s){
-		selectShip(s);
-		enterAttackState();
-		List<Ship> enemies = getShips(0); // get player's ships
-		List<Ship> targets = new ArrayList<Ship>();
-		
-		for(Ship e : enemies){
-			if(map.getTile(e.getLocation()).getHighlight() == Tile.Highlight.RED){
-				targets.add(e);
-			}
-		}
-		
-		return targets;
-	}
-	
-	public List<Point> getPossibleMovesForAI(Ship s){
-		selectShip(s);
-		enterMoveState();
-		
-		List<Point> moves = new ArrayList<Point>();
-		
-		for(int x = 0; x < map.getWidth(); x++){
-			for(int y = 0; y < map.getHeight(); y++){
-				Tile t = map.getTile(x, y);
-				if(t.getHighlight() == Tile.Highlight.BLUE){
-					moves.add(new Point(x, y));
-				}
-			}
-		}
-		
-		return moves;
-	}
-
-	public Ship getNextShipWithMoves() {
-		for (Ship s : getShips(currentTeam)) {
-			if (!s.getIsWaiting()) {
-				return s;
-			}
-		}
-		return null;
-	}
-
-	public void selectNextShip() {
-		Ship nextShip = getNextShipWithMoves();
-		if (nextShip != null) {
-			selectShip(nextShip);
-			
-		} else { // no more ships, turn is over
-			endTurn();
-		}
-		return;
-
 	}
 	
 	public void checkForDestroyedUnits(){
@@ -265,6 +190,15 @@ public class Level extends GameObject {
 			}
 		}
 	}
+	
+	private Ship getNextShipWithMoves() {
+		for (Ship s : getShips(currentTeam)) {
+			if (!s.getIsWaiting()) {
+				return s;
+			}
+		}
+		return null;
+	}
 
 	public void printAllUnits(){
 		System.out.println("\n\nSTATUS:\n");
@@ -273,9 +207,63 @@ public class Level extends GameObject {
 		}
 	}
 	
+	
+	/*
+	 * 
+	 * AI Management
+	 * 
+	 */
+	
+	public void takeNextAIMove(){
+		for(Ship s : getShips()){
+			if(!s.getIsWaiting()){
+				aiStrategy.doNextAction(s, this);
+				return;
+			}
+		}
+	}
+	
+	public List<Ship> getPossibleTargetsForAI(Ship s){
+		
+		List<Ship> targets = new ArrayList<Ship>();
+		if(!s.getCanAttack())
+			return targets;
+		
+		List<Tile> tiles = map.getTilesWithinRange(s.getLocation(), s.getRange(), false);
+		
+		List<Ship> enemies = getShips(0); // get player's ships
+		
+		for(Ship e : enemies){
+			if(tiles.contains(map.getTile(e.getLocation()))){
+				targets.add(e);
+			}
+		}
+		
+		return targets;
+	}
+	
+	public List<Point> getPossibleMovesForAI(Ship s){
+
+		List<Point> moves = new ArrayList<Point>();
+		if(!s.getCanMove())
+			return moves;
+		
+		List<Tile> tiles = map.getTilesWithinRange(s.getLocation(), s.getMovesLeft(), true);
+		
+		for(Tile t : tiles){
+			moves.add(t.getLocation());
+		}
+		
+		return moves;
+	}
+
+	
+	
 	/*
 	 * 
 	 * States
+	 * 
+	 * 
 	 */
 
 	/*
@@ -283,7 +271,8 @@ public class Level extends GameObject {
 	 * nothing
 	 */
 	public void enterDefaultState() {
-		levelButton.enable();
+		if(!isAITurn())
+			levelButton.enable();
 
 		shipButtons.setShip(selectedShip);
 
@@ -315,10 +304,6 @@ public class Level extends GameObject {
 		map.clearHighLights();
 		state = TurnState.DEFAULT;
 		
-		if(isAITurn() && getNextShipWithMoves() == null){
-			endTurn();
-		}
-		
 	}
 
 	/*
@@ -327,6 +312,7 @@ public class Level extends GameObject {
 	public void enterAnimatingState() {
 		map.clearHighLights();
 		levelButton.disable();
+		state = TurnState.ANIMATING;
 	}
 
 	/*
@@ -342,8 +328,9 @@ public class Level extends GameObject {
 		// highlight tiles
 		map.clearHighLights();
 		if (selectedShip != null) {
-			map.highlightTilesAroundShip(selectedShip, selectedShip.getMovesLeft(),
-					true, Tile.Highlight.BLUE);
+			List<Tile> possibleMoves = map.getTilesWithinRange(selectedShip.getLocation(), 
+					selectedShip.getMovesLeft(), true);
+			map.highlightTiles(possibleMoves, Tile.Highlight.BLUE);
 		}
 		
 		// turn off buttons
@@ -366,9 +353,11 @@ public class Level extends GameObject {
 
 		// highlight attack range
 		map.clearHighLights();
-		if (selectedShip != null)
-			map.highlightTilesAroundShip(selectedShip, selectedShip.getRange(),
-					false, Tile.Highlight.RED);
+		if (selectedShip != null){
+			List<Tile> possibleMoves = map.getTilesWithinRange(selectedShip.getLocation(), 
+					selectedShip.getRange(), false);
+			map.highlightTiles(possibleMoves, Tile.Highlight.RED);
+		}
 
 		// turn off buttons
 		shipButtons.setShip(null);
@@ -387,6 +376,18 @@ public class Level extends GameObject {
 		selectedShipBorder.setShip(ship);
 
 		enterMoveState();
+	}
+	
+	public void selectNextShip() {
+		Ship nextShip = getNextShipWithMoves();
+		if (nextShip != null) {
+			selectShip(nextShip);
+			
+		} else { // no more ships, turn is over
+			endTurn();
+		}
+		return;
+
 	}
 
 	public void unselectShip() {
@@ -412,7 +413,7 @@ public class Level extends GameObject {
 		oldTile.setEmpty();
 		newTile.setHasShip(true, ship);
 		
-		printAllUnits();
+//		printAllUnits();
 	}
 
 	public void attackShip(Ship attacker, Ship defender) {
@@ -421,7 +422,7 @@ public class Level extends GameObject {
 		attacker.attack(defender);
 		
 		checkForDestroyedUnits();
-		printAllUnits();
+//		printAllUnits();
 
 		// play animation - TODO
 		enterDefaultState();
@@ -444,9 +445,13 @@ public class Level extends GameObject {
 		enemyShipHolder.addChild(ship);
 	}
 
+	
+	
 	/*
 	 * 
 	 * Input handling
+	 * 
+	 * 
 	 */
 	protected void tileClicked(int x, int y) {
 		Tile tile = map.getTile(x, y);
@@ -522,10 +527,16 @@ public class Level extends GameObject {
 
 	}
 
-	public void onDestroy() {
-		Input.getInstance().removeButton(levelButton);
-	}
 
+	
+	
+	
+	/*
+	 * 
+	 * Getters / Setters
+	 * 
+	 */
+	
 	public Camera getCamera() {
 		return camera;
 	}
@@ -533,5 +544,39 @@ public class Level extends GameObject {
 	public Map getMap() {
 		return map;
 	}
+	
+	public List<Ship> getShips(int team) {
+		List<GameObject> ships;
+		if (team == 0) {
+			ships = shipHolder.getChildren();
+		} else {
+			ships = enemyShipHolder.getChildren();
+		}
+		
+		List<Ship> list = new ArrayList<Ship>();
+		
+		for(GameObject o : ships){
+			Ship s = (Ship) o;
+			list.add(s);
+		}
+		
+		return list;
+	}
+	
+	public List<Ship> getShips(){
+		List<Ship> ships;
+		List<Ship> list = new ArrayList<Ship>();
+		
+		for(int i = 0; i < 2; i++){
+			ships = getShips(i);
+			
+			for(Ship s : ships){
+				list.add(s);
+			}
+		}		
+		
+		return list;
+	}
+	
 
 }

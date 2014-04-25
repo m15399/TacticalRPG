@@ -93,11 +93,11 @@ public class BuildTileMapFromTextFile {
 					tiles[r][c] = new Tile(ship);
 				}
 				else if(temp == '0'){
-					tiles[r][c] = new Tile();
+					tiles[r][c] = new Tile(r, c);
 				}
 				else{
 					System.out.println("Error processing a character.  Set as empty tile.");
-					tiles[r][c] = new Tile();
+					tiles[r][c] = new Tile(r, c);
 				}
 				counter++;
 			}
