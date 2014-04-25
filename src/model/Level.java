@@ -13,8 +13,8 @@ import utils.Observable;
 import utils.Observer;
 import view.Camera;
 import view.SelectedEnemyShip;
-import view.SelectedShipBorder;
-import view.SelectedShipBorder.SelectionType;
+import view.ShipOutline;
+import view.ShipOutline.SelectionType;
 import view.SelectedShipButtons;
 import view.SelectedShipView;
 import view.Starfield;
@@ -51,8 +51,6 @@ public class Level extends GameObject {
 	// UI elements
 	private SelectedShipView selectedShipView;
 	private SelectedEnemyShip hoveredShipView;
-	private SelectedShipBorder selectedShipBorder;
-	private SelectedShipBorder hoveredShipBorder;
 	private SelectedShipButtons shipButtons;
 
 	private Observer enterDefaultStateObserver;
@@ -74,7 +72,7 @@ public class Level extends GameObject {
 		addChild(starfield);
 
 		addChild(camera);
-
+		
 		// Map
 		map = new Map(width, height);
 		camera.addChild(map);
@@ -94,13 +92,6 @@ public class Level extends GameObject {
 		addChild(selectedShipView);
 		hoveredShipView = new SelectedEnemyShip();
 		addChild(hoveredShipView);
-
-		// Ship Borders
-		selectedShipBorder = new SelectedShipBorder();
-		camera.addChild(selectedShipBorder);
-		hoveredShipBorder = new SelectedShipBorder();
-		camera.addChild(hoveredShipBorder);
-		hoveredShipBorder.setSelectionType(SelectionType.HOVER);
 
 		// Background button for mouse input on the map
 		levelButton = new LevelBackgroundButton(this);
@@ -145,6 +136,25 @@ public class Level extends GameObject {
 			shipButtons.setLocation((int) p.getX(), (int) p.getY());
 		}
 
+		// figure out how to outline ships
+		List<Ship> ships = getShips();
+		for(Ship s : ships){
+			ShipOutline o = s.getVisual().getOutline();
+			o.setSelectionType(SelectionType.NONE);
+		}
+		if(state != TurnState.ANIMATING){
+			ships = getShips(currentTeam);
+			for(Ship s : ships){
+				ShipOutline o = s.getVisual().getOutline();
+				if(s == selectedShip){
+					o.setSelectionType(SelectionType.SELECTED);
+				} else if(!s.getIsWaiting()){
+					o.setSelectionType(SelectionType.ACTIONSLEFT);
+				}
+			}
+		}
+		
+		
 	}
 	
 	
@@ -300,7 +310,7 @@ public class Level extends GameObject {
 			});
 
 		}
-
+		
 		map.clearHighLights();
 		state = TurnState.DEFAULT;
 		
@@ -373,7 +383,8 @@ public class Level extends GameObject {
 	public void selectShip(Ship ship) {
 		selectedShip = ship;
 		selectedShipView.setShip(ship);
-		selectedShipBorder.setShip(ship);
+		
+		camera.setFollowTarget(ship.getVisual());
 
 		enterMoveState();
 	}
@@ -393,7 +404,6 @@ public class Level extends GameObject {
 	public void unselectShip() {
 		selectedShip = null;
 		selectedShipView.setShip(null);
-		selectedShipBorder.setShip(null);
 
 		enterDefaultState();
 	}
@@ -401,6 +411,8 @@ public class Level extends GameObject {
 	public void moveShipTo(Ship ship, int mapX, int mapY) {
 		enterAnimatingState();
 
+		camera.setFollowTarget(ship.getVisual());
+		
 		// update map
 		Tile oldTile = map.getTile(ship.getLocation());
 		Tile newTile = map.getTile(mapX, mapY);
@@ -419,6 +431,8 @@ public class Level extends GameObject {
 	public void attackShip(Ship attacker, Ship defender) {
 		enterAnimatingState();
 
+		camera.setFollowTarget(attacker.getVisual());
+		
 		attacker.attack(defender);
 		
 		checkForDestroyedUnits();
@@ -478,6 +492,7 @@ public class Level extends GameObject {
 						&& tile.getHighlight() != Tile.Highlight.NONE) {
 					attackShip(selectedShip, ship);
 				} else {
+					unselectShip();
 					enterDefaultState();
 				}
 			}
@@ -513,7 +528,6 @@ public class Level extends GameObject {
 
 		// place hover view next to ship if tile is a ship tile
 		hoveredShipView.setShip(null);
-		hoveredShipBorder.setShip(null);
 		if (tile != null && tile.getHasShip() == true) {
 			Ship ship = tile.getShip();
 			if (ship != selectedShip) {
@@ -521,7 +535,6 @@ public class Level extends GameObject {
 				Point p = camera.convertFromCameraSpace(Map
 						.mapToPixelCoords(new Point(x + 1, y)));
 				hoveredShipView.setLocation((int) p.getX(), (int) p.getY());
-				hoveredShipBorder.setShip(ship);
 			}
 		}
 

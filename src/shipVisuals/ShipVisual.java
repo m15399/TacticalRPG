@@ -16,6 +16,7 @@ import model.Ship;
 import utils.Direction;
 import utils.Observer;
 import utils.Position;
+import view.ShipOutline;
 
 /*
  * Controls the appearance of ships, 
@@ -24,9 +25,15 @@ import utils.Position;
 public class ShipVisual extends Entity {
 	
 	private Ship ship;
+	private ShipOutline outline;
 	
 	public ShipVisual(Ship ship){
 		this.ship = ship;
+		
+		outline = new ShipOutline();
+		outline.getPosition().setParent(getPosition());
+		addChild(outline);
+		
 		setPositionToShipCoords();
 	}
 	
@@ -37,6 +44,10 @@ public class ShipVisual extends Entity {
 		Point coords = Map.mapToPixelCoords(ship.getLocation());
 		getPosition().setX(coords.getX() + Map.TILESIZE/2);
 		getPosition().setY(coords.getY() + Map.TILESIZE/2);
+	}
+	
+	public ShipOutline getOutline(){
+		return outline;
 	}
 	
 	/*

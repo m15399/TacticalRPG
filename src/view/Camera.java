@@ -5,6 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
 
+import utils.Position;
+
+import model.Entity;
+import model.Game;
 import model.GameObject;
 
 /*
@@ -14,9 +18,54 @@ import model.GameObject;
 public class Camera extends GameObject {
 
 	private double positionX, positionY, prevPositionX, prevPositionY;
+	private Entity followTarget;
+//	private double targetDistanceX, targetDistanceY;
 
 	public Camera() {
 		positionX = positionY = prevPositionX = prevPositionY = 0;
+//		targetDistanceX = targetDistanceY = 0;
+		followTarget = null;
+	}
+	
+	public void update(){
+		prevPositionX = positionX;
+		prevPositionY = positionY;
+		
+		
+		// update the target distance if an object is targeted
+		if(followTarget != null){
+			Position p = followTarget.getPosition();
+			double x = p.getX() - Game.WIDTH/2;
+			double y = p.getY() - Game.HEIGHT/2 + 60;
+//			targetDistanceX = x - positionX;
+//			targetDistanceY = y - positionY;
+			double dx = x - positionX;
+			double dy = y - positionY;
+			
+//			double speed = 20;
+			double min = 1;
+			double distance = Math.sqrt(dx * dx + dy * dy);
+			if(distance < min){
+				moveBy(dx, dy);
+			} else {
+				double fac = .4;
+				moveBy(dx * fac, dy * fac);
+//				dx = dx / distance * speed;
+//				dy = dy / distance * speed;
+//				moveBy(dx, dy);
+			}
+			
+			
+		}
+		
+	}
+	
+	public Entity getFollowTarget(){
+		return followTarget;
+	}
+	
+	public void setFollowTarget(Entity target){
+		followTarget = target;
 	}
 
 	public void setPosition(double x, double y) {
@@ -27,8 +76,7 @@ public class Camera extends GameObject {
 	}
 
 	public void moveBy(double x, double y) {
-		prevPositionX = positionX;
-		prevPositionY = positionY;
+		
 		positionX += x;
 		positionY += y;
 	}
@@ -81,7 +129,7 @@ public class Camera extends GameObject {
 		Graphics2D g2 = (Graphics2D) g;
 		AffineTransform saved = g2.getTransform();
 
-		// g2.scale(3,3);
+//		g2.scale(1.3,1.3);
 		g2.translate(-positionX, -positionY);
 
 		super.drawSelfAndChildren(g);

@@ -211,7 +211,7 @@ public class Position extends Observable implements Observer {
 		
 	}
 	
-	public void unstransform(Graphics g){
+	public void untransform(Graphics g){
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setTransform(saved);		
 	}

@@ -52,6 +52,8 @@ public class LevelBackgroundButton extends Button {
 	 * Scroll the camera
 	 */
 	public void mouseDragged() {
+		level.getCamera().setFollowTarget(null);
+		
 		// move the camera by the velocity of the mouse
 		Input input = Input.getInstance();
 		double multiplier = -2;
@@ -63,11 +65,9 @@ public class LevelBackgroundButton extends Button {
 	}
 
 	/*
-	 * Do stuff for when the mouse is clicked Also move the camera by 0 so
-	 * that it's velocity goes back to 0
+	 * Do stuff for when the mouse is clicked 
 	 */
 	public void mouseReleased() {
-		level.getCamera().moveBy(0, 0);
 
 		// don't accept clicks if the user was trying to drag the camera
 		if (distanceDraggedSinceClick < 1) {
@@ -79,7 +79,6 @@ public class LevelBackgroundButton extends Button {
 	}
 
 	public void mouseReleasedOutsideButton() {
-		level.getCamera().moveBy(0, 0);
 		distanceDraggedSinceClick = 0;
 
 	}

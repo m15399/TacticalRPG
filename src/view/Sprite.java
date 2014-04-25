@@ -41,7 +41,7 @@ public class Sprite extends Entity {
 		
 		g.drawImage(image, -image.getWidth()/2,-image.getHeight()/2, null);
 		
-		getPosition().unstransform(g);
+		getPosition().untransform(g);
 	}
 	
 	

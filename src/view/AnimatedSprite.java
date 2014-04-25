@@ -68,7 +68,7 @@ public class AnimatedSprite extends Sprite {
 		
 		
 		// untransform 
-		getPosition().unstransform(g);
+		getPosition().untransform(g);
 	}
 
 	public void restart() {
