@@ -58,7 +58,7 @@ public class Camera extends GameObject {
 			if(distance < min){
 				moveBy(dx, dy);
 			} else {
-				double fac = .4;
+				double fac = .4 / Game.FPSMUL;
 				moveBy(dx * fac, dy * fac);
 //				dx = dx / distance * speed;
 //				dy = dy / distance * speed;

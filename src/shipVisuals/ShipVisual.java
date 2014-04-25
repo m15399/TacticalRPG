@@ -10,6 +10,7 @@ import java.util.List;
 import actions.*;
 
 import model.Entity;
+import model.Game;
 import model.Map;
 import model.Ship;
 
@@ -57,7 +58,7 @@ public class ShipVisual extends Entity {
 		ActionQueue q = new ActionQueue(notifyWhenDone);
 		
 		int distance = Map.TILESIZE;
-		int time = 12;
+		int time = 12 * Game.FPSMUL;
 		
 		Position currPosition = new Position(getPosition().getX(), getPosition().getY());
 		for(Direction d : directions){

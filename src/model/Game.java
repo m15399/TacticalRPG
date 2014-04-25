@@ -20,6 +20,9 @@ public class Game extends JPanel implements Runnable {
 	public static final int WIDTH = 1024;
 	public static final int HEIGHT = 768;
 	
+	public static final int FPSMUL = 2;
+	public static final int FPS = 30 * FPSMUL;
+	
 	public static long frameNumber = 0;
 	
 	private Thread thread;
@@ -69,7 +72,7 @@ public class Game extends JPanel implements Runnable {
 			repaint();
 			
 			try {
-				Thread.sleep(1000/30);
+				Thread.sleep(1000/FPS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
