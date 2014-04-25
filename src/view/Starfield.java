@@ -140,6 +140,7 @@ public class Starfield extends GameObject {
 	
 	public void update(){
 		if(this.camera != null){
+			offsetZ = (1 - camera.getZoom()) * 2;
 			double multiplier = -1;
 			double translateX = camera.getVelocityX() * multiplier;
 			double translateY = camera.getVelocityY() * multiplier;

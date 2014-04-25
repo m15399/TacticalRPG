@@ -64,7 +64,7 @@ public class Level extends GameObject {
 		numHumans = 1;
 
 		// Camera / Starfield
-		camera = new Camera();
+		camera = new Camera(width, height);
 		camera.setPosition(0, 0);
 
 		starfield = new Starfield(Game.WIDTH, Game.HEIGHT, 7, 100, 22, 27, 300);
@@ -72,6 +72,7 @@ public class Level extends GameObject {
 		addChild(starfield);
 
 		addChild(camera);
+		
 		
 		// Map
 		map = new Map(width, height);
@@ -99,6 +100,21 @@ public class Level extends GameObject {
 		
 		// AI 
 		aiStrategy = new RandomStrategy();
+		
+		// test zoom buttons
+//		int bsize = 20;
+//		final double sfac = 1.1;
+//		Input.getInstance().addButton(new Button(0, 0, bsize, bsize){
+//			public void mouseReleased(){
+//				camera.setZoom(camera.getZoom() * sfac);
+//			}
+//		});
+//		Input.getInstance().addButton(new Button(0, bsize, bsize, bsize){
+//			public void mouseReleased(){
+//				camera.setZoom(camera.getZoom() / sfac);
+//			}
+//		});
+		
 
 		enterDefaultStateObserver = new Observer() {
 			public void notified(Observable sender) {
@@ -116,7 +132,7 @@ public class Level extends GameObject {
 	}
 
 	public void update() {
-		
+				
 		if(isAITurn()){
 			if(state == TurnState.DEFAULT){
 				if(getNextShipWithMoves() == null)

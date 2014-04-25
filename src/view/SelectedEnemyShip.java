@@ -38,11 +38,14 @@ public class SelectedEnemyShip extends GameObject {
 		
 		int maxX = Game.WIDTH - WIDTH - 5;
 		int maxY = Game.HEIGHT - HEIGHT - 27;
+		int minY = 5;
 		
 		if(x > maxX)
 			x = maxX;
 		if(y > maxY)
 			y = maxY;
+		else if (y < minY)
+			y = minY;
 		
 		this.x = x;
 		this.y = y;

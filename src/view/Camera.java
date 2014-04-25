@@ -10,6 +10,7 @@ import utils.Position;
 import model.Entity;
 import model.Game;
 import model.GameObject;
+import model.Map;
 
 /*
  * Camera class, works by transforming the Graphics context before drawing its 
@@ -18,13 +19,22 @@ import model.GameObject;
 public class Camera extends GameObject {
 
 	private double positionX, positionY, prevPositionX, prevPositionY;
+	private double minX, minY, maxX, maxY;
 	private Entity followTarget;
 //	private double targetDistanceX, targetDistanceY;
+	double zoom;
 
-	public Camera() {
+	public Camera(int mapWidth, int mapHeight) {
 		positionX = positionY = prevPositionX = prevPositionY = 0;
 //		targetDistanceX = targetDistanceY = 0;
 		followTarget = null;
+		
+		zoom = 1;
+		
+		minX = 0;
+		minY = 0;
+		maxX = Map.TILESIZE * mapWidth;
+		maxY = Map.TILESIZE * mapHeight;
 	}
 	
 	public void update(){
@@ -35,8 +45,8 @@ public class Camera extends GameObject {
 		// update the target distance if an object is targeted
 		if(followTarget != null){
 			Position p = followTarget.getPosition();
-			double x = p.getX() - Game.WIDTH/2;
-			double y = p.getY() - Game.HEIGHT/2 + 60;
+			double x = p.getX();
+			double y = p.getY() + 60 / zoom;
 //			targetDistanceX = x - positionX;
 //			targetDistanceY = y - positionY;
 			double dx = x - positionX;
@@ -60,6 +70,14 @@ public class Camera extends GameObject {
 		
 	}
 	
+	public double getZoom(){
+		return zoom;
+	}
+	
+	public void setZoom(double newZoom){
+		zoom = newZoom;
+	}
+	
 	public Entity getFollowTarget(){
 		return followTarget;
 	}
@@ -79,14 +97,26 @@ public class Camera extends GameObject {
 		
 		positionX += x;
 		positionY += y;
+		
+		if(positionX < minX)
+			positionX = minX;
+		else if (positionX > maxX)
+			positionX = maxX;
+		
+		if(positionY < minY)
+			positionY = minY;
+		else if(positionY > maxY)
+			positionY = maxY;
+		
 	}
 
 	/*
 	 * Converts a point to what it would be after translating/scaling
 	 */
 	public Point convertToCameraSpace(Point p) {
-		double x = (p.getX() + positionX);
-		double y = (p.getY() + positionY);
+		// magic
+		double x = (p.getX() - Game.WIDTH/2) / zoom + positionX;
+		double y = (p.getY() - Game.HEIGHT/2) / zoom + positionY;
 
 		Point ret = new Point();
 		ret.setLocation(x, y);
@@ -97,8 +127,9 @@ public class Camera extends GameObject {
 	 * Converts a translated/scaled point back to normal coords
 	 */
 	public Point convertFromCameraSpace(Point p) {
-		double x = (p.getX() - positionX);
-		double y = (p.getY() - positionY);
+		// magic
+		double x = (p.getX() - positionX) * zoom + Game.WIDTH/2;
+		double y = (p.getY() - positionY) * zoom + Game.HEIGHT/2;
 
 		Point ret = new Point();
 		ret.setLocation(x, y);
@@ -129,7 +160,8 @@ public class Camera extends GameObject {
 		Graphics2D g2 = (Graphics2D) g;
 		AffineTransform saved = g2.getTransform();
 
-//		g2.scale(1.3,1.3);
+		g2.translate(Game.WIDTH/2, Game.HEIGHT/2);
+		g2.scale(zoom,zoom);
 		g2.translate(-positionX, -positionY);
 
 		super.drawSelfAndChildren(g);
