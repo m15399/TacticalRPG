@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import actions.TimerAction;
-
+import model.Tile.Highlight;
 import strategies.RandomStrategy;
 import strategies.Strategy;
+import utils.Direction;
 import utils.Observable;
 import utils.Observer;
 import view.Camera;
@@ -447,7 +448,7 @@ public class Level extends GameObject {
 		// move the ship and pass in the observer
 		ship.moveWithDirections(enterDefaultStateObserver, mapX, mapY,
 				map.shortestPath(ship.getLocation(), new Point(mapX,
-						mapY), ship.getMovesLeft()));
+						mapY)));
 
 		oldTile.setEmpty();
 		newTile.setHasShip(true, ship);
@@ -588,11 +589,50 @@ public class Level extends GameObject {
 				hoveredShipView.setLocation((int) p.getX(), (int) p.getY());
 			}
 		}
-
+		
+		map.colorGreenHighlightsToBlue();
+		if(tile != null && !tile.getIsOccupied() && selectedShip != null && selectedShip.getTeam() == 0 && tileHovered.getHighlight() == Highlight.BLUE){
+			List<Direction> list = new ArrayList<Direction>();
+			list = map.shortestPath(selectedShip.getLocation(), tileHovered.getLocation());
+			map.highlightTilesWithoutClearingPrevious(convertDirectionsToPoints(list), Highlight.GREEN);
+		}
 	}
-
-
 	
+	/*
+	 * Used in highlighting possible prospective path to a location in green highlighting.
+	 */
+
+	private List<Tile> convertDirectionsToPoints(List<Direction> dirs){
+		List<Point> list = new ArrayList<Point>();
+		Point curr = new Point(selectedShip.getLocation().x, selectedShip.getLocation().y);
+		list.add(selectedShip.getLocation());
+		for(Direction dir: dirs){
+			if(dir == Direction.UP){
+				curr = new Point(curr.x, curr.y - 1);
+				list.add(curr);
+			}
+			else if(dir == Direction.DOWN){
+				curr = new Point(curr.x, curr.y + 1);
+				list.add(curr);
+			}
+			else if(dir == Direction.LEFT){
+				curr = new Point(curr.x - 1, curr.y);
+				list.add(curr);
+			}
+			else if(dir == Direction.RIGHT){
+				curr = new Point(curr.x + 1, curr.y);
+				list.add(curr);
+			}
+			else{
+				System.out.println("Something went wrong in the conversion.");
+			}
+		}
+		List<Tile> tiles = new ArrayList<Tile>();
+		for(Point pt: list){
+			tiles.add(map.getTile(pt));
+		}
+		return tiles;
+	}
 	
 	
 	/*

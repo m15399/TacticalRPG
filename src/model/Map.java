@@ -88,7 +88,7 @@ public class Map extends GameObject {
 	 * @return
 	 */
 
-	public List<Direction> shortestPath(Point curr, Point endLocation, int moves){
+	public List<Direction> shortestPath(Point curr, Point endLocation){
 //		System.out.println(curr.toString() + endLocation.toString() + "  " + moves);
 //		System.out.println(this.toString());
 		Point beginning = curr;
@@ -214,6 +214,16 @@ public class Map extends GameObject {
 		}
 	}
 	
+	/*
+	 * For use with highlighting possiblePath
+	 */
+	
+	public void highlightTilesWithoutClearingPrevious(List<Tile> tileList, Highlight color){
+		for(Tile t : tileList){
+			t.setHighlight(color);
+		}
+	}
+	
 	private boolean checkIfTileExists(Point point){
 		if(point.x >= 0 && point.x < tiles.length && point.y >= 0 && point.y < tiles[0].length){
 			return true;
@@ -256,6 +266,20 @@ public class Map extends GameObject {
 		}
 	}
 
+	/*
+	 * Helper method for resetting green tiles to blue
+	 */
+	
+	public void colorGreenHighlightsToBlue(){
+		for(int r = 0; r < tiles.length; r++){
+			for(int c = 0; c < tiles[r].length; c++){
+				if(tiles[r][c].getHighlight() == Highlight.GREEN){
+					tiles[r][c].setHighlight(Highlight.BLUE);
+				}
+			}
+		}
+	}
+	
 	/*
 	 * Added two setter methods for Tile. Just use whichever one is more
 	 * convenient.
