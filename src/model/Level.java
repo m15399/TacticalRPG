@@ -591,7 +591,7 @@ public class Level extends GameObject {
 		}
 		
 		map.colorGreenHighlightsToBlue();
-		if(tile != null && !tile.getIsOccupied() && selectedShip != null && selectedShip.getTeam() == 0 && tileHovered.getHighlight() == Highlight.BLUE){
+		if(tile != null && !tile.getIsOccupied() && selectedShip != null && !isAITurn() && tileHovered.getHighlight() == Highlight.BLUE){
 			List<Direction> list = new ArrayList<Direction>();
 			list = map.shortestPath(selectedShip.getLocation(), tileHovered.getLocation());
 			map.highlightTilesWithoutClearingPrevious(convertDirectionsToPoints(list), Highlight.GREEN);

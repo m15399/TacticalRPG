@@ -27,7 +27,6 @@ public class RandomStrategy implements Strategy{
 			ship.setCanMove(false);
 			
 		} else if(ship.getCanAttack()){
-			ship.setCanAttack(false);
 			List<Ship> targets = level.getPossibleTargetsForAI(ship);
 			if(targets.size() >= 1){
 				int randomShip = random.nextInt(targets.size());
@@ -37,8 +36,12 @@ public class RandomStrategy implements Strategy{
 				level.waitShip(ship);
 				
 			}
+			ship.setCanAttack(false);
 
-		} 
+
+		} else {
+			level.waitShip(ship);
+		}
 		
 	}
 }
