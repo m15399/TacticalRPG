@@ -21,7 +21,7 @@ public class MapTest {
 		Point endPoint = new Point(2,3);
 		Map map = new Map(3, 4);
 		List<Direction> points = new ArrayList<Direction>();
-		points = map.shortestPath(currentPoint, endPoint, 7);
+		points = map.shortestPath(currentPoint, endPoint);
 		for(Direction dir: points){
 			System.out.println(dir.toString());
 		}
@@ -38,7 +38,7 @@ public class MapTest {
 		Point endPoint = new Point(0,0);
 		Map map = new Map(4, 4);
 		List<Direction> points = new ArrayList<Direction>();
-		points = map.shortestPath(currentPoint, endPoint, 7);
+		points = map.shortestPath(currentPoint, endPoint);
 		for(Direction dir: points){
 			System.out.println(dir.toString());
 		}
@@ -55,7 +55,7 @@ public class MapTest {
 		Point endPoint = new Point(0,3);
 		Map map = new Map(4, 4);
 		List<Direction> points = new ArrayList<Direction>();
-		points = map.shortestPath(currentPoint, endPoint, 7);
+		points = map.shortestPath(currentPoint, endPoint);
 		for(Direction dir: points){
 			System.out.println(dir.toString());
 		}
@@ -72,7 +72,7 @@ public class MapTest {
 		Point endPoint = new Point(5,3);
 		Map map = new Map(16, 12);
 		List<Direction> points = new ArrayList<Direction>();
-		points = map.shortestPath(currentPoint, endPoint, 7);
+		points = map.shortestPath(currentPoint, endPoint);
 		for(Direction dir: points){
 			System.out.println(dir.toString());
 		}
@@ -89,7 +89,7 @@ public class MapTest {
 		Point endPoint = new Point(5,2);
 		Map map = new Map(16, 12);
 		List<Direction> points = new ArrayList<Direction>();
-		points = map.shortestPath(currentPoint, endPoint, 7);
+		points = map.shortestPath(currentPoint, endPoint);
 		for(Direction dir: points){
 			System.out.println(dir.toString());
 		}
