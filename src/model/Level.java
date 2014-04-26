@@ -250,6 +250,10 @@ public class Level extends GameObject {
 			if(!s.getIsWaiting()){
 				selectShip(s);
 				aiStrategy.doNextAction(s, this);
+				
+				if(state != TurnState.ANIMATING)
+					enterDefaultState();
+				
 				return;
 			}
 		}

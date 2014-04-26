@@ -31,11 +31,7 @@ public class RandomStrategy implements Strategy{
 			if(targets.size() >= 1){
 				int randomShip = random.nextInt(targets.size());
 				level.attackShip(ship, targets.get(randomShip));
-			} else {
-				
-				level.waitShip(ship);
-				
-			}
+			} 
 			ship.setCanAttack(false);
 
 
