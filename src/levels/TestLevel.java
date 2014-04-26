@@ -48,24 +48,24 @@ public class TestLevel extends Level {
 		 */
 		
 		//Scout
-		Scout escout = new Scout(new Point(12, 8));
+		Scout escout = new Scout(new Point(15, 11)); //was 12, 8
 		escout.addToItems(new SpaceMine());
 		escout.addToItems(new SpaceMine());
 		escout.addToItems(new SpaceMine());
 		addEnemyShipToMap(escout);
 		
 		//Fighter
-		Fighter efighter = new Fighter(new Point(15, 9));
+		Fighter efighter = new Fighter(new Point(14, 11));//was 15,9
 		efighter.addToItems(new ScrapMetal());
 		addEnemyShipToMap(efighter);
 		
 		//Fighter
-		Fighter efighter2 = new Fighter(new Point(13, 11));
+		Fighter efighter2 = new Fighter(new Point(15, 10));//was 13,11
 		efighter2.addToItems(new ScrapMetal());
 		addEnemyShipToMap(efighter2);
 		
 		//Bomber
-		Bomber ebomber = new Bomber(new Point(15, 11));
+		Bomber ebomber = new Bomber(new Point(14, 10)); //was 15,11
 		ebomber.addToItems(new MagneticShield());
 		addEnemyShipToMap(ebomber);
 				
