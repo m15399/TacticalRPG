@@ -52,18 +52,25 @@ public class Camera extends GameObject {
 			double dx = x - positionX;
 			double dy = y - positionY;
 			
-//			double speed = 20;
-			double min = 1;
+//			double speed = 1;
+			double min = .75;
+			
+			double fac = .13 / Game.FPSMUL;
+			double dxf = dx * fac;
+			double dyf = dy * fac;
+			
 			double distance = Math.sqrt(dx * dx + dy * dy);
+//			double distancef = Math.sqrt(dxf * dxf + dyf * dyf);
+			
 			if(distance < min){
 				moveBy(dx, dy);
+				
 			} else {
-				double fac = .4 / Game.FPSMUL;
-				moveBy(dx * fac, dy * fac);
-//				dx = dx / distance * speed;
-//				dy = dy / distance * speed;
-//				moveBy(dx, dy);
+				dx *= fac;
+				dy *= fac;
+				moveBy(dxf, dyf);
 			}
+			
 			
 			
 		}

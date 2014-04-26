@@ -7,6 +7,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import actions.TimerAction;
+
 import strategies.RandomStrategy;
 import strategies.Strategy;
 import utils.Observable;
@@ -131,18 +133,7 @@ public class Level extends GameObject {
 		Input.getInstance().removeButton(levelButton);
 	}
 
-	public void update() {
-				
-		if(isAITurn()){
-			if(state == TurnState.DEFAULT){
-				if(getNextShipWithMoves() == null)
-					endTurn();
-				else
-					takeNextAIMove();
-			}
-		}
-		
-		
+	public void updateButtons(){
 		// keep the buttons in the right place
 		if (selectedShip != null) {
 			int x = selectedShip.getLocation().x;
@@ -151,6 +142,20 @@ public class Level extends GameObject {
 					.mapToPixelCoords(new Point(x + 1, y)));
 			shipButtons.setLocation((int) p.getX(), (int) p.getY());
 		}
+	}
+	
+	public void update() {
+				
+//		if(isAITurn()){
+//			if(state == TurnState.DEFAULT){
+//				if(getNextShipWithMoves() == null)
+//					endTurn();
+//				else
+//					takeNextAIMove();
+//			}
+//		}
+		
+		updateButtons();
 
 		// figure out how to outline ships
 		List<Ship> ships = getShips();
@@ -158,7 +163,7 @@ public class Level extends GameObject {
 			ShipOutline o = s.getVisual().getOutline();
 			o.setSelectionType(SelectionType.NONE);
 		}
-		if(state != TurnState.ANIMATING){
+		if(!isAITurn() && state != TurnState.ANIMATING){
 			ships = getShips(currentTeam);
 			for(Ship s : ships){
 				ShipOutline o = s.getVisual().getOutline();
@@ -195,12 +200,11 @@ public class Level extends GameObject {
 		enterDefaultState();
 
 		if(!isAITurn()){
-			selectNextShip();
+			selectPlayerNextShip();
 		} 
 	}
 	
 	public void endTurn(){
-		unselectShip();
 		
 		int nextTeam = currentTeam + 1;
 		if (nextTeam > 1)
@@ -243,10 +247,12 @@ public class Level extends GameObject {
 	public void takeNextAIMove(){
 		for(Ship s : getShips()){
 			if(!s.getIsWaiting()){
+				selectShip(s);
 				aiStrategy.doNextAction(s, this);
 				return;
 			}
 		}
+		endTurn();
 	}
 	
 	public List<Ship> getPossibleTargetsForAI(Ship s){
@@ -297,10 +303,17 @@ public class Level extends GameObject {
 	 * nothing
 	 */
 	public void enterDefaultState() {
-		if(!isAITurn())
+		if(!isAITurn()) {
 			levelButton.enable();
-
-		shipButtons.setShip(selectedShip);
+			shipButtons.setShip(selectedShip);
+		} else {
+			hoveredShipView.setShip(null);
+		}
+		updateButtons();
+		
+		if(isAITurn())
+			takeNextAIMove();
+		
 
 		if (selectedShip != null) {
 
@@ -320,8 +333,7 @@ public class Level extends GameObject {
 			}
 			shipButtons.addButton("Wait", new Button() {
 				public void mouseReleased() {
-					selectedShip.setIsWaiting(true);
-					selectNextShip();
+					waitShip(selectedShip);
 				}
 			});
 
@@ -399,17 +411,15 @@ public class Level extends GameObject {
 	public void selectShip(Ship ship) {
 		selectedShip = ship;
 		selectedShipView.setShip(ship);
-		
-		camera.setFollowTarget(ship.getVisual());
-
-		enterMoveState();
+		if(!isAITurn())
+			enterMoveState();
 	}
 	
-	public void selectNextShip() {
+	public void selectPlayerNextShip() {
 		Ship nextShip = getNextShipWithMoves();
 		if (nextShip != null) {
 			selectShip(nextShip);
-			
+			camera.setFollowTarget(nextShip.getVisual());
 		} else { // no more ships, turn is over
 			endTurn();
 		}
@@ -421,7 +431,8 @@ public class Level extends GameObject {
 		selectedShip = null;
 		selectedShipView.setShip(null);
 
-		enterDefaultState();
+		if(!isAITurn())
+			enterDefaultState();
 	}
 
 	public void moveShipTo(Ship ship, int mapX, int mapY) {
@@ -454,10 +465,34 @@ public class Level extends GameObject {
 		checkForDestroyedUnits();
 //		printAllUnits();
 
-		// play animation - TODO
+		// play animation 
 		enterDefaultState();
 	}
 
+	public void waitShip(Ship ship){
+		enterAnimatingState();
+
+		ship.setIsWaiting(true);
+		if(!isAITurn())
+			unselectShip();
+		
+		int waitTime = 0;
+		if(isAITurn()){
+			waitTime = 20;
+		}
+		
+		TimerAction timer = new TimerAction(waitTime * Game.FPSMUL, new Observer(){
+			public void notified(Observable sender){
+				enterDefaultState();
+				if(!isAITurn())
+					selectPlayerNextShip();
+			}
+		});
+		addChild(timer);
+		timer.start();
+		
+	}
+	
 	public void removeShipFromMap(Ship ship){
 		map.getTile(ship.getLocation()).setEmpty();
 		ship.destroy();

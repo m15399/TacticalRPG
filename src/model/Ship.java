@@ -105,16 +105,7 @@ public class Ship extends GameObject {
 	}
 	
 	public boolean getIsWaiting(){
-		if(isWaiting){
-			return true;
-		} else {
-			if(!canMove && !canAttack && !canUseAbility && !canUseItem){
-				setIsWaiting(true);
-				return true;
-			} else {
-				return false;
-			}
-		}
+		return isWaiting;
 	}
 	
 	/*

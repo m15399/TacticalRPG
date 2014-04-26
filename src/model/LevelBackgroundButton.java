@@ -56,7 +56,7 @@ public class LevelBackgroundButton extends Button {
 		
 		// move the camera by the velocity of the mouse
 		Input input = Input.getInstance();
-		double multiplier = -2;
+		double multiplier = -2 / Game.FPSMUL;
 		level.getCamera().moveBy(input.getVelocityX() * multiplier,
 				input.getVelocityY() * multiplier);
 

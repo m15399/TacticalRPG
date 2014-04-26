@@ -9,8 +9,8 @@ import model.Ship;
 
 public class RandomStrategy implements Strategy{
 	public void doNextAction(Ship ship, Level level){		
-		Random random = new Random();		
-		
+		Random random = new Random();	
+
 		if(ship.getCanMove()){
 			List<Point> potentialMoves = level.getPossibleMovesForAI(ship);
 			
@@ -20,20 +20,25 @@ public class RandomStrategy implements Strategy{
 				
 				if(!ship.getLocation().equals(move)){ // don't move to the tile the ship is already on
 					level.moveShipTo(ship, move.x, move.y);
-					ship.setCanMove(false);
 					break;
 				}	
 				potentialMoves.remove(randomMove);
 			}
+			ship.setCanMove(false);
 			
 		} else if(ship.getCanAttack()){
+			ship.setCanAttack(false);
 			List<Ship> targets = level.getPossibleTargetsForAI(ship);
 			if(targets.size() >= 1){
 				int randomShip = random.nextInt(targets.size());
 				level.attackShip(ship, targets.get(randomShip));
+			} else {
+				
+				level.waitShip(ship);
+				
 			}
-			ship.setIsWaiting(true);
-		}
+
+		} 
 		
 	}
 }
