@@ -8,6 +8,9 @@ import specific_ships_items.MagneticShield;
 import specific_ships_items.Scout;
 import specific_ships_items.ScrapMetal;
 import specific_ships_items.SpaceMine;
+import view.AnimatedSprite;
+import view.JetSprite;
+import view.JetSprite.JetSize;
 import model.Level;
 
 public class TestLevel extends Level {
@@ -68,7 +71,7 @@ public class TestLevel extends Level {
 		Bomber ebomber = new Bomber(new Point(14, 10)); //was 15,11
 		ebomber.addToItems(new MagneticShield());
 		addEnemyShipToMap(ebomber);
-				
+						
 		startTurn(0);
 	}
 		

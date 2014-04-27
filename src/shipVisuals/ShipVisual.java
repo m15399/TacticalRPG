@@ -57,6 +57,15 @@ public class ShipVisual extends Entity {
 	public void moveWithDirections(Observer notifyWhenDone, List<Direction> directions){
 		ActionQueue q = new ActionQueue(notifyWhenDone);
 		
+		q.addAction(new Action(null){
+			public void update(){
+				if(getStarted()){
+					playMoveAnimation();
+					finish();
+				}
+			}
+		});
+		
 		int distance = Map.TILESIZE;
 		int time = 12 * Game.FPSMUL;
 		
@@ -80,6 +89,16 @@ public class ShipVisual extends Entity {
 			}
 			q.addAction(new MoveEntityToAction(this, new Position(currPosition), time, null));
 		}
+		
+		q.addAction(new Action(null){
+			public void update(){
+				if(getStarted()){
+					playIdleAnimation();
+					finish();
+				}
+			}
+		});
+		
 		
 		addChild(q);
 		q.start();

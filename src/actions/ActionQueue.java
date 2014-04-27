@@ -31,6 +31,7 @@ public class ActionQueue extends Action implements Observer {
 	}
 	
 	private void startNextAction(){
+//		System.out.println("starting action");
 		if(queue.isEmpty())
 			finish();
 		else{

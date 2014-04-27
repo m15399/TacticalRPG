@@ -9,7 +9,12 @@ public class AnimatedSprite extends Sprite {
 	private Size frameSize;
 	private int delay, delayLeft, numberFrames, currentFrame;
 	private int[] frameIndicies;
+	private boolean visible;
 
+	public AnimatedSprite(){
+		initAnimatedSprite();
+	}
+	
 	public AnimatedSprite(String filename) {
 		super(filename);
 		initAnimatedSprite();
@@ -24,7 +29,7 @@ public class AnimatedSprite extends Sprite {
 		frameSize = new Size(0, 0);
 		delay = delayLeft = numberFrames = currentFrame = 0;
 		frameIndicies = null;
-		
+		visible = true;
 	}
 
 	public void update() {
@@ -41,6 +46,9 @@ public class AnimatedSprite extends Sprite {
 	}
 	
 	public void draw(Graphics g){
+		if(!visible)
+			return;
+		
 		// transform to draw Sprite correctly
 		getPosition().transform(g);
 		
@@ -80,6 +88,14 @@ public class AnimatedSprite extends Sprite {
 	 * methods above these so they are easier to find.
 	 */
 
+	public void setVisible(boolean b){
+		visible = b;
+	}
+	
+	public boolean getVisible(){
+		return visible;
+	}
+	
 	public Size getFrameSize() {
 		return frameSize;
 	}

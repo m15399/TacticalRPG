@@ -28,6 +28,10 @@ public class Action extends GameObject {
 		started = true;
 	}
 	
+	public boolean getStarted(){
+		return started;
+	}
+	
 	/*
 	 * default Action just finishes
 	 */

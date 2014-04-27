@@ -17,7 +17,8 @@ public class ImageLibrary {
 		"test.png",
 		"test2.png",
 		"smurf_sprite.png",
-		"scout.png"
+		"scout.png",
+		"jet_37x16.png"
 		};
 	
 	/*
@@ -43,7 +44,12 @@ public class ImageLibrary {
 	}
 
 	public BufferedImage getImage(String filename){
-		return images.get(filename);
+		BufferedImage image = images.get(filename);
+		if(image == null){
+			System.out.println("Error getting image: " + filename);
+			System.exit(1);
+		}
+		return image;
 	}
 
 	private void loadImage(String filename) {

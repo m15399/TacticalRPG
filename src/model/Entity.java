@@ -26,4 +26,8 @@ public class Entity extends GameObject {
 		return position;
 	}
 	
+	public void setSpatialParent(Entity e){
+		getPosition().setParent(e.getPosition());
+	}
+	
 }
