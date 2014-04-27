@@ -7,7 +7,6 @@ import java.util.List;
 import model.Item;
 import model.Ship;
 import shipVisuals.FighterVisual;
-import shipVisuals.ScoutVisual;
 
 public class Fighter extends Ship {
 
