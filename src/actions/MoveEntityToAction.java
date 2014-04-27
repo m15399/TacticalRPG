@@ -46,6 +46,12 @@ public class MoveEntityToAction extends Action {
 			
 			double dx = (endX - currX) / timeLeft;
 			double dy = (endY - currY) / timeLeft;
+			
+			if(dx < 0){
+				entity.getPosition().setMirrored(true);
+			} else if (dx > 0){
+				entity.getPosition().setMirrored(false);
+			}
 						
 			entity.getPosition().moveBy(dx, dy);
 		}
