@@ -6,19 +6,21 @@ import model.Ship;
 /*
  * Controls visuals for the Scout
  */
-public class ScoutVisual extends ShipVisual {
+public class FighterVisual extends ShipVisual {
 
 	Sprite sprite;
 	
-	public ScoutVisual(Ship ship) {
+	public FighterVisual(Ship ship) {
 		super(ship);
 		
-		sprite = new Sprite("scout.png");
+		sprite = new Sprite("test.png");
 		addChild(sprite);
 
 		// parent the sprite to the location of the visual
 		sprite.getPosition().setParent(getPosition());
 		
+		sprite.getPosition().setScale(.6, .6);
+
 	}
 
 

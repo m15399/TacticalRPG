@@ -6,6 +6,7 @@ import java.util.List;
 
 import model.Item;
 import model.Ship;
+import shipVisuals.FighterVisual;
 import shipVisuals.ScoutVisual;
 
 public class Fighter extends Ship {
@@ -18,7 +19,7 @@ public class Fighter extends Ship {
 		this.constructorAid("Fighter", 3, 75, 25, 75, 25, 80, items,
 				description, 40, 50, 25, 2);
 
-		setVisual(new ScoutVisual(this));
+		setVisual(new FighterVisual(this));
 	}
 
 	/*

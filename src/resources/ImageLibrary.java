@@ -16,7 +16,8 @@ public class ImageLibrary {
 	private static final String[] files = {
 		"test.png",
 		"test2.png",
-		"smurf_sprite.png"
+		"smurf_sprite.png",
+		"scout.png"
 		};
 	
 	/*
