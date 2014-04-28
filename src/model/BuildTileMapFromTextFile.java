@@ -7,7 +7,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
+import specific_ships_items.Bomber;
+import specific_ships_items.Fighter;
+import specific_ships_items.Mothership;
 import specific_ships_items.Scout;
+import specific_terrains.AsteroidTerrain;
+import specific_terrains.PlanetTerrain;
 
 public class BuildTileMapFromTextFile {
 	
@@ -62,11 +67,16 @@ public class BuildTileMapFromTextFile {
 	
 	/*
 	 * Breakdown of what letters mean.  Please don't delete commented println's since they can be used to debug in the future.
-	 * isEdge = "E"
-	 * isTerrain (Unpassable) = "T"
-	 * isTerrain (Passable) = "B" (for background though it could have other effects, but it's essentially background)
-	 * hasShip = "S" (Scout Ship)
-	 * unoccupied = "0"
+	 * S = Scout
+	 * F = Fighter
+	 * B = Bomber
+	 * C = Cruiser
+	 * M = Mothership
+	 * E = Engineer
+	 * X = Sniper
+	 * A = Asteroid
+	 * P = Planet
+	 * p = Planet (used for extending planet graphic beyond 1 tile)
 	 */
 	
 	private void processData(String levelInfo, int levelWidth, int levelHeight){
@@ -78,19 +88,44 @@ public class BuildTileMapFromTextFile {
 			for(int c = 0; c < levelWidth; c++){
 				//System.out.println("[" + r + "," + c + "]");
 				char temp = levelInfo.charAt(counter);
-				if(temp == 'E'){
-					tiles[r][c] = new Tile(true);
-				}
-				//TODO adjust to new changes regarding terrain.  Fix comments above.
-//				else if(temp == 'T'){
-//					tiles[r][c] = new Tile(false);
-//				}
-//				else if(temp == 'B'){
-//					tiles[r][c] = new Tile(true);
-//				}
-				else if(temp == 'S'){
-					Ship ship = new Scout(new Point(r, c));
+				if(temp == 'S'){
+					Scout ship = new Scout(new Point(r, c));
 					tiles[r][c] = new Tile(ship);
+				}
+				else if(temp == 'F'){
+					Fighter ship = new Fighter(new Point(r, c));
+					tiles[r][c] = new Tile(ship);
+				}
+				else if(temp == 'B'){
+					Bomber ship = new Bomber(new Point(r, c));
+					tiles[r][c] = new Tile(ship);
+				}
+//				else if(temp == 'C'){
+//					Cruiser ship = new Cruiser(new Point(r, c));
+//					tiles[r][c] = new Tile(ship);
+//				}
+				else if(temp == 'M'){
+					Mothership ship = new Mothership(new Point(r, c));
+					tiles[r][c] = new Tile(ship);
+				}
+//				else if(temp == 'E'){
+//					Engineer ship = new Engineer(new Point(r, c));
+//					tiles[r][c] = new Tile(ship);
+//				}
+//				else if(temp == 'X'){
+//					Sniper ship = new Sniper(new Point(r, c));
+//					tiles[r][c] = new Tile(ship);
+//				}
+				else if(temp == 'A'){
+					AsteroidTerrain terrain = new AsteroidTerrain(new Point(r, c));
+					tiles[r][c] = new Tile(true, terrain);
+				}
+				else if(temp == 'P'){
+					PlanetTerrain terrain = new PlanetTerrain(new Point(r, c));
+					tiles[r][c] = new Tile(false, terrain);
+				}
+				else if(temp == 'p'){
+					tiles[r][c] = new Tile(true);
 				}
 				else if(temp == '0'){
 					tiles[r][c] = new Tile(r, c);

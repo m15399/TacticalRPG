@@ -4,7 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
+import specific_ships_items.Bomber;
+import specific_ships_items.Fighter;
+import specific_ships_items.Mothership;
 import specific_ships_items.Scout;
+import specific_terrains.AsteroidTerrain;
+import specific_terrains.PlanetTerrain;
 
 /**
  * Tried to wrap all the Tile classes into one class to simplify things and cut
@@ -17,7 +22,7 @@ import specific_ships_items.Scout;
 
 public class Tile extends GameObject implements Comparable<Tile>{
 
-	private boolean isOccupied, isEdge, isTerrain, hasShip;
+	private boolean isOccupied, isTerrain, hasShip;
 	private Highlight highlight;
 	private boolean mousedOver;
 	private Ship ship;
@@ -72,16 +77,14 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		setEmpty();
 		setTerrain(trueIfTerrainCanBeOccupied, newTerrain);
 	}
-
+	
 	/**
-	 * Edge tile constructor
-	 * 
-	 * @return
+	 * Occupied or Unoccupied generic terrain Tile
 	 */
-
-	public Tile(boolean trueIfTileIsEdgeTile) {
+	public Tile(boolean trueIfTerrainCanBeOccupied){
 		setEmpty();
-		setIsEdge(trueIfTileIsEdgeTile);
+		setIsOccupied(trueIfTerrainCanBeOccupied);
+		setIsTerrain(true);
 	}
 
 	public boolean getIsOccupied() {
@@ -104,19 +107,12 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		mousedOver = b;
 	}
 
-	public boolean getIsEdge() {
-		return isEdge;
-	}
-
-	/**
-	 * Automatically handles the tile being occupied.
-	 */
-	public void setIsEdge(boolean trueIfTileIsEdgeTile) {
-		isEdge = trueIfTileIsEdgeTile;
-	}
-
 	public boolean getIsTerrain() {
 		return isTerrain;
+	}
+	
+	public void setIsTerrain(boolean newIsTerrainValue){
+		isTerrain = newIsTerrainValue;
 	}
 
 	public Terrain getTerrain(){
@@ -159,7 +155,6 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	public void setEmpty() {
 		setHasShip(false, null);
 		setIsOccupied(false);
-		setIsEdge(false);
 		removeTerrain();
 		setHighlight(Highlight.NONE);
 	}
@@ -206,19 +201,50 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		}
 	}
 	
+	/*
+	 * Breakdown of what letters mean.  Please don't delete commented println's since they can be used to debug in the future.
+	 * S = Scout
+	 * F = Fighter
+	 * B = Bomber
+	 * C = Cruiser
+	 * M = Mothership
+	 * E = Engineer
+	 * X = Sniper
+	 * A = Asteroid
+	 * P = Planet
+	 */
+	
 	public String toString(){
 		String result = "";
-		if(isEdge){
-			result += "E";
-		}
-		else if(hasShip && ship instanceof Scout){
+		if(hasShip && ship instanceof Scout){
 			result += "S";
 		}
-		else if(isTerrain && !isOccupied){
+		else if(hasShip && ship instanceof Fighter){
+			result += "F";
+		}
+		else if(hasShip && ship instanceof Bomber){
 			result += "B";
 		}
-		else if(isTerrain && isOccupied){
-			result += "T";
+//		else if(hasShip && ship instanceof Cruiser){
+//			result += "C";
+//		}
+		else if(hasShip && ship instanceof Mothership){
+			result += "M";
+		}
+//		else if(hasShip && ship instanceof Engineer){
+//			result += "E";
+//		}
+//		else if(hasShip && ship instanceof Sniper){
+//			result += "X";
+//		}
+		else if(isTerrain && terrain instanceof AsteroidTerrain){
+			result += "A";
+		}
+		else if(isTerrain && terrain instanceof PlanetTerrain){
+			result += "P";
+		}
+		else if(isTerrain){
+			result += "p";
 		}
 		else if(!isOccupied){
 			result += "0";
@@ -227,6 +253,11 @@ public class Tile extends GameObject implements Comparable<Tile>{
 			System.out.println("Some error happened reading this Tile.  Placed 1 in for spot.");
 			result += "1";
 		}
+		
+		
+		
+		
+		
 		return result;
 	}
 	
