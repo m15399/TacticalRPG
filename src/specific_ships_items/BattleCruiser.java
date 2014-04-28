@@ -8,35 +8,35 @@ import model.Item;
 import model.Ship;
 import shipVisuals.BomberVisual;
 
-public class Bomber extends Ship {
+public class BattleCruiser extends Ship {
 
-	public Bomber(Point newLocation) {
+	public BattleCruiser(Point newLocation) {
 		super(newLocation);
-		String description = "Bomber ship,\nstrong against\nnon-mobile targets.";
+		String description = "Battle Cruiser,\nMade for battle\ncruisin' to victory.";
 		List<Item> items = new ArrayList<Item>();
 		items.add(new SpaceMine());
-		this.constructorAid("Bomber", 4, 100, 30, 100, 30, 75, items,
-				description, 40, 45, 15, 1);
+		this.constructorAid("BattleCruiser", 3, 150, 30, 150, 30, 75, items,
+				description, 50, 55, 25, 2);
 
 		setVisual(new BomberVisual(this));
 	}
 
 	/*
-	 * Ship basic attack. Half damage against non-mothership
+	 * Ship basic attack. Ignore scout armor.
 	 */
 
 	@Override
 	public void attack(Ship target) {
 		double damage = this.getDamage();
-		if (!target.getName().equals("Mothership")) {
-			if (target.getHull() - target.getFinalDamage(damage / 1.5) > 0)
+		if (!target.getName().equals("Scout")) {
+			if (target.getHull() - target.getFinalDamage(damage) > 0)
 				target.setHull(target.getHull()
-						- target.getFinalDamage(damage / 1.5));
+						- target.getFinalDamage(damage));
 			else
 				target.setHull(0);
 		} else {
-			if (target.getHull() - target.getFinalDamage(damage) > 0)
-				target.setHull(target.getHull() - target.getFinalDamage(damage));
+			if (target.getHull() - damage > 0)
+				target.setHull(target.getHull() - damage);
 			else
 				target.setHull(0);
 		}
