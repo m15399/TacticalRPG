@@ -36,7 +36,18 @@ public class Map extends GameObject {
 		}
 
 	}
-
+	
+	public Map(Tile[][] tiles){
+		width = tiles.length;
+		height = tiles[0].length;
+		this.tiles = tiles;
+		for(int i = 0; i < width; i++){
+			for(int j = 0; j < height; j++){
+				addChild(tiles[i][j]);
+			}
+		}
+	}
+	
 	/*
 	 * Convert the pixel coords to map/tile coords e.g. (100, 100) -> (2, 2)
 	 */

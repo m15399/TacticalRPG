@@ -61,13 +61,40 @@ public class Level extends GameObject {
 	private Strategy aiStrategy;
 
 	public Level(int width, int height) {
+		
+		map = new Map(width, height);
+
+		init();
+	}
+		
+	public Level(String filename, List<Ship> player1Ships, List<Ship> player2Ships){
+		
+		BuildTileMapFromTextFile builtMap = new BuildTileMapFromTextFile(filename);
+		
+		Tile[][] tiles = builtMap.getTiles();
+		
+		map = new Map(tiles);
+		init();
+
+		for(int x = 0; x < map.getWidth(); x++){
+			for(int y = 0; y < map.getHeight(); y++){
+				Tile t = map.getTile(x, y);
+				if(t.getHasShip()){
+					addEnemyShipToMap(t.getShip());
+				}
+			}
+		}
+		
+	}
+	
+	private void init(){
 		selectedShip = null;
 		tileHovered = null;
 		currentTeam = 0;
 		numHumans = 1;
 
 		// Camera / Starfield
-		camera = new Camera(width, height);
+		camera = new Camera(map.getWidth(), map.getHeight());
 		camera.setPosition(0, 0);
 
 		starfield = new Starfield(Game.WIDTH, Game.HEIGHT, 7, 100, 22, 27, 300);
@@ -77,7 +104,6 @@ public class Level extends GameObject {
 		addChild(camera);
 
 		// Map
-		map = new Map(width, height);
 		camera.addChild(map);
 
 		// Ships Holder
@@ -671,5 +697,7 @@ public class Level extends GameObject {
 
 		return list;
 	}
+	
+	
 
 }

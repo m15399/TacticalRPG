@@ -82,57 +82,57 @@ public class BuildTileMapFromTextFile {
 	private void processData(String levelInfo, int levelWidth, int levelHeight){
 		//System.out.println(levelWidth + " " + levelHeight);
 		//System.out.println(levelInfo);
-		tiles = new Tile[levelHeight][levelWidth];
+		tiles = new Tile[levelWidth][levelHeight];
 		int counter = 0;
 		for(int r = 0; r < levelHeight; r++){
 			for(int c = 0; c < levelWidth; c++){
 				//System.out.println("[" + r + "," + c + "]");
 				char temp = levelInfo.charAt(counter);
 				if(temp == 'S'){
-					Scout ship = new Scout(new Point(r, c));
-					tiles[r][c] = new Tile(ship);
+					Scout ship = new Scout(new Point(c, r));
+					tiles[c][r] = new Tile(ship);
 				}
 				else if(temp == 'F'){
-					Fighter ship = new Fighter(new Point(r, c));
-					tiles[r][c] = new Tile(ship);
+					Fighter ship = new Fighter(new Point(c, r));
+					tiles[c][r] = new Tile(ship);
 				}
 				else if(temp == 'B'){
-					Bomber ship = new Bomber(new Point(r, c));
-					tiles[r][c] = new Tile(ship);
+					Bomber ship = new Bomber(new Point(c, r));
+					tiles[c][r] = new Tile(ship);
 				}
 //				else if(temp == 'C'){
-//					Cruiser ship = new Cruiser(new Point(r, c));
-//					tiles[r][c] = new Tile(ship);
+//					Cruiser ship = new Cruiser(new Point(c, r));
+//					tiles[c][r] = new Tile(ship);
 //				}
 				else if(temp == 'M'){
-					Mothership ship = new Mothership(new Point(r, c));
-					tiles[r][c] = new Tile(ship);
+					Mothership ship = new Mothership(new Point(c, r));
+					tiles[c][r] = new Tile(ship);
 				}
 //				else if(temp == 'E'){
-//					Engineer ship = new Engineer(new Point(r, c));
-//					tiles[r][c] = new Tile(ship);
+//					Engineer ship = new Engineer(new Point(c, r));
+//					tiles[c][r] = new Tile(ship);
 //				}
 //				else if(temp == 'X'){
-//					Sniper ship = new Sniper(new Point(r, c));
-//					tiles[r][c] = new Tile(ship);
+//					Sniper ship = new Sniper(new Point(c, r));
+//					tiles[c][r] = new Tile(ship);
 //				}
 				else if(temp == 'A'){
-					AsteroidTerrain terrain = new AsteroidTerrain(new Point(r, c));
-					tiles[r][c] = new Tile(true, terrain);
+					AsteroidTerrain terrain = new AsteroidTerrain(new Point(c, r));
+					tiles[c][r] = new Tile(true, terrain);
 				}
 				else if(temp == 'P'){
-					PlanetTerrain terrain = new PlanetTerrain(new Point(r, c));
-					tiles[r][c] = new Tile(false, terrain);
+					PlanetTerrain terrain = new PlanetTerrain(new Point(c, r));
+					tiles[c][r] = new Tile(false, terrain);
 				}
 				else if(temp == 'p'){
-					tiles[r][c] = new Tile(true);
+					tiles[c][r] = new Tile(true);
 				}
 				else if(temp == '0'){
-					tiles[r][c] = new Tile(r, c);
+					tiles[c][r] = new Tile(c, r);
 				}
 				else{
 					System.out.println("Error processing a character.  Set as empty tile.");
-					tiles[r][c] = new Tile(r, c);
+					tiles[c][r] = new Tile(c, r);
 				}
 				counter++;
 			}
@@ -154,9 +154,9 @@ public class BuildTileMapFromTextFile {
 	
 	public String toString(){
 		String result = "";
-		for(int r = 0; r < tiles.length; r++){
-			for(int c = 0; c < tiles[r].length; c++){
-				result += tiles[r][c].toString();
+		for(int r = 0; r < tiles[0].length; r++){
+			for(int c = 0; c < tiles.length; c++){
+				result += tiles[c][r].toString();
 			}
 			result += "\n";
 		}
