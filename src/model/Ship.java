@@ -8,6 +8,7 @@ import java.util.List;
 import shipVisuals.ShipVisual;
 import utils.Direction;
 import utils.Observer;
+import view.Camera;
 
 public class Ship extends GameObject {
 	private Point location;
@@ -84,11 +85,11 @@ public class Ship extends GameObject {
 	/*
 	 * Plays the move animation 
 	 */
-	public void moveWithDirections(Observer notifyWhenDone, int x, int y, List<Direction> directions){
+	public void moveWithDirections(Observer notifyWhenDone, int x, int y, List<Direction> directions, Camera camera){
 		setLocation(new Point(x, y));
 		ShipVisual visual = getVisual();
 		if(visual != null){
-			visual.moveWithDirections(notifyWhenDone, directions);
+			visual.moveWithDirections(notifyWhenDone, directions, camera);
 		}
 		updateMovesLeft(-directions.size());
 	}

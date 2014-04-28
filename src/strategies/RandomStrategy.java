@@ -34,7 +34,6 @@ public class RandomStrategy implements Strategy{
 			} 
 			ship.setCanAttack(false);
 
-
 		} else {
 			level.waitShip(ship);
 		}

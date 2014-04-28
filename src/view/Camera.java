@@ -18,18 +18,21 @@ import model.Map;
  */
 public class Camera extends GameObject {
 
+	private double centerOffsetY;
 	private double positionX, positionY, prevPositionX, prevPositionY;
 	private double minX, minY, maxX, maxY;
 	private Entity followTarget;
 //	private double targetDistanceX, targetDistanceY;
-	double zoom;
+	double zoom, zoomTarget;
 
 	public Camera(int mapWidth, int mapHeight) {
 		positionX = positionY = prevPositionX = prevPositionY = 0;
 //		targetDistanceX = targetDistanceY = 0;
 		followTarget = null;
 		
-		zoom = 1;
+		centerOffsetY = -60;
+		
+		zoom = zoomTarget = 1;
 		
 		minX = 0;
 		minY = 0;
@@ -41,34 +44,54 @@ public class Camera extends GameObject {
 		prevPositionX = positionX;
 		prevPositionY = positionY;
 		
+		if(zoomTarget != zoom){
+			double dz = zoomTarget - zoom;
+			
+			double fac = .2 / Game.FPSMUL;
+			double min = .001;
+
+			if(Math.abs(dz) < min){
+				zoom = zoomTarget;
+			} else {
+				zoom += dz * fac;
+			}
+			
+		}
 		
 		// update the target distance if an object is targeted
 		if(followTarget != null){
 			Position p = followTarget.getPosition();
 			double x = p.getX();
-			double y = p.getY() + 60 / zoom;
+			double y = p.getY();
 //			targetDistanceX = x - positionX;
 //			targetDistanceY = y - positionY;
 			double dx = x - positionX;
 			double dy = y - positionY;
 			
 //			double speed = 1;
-			double min = .75;
+			double min = .5;
+			double max = 9 * Game.FPSMUL;
 			
-			double fac = .24 / Game.FPSMUL;
+			double fac = .12; //.9 / Game.FPSMUL;
 			double dxf = dx * fac;
 			double dyf = dy * fac;
 			
 			double distance = Math.sqrt(dx * dx + dy * dy);
-//			double distancef = Math.sqrt(dxf * dxf + dyf * dyf);
+			double distancef = Math.sqrt(dxf * dxf + dyf * dyf);
 			
 			if(distance < min){
 				moveBy(dx, dy);
 				
-			} else {
-				dx *= fac;
-				dy *= fac;
+			} else if(distancef > max){ 
+				dxf /= distancef;
+				dxf *= max;
+				dyf /= distancef;
+				dyf *= max;
 				moveBy(dxf, dyf);
+				
+			} else {
+				moveBy(dxf, dyf);
+
 			}
 			
 			
@@ -82,7 +105,11 @@ public class Camera extends GameObject {
 	}
 	
 	public void setZoom(double newZoom){
-		zoom = newZoom;
+		zoom = zoomTarget = newZoom;
+	}
+	
+	public void setZoomTarget(double newZoom){
+		zoomTarget = newZoom;
 	}
 	
 	public Entity getFollowTarget(){
@@ -123,7 +150,7 @@ public class Camera extends GameObject {
 	public Point convertToCameraSpace(Point p) {
 		// magic
 		double x = (p.getX() - Game.WIDTH/2) / zoom + positionX;
-		double y = (p.getY() - Game.HEIGHT/2) / zoom + positionY;
+		double y = (p.getY() - Game.HEIGHT/2 - centerOffsetY) / zoom + positionY;
 
 		Point ret = new Point();
 		ret.setLocation(x, y);
@@ -136,7 +163,7 @@ public class Camera extends GameObject {
 	public Point convertFromCameraSpace(Point p) {
 		// magic
 		double x = (p.getX() - positionX) * zoom + Game.WIDTH/2;
-		double y = (p.getY() - positionY) * zoom + Game.HEIGHT/2;
+		double y = (p.getY() - positionY + centerOffsetY) * zoom + Game.HEIGHT/2;
 
 		Point ret = new Point();
 		ret.setLocation(x, y);
@@ -167,7 +194,7 @@ public class Camera extends GameObject {
 		Graphics2D g2 = (Graphics2D) g;
 		AffineTransform saved = g2.getTransform();
 
-		g2.translate(Game.WIDTH/2, Game.HEIGHT/2);
+		g2.translate(Game.WIDTH/2, Game.HEIGHT/2 + centerOffsetY / zoom);
 		g2.scale(zoom,zoom);
 		g2.translate(-positionX, -positionY);
 

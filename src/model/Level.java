@@ -106,15 +106,15 @@ public class Level extends GameObject {
 		
 		// test zoom buttons
 		int bsize = 20;
-		final double sfac = 1.1;
+		final double sfac = 2;
 		Input.getInstance().addButton(new Button(0, 0, bsize, bsize){
 			public void mouseReleased(){
-				camera.setZoom(camera.getZoom() * sfac);
+				camera.setZoomTarget(camera.getZoom() * sfac);
 			}
 		});
 		Input.getInstance().addButton(new Button(0, bsize, bsize, bsize){
 			public void mouseReleased(){
-				camera.setZoom(camera.getZoom() / sfac);
+				camera.setZoomTarget(camera.getZoom() / sfac);
 			}
 		});
 		
@@ -452,7 +452,7 @@ public class Level extends GameObject {
 		// move the ship and pass in the observer
 		ship.moveWithDirections(enterDefaultStateObserver, mapX, mapY,
 				map.shortestPath(ship.getLocation(), new Point(mapX,
-						mapY)));
+						mapY)), camera);
 
 		oldTile.setEmpty();
 		newTile.setHasShip(true, ship);
@@ -471,7 +471,9 @@ public class Level extends GameObject {
 //		printAllUnits();
 
 		// play animation 
-		enterDefaultState();
+		TimerAction timer = new TimerAction(5, enterDefaultStateObserver);
+		addChild(timer);
+		timer.start();
 	}
 
 	public void waitShip(Ship ship){
@@ -484,7 +486,7 @@ public class Level extends GameObject {
 		int waitTime = 0;
 		if(isAITurn()){
 			waitTime = 20;
-		}
+		} 
 		
 		TimerAction timer = new TimerAction(waitTime * Game.FPSMUL, new Observer(){
 			public void notified(Observable sender){

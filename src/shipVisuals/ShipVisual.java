@@ -17,6 +17,7 @@ import model.Ship;
 import utils.Direction;
 import utils.Observer;
 import utils.Position;
+import view.Camera;
 import view.ShipOutline;
 
 /*
@@ -54,9 +55,12 @@ public class ShipVisual extends Entity {
 	/*
 	 * Create a queue of Actions that move the ship to the required location
 	 */
-	public void moveWithDirections(Observer notifyWhenDone, List<Direction> directions){
+	public void moveWithDirections(Observer notifyWhenDone, List<Direction> directions, Camera camera){
 		ActionQueue q = new ActionQueue(notifyWhenDone);
+
 		
+		q.addAction(new WaitForCameraAction(camera, null));
+
 		q.addAction(new Action(null){
 			public void update(){
 				if(getStarted()){

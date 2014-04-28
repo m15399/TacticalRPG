@@ -7,7 +7,7 @@ import utils.Observer;
  */
 public class TimerAction extends Action {
 
-	int timeLeft;
+	private int timeLeft;
 
 	public TimerAction(int time, Observer observer){
 		super(observer);
@@ -24,6 +24,10 @@ public class TimerAction extends Action {
 		if(timeLeft <= 0){
 			finish();
 		}
+	}
+	
+	public int getTimeLeft(){
+		return timeLeft;
 	}
 	
 }
