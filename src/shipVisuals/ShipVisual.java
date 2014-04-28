@@ -15,6 +15,7 @@ import model.Map;
 import model.Ship;
 
 import utils.Direction;
+import utils.Observable;
 import utils.Observer;
 import utils.Position;
 import view.Camera;
@@ -25,58 +26,71 @@ import view.ShipOutline;
  * extended by specific visuals for ships like ScoutVisual, FighterVisual, etc
  */
 public class ShipVisual extends Entity {
-	
+
 	private Ship ship;
 	private ShipOutline outline;
+	private double displayHealth;
 	
-	public ShipVisual(Ship ship){
+	
+	private Ship enemy; 
+	private Observer notifyWhenAttacking;
+	
+	public ShipVisual(Ship ship) {
 		this.ship = ship;
+		
+		updateDisplayHealth();
 		
 		outline = new ShipOutline();
 		outline.getPosition().setParent(getPosition());
 		addChild(outline);
-		
+
 		setPositionToShipCoords();
 	}
 	
+	public void updateDisplayHealth(){
+		displayHealth = ship.getHull();
+
+	}
+
 	/*
 	 * Place the visual on the tile the ship is on
 	 */
-	private void setPositionToShipCoords(){
+	private void setPositionToShipCoords() {
 		Point coords = Map.mapToPixelCoords(ship.getLocation());
-		getPosition().setX(coords.getX() + Map.TILESIZE/2);
-		getPosition().setY(coords.getY() + Map.TILESIZE/2);
+		getPosition().setX(coords.getX() + Map.TILESIZE / 2);
+		getPosition().setY(coords.getY() + Map.TILESIZE / 2);
 	}
-	
-	public ShipOutline getOutline(){
+
+	public ShipOutline getOutline() {
 		return outline;
 	}
-	
+
 	/*
 	 * Create a queue of Actions that move the ship to the required location
 	 */
-	public void moveWithDirections(Observer notifyWhenDone, List<Direction> directions, Camera camera){
+	public void moveWithDirections(Observer notifyWhenDone,
+			List<Direction> directions, Camera camera) {
 		ActionQueue q = new ActionQueue(notifyWhenDone);
 
-		
 		q.addAction(new WaitForCameraAction(camera, null));
 
-		q.addAction(new Action(null){
-			public void update(){
-				if(getStarted()){
+		q.addAction(new Action(null) {
+			public void update() {
+				if (getStarted()) {
 					playMoveAnimation();
 					finish();
 				}
 			}
 		});
-		
+
 		int distance = Map.TILESIZE;
 		int time = 12 * Game.FPSMUL;
-		
-		Position currPosition = new Position(getPosition().getX(), getPosition().getY());
-		for(Direction d : directions){
-			
-			switch(d){
+
+		Position currPosition = new Position(getPosition().getX(),
+				getPosition().getY());
+		for (Direction d : directions) {
+
+			switch (d) {
 			case UP:
 				currPosition.moveBy(0, -distance);
 				break;
@@ -89,70 +103,93 @@ public class ShipVisual extends Entity {
 			case RIGHT:
 				currPosition.moveBy(distance, 0);
 				break;
-			
+
 			}
-			q.addAction(new MoveEntityToAction(this, new Position(currPosition), time, null));
+			q.addAction(new MoveEntityToAction(this,
+					new Position(currPosition), time, null));
 		}
-		
-		q.addAction(new Action(null){
-			public void update(){
-				if(getStarted()){
+
+		q.addAction(new Action(null) {
+			public void update() {
+				if (getStarted()) {
 					playIdleAnimation();
 					finish();
 				}
 			}
 		});
-		
-		
+
 		addChild(q);
 		q.start();
 	}
-	
-	public void attack(Observer notifyWhenDone, int enemyX, int enemyY, int damage, boolean didCrit){
+
+	public void attack(Observer notifyWhenDone, Observer newNotifyWhenAttacking, Ship defender,
+			int damage, boolean didCrit, boolean didMiss, Camera camera) {
+		// zoom
+		// play attack animation
+		// zoom to other ship
+		// play hit animation
+		// zoom out and return to first ship
+
+		enemy = defender;
+		notifyWhenAttacking = newNotifyWhenAttacking;
 		
-	}
-	
-	public void explode(Observer notifyWhenDone){
+		TimerAction attackTimer = new TimerAction(30, new Observer(){
+			public void notified(Observable sender){
+				enemy.getVisual().updateDisplayHealth();
+				notifyWhenAttacking.notified(null);
+			}
+		});
+		addChild(attackTimer);
+		attackTimer.start();
 		
+		TimerAction timer = new TimerAction(60, notifyWhenDone);
+		addChild(timer);
+		timer.start();
 	}
-	
-	
-	public void playMoveAnimation(){
+
+	public void explode(Observer notifyWhenDone) {
+
+	}
+
+	public void playMoveAnimation() {
 		// override
 	}
-	public void playIdleAnimation(){
+
+	public void playIdleAnimation() {
 		// override
 	}
-	
-	public void draw(Graphics g1){
+
+	public void draw(Graphics g1) {
 
 		// health bar
 		Graphics2D g = (Graphics2D) g1;
 		g.setStroke(new BasicStroke(0));
-		
+
 		// size
-		int width = Map.TILESIZE-6;
+		int width = Map.TILESIZE - 6;
 		int height = 3;
-		
+
 		// position
-		int ox = (int)(getPosition().getX());
-		int oy = (int)(getPosition().getY() + Map.TILESIZE/2 - height + 3);
-		
+		int ox = (int) (getPosition().getX());
+		int oy = (int) (getPosition().getY() + Map.TILESIZE / 2 - height + 3);
+
 		// border
 		g.setColor(Color.white);
-		g.drawRect(ox -width/2-1, oy -height/2-1, width+2, height+2);
-		
+		g.drawRect(ox - width / 2 - 1, oy - height / 2 - 1, width + 2,
+				height + 2);
+
 		// color
 		Color red = new Color(1.0f, .25f, .15f);
 		Color green = new Color(0f, .8f, .0f);
-		if(ship.getTeam() == 0){
-			g.setColor(green);			
+		if (ship.getTeam() == 0) {
+			g.setColor(green);
 		} else {
 			g.setColor(red);
 		}
-		
-		g.fillRect(ox -width/2, oy -height/2, (int)(width * ship.getHull() / ship.getMaxHull())+1, height+1);
+
+		g.fillRect(ox - width / 2, oy - height / 2,
+				(int) (width * displayHealth / ship.getMaxHull()) + 1,
+				height + 1);
 	}
-	
-	
+
 }

@@ -47,8 +47,8 @@ public class Camera extends GameObject {
 		if(zoomTarget != zoom){
 			double dz = zoomTarget - zoom;
 			
-			double fac = .2 / Game.FPSMUL;
-			double min = .001;
+			double fac = .3 / Game.FPSMUL;
+			double min = .002;
 
 			if(Math.abs(dz) < min){
 				zoom = zoomTarget;
@@ -98,6 +98,15 @@ public class Camera extends GameObject {
 			
 		}
 		
+	}
+	
+	public boolean getIsMoving(){
+		if(getVelocityX() == getVelocityY() && getVelocityX() == 0){
+			if(zoom == zoomTarget){
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public double getZoom(){

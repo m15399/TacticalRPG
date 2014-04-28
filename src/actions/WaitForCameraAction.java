@@ -14,7 +14,7 @@ public class WaitForCameraAction extends Action {
 	
 	public void update(){
 		if(started){
-			if(camera.getVelocityX() == camera.getVelocityY() && camera.getVelocityX() == 0){
+			if(!camera.getIsMoving()){
 				finish();
 			}
 		}
