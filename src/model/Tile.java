@@ -4,9 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
+import specific_ships_items.BattleCruiser;
 import specific_ships_items.Bomber;
 import specific_ships_items.Fighter;
 import specific_ships_items.Mothership;
+import specific_ships_items.RepairShip;
 import specific_ships_items.Scout;
 import specific_terrains.AsteroidTerrain;
 import specific_terrains.PlanetTerrain;
@@ -225,15 +227,15 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		else if(hasShip && ship instanceof Bomber){
 			result += "B";
 		}
-//		else if(hasShip && ship instanceof Cruiser){
-//			result += "C";
-//		}
+		else if(hasShip && ship instanceof BattleCruiser){
+			result += "C";
+		}
 		else if(hasShip && ship instanceof Mothership){
 			result += "M";
 		}
-//		else if(hasShip && ship instanceof Engineer){
-//			result += "E";
-//		}
+		else if(hasShip && ship instanceof RepairShip){
+			result += "E";
+		}
 //		else if(hasShip && ship instanceof Sniper){
 //			result += "X";
 //		}
@@ -253,11 +255,6 @@ public class Tile extends GameObject implements Comparable<Tile>{
 			System.out.println("Some error happened reading this Tile.  Placed 1 in for spot.");
 			result += "1";
 		}
-		
-		
-		
-		
-		
 		return result;
 	}
 	

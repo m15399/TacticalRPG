@@ -7,9 +7,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
+import specific_ships_items.BattleCruiser;
 import specific_ships_items.Bomber;
 import specific_ships_items.Fighter;
 import specific_ships_items.Mothership;
+import specific_ships_items.RepairShip;
 import specific_ships_items.Scout;
 import specific_terrains.AsteroidTerrain;
 import specific_terrains.PlanetTerrain;
@@ -100,18 +102,18 @@ public class BuildTileMapFromTextFile {
 					Bomber ship = new Bomber(new Point(c, r));
 					tiles[c][r] = new Tile(ship);
 				}
-//				else if(temp == 'C'){
-//					Cruiser ship = new Cruiser(new Point(c, r));
-//					tiles[c][r] = new Tile(ship);
-//				}
+				else if(temp == 'C'){
+					BattleCruiser ship = new BattleCruiser(new Point(c, r));
+					tiles[c][r] = new Tile(ship);
+				}
 				else if(temp == 'M'){
 					Mothership ship = new Mothership(new Point(c, r));
 					tiles[c][r] = new Tile(ship);
 				}
-//				else if(temp == 'E'){
-//					Engineer ship = new Engineer(new Point(c, r));
-//					tiles[c][r] = new Tile(ship);
-//				}
+				else if(temp == 'E'){
+					RepairShip ship = new RepairShip(new Point(c, r));
+					tiles[c][r] = new Tile(ship);
+				}
 //				else if(temp == 'X'){
 //					Sniper ship = new Sniper(new Point(c, r));
 //					tiles[c][r] = new Tile(ship);
