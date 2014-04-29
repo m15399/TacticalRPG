@@ -25,7 +25,7 @@ import specific_terrains.WarpGateTerrain;
 
 public class Tile extends GameObject implements Comparable<Tile>{
 
-	private boolean isOccupied, isTerrain, hasShip;
+	private boolean isOccupied, hasTerrain, hasShip;
 	private Highlight highlight;
 	private boolean mousedOver;
 	private Ship ship;
@@ -53,6 +53,9 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	private static Color lightGreenColor = new Color(.5f, 1f, .5f,
 			highlightAlpha);
 
+	/*
+	 * Constructors
+	 */
 	
 	/**
 	 * Empty tile constructor for creation at certain coordinates.
@@ -82,91 +85,12 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	}
 	
 	/**
-	 * Occupied or Unoccupied generic terrain Tile
+	 * Occupied or Unoccupied generic terrain Tile constructor
 	 */
 	public Tile(boolean trueIfTerrainCanBeOccupied){
 		setEmpty();
 		setIsOccupied(trueIfTerrainCanBeOccupied);
-		setIsTerrain(true);
-	}
-
-	public boolean getIsOccupied() {
-		return isOccupied;
-	}
-
-	public void setIsOccupied(boolean trueIfTileIsOccupied) {
-		isOccupied = trueIfTileIsOccupied;
-	}
-
-	public Highlight getHighlight() {
-		return highlight;
-	}
-
-	public void setHighlight(Highlight newHighlight) {
-		highlight = newHighlight;
-	}
-
-	public void setMousedOver(boolean b) {
-		mousedOver = b;
-	}
-
-	public boolean getIsTerrain() {
-		return isTerrain;
-	}
-	
-	public void setIsTerrain(boolean newIsTerrainValue){
-		isTerrain = newIsTerrainValue;
-	}
-
-	public Terrain getTerrain(){
-		return terrain;
-	}
-	
-	/**
-	 * Automatically handles the tile being occupied.
-	 */
-	public void setTerrain(boolean trueIfTerrainCanBeOccupied, Terrain newTerrain) {
-		isTerrain = true;
-		terrain = newTerrain;
-		if (!trueIfTerrainCanBeOccupied)
-			setIsOccupied(true);
-	}
-	
-	public void removeTerrain(){
-		isTerrain = false;
-		terrain = null;
-		if(!hasShip)
-			isOccupied = false;
-	}
-
-	public boolean getHasShip() {
-		return hasShip;
-	}
-
-	/**
-	 * Automatically handles the tile being occupied.
-	 */
-	public void setHasShip(boolean newHasShip, Ship theShip) {
-		hasShip = newHasShip;
-		ship = theShip;
-		setIsOccupied(newHasShip);
-	}
-
-	/**
-	 * Resets the tile back to default state.
-	 */
-	public void setEmpty() {
-		setHasShip(false, null);
-		setIsOccupied(false);
-		removeTerrain();
-		setHighlight(Highlight.NONE);
-	}
-
-	public Ship getShip() {
-		if (!hasShip)
-			System.out
-					.println("This tile does not have a Ship to return. Considering calling getHasShip() to see if it has a Ship first.");
-		return ship;
+		setHasTerrain(true);
 	}
 
 	public void draw(Graphics g) {
@@ -204,63 +128,93 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		}
 	}
 	
-	/*
-	 * Breakdown of what letters mean.  Please don't delete commented println's since they can be used to debug in the future.
-	 * S = Scout
-	 * F = Fighter
-	 * B = Bomber
-	 * C = Cruiser
-	 * M = Mothership
-	 * E = Engineer
-	 * X = Sniper
-	 * A = Asteroid
-	 * P = Planet
+	/**
+	 * Resets the tile back to default state.
 	 */
-	
-	public String toString(){
-		String result = "";
-		if(hasShip && ship instanceof Scout){
-			result += "S";
-		}
-		else if(hasShip && ship instanceof Fighter){
-			result += "F";
-		}
-		else if(hasShip && ship instanceof Bomber){
-			result += "B";
-		}
-		else if(hasShip && ship instanceof BattleCruiser){
-			result += "C";
-		}
-		else if(hasShip && ship instanceof Mothership){
-			result += "M";
-		}
-		else if(hasShip && ship instanceof RepairShip){
-			result += "E";
-		}
-//		else if(hasShip && ship instanceof Sniper){
-//			result += "X";
-//		}
-		else if(isTerrain && terrain instanceof AsteroidTerrain){
-			result += "A";
-		}
-		else if(isTerrain && terrain instanceof PlanetTerrain){
-			result += "P";
-		}
-		else if(isTerrain && terrain instanceof WarpGateTerrain){
-			result += "W";
-		}
-		else if(isTerrain){
-			result += "p";
-		}
-		else if(!isOccupied){
-			result += "0";
-		}
-		else{
-			System.out.println("Some error happened reading this Tile.  Placed 1 in for spot.");
-			result += "1";
-		}
-		return result;
+	public void setEmpty() {
+		setHasShip(false, null);
+		setIsOccupied(false);
+		removeTerrain();
+		setHighlight(Highlight.NONE);
 	}
+	
+	/*
+	 * Basic Getters and Setters
+	 */
+	public boolean getIsOccupied() {
+		return isOccupied;
+	}
+
+	public void setIsOccupied(boolean trueIfTileIsOccupied) {
+		isOccupied = trueIfTileIsOccupied;
+	}
+
+	public Highlight getHighlight() {
+		return highlight;
+	}
+
+	public void setHighlight(Highlight newHighlight) {
+		highlight = newHighlight;
+	}
+
+	public void setMousedOver(boolean b) {
+		mousedOver = b;
+	}
+
+	public boolean getHasTerrain() {
+		return hasTerrain;
+	}
+	
+	public void setHasTerrain(boolean newHasTerrainValue){
+		hasTerrain = newHasTerrainValue;
+	}
+
+	public Terrain getTerrain(){
+		return terrain;
+	}
+	
+	/**
+	 * Automatically handles the tile being occupied.
+	 */
+	public void setTerrain(boolean trueIfTerrainCanBeOccupied, Terrain newTerrain) {
+		hasTerrain = true;
+		terrain = newTerrain;
+		if (!trueIfTerrainCanBeOccupied)
+			setIsOccupied(true);
+	}
+	
+	public void removeTerrain(){
+		hasTerrain = false;
+		terrain = null;
+		if(!hasShip)
+			isOccupied = false;
+	}
+
+	public boolean getHasShip() {
+		return hasShip;
+	}
+
+	/**
+	 * Automatically handles the tile being occupied.
+	 */
+	public void setHasShip(boolean newHasShip, Ship theShip) {
+		hasShip = newHasShip;
+		ship = theShip;
+		setIsOccupied(newHasShip);
+	}
+
+	
+
+	public Ship getShip() {
+		if (!hasShip)
+			System.out
+					.println("This tile does not have a Ship to return. Considering calling getHasShip() to see if it has a Ship first.");
+		return ship;
+	}
+	
+	/*
+	 * End of basic Setters and Getters
+	 */
 	
 	/*
 	 * Methods for shortestPath algorithm.
@@ -303,4 +257,66 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	/*
 	 * End of methods for shortestPath algorithm
 	 */
+	
+	
+	/*
+	 * toString()
+	 * 
+	 * Breakdown of what letters mean.  Please don't delete commented println's since they can be used to debug in the future.
+	 * S = Scout
+	 * F = Fighter
+	 * B = Bomber
+	 * C = Cruiser
+	 * M = Mothership
+	 * E = Engineer
+	 * X = Sniper
+	 * A = Asteroid Terrain
+	 * P = Planet Terrain
+	 * W = WarpGate Terrain
+	 */
+	
+	public String toString(){
+		String result = "";
+		if(hasShip && ship instanceof Scout){
+			result += "S";
+		}
+		else if(hasShip && ship instanceof Fighter){
+			result += "F";
+		}
+		else if(hasShip && ship instanceof Bomber){
+			result += "B";
+		}
+		else if(hasShip && ship instanceof BattleCruiser){
+			result += "C";
+		}
+		else if(hasShip && ship instanceof Mothership){
+			result += "M";
+		}
+		else if(hasShip && ship instanceof RepairShip){
+			result += "E";
+		}
+//		else if(hasShip && ship instanceof Sniper){
+//			result += "X";
+//		}
+		else if(hasTerrain && terrain instanceof AsteroidTerrain){
+			result += "A";
+		}
+		else if(hasTerrain && terrain instanceof PlanetTerrain){
+			result += "P";
+		}
+		else if(hasTerrain && terrain instanceof WarpGateTerrain){
+			result += "W";
+		}
+		else if(hasTerrain){
+			result += "p";
+		}
+		else if(!isOccupied){
+			result += "0";
+		}
+		else{
+			System.out.println("Some error happened reading this Tile.  Placed 1 in for spot.");
+			result += "1";
+		}
+		return result;
+	}
 }
