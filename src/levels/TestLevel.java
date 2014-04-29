@@ -8,6 +8,7 @@ import specific_ships_items.MagneticShield;
 import specific_ships_items.Scout;
 import specific_ships_items.ScrapMetal;
 import specific_ships_items.SpaceMine;
+import specific_ships_items.WarpGateShip;
 import model.Level;
 
 public class TestLevel extends Level {
@@ -42,6 +43,10 @@ public class TestLevel extends Level {
 		Bomber bomber = new Bomber(new Point(1, 1));
 		bomber.addToItems(new MagneticShield());
 		addShipToMap(bomber);
+		
+		//Warpgate
+		WarpGateShip warpgate = new WarpGateShip(new Point(0,0));
+		addShipToMap(warpgate);
 		
 		/*
 		 * Enemy Ships

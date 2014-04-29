@@ -9,6 +9,7 @@ import java.util.List;
 
 import actions.TimerAction;
 import model.Tile.Highlight;
+import specific_ships_items.WarpGateShip;
 import strategies.RandomStrategy;
 import strategies.Strategy;
 import utils.Direction;
@@ -56,6 +57,7 @@ public class Level extends GameObject {
 	private SelectedShipView selectedShipView;
 	private SelectedEnemyShip hoveredShipView;
 	private SelectedShipButtons shipButtons;
+	private ShipSelectionScreen shipSelectionScreen;
 
 	private Observer enterDefaultStateObserver;
 
@@ -124,8 +126,8 @@ public class Level extends GameObject {
 		addChild(hoveredShipView);
 		
 		//Ship Selection View
-		ShipSelectionScreen shipSelectionView = new ShipSelectionScreen();
-		addChild(shipSelectionView);
+		shipSelectionScreen = new ShipSelectionScreen(this);
+		addChild(shipSelectionScreen);
 		
 		// Background button for mouse input on the map
 		levelButton = new LevelBackgroundButton(this);
@@ -169,6 +171,7 @@ public class Level extends GameObject {
 			Point p = camera.convertFromCameraSpace(Map
 					.mapToPixelCoords(new Point(x + 1, y)));
 			shipButtons.setLocation((int) p.getX(), (int) p.getY());
+			
 		}
 	}
 
@@ -334,32 +337,41 @@ public class Level extends GameObject {
 			hoveredShipView.setShip(null);
 		}
 		updateButtons();
+		shipSelectionScreen.setVisible(false);
 
 		if (isAITurn())
 			takeNextAIMove();
 
 		if (selectedShip != null) {
 
-			if (selectedShip.getCanMove()) {
-				shipButtons.addButton("Move", new Button() {
-					public void mouseReleased() {
-						enterMoveState();
-					}
-				});
-			}
-			if (selectedShip.getCanAttack()) {
-				shipButtons.addButton("Attack", new Button() {
-					public void mouseReleased() {
-						enterAttackState();
-					}
-				});
-			}
-			shipButtons.addButton("Wait", new Button() {
-				public void mouseReleased() {
-					waitShip(selectedShip);
+			if(selectedShip instanceof WarpGateShip){
+				shipSelectionScreen.setVisible(true);
+				
+				
+			} else {
+				if (selectedShip.getCanMove()) {
+					shipButtons.addButton("Move", new Button() {
+						public void mouseReleased() {
+							enterMoveState();
+						}
+					});
 				}
-			});
+				if (selectedShip.getCanAttack()) {
+					shipButtons.addButton("Attack", new Button() {
+						public void mouseReleased() {
+							enterAttackState();
+						}
+					});
+				}
+				shipButtons.addButton("Wait", new Button() {
+					public void mouseReleased() {
+						waitShip(selectedShip);
+					}
+				});
 
+			}
+			
+			
 		}
 
 		map.clearHighLights();
@@ -374,6 +386,7 @@ public class Level extends GameObject {
 		map.clearHighLights();
 		levelButton.disable();
 		hoveredShipView.setShip(null);
+		shipSelectionScreen.setVisible(false);
 		state = TurnState.ANIMATING;
 	}
 
@@ -398,6 +411,7 @@ public class Level extends GameObject {
 
 		// turn off buttons
 		shipButtons.setShip(null);
+		shipSelectionScreen.setVisible(false);
 
 		state = TurnState.MOVING;
 
@@ -424,6 +438,7 @@ public class Level extends GameObject {
 
 		// turn off buttons
 		shipButtons.setShip(null);
+		shipSelectionScreen.setVisible(false);
 
 		state = TurnState.ATTACKING;
 	}

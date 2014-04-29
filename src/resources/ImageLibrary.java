@@ -18,6 +18,13 @@ public class ImageLibrary {
 		"test2.png",
 		"smurf_sprite.png",
 		"scout.png",
+		"fighter.png",
+		"battlecruiser.png",
+		"bomber.png",
+		"sniper.png",
+		"repairship.png",
+		"mothership.png",
+		"warpgate.png",
 		"jet_37x16.png",
 		"speedboost.png"
 		};

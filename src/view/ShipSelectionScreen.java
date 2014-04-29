@@ -1,27 +1,70 @@
 package view;
 
+import input.Button;
+import input.Input;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import resources.ImageLibrary;
+import utils.Position;
 import model.GameObject;
+import model.Level;
 
 public class ShipSelectionScreen extends GameObject{
 	static final int WIDTH = 200;
 	static final int HEIGHT = 400;
 	
-	public ShipSelectionScreen(){
-		
+	private boolean visible;
+	private Level level;
+	
+	private ArrayList<Button> buttons;
+	
+	public ShipSelectionScreen(Level newLevel){
+		level = newLevel;
+		visible = false;
+		buttons = new ArrayList<Button>();
 	}
 	
 	public void update(){
 		
 	}
 	
+	public void onDestroy(){
+		clearButtons();
+	}
+	
+	private void clearButtons() {
+		// clear old buttons
+		for (Button b : buttons) {
+			Input.getInstance().removeButton(b);
+		}
+		buttons.clear();
+	}
+	
+	public void addButton(String name, Button button) {
+		buttons.add(button);
+		Input.getInstance().addButton(button);
+
+		// set its position
+		Position bp = button.getPosition();
+		int index = buttons.size() - 1;
+		bp.setLocation(0, index * HEIGHT);
+		bp.setScale(WIDTH, HEIGHT);
+
+	}
+	
+	public void setVisible(boolean newVisible){
+		visible = newVisible;
+	}
+	
 	public void draw(Graphics g){
+		if(!visible)
+			return;
 		
 		int offsetX = 0;
 		int offsetY = 0;

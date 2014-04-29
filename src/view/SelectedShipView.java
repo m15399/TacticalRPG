@@ -9,13 +9,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import resources.ImageLibrary;
 import model.Game;
@@ -107,10 +101,12 @@ public class SelectedShipView extends GameObject {
 		
 		g2.setStroke(new BasicStroke());
 		ImageLibrary images = ImageLibrary.getInstance();
-//		BufferedImage img = images.getImage(currentShip.getName().toLowerCase() + ".png");
+		Sprite sprite = new Sprite(currentShip.getName().toLowerCase() + ".png", offsetX + 72, offsetY + 82);
+//		Sprite sprite = new Sprite("scout.png", offsetX+72, offsetY + 82);
+		sprite.getPosition().setScale(2,2);
+		sprite.draw(g);
+//		BufferedImage img = images.getImage("scout.png");
 //		g.drawImage(img, offsetX+40, offsetY + 50, null);
-		BufferedImage img = images.getImage("scout.png");
-		g.drawImage(img, offsetX+40, offsetY + 50, null);
 		BufferedImage item = images.getImage("speedboost.png");
 		g.drawImage(item, offsetX+380, offsetY+138, null);
 //		
