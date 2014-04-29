@@ -18,7 +18,8 @@ public class ImageLibrary {
 		"test2.png",
 		"smurf_sprite.png",
 		"scout.png",
-		"jet_37x16.png"
+		"jet_37x16.png",
+		"speedboost.png"
 		};
 	
 	/*

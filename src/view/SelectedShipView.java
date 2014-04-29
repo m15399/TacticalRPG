@@ -8,9 +8,19 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+
+import resources.ImageLibrary;
 import model.Game;
 import model.GameObject;
+import model.Item;
 import model.Ship;
 
 public class SelectedShipView extends GameObject {
@@ -58,6 +68,7 @@ public class SelectedShipView extends GameObject {
 		g2.setStroke(new BasicStroke(2));
 		
 		// Draw a black rect first as a background
+		
 		g2.setColor(Color.black);
 		g2.fillRect(offsetX, offsetY, WIDTH, HEIGHT);
 
@@ -95,5 +106,44 @@ public class SelectedShipView extends GameObject {
 		g2.drawString("Items:", 333 + offsetX, 150 + offsetY);
 		
 		g2.setStroke(new BasicStroke());
+		ImageLibrary images = ImageLibrary.getInstance();
+//		BufferedImage img = images.getImage(currentShip.getName().toLowerCase() + ".png");
+//		g.drawImage(img, offsetX+40, offsetY + 50, null);
+		BufferedImage img = images.getImage("scout.png");
+		g.drawImage(img, offsetX+40, offsetY + 50, null);
+		BufferedImage item = images.getImage("speedboost.png");
+		g.drawImage(item, offsetX+380, offsetY+138, null);
+//		
+//		ArrayList<Item> itemList = (ArrayList<Item>) currentShip.getItemsList();
+//		int counterSB = 0;
+//		int counterMS = 0;
+//		int counterSM = 0;
+//		g2.setFont(new Font("Arial", Font.TRUETYPE_FONT, 4));
+//		for(int i=0; i<itemList.size(); i++){
+//			if(itemList.get(i).getName().equals("Speed Boost")){
+//				counterSB++;
+//			}
+//			else if(itemList.get(i).getName().equals("Magnetic Shield")){
+//				counterMS++;
+//			}
+//			else if(itemList.get(i).getName().equals("Scrap Metal")){
+//				counterSM++;
+//			}
+//		}
+//		if(counterSB > 0){
+//			g.drawImage(item, offsetX+380, offsetY+138, null);
+//			g2.drawString("X" + counterSB, offsetX+380, offsetY+138);
+//		}
+//		if(counterMS > 0){
+//			g.drawImage(item, offsetX+380, offsetY+138, null);
+//			g2.drawString("X" + counterMS, offsetX+380, offsetY+138);
+//		}
+//		if(counterSM > 0){
+//			g.drawImage(item, offsetX+380, offsetY+138, null);
+//			g2.drawString("X" + counterSM, offsetX+380, offsetY+138);
+//		}
+		
+		
+		
 	}
 }
