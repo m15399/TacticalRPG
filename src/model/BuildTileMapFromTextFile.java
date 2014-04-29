@@ -15,6 +15,7 @@ import specific_ships_items.RepairShip;
 import specific_ships_items.Scout;
 import specific_terrains.AsteroidTerrain;
 import specific_terrains.PlanetTerrain;
+import specific_terrains.WarpGateTerrain;
 
 public class BuildTileMapFromTextFile {
 	
@@ -80,7 +81,7 @@ public class BuildTileMapFromTextFile {
 	 * P = Planet
 	 * p = Planet (used for extending planet graphic beyond 1 tile)
 	 * 0 = Unoccupied Tile
-	 * 1 = Player spawn point
+	 * W = WarpGateTerrain
 	 */
 	
 	private void processData(String levelInfo, int levelWidth, int levelHeight){
@@ -133,6 +134,10 @@ public class BuildTileMapFromTextFile {
 				}
 				else if(temp == '0'){
 					tiles[c][r] = new Tile(c, r);
+				}
+				else if(temp == 'W'){
+					WarpGateTerrain terrain = new WarpGateTerrain(new Point(c, r));
+					tiles[r][c] = new Tile(false, terrain);
 				}
 				else{
 					System.out.println("Error processing a character.  Set as empty tile.");

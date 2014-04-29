@@ -12,6 +12,7 @@ import specific_ships_items.RepairShip;
 import specific_ships_items.Scout;
 import specific_terrains.AsteroidTerrain;
 import specific_terrains.PlanetTerrain;
+import specific_terrains.WarpGateTerrain;
 
 /**
  * Tried to wrap all the Tile classes into one class to simplify things and cut
@@ -244,6 +245,9 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		}
 		else if(isTerrain && terrain instanceof PlanetTerrain){
 			result += "P";
+		}
+		else if(isTerrain && terrain instanceof WarpGateTerrain){
+			result += "W";
 		}
 		else if(isTerrain){
 			result += "p";
