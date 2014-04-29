@@ -30,6 +30,7 @@ public class Button {
 	}
 	
 	public void disable(){
+		mouseExited();
 		enabled = false;
 	}
 	

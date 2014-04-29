@@ -10,9 +10,9 @@ import specific_ships_items.Fighter;
 import specific_ships_items.Mothership;
 import specific_ships_items.RepairShip;
 import specific_ships_items.Scout;
+import specific_ships_items.WarpGateShip;
 import specific_terrains.AsteroidTerrain;
 import specific_terrains.PlanetTerrain;
-import specific_terrains.WarpGateTerrain;
 
 /**
  * Tried to wrap all the Tile classes into one class to simplify things and cut
@@ -73,6 +73,8 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	 */
 	public Tile(Ship newShip) {
 		setEmpty();
+		mapX = newShip.getLocation().x;
+		mapY = newShip.getLocation().y;
 		setHasShip(true, newShip);
 	}
 
@@ -81,14 +83,18 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	 */
 	public Tile(boolean trueIfTerrainCanBeOccupied, Terrain newTerrain) {
 		setEmpty();
+		mapX = newTerrain.getLocation().x;
+		mapY = newTerrain.getLocation().y;
 		setTerrain(trueIfTerrainCanBeOccupied, newTerrain);
 	}
 	
 	/**
 	 * Occupied or Unoccupied generic terrain Tile constructor
 	 */
-	public Tile(boolean trueIfTerrainCanBeOccupied){
+	public Tile(boolean trueIfTerrainCanBeOccupied, int x, int y){
 		setEmpty();
+		mapX = x;
+		mapY = y;
 		setIsOccupied(trueIfTerrainCanBeOccupied);
 		setHasTerrain(true);
 	}
@@ -122,6 +128,15 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		}
 		
 		if (highlight != Highlight.NONE) {
+			Point px = Map.mapToPixelCoords(new Point(mapX, mapY));
+			g.fillRect((int) px.getX(), (int) px.getY(), Map.TILESIZE,
+					Map.TILESIZE);
+		}
+		
+		// terrain debugging
+		if(hasTerrain && isOccupied){
+			g.setColor(new Color(.5f, .5f, .5f, .4f));
+
 			Point px = Map.mapToPixelCoords(new Point(mapX, mapY));
 			g.fillRect((int) px.getX(), (int) px.getY(), Map.TILESIZE,
 					Map.TILESIZE);
@@ -295,6 +310,9 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		else if(hasShip && ship instanceof RepairShip){
 			result += "E";
 		}
+		else if(hasShip && ship instanceof WarpGateShip){
+			result += "W";
+		}
 //		else if(hasShip && ship instanceof Sniper){
 //			result += "X";
 //		}
@@ -303,9 +321,6 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		}
 		else if(hasTerrain && terrain instanceof PlanetTerrain){
 			result += "P";
-		}
-		else if(hasTerrain && terrain instanceof WarpGateTerrain){
-			result += "W";
 		}
 		else if(hasTerrain){
 			result += "p";

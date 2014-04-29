@@ -13,9 +13,9 @@ import specific_ships_items.Fighter;
 import specific_ships_items.Mothership;
 import specific_ships_items.RepairShip;
 import specific_ships_items.Scout;
+import specific_ships_items.WarpGateShip;
 import specific_terrains.AsteroidTerrain;
 import specific_terrains.PlanetTerrain;
-import specific_terrains.WarpGateTerrain;
 
 public class BuildTileMapFromTextFile {
 	
@@ -130,14 +130,14 @@ public class BuildTileMapFromTextFile {
 					tiles[c][r] = new Tile(false, terrain);
 				}
 				else if(temp == 'p'){
-					tiles[c][r] = new Tile(true);
+					tiles[c][r] = new Tile(true, c, r);
 				}
 				else if(temp == '0'){
 					tiles[c][r] = new Tile(c, r);
 				}
 				else if(temp == 'W'){
-					WarpGateTerrain terrain = new WarpGateTerrain(new Point(c, r));
-					tiles[r][c] = new Tile(false, terrain);
+					WarpGateShip warpgate = new WarpGateShip(new Point(c, r));
+					tiles[c][r] = new Tile(warpgate);
 				}
 				else{
 					System.out.println("Error processing a character.  Set as empty tile.");

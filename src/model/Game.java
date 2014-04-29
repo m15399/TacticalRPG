@@ -51,8 +51,8 @@ public class Game extends JPanel implements Runnable {
 		addMouseListener(Input.getInstance());
 		addMouseMotionListener(Input.getInstance());
 		
-		setRoot(new TestLevel());
-//		setRoot(new TestLevelFromFile());
+//		setRoot(new TestLevel());
+		setRoot(new TestLevelFromFile());
 
 	}
 	

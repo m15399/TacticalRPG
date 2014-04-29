@@ -72,7 +72,7 @@ public class Camera extends GameObject {
 			double min = .5;
 			double max = 9 * Game.FPSMUL;
 			
-			double fac = .12; //.9 / Game.FPSMUL;
+			double fac = .17; //.9 / Game.FPSMUL;
 			double dxf = dx * fac;
 			double dyf = dy * fac;
 			

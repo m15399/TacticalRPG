@@ -14,6 +14,7 @@ import model.Game;
 import model.Map;
 import model.Ship;
 
+import sun.security.action.GetLongAction;
 import utils.Direction;
 import utils.Observable;
 import utils.Observer;
@@ -54,7 +55,7 @@ public class ShipVisual extends Entity {
 	/*
 	 * Place the visual on the tile the ship is on
 	 */
-	private void setPositionToShipCoords() {
+	public void setPositionToShipCoords() {
 		Point coords = Map.mapToPixelCoords(ship.getLocation());
 		getPosition().setX(coords.getX() + Map.TILESIZE / 2);
 		getPosition().setY(coords.getY() + Map.TILESIZE / 2);
@@ -128,6 +129,13 @@ public class ShipVisual extends Entity {
 		// zoom to other ship
 		// play hit animation
 		// zoom out and return to first ship
+		
+		int shipX = ship.getLocation().x;
+		int enemyX = defender.getLocation().x;
+		if(enemyX < shipX){
+			getPosition().setMirrored(true);
+		}
+		
 
 		enemy = defender;
 		notifyWhenAttacking = newNotifyWhenAttacking;

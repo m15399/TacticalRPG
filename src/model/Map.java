@@ -48,6 +48,19 @@ public class Map extends GameObject {
 		}
 	}
 	
+	public void checkTileLocations(){
+		for(int i = 0; i < width; i++){
+			for(int j = 0; j < height; j++){
+				Tile t = tiles[i][j];
+				if(t.getLocation().x != i | t.getLocation().y != j){
+					System.out.println("Map check failed at " + i + ", " + j);
+					System.out.println("Tile's coordinates were either not set or set incorrectly");
+//					System.exit(1);
+				}
+			}
+		}
+	}
+	
 	/*
 	 * Convert the pixel coords to map/tile coords e.g. (100, 100) -> (2, 2)
 	 */

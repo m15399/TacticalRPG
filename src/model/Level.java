@@ -62,6 +62,8 @@ public class Level extends GameObject {
 	private Observer enterDefaultStateObserver;
 
 	private Strategy aiStrategy;
+	
+	private Ship shipWarpingIn;
 
 	public Level(int width, int height) {
 		
@@ -70,7 +72,7 @@ public class Level extends GameObject {
 		init();
 	}
 	
-	public Level(String filename, List<Ship> player1Ships, List<Ship> player2Ships){
+	public Level(String filename){
 		
 		BuildTileMapFromTextFile builtMap = new BuildTileMapFromTextFile(filename);
 		
@@ -83,7 +85,13 @@ public class Level extends GameObject {
 			for(int y = 0; y < map.getHeight(); y++){
 				Tile t = map.getTile(x, y);
 				if(t.getHasShip()){
-					addEnemyShipToMap(t.getShip());
+					
+					Ship ship = t.getShip();
+					if(ship instanceof WarpGateShip){
+						addShipToMap(ship);
+					} else {
+						addEnemyShipToMap(ship);						
+					}
 				}
 			}
 		}
@@ -156,6 +164,8 @@ public class Level extends GameObject {
 			}
 		};
 
+		map.checkTileLocations();
+		
 		enterDefaultState();
 	}
 
@@ -489,7 +499,7 @@ public class Level extends GameObject {
 				map.shortestPath(ship.getLocation(), new Point(mapX, mapY)),
 				camera);
 
-		oldTile.setEmpty();
+		oldTile.setHasShip(false, null);
 		newTile.setHasShip(true, ship);
 
 		// printAllUnits();
@@ -535,13 +545,45 @@ public class Level extends GameObject {
 
 	}
 
+	public void warpInPlayerShip(Ship ship){
+		
+//		
+//		ship.setCanAttack(false);
+//		ship.setCanMove(false);
+//		ship.setCanUseAbility(false);
+//		ship.setCanUseItem(false);
+//		ship.setIsWaiting(true);
+		
+		ship.setLocation(new Point(selectedShip.getLocation()));
+		ship.getVisual().setPositionToShipCoords();
+		ship.setTeam(currentTeam);
+
+		ship.startTurn();
+		
+		shipWarpingIn = ship;
+		
+		enterAnimatingState();
+
+		TimerAction timer = new TimerAction(30, new Observer(){
+			public void notified(Observable sender){
+				removeShipFromMap(selectedShip);
+				addShipToMap(shipWarpingIn);
+				
+				enterDefaultState();
+				selectPlayerNextShip();
+			}
+		});
+		addChild(timer);
+		timer.start();
+	}
+	
 	public void removeShipFromMap(Ship ship) {
 		map.getTile(ship.getLocation()).setEmpty();
 		ship.destroy();
 	}
 
 	public void addShipToMap(Ship ship) {
-		ship.setTeam(0);
+//		ship.setTeam(0);
 		map.getTile(ship.getLocation()).setHasShip(true, ship); // testing
 		shipHolder.addChild(ship);
 	}
