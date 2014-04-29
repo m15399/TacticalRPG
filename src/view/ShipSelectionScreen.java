@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import resources.ImageLibrary;
 import model.GameObject;
 
 public class ShipSelectionScreen extends GameObject{
@@ -45,6 +46,7 @@ public class ShipSelectionScreen extends GameObject{
 		g2.drawString("Ship Selection Screen", 10, 20);
 		g2.setFont(font);
 		g2.drawString("Scout", 10, 40);
+		g2.drawImage(ImageLibrary.getInstance().getImage("scout.png"), 5, 45, null);
 		g2.drawString("Fighter", 110, 40);
 		g2.drawString("Bomber", 10, 130);
 		g2.drawString("Repair Ship", 110, 130);
