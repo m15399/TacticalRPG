@@ -16,6 +16,4 @@ public abstract class Terrain extends GameObject{
 	public void setLocation(Point newLocation){
 		location = newLocation;
 	}
-	
-	public abstract void applyEffect(Ship ship);
 }

@@ -79,6 +79,8 @@ public class BuildTileMapFromTextFile {
 	 * A = Asteroid
 	 * P = Planet
 	 * p = Planet (used for extending planet graphic beyond 1 tile)
+	 * 0 = Unoccupied Tile
+	 * 1 = Player spawn point
 	 */
 	
 	private void processData(String levelInfo, int levelWidth, int levelHeight){

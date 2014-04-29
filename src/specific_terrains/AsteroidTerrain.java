@@ -16,7 +16,6 @@ public class AsteroidTerrain extends Terrain{
 		super(newLocation);
 	}
 
-	@Override
 	public void applyEffect(Ship ship) {
 		Random random = new Random();
 		int damage = random.nextInt(100) + 1; //1-100 damage
