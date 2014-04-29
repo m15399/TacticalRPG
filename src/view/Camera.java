@@ -70,16 +70,16 @@ public class Camera extends GameObject {
 			
 //			double speed = 1;
 			double min = .5;
-			double max = 9 * Game.FPSMUL;
+			double max = 5 * Game.FPSMUL;
 			
-			double fac = .17; //.9 / Game.FPSMUL;
+			double fac = .3; //.9 / Game.FPSMUL;
 			double dxf = dx * fac;
 			double dyf = dy * fac;
 			
 			double distance = Math.sqrt(dx * dx + dy * dy);
 			double distancef = Math.sqrt(dxf * dxf + dyf * dyf);
 			
-			if(distance < min){
+			if(distance < min || distancef < min){
 				moveBy(dx, dy);
 				
 			} else if(distancef > max){ 
