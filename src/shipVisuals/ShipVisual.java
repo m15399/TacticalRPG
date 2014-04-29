@@ -134,6 +134,8 @@ public class ShipVisual extends Entity {
 		int enemyX = defender.getLocation().x;
 		if(enemyX < shipX){
 			getPosition().setMirrored(true);
+		} else if(enemyX > shipX){
+			getPosition().setMirrored(false);
 		}
 		
 
