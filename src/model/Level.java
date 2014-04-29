@@ -64,6 +64,7 @@ public class Level extends GameObject {
 	private Strategy aiStrategy;
 	
 	private Ship shipWarpingIn;
+	private WarpGateShip warper;
 
 	public Level(int width, int height) {
 		
@@ -546,19 +547,20 @@ public class Level extends GameObject {
 	}
 
 	public void warpInPlayerShip(Ship ship){
+		warper = (WarpGateShip) selectedShip;
+		unselectShip();
 		
-//		
-//		ship.setCanAttack(false);
-//		ship.setCanMove(false);
-//		ship.setCanUseAbility(false);
-//		ship.setCanUseItem(false);
-//		ship.setIsWaiting(true);
+		ship.setCanAttack(false);
+		ship.setCanMove(false);
+		ship.setCanUseAbility(false);
+		ship.setCanUseItem(false);
+		ship.setIsWaiting(true);
 		
-		ship.setLocation(new Point(selectedShip.getLocation()));
+		ship.setLocation(new Point(warper.getLocation()));
 		ship.getVisual().setPositionToShipCoords();
 		ship.setTeam(currentTeam);
 
-		ship.startTurn();
+//		ship.startTurn();
 		
 		shipWarpingIn = ship;
 		
@@ -566,11 +568,12 @@ public class Level extends GameObject {
 
 		TimerAction timer = new TimerAction(30, new Observer(){
 			public void notified(Observable sender){
-				removeShipFromMap(selectedShip);
+				removeShipFromMap(warper);
 				addShipToMap(shipWarpingIn);
 				
 				enterDefaultState();
-				selectPlayerNextShip();
+				if (!isAITurn())
+					selectPlayerNextShip();
 			}
 		});
 		addChild(timer);
