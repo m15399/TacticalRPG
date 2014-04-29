@@ -20,6 +20,7 @@ import view.ShipOutline;
 import view.ShipOutline.SelectionType;
 import view.SelectedShipButtons;
 import view.SelectedShipView;
+import view.ShipSelectionScreen;
 import view.Starfield;
 
 /*
@@ -121,7 +122,11 @@ public class Level extends GameObject {
 		addChild(selectedShipView);
 		hoveredShipView = new SelectedEnemyShip();
 		addChild(hoveredShipView);
-
+		
+		//Ship Selection View
+		ShipSelectionScreen shipSelectionView = new ShipSelectionScreen();
+		addChild(shipSelectionView);
+		
 		// Background button for mouse input on the map
 		levelButton = new LevelBackgroundButton(this);
 		Input.getInstance().addButton(levelButton);

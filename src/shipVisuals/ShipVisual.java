@@ -49,7 +49,6 @@ public class ShipVisual extends Entity {
 	
 	public void updateDisplayHealth(){
 		displayHealth = ship.getHull();
-
 	}
 
 	/*
