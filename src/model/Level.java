@@ -66,7 +66,7 @@ public class Level extends GameObject {
 
 		init();
 	}
-		
+	
 	public Level(String filename, List<Ship> player1Ships, List<Ship> player2Ships){
 		
 		BuildTileMapFromTextFile builtMap = new BuildTileMapFromTextFile(filename);
