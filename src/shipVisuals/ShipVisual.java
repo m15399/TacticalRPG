@@ -14,7 +14,6 @@ import model.Game;
 import model.Map;
 import model.Ship;
 
-import sun.security.action.GetLongAction;
 import utils.Direction;
 import utils.Observable;
 import utils.Observer;
@@ -126,9 +125,10 @@ public class ShipVisual extends Entity {
 			int damage, boolean didCrit, boolean didMiss, Camera camera) {
 		// zoom
 		// play attack animation
-		// zoom to other ship
-		// play hit animation
-		// zoom out and return to first ship
+		// fly to other ship
+		// play hit animation and notify
+		// return to first ship
+		// unzoom
 		
 		int shipX = ship.getLocation().x;
 		int enemyX = defender.getLocation().x;

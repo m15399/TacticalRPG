@@ -8,8 +8,6 @@ import java.awt.Graphics;
 
 import javax.swing.*;
 
-import levels.TestLevel;
-import levels.TestLevelFromFile;
 
 
 
@@ -50,10 +48,9 @@ public class Game extends JPanel implements Runnable {
 		
 		addMouseListener(Input.getInstance());
 		addMouseMotionListener(Input.getInstance());
-		
-//		setRoot(new TestLevel());
-		setRoot(new TestLevelFromFile());
 
+		setRoot(new TitleMenu(this));
+		
 	}
 	
 	public void startGame(){
@@ -62,6 +59,9 @@ public class Game extends JPanel implements Runnable {
 	}
 	
 	public void setRoot(GameObject o){
+		if(rootObject != null){
+			rootObject.destroy();
+		}
 		rootObject = o;
 	}
 

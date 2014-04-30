@@ -514,7 +514,11 @@ public class Level extends GameObject {
 		attacker.attack(defender);
 		// printAllUnits();
 
-		attacker.getVisual().attack(enterDefaultStateObserver, new Observer() {
+		attacker.getVisual().attack(new Observer(){
+			public void notified(Observable sender){
+				enterDefaultState();
+			}
+		}, new Observer() {
 			public void notified(Observable sender) {
 				checkForDestroyedUnits();
 			}
