@@ -736,6 +736,8 @@ public class Level extends GameObject {
 			} else if (state == TurnState.CASTING
 					&& currentCastable.getTargetType() == Castable.TargetType.TILE) {
 				useCastableOnTile(tile);
+			} else if (state == TurnState.CASTING){
+				enterDefaultState();
 			}
 		}
 	}
