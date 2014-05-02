@@ -16,6 +16,7 @@ public class Ship extends GameObject {
 	private double hull, shielding, maxHull, maxShielding, accuracy, minDamage,
 			maxDamage, critChance;
 	private List<Item> items;
+	private Ability ability;
 	private String description, name;
 	private boolean canAttack, canMove, canUseAbility, canUseItem, isWaiting;
 	private int team;
@@ -28,6 +29,7 @@ public class Ship extends GameObject {
 				"No description available", 1, 1, 1, 1);
 		visual = null;
 		team = 0;
+		ability = null;
 	}
 
 	public boolean isShipDead() {
@@ -78,8 +80,11 @@ public class Ship extends GameObject {
 	
 	public void startTurn(){
 		setMovesLeft(moves);
-		canAttack = true;
-		isWaiting = false;
+		setCanAttack(true);
+		setCanUseItem(true);
+		setCanUseAbility(true);
+		setIsWaiting(false);
+		ability.startTurn();
 	}
 	
 	/*
@@ -110,6 +115,24 @@ public class Ship extends GameObject {
 	}
 	
 	/*
+	 * Items
+	 */
+	
+	public void itemUsed(Item item){
+		items.remove(item);
+		setCanUseItem(false);
+	}
+	
+	/*
+	 * Ability
+	 */
+	
+	public void abilityUsed(){
+		setCanUseAbility(false);
+		ability.resetCooldown();
+	}
+		
+	/*
 	 * Returns a random damage amount between the min and max damage values.
 	 * Remember nextInt returns a value between 0 inclusive and some value exclusive.
 	 */
@@ -134,6 +157,14 @@ public class Ship extends GameObject {
 	 * Setters and Getters for private instance variables. Please add other
 	 * methods above these so they are easier to find.
 	 */
+	
+	public void setAbility(Ability ability){
+		this.ability = ability;
+	}
+	
+	public Ability getAbility(){
+		return ability;
+	}
 	
 	public void setTeam(int newTeam){
 		team = newTeam;

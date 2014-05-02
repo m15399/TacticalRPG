@@ -69,18 +69,8 @@ public class Fighter extends Ship {
 		this.removeFromItems(item);
 		ally.addToItems(item);
 	}
-	
-	/*
-	 * Ship uses item
-	 */
-	
-	public void useItem(Ship target, Item item) {
-		this.setCanAttack(false);
-		this.setCanUseAbility(false);
-		this.setCanUseItem(false);
-		item.useOnShip(target);
-	}
 
+	
 	/*
 	 * Ship waits turn
 	 */

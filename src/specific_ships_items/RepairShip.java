@@ -64,15 +64,6 @@ public class RepairShip extends Ship {
 	}
 
 	/*
-	 * Ship uses item
-	 */
-
-	public void useItem(Ship target, Item item) {
-		item.useOnShip(target);
-		this.setCanUseItem(false);
-	}
-
-	/*
 	 * Ship waits turn
 	 */
 
