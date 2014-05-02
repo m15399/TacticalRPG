@@ -1,32 +1,27 @@
 package specific_ships_items;
 
+import actions.TimerAction;
+import utils.Observer;
+import model.Castable;
 import model.Item;
-import model.Ship;
 import model.Tile;
 
-public class SpaceMine extends Item{
+public class SpaceMine extends Item {
 	private int damage;
-	
+
 	public SpaceMine() {
-		super("Space Mine", "The ship drops a space mine in a specific location that will be detonated by any enemy ship that passes through.", true, 1);
+		super(
+				"Space Mine",
+				"The ship drops a space mine in a specific location that will be detonated by any enemy ship that passes through.",
+				Castable.TargetType.TILE, 1);
 		damage = 100;
 	}
 
-	@Override
-	public void useOnShip(Ship ship) {
-		ship.updateHull(-damage);
+	public void useOnTile(Tile tile, Observer notifyWhenDone) {
+		// placeholder animation
+		TimerAction timer = new TimerAction(30, notifyWhenDone);
+		addChild(timer);
+		timer.start();
 	}
 
-	@Override
-	public void useWithoutTarget() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void useOnTile(Tile tile) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

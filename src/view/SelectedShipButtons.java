@@ -19,7 +19,7 @@ import model.Ship;
  */
 public class SelectedShipButtons extends Entity {
 
-	private static final int WIDTH = 100;
+	private static final int WIDTH = 130;
 	private static final int HEIGHT = 31;
 
 	private Ship ship;
@@ -90,8 +90,14 @@ public class SelectedShipButtons extends Entity {
 		for (String s : buttonNames) {
 			g.setColor(Color.lightGray);
 			g.fillRect(x, y, WIDTH, HEIGHT - 2);
-			g.setColor(Color.black);
-			g.drawString(s, x + WIDTH / 5, y + HEIGHT - 8);
+			
+			if(s.contains("/")){
+				int b = 125;
+				g.setColor(new Color(b, b, b));
+			} else {
+				g.setColor(Color.black);
+			}
+			g.drawString(s, x + 20, y + HEIGHT - 8);
 			y += HEIGHT;
 		}
 

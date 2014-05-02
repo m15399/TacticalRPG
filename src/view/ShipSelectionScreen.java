@@ -36,6 +36,10 @@ public class ShipSelectionScreen extends GameObject{
 		tooltip = new Tooltip();
 		addChild(tooltip);
 		
+		Button backgroundButton = new Button(0, 0, WIDTH, HEIGHT);
+		backgroundButton.getPosition().setZ(10);
+		addButton(backgroundButton);
+		
 		addButton(new SelectionButton(5, 50, 64, 64) {
 			public Ship getANewShip() {
 				return new Scout(new Point(-1, -1));

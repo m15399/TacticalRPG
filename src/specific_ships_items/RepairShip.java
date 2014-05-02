@@ -18,6 +18,7 @@ public class RepairShip extends Ship {
 		
 		// ability - either let unit attack twice or disable target for a turn
 		// i thought its ability was to heal though?
+		setAbility(new RepairAbility());
 	}
 
 	/*

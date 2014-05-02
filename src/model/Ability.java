@@ -4,9 +4,9 @@ public abstract class Ability extends Castable {
 
 	private int cooldown, cooldownLeft;
 	
-	public Ability(String name, String description, boolean isTargetted,
+	public Ability(String name, String description, Castable.TargetType targetType,
 			int castRange, int cooldown) {
-		super(name, description, isTargetted, castRange);
+		super(name, description, targetType, castRange);
 		this.cooldown = cooldown;
 		cooldownLeft = 0;
 		

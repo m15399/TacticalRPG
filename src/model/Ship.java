@@ -65,9 +65,9 @@ public class Ship extends GameObject {
 			double minDamage, double maxDamage, double critChance, int range) {
 		setName(name);
 		setMoves(moves);
+		setMaxHull(maxHull);
 		setHull(hull);
 		setShielding(shielding);
-		setMaxHull(maxHull);
 		setMaxShielding(maxShielding);
 		setAccuracy(accuracy);
 		setDescription(description);
@@ -120,7 +120,7 @@ public class Ship extends GameObject {
 	 */
 	
 	public void itemUsed(Item item){
-		items.remove(item);
+		removeFromItems(item);
 		setCanUseItem(false);
 	}
 	
@@ -128,9 +128,15 @@ public class Ship extends GameObject {
 	 * Ability
 	 */
 	
-	public void abilityUsed(){
+	private void abilityUsed(){
 		setCanUseAbility(false);
 		ability.resetCooldown();
+	}
+	
+	public void useAbilityOnShip(Ship ship, Observer notifyWhenDone){
+		abilityUsed();
+		ability.useOnShip(ship, notifyWhenDone);
+		ship.getVisual().updateDisplayHealth();
 	}
 		
 	/*
@@ -162,6 +168,7 @@ public class Ship extends GameObject {
 	public void setAbility(Ability ability){
 		this.ability = ability;
 		ability.setOwner(this);
+		addChild(ability);
 	}
 	
 	public Ability getAbility(){
@@ -211,10 +218,14 @@ public class Ship extends GameObject {
 
 	public void setHull(double newHullTotal) {
 		hull = newHullTotal;
+		if(hull < 0)
+			hull = 0;
+		if(hull > maxHull)
+			hull = maxHull;
 	}
 
 	public void updateHull(double valueToAdjustHullBy) {
-		hull += valueToAdjustHullBy;
+		setHull(hull + valueToAdjustHullBy);
 	}
 
 	public double getShielding() {
@@ -285,11 +296,13 @@ public class Ship extends GameObject {
 	public void addToItems(Item newItem) {
 		items.add(newItem);
 		newItem.setOwner(this);
+		addChild(newItem);
 	}
 
 	public void removeFromItems(Item itemUsed) {
 		items.remove(itemUsed);
 		itemUsed.setOwner(null);
+		removeChild(itemUsed);
 	}
 
 	public void setAccuracy(double newAccuracy) {

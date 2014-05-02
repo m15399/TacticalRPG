@@ -1,34 +1,28 @@
 package specific_ships_items;
 
+import actions.TimerAction;
+import utils.Observer;
+import model.Castable;
 import model.Item;
 import model.Ship;
-import model.Tile;
 
 public class ScrapMetal extends Item {
-	
+
 	private double hullBoost;
 
 	public ScrapMetal() {
-		super("Scrap Metal", "Heals the ship's hull for 100 points", true, 2);
+		super("Scrap Metal", "Heals the ship's hull for 100 points",
+				Castable.TargetType.ALLY, 2);
 		hullBoost = 100;
 	}
 
-	@Override
-	public void useOnShip(Ship ship) {
+	public void useOnShip(Ship ship, Observer notifyWhenDone) {
 		ship.updateHull(hullBoost);
-		
+
+		// placeholder animation
+		TimerAction timer = new TimerAction(30, notifyWhenDone);
+		addChild(timer);
+		timer.start();
 	}
-
-	@Override
-	public void useWithoutTarget() {
-		
-	}
-
-	@Override
-	public void useOnTile(Tile tile) {
-		
-	}
-
-
 
 }

@@ -33,7 +33,7 @@ public class Level extends GameObject {
 	 * Current state - attacking, moving, etc
 	 */
 	private enum TurnState {
-		DEFAULT, ANIMATING, MOVING, ATTACKING;
+		DEFAULT, ANIMATING, MOVING, ATTACKING, CASTING;
 	}
 
 	private TurnState state;
@@ -52,6 +52,7 @@ public class Level extends GameObject {
 	private Tile tileHovered;
 
 	private Ship selectedShip;
+	private Castable currentCastable;
 
 	// UI elements
 	private SelectedShipView selectedShipView;
@@ -62,44 +63,45 @@ public class Level extends GameObject {
 	private Observer enterDefaultStateObserver;
 
 	private Strategy aiStrategy;
-	
+
 	private Ship shipWarpingIn;
 	private WarpGateShip warper;
 
 	public Level(int width, int height) {
-		
+
 		map = new Map(width, height);
 
 		init();
 	}
-	
-	public Level(String filename){
-		
-		BuildTileMapFromTextFile builtMap = new BuildTileMapFromTextFile(filename);
-		
+
+	public Level(String filename) {
+
+		BuildTileMapFromTextFile builtMap = new BuildTileMapFromTextFile(
+				filename);
+
 		Tile[][] tiles = builtMap.getTiles();
-		
+
 		map = new Map(tiles);
 		init();
 
-		for(int x = 0; x < map.getWidth(); x++){
-			for(int y = 0; y < map.getHeight(); y++){
+		for (int x = 0; x < map.getWidth(); x++) {
+			for (int y = 0; y < map.getHeight(); y++) {
 				Tile t = map.getTile(x, y);
-				if(t.getHasShip()){
-					
+				if (t.getHasShip()) {
+
 					Ship ship = t.getShip();
-					if(ship instanceof WarpGateShip){
+					if (ship instanceof WarpGateShip) {
 						addShipToMap(ship);
 					} else {
-						addEnemyShipToMap(ship);						
+						addEnemyShipToMap(ship);
 					}
 				}
 			}
 		}
-		
+
 	}
-	
-	private void init(){
+
+	private void init() {
 		selectedShip = null;
 		tileHovered = null;
 		currentTeam = 0;
@@ -133,11 +135,11 @@ public class Level extends GameObject {
 		addChild(selectedShipView);
 		hoveredShipView = new SelectedEnemyShip();
 		addChild(hoveredShipView);
-		
-		//Ship Selection View
+
+		// Ship Selection View
 		shipSelectionScreen = new ShipSelectionScreen(this);
 		addChild(shipSelectionScreen);
-		
+
 		// Background button for mouse input on the map
 		levelButton = new LevelBackgroundButton(this);
 		Input.getInstance().addButton(levelButton);
@@ -166,7 +168,7 @@ public class Level extends GameObject {
 		};
 
 		map.checkTileLocations();
-		
+
 		enterDefaultState();
 	}
 
@@ -182,7 +184,7 @@ public class Level extends GameObject {
 			Point p = camera.convertFromCameraSpace(Map
 					.mapToPixelCoords(new Point(x + 1, y)));
 			shipButtons.setLocation((int) p.getX(), (int) p.getY());
-			
+
 		}
 	}
 
@@ -350,15 +352,16 @@ public class Level extends GameObject {
 		updateButtons();
 		shipSelectionScreen.setVisible(false);
 
+		currentCastable = null;
+
 		if (isAITurn())
 			takeNextAIMove();
 
 		if (selectedShip != null) {
 
-			if(selectedShip instanceof WarpGateShip){
+			if (selectedShip instanceof WarpGateShip) {
 				shipSelectionScreen.setVisible(true);
-				
-				
+
 			} else {
 				if (selectedShip.getCanMove()) {
 					shipButtons.addButton("Move", new Button() {
@@ -374,6 +377,31 @@ public class Level extends GameObject {
 						}
 					});
 				}
+				if (selectedShip.getCanUseAbility()) {
+					Ability ability = selectedShip.getAbility();
+					if (ability != null) {
+						String name = selectedShip.getAbility().getName();
+
+						if (ability.getCooldownLeft() == 0) {
+							shipButtons.addButton(name, new Button() {
+								public void mouseReleased() {
+									currentCastable = selectedShip.getAbility();
+									enterCastingState();
+								}
+							});
+
+						} else {
+							shipButtons
+									.addButton(
+											name + "("
+													+ ability.getCooldownLeft()
+													+ "/"
+													+ ability.getCooldown()
+													+ ")", new Button());
+						}
+
+					}
+				}
 				shipButtons.addButton("Wait", new Button() {
 					public void mouseReleased() {
 						waitShip(selectedShip);
@@ -381,8 +409,7 @@ public class Level extends GameObject {
 				});
 
 			}
-			
-			
+
 		}
 
 		map.clearHighLights();
@@ -454,6 +481,28 @@ public class Level extends GameObject {
 		state = TurnState.ATTACKING;
 	}
 
+	public void enterCastingState() {
+		if (selectedShip == null) {
+			System.out
+					.println("Error: Entered casting state with no ship selected");
+			System.exit(1);
+		}
+
+		// highlight attack range
+		map.clearHighLights();
+
+		int castRange = currentCastable.getCastRange();
+		List<Tile> possibleMoves = map.getTilesWithinRange(
+				selectedShip.getLocation(), castRange, false);
+		map.highlightTiles(possibleMoves, Tile.Highlight.GREEN);
+
+		// turn off buttons
+		shipButtons.setShip(null);
+		shipSelectionScreen.setVisible(false);
+
+		state = TurnState.CASTING;
+	}
+
 	/*
 	 * 
 	 * Handling player actions
@@ -514,8 +563,8 @@ public class Level extends GameObject {
 		attacker.attack(defender);
 		// printAllUnits();
 
-		attacker.getVisual().attack(new Observer(){
-			public void notified(Observable sender){
+		attacker.getVisual().attack(new Observer() {
+			public void notified(Observable sender) {
 				enterDefaultState();
 			}
 		}, new Observer() {
@@ -550,31 +599,31 @@ public class Level extends GameObject {
 
 	}
 
-	public void warpInPlayerShip(Ship ship){
+	public void warpInPlayerShip(Ship ship) {
 		warper = (WarpGateShip) selectedShip;
 		unselectShip();
-		
+
 		ship.setCanAttack(false);
 		ship.setCanMove(false);
 		ship.setCanUseAbility(false);
 		ship.setCanUseItem(false);
 		ship.setIsWaiting(true);
-		
+
 		ship.setLocation(new Point(warper.getLocation()));
 		ship.getVisual().setPositionToShipCoords();
 		ship.setTeam(currentTeam);
 
-//		ship.startTurn();
-		
+		// ship.startTurn();
+
 		shipWarpingIn = ship;
-		
+
 		enterAnimatingState();
 
-		TimerAction timer = new TimerAction(30, new Observer(){
-			public void notified(Observable sender){
+		TimerAction timer = new TimerAction(30, new Observer() {
+			public void notified(Observable sender) {
 				removeShipFromMap(warper);
 				addShipToMap(shipWarpingIn);
-				
+
 				enterDefaultState();
 				if (!isAITurn())
 					selectPlayerNextShip();
@@ -583,14 +632,43 @@ public class Level extends GameObject {
 		addChild(timer);
 		timer.start();
 	}
-	
+
+	private void useCastableStart() {
+		enterAnimatingState();
+
+		camera.setFollowTarget(selectedShip.getVisual());
+	}
+
+	private void useCastableEnd() {
+		enterDefaultState();
+		checkForDestroyedUnits();
+	}
+
+	public void useCastableWithoutTarget() {
+
+	}
+
+	public void useCastableOnShip(Ship ship) {
+		useCastableStart();
+
+		selectedShip.useAbilityOnShip(ship, new Observer() {
+			public void notified(Observable sender) {
+				useCastableEnd();
+			}
+		});
+	}
+
+	public void useCastableOnTile(Tile tile) {
+
+	}
+
 	public void removeShipFromMap(Ship ship) {
 		map.getTile(ship.getLocation()).setEmpty();
 		ship.destroy();
 	}
 
 	public void addShipToMap(Ship ship) {
-//		ship.setTeam(0);
+		// ship.setTeam(0);
 		map.getTile(ship.getLocation()).setHasShip(true, ship); // testing
 		shipHolder.addChild(ship);
 	}
@@ -619,7 +697,16 @@ public class Level extends GameObject {
 
 			Ship ship = tile.getShip();
 
-			if (ship.getTeam() == currentTeam) {
+			if (state == TurnState.CASTING
+					&& tile.getHighlight() != Tile.Highlight.NONE
+					&& ((currentCastable.getTargetType() == Castable.TargetType.ALLY && ship
+							.getTeam() == currentTeam) || (currentCastable
+							.getTargetType() == Castable.TargetType.ENEMY && ship
+							.getTeam() != currentTeam))) {
+
+				useCastableOnShip(ship);
+
+			} else if (ship.getTeam() == currentTeam) {
 				if (ship == selectedShip) { // clicked on self
 					enterDefaultState();
 				} else {
@@ -629,6 +716,7 @@ public class Level extends GameObject {
 				if (state == TurnState.ATTACKING
 						&& tile.getHighlight() != Tile.Highlight.NONE) {
 					attackShip(selectedShip, ship);
+
 				} else {
 					unselectShip();
 					enterDefaultState();
@@ -645,6 +733,9 @@ public class Level extends GameObject {
 				moveShipTo(selectedShip, x, y);
 			} else if (state == TurnState.ATTACKING) {
 				enterDefaultState();
+			} else if (state == TurnState.CASTING
+					&& currentCastable.getTargetType() == Castable.TargetType.TILE) {
+				useCastableOnTile(tile);
 			}
 		}
 	}
@@ -676,15 +767,19 @@ public class Level extends GameObject {
 			}
 		}
 
-		map.colorGreenHighlightsToBlue();
-		if (tile != null && !tile.getIsOccupied() && selectedShip != null
-				&& !isAITurn() && tileHovered.getHighlight() == Highlight.BLUE) {
-			List<Direction> list = new ArrayList<Direction>();
-			list = map.shortestPath(selectedShip.getLocation(),
-					tileHovered.getLocation());
-			map.highlightTilesWithoutClearingPrevious(
-					convertDirectionsToPoints(list), Highlight.GREEN);
+		if (state == TurnState.MOVING) {
+			map.colorGreenHighlightsToBlue();
+			if (tile != null && !tile.getIsOccupied() && selectedShip != null
+					&& !isAITurn()
+					&& tileHovered.getHighlight() == Highlight.BLUE) {
+				List<Direction> list = new ArrayList<Direction>();
+				list = map.shortestPath(selectedShip.getLocation(),
+						tileHovered.getLocation());
+				map.highlightTilesWithoutClearingPrevious(
+						convertDirectionsToPoints(list), Highlight.GREEN);
+			}
 		}
+
 	}
 
 	/*
@@ -766,7 +861,5 @@ public class Level extends GameObject {
 
 		return list;
 	}
-	
-	
 
 }

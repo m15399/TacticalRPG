@@ -1,25 +1,31 @@
 package model;
 
+import utils.Observer;
+
 public abstract class Castable extends GameObject {
 
+	public enum TargetType{
+		NONE, ALLY, ENEMY, TILE;
+	}
+	
 	private String description;
 	private String name;
-	private boolean isTargetted;
+	private TargetType targetType;
 	private int castRange;
 	
 	private Ship owner;
 	
-	public Castable(String name, String description, boolean isTargetted, int castRange){
+	public Castable(String name, String description, TargetType targetType, int castRange){
 		this.name = name;
 		this.description = description;
-		this.isTargetted = isTargetted;
+		this.targetType = targetType;
 		this.castRange = castRange;
 		owner = null;
 	}
 	
-	public abstract void useWithoutTarget();
-	public abstract void useOnShip(Ship ship);
-	public abstract void useOnTile(Tile tile);
+	public void useWithoutTarget(Observer notifyWhenDone){}
+	public void useOnShip(Ship ship, Observer notifyWhenDone){}
+	public void useOnTile(Tile tile, Observer notifyWhenDone){}
 	
 	/*
 	 * Setters and Getters.  Please add other methods above these so they are easier to find.
@@ -37,8 +43,8 @@ public abstract class Castable extends GameObject {
 		return castRange;
 	}
 	
-	public boolean getIsTargetted(){
-		return isTargetted;
+	public TargetType getTargetType(){
+		return targetType;
 	}
 	
 	public String getDescription(){
