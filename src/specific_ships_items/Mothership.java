@@ -68,7 +68,7 @@ public class Mothership extends Ship{
 		this.setCanAttack(false);
 		this.setCanUseAbility(false);
 		this.setCanUseItem(false);
-		item.useOn(target);
+		item.useOnShip(target);
 	}
 
 	/*

@@ -63,7 +63,7 @@ public class ShipSelectionScreen extends GameObject{
 		});
 		addButton(new SelectionButton(105, 230, 64, 64) {
 			public Ship getANewShip() {
-				return new Scout(new Point(-1, -1));
+				return new Sniper(new Point(-1, -1));
 			}
 		});
 		

@@ -75,7 +75,7 @@ public class BattleCruiser extends Ship {
 	 */
 
 	public void useItem(Ship target, Item item) {
-		item.useOn(target);
+		item.useOnShip(target);
 		this.setCanUseItem(false);
 	}
 
