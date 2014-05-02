@@ -1,10 +1,6 @@
 package specific_ships_items;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-
-import model.Item;
 import model.Ship;
 import shipVisuals.FighterVisual;
 
@@ -13,11 +9,10 @@ public class Fighter extends Ship {
 	public Fighter(Point newLocation) {
 		super(newLocation);
 		String description = "Anti-air fighter,\ncapable of long\nrange attacks.";
-		List<Item> items = new ArrayList<Item>();
-		items.add(new SpaceMine());
-		this.constructorAid("Fighter", 3, 75, 25, 75, 25, 80, items,
+		this.constructorAid("Fighter", 3, 75, 25, 75, 25, 80,
 				description, 40, 50, 25, 2);
-
+		addToItems(new SpaceMine());
+		
 		setVisual(new FighterVisual(this));
 	}
 

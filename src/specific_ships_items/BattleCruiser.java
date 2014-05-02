@@ -1,10 +1,6 @@
 package specific_ships_items;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-
-import model.Item;
 import model.Ship;
 import shipVisuals.BomberVisual;
 
@@ -13,10 +9,9 @@ public class BattleCruiser extends Ship {
 	public BattleCruiser(Point newLocation) {
 		super(newLocation);
 		String description = "Battle Cruiser,\nMade for battle\ncruisin' to victory.";
-		List<Item> items = new ArrayList<Item>();
-		items.add(new SpaceMine());
-		this.constructorAid("BattleCruiser", 3, 150, 30, 150, 30, 75, items,
+		this.constructorAid("BattleCruiser", 3, 150, 30, 150, 30, 75,
 				description, 50, 55, 25, 2);
+		addToItems(new SpaceMine());
 
 		setVisual(new BomberVisual(this));
 		

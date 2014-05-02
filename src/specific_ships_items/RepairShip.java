@@ -1,10 +1,6 @@
 package specific_ships_items;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-
-import model.Item;
 import model.Ship;
 import shipVisuals.ScoutVisual;
 
@@ -13,10 +9,10 @@ public class RepairShip extends Ship {
 	public RepairShip(Point newLocation) {
 		super(newLocation);
 		String description = "Repair ship,\nBattlefield support\ndefenseless.";
-		List<Item> items = new ArrayList<Item>();
-		items.add(new SpaceMine());
-		this.constructorAid("RepairShip", 4, 75, 20, 75, 20, 100, items,
+
+		this.constructorAid("RepairShip", 4, 75, 20, 75, 20, 100,
 				description, 0, 0, 1, 1);
+		addToItems(new SpaceMine());
 
 		setVisual(new ScoutVisual(this));
 		

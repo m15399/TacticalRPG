@@ -6,7 +6,6 @@ import model.Tile;
 
 public class MagneticShield extends Item{
 	private double shieldingBoost ;
-	private String name;
 	
 	public MagneticShield() {
 		super("Magnetic Shield", "Gives the ship a shield boost of 15%", false, 0);

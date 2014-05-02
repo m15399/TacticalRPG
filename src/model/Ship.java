@@ -25,8 +25,9 @@ public class Ship extends GameObject {
 
 	public Ship(Point newLocation) {
 		location = new Point(newLocation);
-		constructorAid("DefaultShip", 1, 1, 1, 1, 1, 1, new ArrayList<Item>(),
+		constructorAid("DefaultShip", 1, 1, 1, 1, 1, 1,
 				"No description available", 1, 1, 1, 1);
+		items = new ArrayList<Item>();
 		visual = null;
 		team = 0;
 		ability = null;
@@ -60,7 +61,7 @@ public class Ship extends GameObject {
 
 	public void constructorAid(String name, int moves, double hull,
 			double shielding, double maxHull, double maxShielding,
-			double accuracy, List<Item> items, String description,
+			double accuracy, String description,
 			double minDamage, double maxDamage, double critChance, int range) {
 		setName(name);
 		setMoves(moves);
@@ -69,7 +70,6 @@ public class Ship extends GameObject {
 		setMaxHull(maxHull);
 		setMaxShielding(maxShielding);
 		setAccuracy(accuracy);
-		setItems(items);
 		setDescription(description);
 		setMinDamage(minDamage);
 		setMaxDamage(maxDamage);
@@ -161,6 +161,7 @@ public class Ship extends GameObject {
 	
 	public void setAbility(Ability ability){
 		this.ability = ability;
+		ability.setOwner(this);
 	}
 	
 	public Ability getAbility(){
@@ -281,16 +282,14 @@ public class Ship extends GameObject {
 		return items;
 	}
 
-	public void setItems(List<Item> newItemList) {
-		items = newItemList;
-	}
-
 	public void addToItems(Item newItem) {
 		items.add(newItem);
+		newItem.setOwner(this);
 	}
 
 	public void removeFromItems(Item itemUsed) {
 		items.remove(itemUsed);
+		itemUsed.setOwner(null);
 	}
 
 	public void setAccuracy(double newAccuracy) {

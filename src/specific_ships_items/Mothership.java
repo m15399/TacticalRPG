@@ -1,10 +1,6 @@
 package specific_ships_items;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-
-import model.Item;
 import model.Ship;
 import shipVisuals.ShipVisual;
 
@@ -13,9 +9,8 @@ public class Mothership extends Ship{
 	public Mothership(Point newLocation) {
 		super(newLocation);
 		String description = "Grand mothership,\nstationary and capable\nof unit production.";
-		List<Item> items = new ArrayList<Item>();
-		items.add(new SpaceMine());
-		this.constructorAid("Mothership", 0, 500, 50, 500, 50, 100, items, description, 0, 0, 0, 1);
+		this.constructorAid("Mothership", 0, 500, 50, 500, 50, 100, description, 0, 0, 0, 1);
+		addToItems(new SpaceMine());
 		
 		setVisual(new ShipVisual(this));
 		
