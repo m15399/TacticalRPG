@@ -19,6 +19,9 @@ public class Bomber extends Ship {
 				description, 40, 45, 15, 1);
 
 		setVisual(new BomberVisual(this));
+		
+		// ability - deal true damage to target mothership
+
 	}
 
 	/*
@@ -43,38 +46,5 @@ public class Bomber extends Ship {
 		this.setCanAttack(false);
 	}
 
-	/*
-	 * Ship special ability
-	 */
-
-	public void special(Ship target) {
-		// deal true damage to target mothership
-		this.setCanUseAbility(false);
-	}
-
-	/*
-	 * Ship moves
-	 */
-
-	public void move() {
-		this.setCanMove(false);
-	}
-
-	/*
-	 * Ship trades item
-	 */
-
-	public void trade(Ship ally, Item item) {
-		// set gui screen for trading
-		this.removeFromItems(item);
-		ally.addToItems(item);
-	}
-
-	/*
-	 * Ship waits turn
-	 */
-
-	public void waitTurn() {
-	}
 
 }

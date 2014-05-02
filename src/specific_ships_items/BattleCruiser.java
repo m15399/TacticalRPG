@@ -19,6 +19,8 @@ public class BattleCruiser extends Ship {
 				description, 50, 55, 25, 2);
 
 		setVisual(new BomberVisual(this));
+		
+		// ability - deal true damage to target mothership
 	}
 
 	/*
@@ -43,39 +45,5 @@ public class BattleCruiser extends Ship {
 		this.setCanAttack(false);
 	}
 
-	/*
-	 * Ship special ability
-	 */
-
-	public void special(Ship target) {
-		// deal true damage to target mothership
-		this.setCanUseAbility(false);
-	}
-
-	/*
-	 * Ship moves
-	 */
-
-	public void move() {
-		this.setCanMove(false);
-	}
-
-	/*
-	 * Ship trades item
-	 */
-
-	public void trade(Ship ally, Item item) {
-		// set gui screen for trading
-		this.removeFromItems(item);
-		ally.addToItems(item);
-	}
-
-
-	/*
-	 * Ship waits turn
-	 */
-
-	public void waitTurn() {
-	}
 
 }

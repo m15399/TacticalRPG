@@ -19,6 +19,8 @@ public class Scout extends Ship {
 				30, 35, 15, 3);
 
 		setVisual(new ScoutVisual(this));
+		
+		// ability - possibly be untargetable for one turn / use mine
 	}
 
 	/*
@@ -34,39 +36,5 @@ public class Scout extends Ship {
 		this.setCanAttack(false);
 	}
 
-	/*
-	 * Ship special ability
-	 */
-	
-	public void special(Ship target) {
-		// possibly be untargetable for one turn
-		target.setAccuracy(100);
-		this.setCanUseAbility(false);
-	}
-	
-	/*
-	 * Ship moves
-	 */
-
-	public void move() {
-		this.setCanMove(false);
-	}
-	
-	/*
-	 * Ship trades item
-	 */
-
-	public void trade(Ship ally, Item item) {
-		// set gui screen for trading
-		this.removeFromItems(item);
-		ally.addToItems(item);
-	}
-
-
-	/*
-	 * Ship waits turn
-	 */
-	public void waitTurn() {
-	}
 
 }

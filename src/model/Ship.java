@@ -84,7 +84,8 @@ public class Ship extends GameObject {
 		setCanUseItem(true);
 		setCanUseAbility(true);
 		setIsWaiting(false);
-		ability.startTurn();
+		if(ability != null)
+			ability.startTurn();
 	}
 	
 	/*

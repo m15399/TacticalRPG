@@ -18,6 +18,9 @@ public class Mothership extends Ship{
 		this.constructorAid("Mothership", 0, 500, 50, 500, 50, 100, items, description, 0, 0, 0, 1);
 		
 		setVisual(new ShipVisual(this));
+		
+		// ability - possibly create scout or other unit
+
 	}
 	
 	/*
@@ -33,37 +36,6 @@ public class Mothership extends Ship{
 		this.setCanAttack(false);
 	}
 
-	/*
-	 * Ship special ability
-	 */
-	
-	public void special(Ship target) {
-		// possibly create scout or other unit
-		this.setCanUseAbility(false);
-	}
-	
-	/*
-	 * Ship moves
-	 */
 
-	public void move() {
-		this.setCanMove(false);
-	}
-	
-	/*
-	 * Ship trades item
-	 */
-
-	public void trade(Ship ally, Item item) {
-		// set gui screen for trading
-		this.removeFromItems(item);
-		ally.addToItems(item);
-	}
-	
-	/*
-	 * Ship waits turn
-	 */
-	public void waitTurn() {
-	}
 
 }

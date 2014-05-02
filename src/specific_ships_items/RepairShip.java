@@ -19,6 +19,9 @@ public class RepairShip extends Ship {
 				description, 0, 0, 1, 1);
 
 		setVisual(new ScoutVisual(this));
+		
+		// ability - either let unit attack twice or disable target for a turn
+		// i thought its ability was to heal though?
 	}
 
 	/*
@@ -34,40 +37,6 @@ public class RepairShip extends Ship {
 			target.setHull(target.getHull() + target.getMaxHull() * (1/3));
 		}
 		this.setCanAttack(false);
-	}
-
-	/*
-	 * Ship special ability
-	 */
-
-	public void special(Ship target) {
-		// either let unit attack twice or disable target for a turn
-		this.setCanUseAbility(false);
-	}
-
-	/*
-	 * Ship moves
-	 */
-
-	public void move() {
-		this.setCanMove(false);
-	}
-
-	/*
-	 * Ship trades item
-	 */
-
-	public void trade(Ship ally, Item item) {
-		// set gui screen for trading
-		this.removeFromItems(item);
-		ally.addToItems(item);
-	}
-
-	/*
-	 * Ship waits turn
-	 */
-
-	public void waitTurn() {
 	}
 
 }
