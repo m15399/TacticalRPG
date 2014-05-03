@@ -12,6 +12,8 @@ import model.Tile.Highlight;
 import specific_ships_items.WarpGateShip;
 import strategies.RandomStrategy;
 import strategies.Strategy;
+import terrains.AsteroidTerrain;
+import terrains.Terrain;
 import utils.Direction;
 import utils.Observable;
 import utils.Observer;
@@ -45,6 +47,7 @@ public class Level extends GameObject {
 
 	private GameObject shipHolder; // parent object for the ships
 	private GameObject enemyShipHolder;
+	private GameObject terrainHolder;
 
 	private int currentTeam;
 	private int numHumans;
@@ -87,6 +90,12 @@ public class Level extends GameObject {
 		for (int x = 0; x < map.getWidth(); x++) {
 			for (int y = 0; y < map.getHeight(); y++) {
 				Tile t = map.getTile(x, y);
+				if(t.getHasTerrain()){
+					Terrain terrain = t.getTerrain();
+					if(terrain instanceof AsteroidTerrain){
+						addTerrainToMap(terrain);
+					}
+				}
 				if (t.getHasShip()) {
 
 					Ship ship = t.getShip();
@@ -125,7 +134,11 @@ public class Level extends GameObject {
 		camera.addChild(shipHolder);
 		enemyShipHolder = new GameObject();
 		camera.addChild(enemyShipHolder);
-
+		
+		//Terrains Holder
+		terrainHolder = new GameObject();
+		camera.addChild(terrainHolder);
+		
 		// Ship buttons
 		shipButtons = new SelectedShipButtons();
 		addChild(shipButtons);
@@ -702,6 +715,10 @@ public class Level extends GameObject {
 		ship.setTeam(1);
 		addShipHelper(ship);
 		enemyShipHolder.addChild(ship);
+	}
+	
+	public void addTerrainToMap(Terrain terrain){
+		terrainHolder.addChild(terrain);
 	}
 
 	/*
