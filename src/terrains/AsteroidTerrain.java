@@ -3,6 +3,7 @@ package terrains;
 import java.awt.Point;
 import java.util.Random;
 
+import terrainVisuals.AsteroidVisual;
 import model.Ship;
 
 /*
@@ -13,6 +14,7 @@ public class AsteroidTerrain extends Terrain{
 	
 	public AsteroidTerrain(Point newLocation){
 		super(newLocation);
+		this.setVisual(new AsteroidVisual(this));
 	}
 
 	public void applyEffect(Ship ship) {

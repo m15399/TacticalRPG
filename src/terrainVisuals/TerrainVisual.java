@@ -19,8 +19,8 @@ public class TerrainVisual extends Entity{
 	
 	public void setPositionToTerrainCoords(){
 		Point coords = Map.mapToPixelCoords(terrain.getLocation());
-		getPosition().setX(coords.getX() + Map.TILESIZE);
-		getPosition().setY(coords.getY() + Map.TILESIZE);
+		getPosition().setX(coords.getX() + Map.TILESIZE / 2);
+		getPosition().setY(coords.getY() + Map.TILESIZE / 2);
 	}
 	
 	public void draw(Graphics g1){
