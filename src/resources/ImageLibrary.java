@@ -3,6 +3,7 @@ package resources;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -27,7 +28,8 @@ public class ImageLibrary {
 		"mine.png",
 		"warpgate.png",
 		"jet_37x16.png",
-		"speedboost.png"
+		"speedboost.png",
+		"asteroids.png"
 		};
 	
 	/*
@@ -61,6 +63,23 @@ public class ImageLibrary {
 		return image;
 	}
 
+	public BufferedImage getRandomImageFromSheet(String filename){
+		BufferedImage image = images.get(filename);
+		if(image == null){
+			System.out.println("Error getting random image: " + filename);
+			System.exit(1);
+		}
+		BufferedImage[] images = new BufferedImage[image.getWidth()/64];
+		int x = 0;
+		for(int i = 0; i < image.getWidth()/64; i++){
+			images[i] = image.getSubimage(x, 0, 64, 64);
+			x += 64;
+		}
+		Random random = new Random();
+		int rand = random.nextInt(images.length);
+		return images[rand];
+	}
+	
 	private void loadImage(String filename) {
 		try {
 			BufferedImage img = ImageIO.read(ImageLibrary.class.getResource("/images/" + filename));

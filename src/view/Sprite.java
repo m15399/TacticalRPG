@@ -23,6 +23,11 @@ public class Sprite extends Entity {
 		setImage(filename);
 	}
 	
+	public Sprite(int x, int y){
+		super(x, y);
+		image = null;
+	}
+	
 	/*
 	 * Setters and Getters for private instance variables.  Please add other methods 
 	 * above these so they are easier to find.

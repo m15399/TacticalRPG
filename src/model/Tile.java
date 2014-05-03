@@ -11,8 +11,9 @@ import specific_ships_items.Mothership;
 import specific_ships_items.RepairShip;
 import specific_ships_items.Scout;
 import specific_ships_items.WarpGateShip;
-import specific_terrains.AsteroidTerrain;
-import specific_terrains.PlanetTerrain;
+import terrains.AsteroidTerrain;
+import terrains.PlanetTerrain;
+import terrains.Terrain;
 
 /**
  * Tried to wrap all the Tile classes into one class to simplify things and cut

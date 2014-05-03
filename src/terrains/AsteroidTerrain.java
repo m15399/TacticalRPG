@@ -1,10 +1,9 @@
-package specific_terrains;
+package terrains;
 
 import java.awt.Point;
 import java.util.Random;
 
 import model.Ship;
-import model.Terrain;
 
 /*
  * Asteroids damage passing ships.
