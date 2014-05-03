@@ -24,6 +24,7 @@ public class ImageLibrary {
 		"sniper.png",
 		"repairship.png",
 		"mothership.png",
+		"mine.png",
 		"warpgate.png",
 		"jet_37x16.png",
 		"speedboost.png"

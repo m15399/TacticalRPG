@@ -17,6 +17,7 @@ public class Scout extends Ship {
 		setVisual(new ScoutVisual(this));
 		
 		// ability - possibly be untargetable for one turn / use mine
+		setAbility(new PlaceMineAbility());
 	}
 
 	/*

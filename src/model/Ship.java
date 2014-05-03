@@ -20,6 +20,7 @@ public class Ship extends GameObject {
 	private String description, name;
 	private boolean canAttack, canMove, canUseAbility, canUseItem, isWaiting;
 	private int team;
+	private Level level;
 	
 	private ShipVisual visual;
 
@@ -51,7 +52,6 @@ public class Ship extends GameObject {
 	 * @param maxHull
 	 * @param maxShielding
 	 * @param accuracy
-	 * @param items
 	 * @param description
 	 * @param minDamage
 	 * @param maxDamage
@@ -136,7 +136,16 @@ public class Ship extends GameObject {
 	public void useAbilityOnShip(Ship ship, Observer notifyWhenDone){
 		abilityUsed();
 		ability.useOnShip(ship, notifyWhenDone);
-		ship.getVisual().updateDisplayHealth();
+	}
+	
+	public void useAbilityOnTile(Tile tile, Observer notifyWhenDone){
+		abilityUsed();
+		ability.useOnTile(tile, notifyWhenDone);
+	}
+	
+	public void useAbilityWithoutTarget(Observer notifyWhenDone){
+		abilityUsed();
+		ability.useWithoutTarget(notifyWhenDone);
 	}
 		
 	/*
@@ -164,6 +173,14 @@ public class Ship extends GameObject {
 	 * Setters and Getters for private instance variables. Please add other
 	 * methods above these so they are easier to find.
 	 */
+	
+	public void setLevel(Level level){
+		this.level = level;
+	}
+	
+	public Level getLevel(){
+		return level;
+	}
 	
 	public void setAbility(Ability ability){
 		this.ability = ability;
@@ -373,7 +390,9 @@ public class Ship extends GameObject {
 		range += valueToAdjustBy;
 	}
 	
-	public Boolean getCanAttack() {
+	public boolean getCanAttack() {
+		if(range == 0)
+			return false;
 		return canAttack;
 	}
 
@@ -381,7 +400,9 @@ public class Ship extends GameObject {
 		this.canAttack = canAttack;
 	}
 
-	public Boolean getCanMove() {
+	public boolean getCanMove() {
+		if(movesLeft == 0)
+			return false;
 		return canMove;
 	}
 

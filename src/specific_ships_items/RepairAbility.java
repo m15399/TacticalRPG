@@ -18,6 +18,8 @@ public class RepairAbility extends Ability {
 
 	public void useOnShip(Ship ship, Observer notifyWhenDone) {		
 		ship.updateHull(HEAL_AMOUNT);
+		ship.getVisual().updateDisplayHealth();
+
 
 		// placeholder animation
 		TimerAction timer = new TimerAction(30, notifyWhenDone);

@@ -393,8 +393,8 @@ public class Level extends GameObject {
 						} else {
 							shipButtons
 									.addButton(
-											name + "("
-													+ ability.getCooldownLeft()
+											name + " ("
+													+ (ability.getCooldown() - ability.getCooldownLeft())
 													+ "/"
 													+ ability.getCooldown()
 													+ ")", new Button());
@@ -490,11 +490,16 @@ public class Level extends GameObject {
 
 		// highlight attack range
 		map.clearHighLights();
-
-		int castRange = currentCastable.getCastRange();
-		List<Tile> possibleMoves = map.getTilesWithinRange(
-				selectedShip.getLocation(), castRange, false);
-		map.highlightTiles(possibleMoves, Tile.Highlight.GREEN);
+		
+		if(currentCastable.getTargetType() == Castable.TargetType.NONE){
+			useCastableWithoutTarget();
+			
+		} else {
+			int castRange = currentCastable.getCastRange();
+			List<Tile> possibleMoves = map.getTilesWithinRange(
+					selectedShip.getLocation(), castRange, false);
+			map.highlightTiles(possibleMoves, Tile.Highlight.GREEN);
+		}
 
 		// turn off buttons
 		shipButtons.setShip(null);
@@ -603,12 +608,6 @@ public class Level extends GameObject {
 		warper = (WarpGateShip) selectedShip;
 		unselectShip();
 
-		ship.setCanAttack(false);
-		ship.setCanMove(false);
-		ship.setCanUseAbility(false);
-		ship.setCanUseItem(false);
-		ship.setIsWaiting(true);
-
 		ship.setLocation(new Point(warper.getLocation()));
 		ship.getVisual().setPositionToShipCoords();
 		ship.setTeam(currentTeam);
@@ -642,10 +641,19 @@ public class Level extends GameObject {
 	private void useCastableEnd() {
 		enterDefaultState();
 		checkForDestroyedUnits();
+		if(selectedShip.isShipDead()){
+			selectPlayerNextShip();
+		}
 	}
 
 	public void useCastableWithoutTarget() {
+		useCastableStart();
 
+		selectedShip.useAbilityWithoutTarget(new Observer() {
+			public void notified(Observable sender) {
+				useCastableEnd();
+			}
+		});
 	}
 
 	public void useCastableOnShip(Ship ship) {
@@ -659,23 +667,40 @@ public class Level extends GameObject {
 	}
 
 	public void useCastableOnTile(Tile tile) {
+		useCastableStart();
 
+		selectedShip.useAbilityOnTile(tile, new Observer() {
+			public void notified(Observable sender) {
+				useCastableEnd();
+			}
+		});
 	}
 
 	public void removeShipFromMap(Ship ship) {
 		map.getTile(ship.getLocation()).setEmpty();
 		ship.destroy();
 	}
+	
+	private void addShipHelper(Ship ship){
+		ship.setLevel(this);
+		map.getTile(ship.getLocation()).setHasShip(true, ship);
+		ship.setCanAttack(false);
+		ship.setCanMove(false);
+		ship.setCanUseAbility(false);
+		ship.setCanUseItem(false);
+		ship.setIsWaiting(true);
 
+	}
+	
 	public void addShipToMap(Ship ship) {
-		// ship.setTeam(0);
-		map.getTile(ship.getLocation()).setHasShip(true, ship); // testing
+		// ship.setTeam(0); // not sure if needed? 
+		addShipHelper(ship);
 		shipHolder.addChild(ship);
 	}
 
 	public void addEnemyShipToMap(Ship ship) {
 		ship.setTeam(1);
-		map.getTile(ship.getLocation()).setHasShip(true, ship); // testing
+		addShipHelper(ship);
 		enemyShipHolder.addChild(ship);
 	}
 
@@ -734,9 +759,10 @@ public class Level extends GameObject {
 			} else if (state == TurnState.ATTACKING) {
 				enterDefaultState();
 			} else if (state == TurnState.CASTING
-					&& currentCastable.getTargetType() == Castable.TargetType.TILE) {
+					&& currentCastable.getTargetType() == Castable.TargetType.TILE
+					&& !tile.getIsOccupied()) {
 				useCastableOnTile(tile);
-			} else if (state == TurnState.CASTING){
+			} else if (state == TurnState.CASTING) {
 				enterDefaultState();
 			}
 		}
@@ -859,6 +885,30 @@ public class Level extends GameObject {
 			for (Ship s : ships) {
 				list.add(s);
 			}
+		}
+
+		return list;
+	}
+	
+	public List<Ship> getShipsWithinCircularArea(Ship src, int range, int team){
+		List<GameObject> ships;
+		if (team == 0) {
+			ships = shipHolder.getChildren();
+		} else {
+			ships = enemyShipHolder.getChildren();
+		}
+
+		List<Ship> list = new ArrayList<Ship>();
+
+		for (GameObject o : ships) {
+			Ship s = (Ship) o;
+			
+			double dx = src.getLocation().x - s.getLocation().x;
+			double dy = src.getLocation().y - s.getLocation().y;
+			double distance = Math.sqrt(dx * dx + dy * dy);
+			
+			if(distance <= range)
+				list.add(s);
 		}
 
 		return list;
