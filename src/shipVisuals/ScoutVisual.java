@@ -1,7 +1,9 @@
 package shipVisuals;
 
+import view.GunSprite;
 import view.JetSprite;
 import view.Sprite;
+import view.GunSprite.GunSize;
 import view.JetSprite.JetSize;
 import model.Ship;
 
@@ -12,6 +14,7 @@ public class ScoutVisual extends ShipVisual {
 
 	private Sprite sprite;
 	private JetSprite jet;
+	private GunSprite gun;
 
 	public ScoutVisual(Ship ship) {
 		super(ship);
@@ -23,6 +26,10 @@ public class ScoutVisual extends ShipVisual {
 		sprite = new Sprite("scout.png");
 		addChild(sprite);
 
+		gun = new GunSprite(24, 8, this, GunSize.H16);
+		gun.getPosition().setScale(.8, .8);
+		addChild(gun);
+		
 		// parent the sprite to the location of the visual
 		sprite.getPosition().setParent(getPosition());
 

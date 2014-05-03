@@ -1,8 +1,6 @@
-package specific_terrains;
+package terrains;
 
 import java.awt.Point;
-
-import model.Terrain;
 
 public class PlanetTerrain extends Terrain{
 

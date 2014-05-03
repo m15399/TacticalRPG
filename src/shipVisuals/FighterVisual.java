@@ -1,7 +1,9 @@
 package shipVisuals;
 
+import view.GunSprite;
 import view.JetSprite;
 import view.Sprite;
+import view.GunSprite.GunSize;
 import view.JetSprite.JetSize;
 import model.Ship;
 
@@ -12,6 +14,7 @@ public class FighterVisual extends ShipVisual {
 
 	private Sprite sprite;
 	private JetSprite[] jets;
+	private GunSprite gun;
 
 	public FighterVisual(Ship ship) {
 		super(ship);
@@ -35,12 +38,14 @@ public class FighterVisual extends ShipVisual {
 		addChild(jet);
 		jets[2] = jet;
 		
-		
 				
 		
 		sprite = new Sprite("fighter.png");
 		addChild(sprite);
 
+		gun = new GunSprite(13, 7, this, GunSize.H8);
+		addChild(gun);
+		
 		// parent the sprite to the location of the visual
 		sprite.getPosition().setParent(getPosition());
 		
@@ -52,7 +57,7 @@ public class FighterVisual extends ShipVisual {
 			j.setVisible(true);
 		}
 	}
-
+	
 	public void playIdleAnimation() {
 		for(JetSprite j : jets){
 			j.setVisible(false);
