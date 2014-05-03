@@ -130,15 +130,15 @@ public class Level extends GameObject {
 		// Map
 		camera.addChild(map);
 
+		//Terrains Holder
+		terrainHolder = new GameObject();
+		camera.addChild(terrainHolder);
+		
 		// Ships Holder
 		shipHolder = new GameObject();
 		camera.addChild(shipHolder);
 		enemyShipHolder = new GameObject();
 		camera.addChild(enemyShipHolder);
-		
-		//Terrains Holder
-		terrainHolder = new GameObject();
-		camera.addChild(terrainHolder);
 		
 		// Ship buttons
 		shipButtons = new SelectedShipButtons();
