@@ -10,7 +10,7 @@ import model.Ship;
 
 public class MineAbility extends Ability {
 
-	private static int DAMAGE = 50;
+	private static int DAMAGE = 35;
 	private static int RANGE = 3;
 
 	public MineAbility() {
