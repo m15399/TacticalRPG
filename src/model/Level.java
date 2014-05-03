@@ -45,9 +45,10 @@ public class Level extends GameObject {
 	private Camera camera;
 	private LevelBackgroundButton levelButton;
 
+	private GameObject terrainHolder;
 	private GameObject shipHolder; // parent object for the ships
 	private GameObject enemyShipHolder;
-	private GameObject terrainHolder;
+	
 
 	private int currentTeam;
 	private int numHumans;
