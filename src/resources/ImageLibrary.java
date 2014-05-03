@@ -32,7 +32,10 @@ public class ImageLibrary {
 		"guns_36x17.png",
 		"guns_19x7.png",
 		"speedboost.png",
-		"asteroids.png"
+		"asteroids.png",
+		"wormholeBlue.png",
+		"wormholeRed.png",
+		"wormholeGreen.png"
 		};
 	
 	/*
@@ -91,5 +94,4 @@ public class ImageLibrary {
 			System.out.println("Error loading image: " + filename);
 		}
 	}
-
 }
