@@ -27,6 +27,7 @@ public class ImageLibrary {
 		"mine.png",
 		"warpgate.png",
 		"jet_37x16.png",
+		"jet_19x9.png",
 		"speedboost.png"
 		};
 	

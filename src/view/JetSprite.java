@@ -8,7 +8,7 @@ import model.Entity;
 public class JetSprite extends AnimatedSprite {
 	
 	public enum JetSize {
-		H16;
+		H8, H16;
 	}
 	
 	public JetSprite(int x, int y, Entity spatialParent, JetSize size){
@@ -25,6 +25,10 @@ public class JetSprite extends AnimatedSprite {
 			w = 37;
 			h = 16;
 			break;
+		case H8:
+			fn = "jet_19x9.png";
+			w = 19;
+			h = 9;
 		}
 		
 		setImage(fn);
