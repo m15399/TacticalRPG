@@ -19,7 +19,7 @@ import model.Ship;
 
 public class ShipSelectionScreen extends GameObject{
 	static final int WIDTH = 200;
-	static final int HEIGHT = 310;
+	static final int HEIGHT = 380;
 	
 	private boolean visible;
 	private Level level;
@@ -160,10 +160,16 @@ public class ShipSelectionScreen extends GameObject{
 		g2.drawString("Scout", 10, 40);
 		g2.drawImage(ImageLibrary.getInstance().getImage("scout.png"), 5, 45, null);
 		g2.drawString("Fighter", 110, 40);
+		g2.drawImage(ImageLibrary.getInstance().getImage("fighter.png"), 105, 45, null);
 		g2.drawString("Bomber", 10, 130);
+		g2.drawImage(ImageLibrary.getInstance().getImage("bomber.png"), 5, 135, null);
 		g2.drawString("Repair Ship", 110, 130);
+		g2.drawImage(ImageLibrary.getInstance().getImage("repairship.png"), 105, 135, null);
 		g2.drawString("Battle Cruiser", 10, 220);
+		g2.drawImage(ImageLibrary.getInstance().getImage("sniper.png"), 5, 225, null);
 		g2.drawString("Sniper", 110, 220);
-//		g2.drawString("Mothership", 10, 310);
+		g2.drawImage(ImageLibrary.getInstance().getImage("battlecruiser.png"), 105, 225, null);
+		g2.drawString("Mothership", 10, 310);
+		g2.drawImage(ImageLibrary.getInstance().getImage("mothership.png"), 5, 315, null);
 	}
 }
