@@ -16,6 +16,8 @@ public class Game extends JPanel implements Runnable {
 
 	private static final long serialVersionUID = -7803629994015778818L;
 
+	public static final boolean DEBUG = false;
+	
 	public static final int WIDTH = 1024;
 	public static final int HEIGHT = 768;
 	

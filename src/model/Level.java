@@ -159,18 +159,21 @@ public class Level extends GameObject {
 		aiStrategy = new RandomStrategy();
 
 		// test zoom buttons
-		int bsize = 20;
-		final double sfac = 2;
-		Input.getInstance().addButton(new Button(0, 0, bsize, bsize) {
-			public void mouseReleased() {
-				camera.setZoomTarget(camera.getZoom() * sfac);
-			}
-		});
-		Input.getInstance().addButton(new Button(0, bsize, bsize, bsize) {
-			public void mouseReleased() {
-				camera.setZoomTarget(camera.getZoom() / sfac);
-			}
-		});
+		if(Game.DEBUG){
+			int bsize = 20;
+			final double sfac = 2;
+			Input.getInstance().addButton(new Button(0, 0, bsize, bsize) {
+				public void mouseReleased() {
+					camera.setZoomTarget(camera.getZoom() * sfac);
+				}
+			});
+			Input.getInstance().addButton(new Button(0, bsize, bsize, bsize) {
+				public void mouseReleased() {
+					camera.setZoomTarget(camera.getZoom() / sfac);
+				}
+			});
+		}
+		
 
 		enterDefaultStateObserver = new Observer() {
 			public void notified(Observable sender) {
