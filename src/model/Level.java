@@ -91,11 +91,8 @@ public class Level extends GameObject {
 		for (int x = 0; x < map.getWidth(); x++) {
 			for (int y = 0; y < map.getHeight(); y++) {
 				Tile t = map.getTile(x, y);
-				if(t.getHasTerrain()){
-					Terrain terrain = t.getTerrain();
-					if(terrain instanceof AsteroidTerrain){
-						addTerrainToMap(terrain);
-					}
+				if(t.getHasTerrain() && t.getTerrain() != null){
+					addTerrainToMap(t.getTerrain());
 				}
 				if (t.getHasShip()) {
 

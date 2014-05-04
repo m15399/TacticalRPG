@@ -35,7 +35,8 @@ public class ImageLibrary {
 		"asteroids.png",
 		"wormholeBlue.png",
 		"wormholeRed.png",
-		"wormholeGreen.png"
+		"wormholeGreen.png",
+		"planet2x2.png" //Courtesy of Nasa
 		};
 	
 	/*
