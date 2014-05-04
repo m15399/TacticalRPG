@@ -8,6 +8,8 @@ import model.Ship;
 
 public class Sniper extends Ship {
 
+	private boolean charged;
+	
 	public Sniper(Point newLocation) {
 		super(newLocation);
 		String description = "Sniper ship,\nFires safely\nfrom the distance.";
@@ -16,11 +18,21 @@ public class Sniper extends Ship {
 		addToItems(new SpaceMine());
 		
 		 setVisual(new BomberVisual(this));
+		 
+		 charged = false;
 
 		// ability - charge next attack to pierce shielding
-
+		 setAbility(new SniperChargeAbility());
 	}
-
+	
+	public boolean getCharged(){
+		return charged;
+	}
+	
+	public void setCharged(boolean charged){
+		this.charged = charged;
+	}
+	
 	/*
 	 * Ship basic attack. Ignore armor when ability is used.
 	 */
@@ -28,6 +40,11 @@ public class Sniper extends Ship {
 	@Override
 	public void attack(Ship target) {
 		double damage = this.getDamage();
+		if(charged){
+			damage *= 1.5;
+			charged = false;
+		}
+		
 		if (this.getCanUseAbility() == true) {
 			if (target.getHull() - target.getFinalDamage(damage) > 0)
 				target.setHull(target.getHull() - target.getFinalDamage(damage));
