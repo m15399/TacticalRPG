@@ -10,7 +10,7 @@ public class PlanetVisual2x2 extends TerrainVisual{
 	
 	public PlanetVisual2x2(Terrain terrain) {
 		super(terrain);
-		sprite = new Sprite(terrain.getLocation().x, terrain.getLocation().y);
+		sprite = new Sprite();
 		sprite.setImage(ImageLibrary.getInstance().getImage("asteroids.png"));
 		addChild(sprite);
 		
