@@ -10,9 +10,12 @@ public class AsteroidVisual extends TerrainVisual{
 	
 	public AsteroidVisual(AsteroidTerrain terrain) {
 		super(terrain);
-		sprite = new Sprite(terrain.getLocation().x, terrain.getLocation().y);
+		sprite = new Sprite();
 		sprite.setImage(ImageLibrary.getInstance().getRandomImageFromSheet("asteroids.png"));
 		addChild(sprite);
+		
+		// rotate to a random degree
+//		sprite.getPosition().setRotation(Math.random()*10);
 		
 		// parent the sprite to the location of the visual
 		sprite.getPosition().setParent(getPosition());
