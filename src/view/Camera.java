@@ -101,11 +101,16 @@ public class Camera extends GameObject {
 	}
 	
 	public boolean getIsMoving(){
-		if(getVelocityX() == getVelocityY() && getVelocityX() == 0){
-			if(zoom == zoomTarget){
-				return false;
-			}
+		Position p = getFollowTarget().getPosition();
+		double x = p.getX();
+		double y = p.getY();
+		double dx = x - positionX;
+		double dy = y - positionY;		
+		
+		if(zoom == zoomTarget && dx == 0 && dy == 0){
+			return false;
 		}
+		
 		return true;
 	}
 	

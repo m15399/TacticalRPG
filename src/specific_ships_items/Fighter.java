@@ -9,7 +9,7 @@ public class Fighter extends Ship {
 	public Fighter(Point newLocation) {
 		super(newLocation);
 		String description = "Anti-air fighter,\ncapable of long\nrange attacks.";
-		this.constructorAid("Fighter", 3, 75, 25, 75, 25, 80,
+		this.constructorAid("Fighter", 5, 75, 25, 75, 25, 80,
 				description, 40, 50, 25, 2);
 		addToItems(new SpaceMine());
 		

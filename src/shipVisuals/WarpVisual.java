@@ -11,7 +11,7 @@ public class WarpVisual extends ShipVisual{
 	public WarpVisual(Ship ship) {
 		super(ship);
 		
-		rotateSpeed = .004;
+		rotateSpeed = .006;
 		
 		if(ship.getTeam() == 0)
 			sprite = new Sprite("wormholeBlue.png");

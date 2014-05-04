@@ -27,10 +27,12 @@ import view.ShipOutline;
  */
 public class ShipVisual extends Entity {
 
+	private static double ZOOM_TARGET = 1.75;
+	
 	private Ship ship;
 	private ShipOutline outline;
 	private double displayHealth;
-	
+	private Camera currCamera;
 	
 	private Ship enemy; 
 	private Observer notifyWhenAttacking;
@@ -130,6 +132,7 @@ public class ShipVisual extends Entity {
 		// return to first ship
 		// unzoom
 		
+		// set ship facing its target
 		int shipX = ship.getLocation().x;
 		int enemyX = defender.getLocation().x;
 		if(enemyX < shipX){
@@ -138,22 +141,87 @@ public class ShipVisual extends Entity {
 			getPosition().setMirrored(false);
 		}
 		
-
+		currCamera = camera;
 		enemy = defender;
 		notifyWhenAttacking = newNotifyWhenAttacking;
 		
-		TimerAction attackTimer = new TimerAction(30, new Observer(){
+		ActionQueue q = new ActionQueue(notifyWhenDone);
+
+		// wait for camera before doing anything
+		q.addAction(new WaitForCameraAction(camera, new Observer(){
+			
+			// zoom in
+			public void notified(Observable sender){
+				currCamera.setZoomTarget(ZOOM_TARGET);
+			}
+		}));
+		
+		// wait for camera again
+		q.addAction(new WaitForCameraAction(camera, new Observer(){
+			
+			// when that's done start attack animation
+			public void notified(Observable sender){
+				playAttackAnimation();
+			}
+		}));
+		
+		// wait while attack animation plays
+		q.addAction(new TimerAction(20*Game.FPSMUL, new Observer(){
+			
+			// then stop attacking 
+			public void notified(Observable sender){
+				playIdleAnimation();
+			}
+		}));
+		
+		// wait another bit
+		q.addAction(new TimerAction(15*Game.FPSMUL, new Observer(){
+			
+			// then  fly to the other ship
+			public void notified(Observable sender){
+				currCamera.setFollowTarget(enemy.getVisual());
+			}
+		}));
+		
+		// wait for camera
+		q.addAction(new WaitForCameraAction(camera, new Observer(){
+			
+			// update the enemy's health and notify level the actual attack is happening
 			public void notified(Observable sender){
 				enemy.getVisual().updateDisplayHealth();
 				notifyWhenAttacking.notified(null);
 			}
-		});
-		addChild(attackTimer);
-		attackTimer.start();
+		}));
 		
-		TimerAction timer = new TimerAction(60, notifyWhenDone);
-		addChild(timer);
-		timer.start();
+		// wait while we watch the destruction
+		q.addAction(new TimerAction(25*Game.FPSMUL, new Observer(){
+			
+			// return camera to first ship
+			public void notified(Observable sender){
+				currCamera.setFollowTarget(ShipVisual.this);
+			}
+		}));
+		
+		// wait for camera
+		q.addAction(new WaitForCameraAction(camera, new Observer(){
+			
+			// zoom out
+			public void notified(Observable sender){
+				currCamera.setZoomTarget(1.0);
+			}
+		}));
+		
+		// wait for camera again
+		q.addAction(new WaitForCameraAction(camera, null));
+		
+		
+		addChild(q);
+		q.start();
+		
+		
+		
+		
+		
 	}
 
 	public void explode(Observer notifyWhenDone) {
@@ -161,6 +229,10 @@ public class ShipVisual extends Entity {
 	}
 
 	public void playMoveAnimation() {
+		// override
+	}
+	
+	public void playAttackAnimation(){
 		// override
 	}
 
