@@ -7,14 +7,12 @@ import model.Item;
 import model.Tile;
 
 public class SpaceMine extends Item {
-	private int damage;
 
 	public SpaceMine() {
 		super(
 				"Space Mine",
 				"The ship drops a space mine in a specific location that will be detonated by any enemy ship that passes through.",
 				Castable.TargetType.TILE, 1);
-		damage = 100;
 	}
 
 	public void useOnTile(Tile tile, Observer notifyWhenDone) {

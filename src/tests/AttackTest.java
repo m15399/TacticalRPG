@@ -4,16 +4,16 @@ import static org.junit.Assert.*;
 
 import java.awt.Point;
 
-import model.Ship;
-
 import org.junit.Test;
 
 import specific_ships_items.Scout;
+import specific_ships_items.Sniper;
 
 public class AttackTest {
 
 	Scout ship = new Scout(new Point(1,1));
 	Scout ship2 = new Scout(new Point(1,2));
+	Sniper sniper = new Sniper(new Point(1, 3));
 	
 	@Test
 	public void testLocation() {
@@ -42,8 +42,8 @@ public class AttackTest {
 	
 	@Test
 	public void testSpecial() {
-		assertEquals(60, ship.getAccuracy(), 1e-12);
-//		ship.special(ship2);
-//		assertEquals(100, ship2.getAccuracy(), 1e-12);
+		assertFalse(sniper.getCharged());
+		sniper.useAbilityWithoutTarget(null);
+		assertTrue(sniper.getCharged());
 	}
 }

@@ -12,7 +12,6 @@ import model.Tile.Highlight;
 import specific_ships_items.WarpGateShip;
 import strategies.RandomStrategy;
 import strategies.Strategy;
-import terrains.AsteroidTerrain;
 import terrains.Terrain;
 import utils.Direction;
 import utils.Observable;

@@ -1,7 +1,5 @@
 package terrainVisuals;
 
-import java.awt.image.BufferedImage;
-
 import resources.ImageLibrary;
 import terrains.Terrain;
 import view.Sprite;
