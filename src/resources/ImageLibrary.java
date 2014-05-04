@@ -36,7 +36,7 @@ public class ImageLibrary {
 		"wormholeBlue.png",
 		"wormholeRed.png",
 		"wormholeGreen.png",
-		"planet2x2.png" //Courtesy of Nasa
+		"planet2x2.png" //Courtesy of Nasa -- http://www.ehdwalls.com/1280x1024/space/nasa_-_neptune/
 		};
 	
 	/*

@@ -14,6 +14,7 @@ public class PlanetVisual2x2 extends TerrainVisual{
 		super(terrain);
 		sprite = new Sprite();
 		sprite.setImage(ImageLibrary.getInstance().getImage("planet2x2.png"));
+		sprite.getPosition().setLocation(35, 33);
 		addChild(sprite);
 		
 		// parent the sprite to the location of the visual
