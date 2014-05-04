@@ -12,7 +12,7 @@ import specific_ships_items.RepairShip;
 import specific_ships_items.Scout;
 import specific_ships_items.WarpGateShip;
 import terrains.AsteroidTerrain;
-import terrains.PlanetTerrain;
+import terrains.PlanetTerrain2x2;
 import terrains.Terrain;
 
 /**
@@ -96,7 +96,7 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		setEmpty();
 		mapX = x;
 		mapY = y;
-		setIsOccupied(trueIfTerrainCanBeOccupied);
+		setIsOccupied(true);
 		setHasTerrain(true);
 	}
 
@@ -320,7 +320,7 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		else if(hasTerrain && terrain instanceof AsteroidTerrain){
 			result += "A";
 		}
-		else if(hasTerrain && terrain instanceof PlanetTerrain){
+		else if(hasTerrain && terrain instanceof PlanetTerrain2x2){
 			result += "P";
 		}
 		else if(hasTerrain){

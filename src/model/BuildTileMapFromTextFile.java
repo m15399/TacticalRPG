@@ -15,7 +15,7 @@ import specific_ships_items.RepairShip;
 import specific_ships_items.Scout;
 import specific_ships_items.WarpGateShip;
 import terrains.AsteroidTerrain;
-import terrains.PlanetTerrain;
+import terrains.PlanetTerrain2x2;
 
 public class BuildTileMapFromTextFile {
 	
@@ -126,11 +126,11 @@ public class BuildTileMapFromTextFile {
 					tiles[c][r] = new Tile(true, terrain);
 				}
 				else if(temp == 'P'){
-					PlanetTerrain terrain = new PlanetTerrain(new Point(c, r));
+					PlanetTerrain2x2 terrain = new PlanetTerrain2x2(new Point(c, r));
 					tiles[c][r] = new Tile(false, terrain);
 				}
 				else if(temp == 'p'){
-					tiles[c][r] = new Tile(true, c, r);
+					tiles[c][r] = new Tile(false, c, r);
 				}
 				else if(temp == '0'){
 					tiles[c][r] = new Tile(c, r);
