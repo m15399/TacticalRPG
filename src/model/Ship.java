@@ -17,7 +17,7 @@ public class Ship extends GameObject {
 			maxDamage, critChance;
 	private List<Item> items;
 	private Ability ability;
-	private String description, name;
+	private String description, name, filename;
 	private boolean canAttack, canMove, canUseAbility, canUseItem, isWaiting;
 	private int team;
 	private Level level;
@@ -64,6 +64,7 @@ public class Ship extends GameObject {
 			double accuracy, String description,
 			double minDamage, double maxDamage, double critChance, int range) {
 		setName(name);
+		setFileName(name.toLowerCase() + ".png");//doubles off of setName
 		setMoves(moves);
 		setMaxHull(maxHull);
 		setHull(hull);
@@ -428,6 +429,15 @@ public class Ship extends GameObject {
 	public List<Item> getItemsList(){
 		return items;
 	}
+	
+	public String getFileName(){
+		return filename;
+	}
+	
+	public void setFileName(String newFileName){
+		filename = newFileName;
+	}
+	
 	public String itemsToString(){
 		String itemsString = "";
 		for(int i = 0; i < items.size(); i++){

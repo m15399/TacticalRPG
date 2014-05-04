@@ -10,16 +10,14 @@ public class WarpVisual extends ShipVisual{
 	public WarpVisual(Ship ship) {
 		super(ship);
 		
-		sprite = new Sprite("wormholeBlue.png", ship.getLocation().x, ship.getLocation().y);
-		
-//		if(ship.getTeam() == 0)
-//			sprite = new Sprite("wormholeBlue.png", ship.getLocation().x, ship.getLocation().y);
-//		else if(ship.getTeam() == 1)
-//			sprite = new Sprite("wormholeRed.png", ship.getLocation().x, ship.getLocation().y);
-//		else if(ship.getTeam() == 2)
-//			sprite = new Sprite("wormholeGreen.png", ship.getLocation().x, ship.getLocation().y);
-//		else
-//			System.out.println("Something went wrong loading a warp hole.");
+		if(ship.getTeam() == 0)
+			sprite = new Sprite("wormholeBlue.png", ship.getLocation().x, ship.getLocation().y);
+		else if(ship.getTeam() == 1)
+			sprite = new Sprite("wormholeRed.png", ship.getLocation().x, ship.getLocation().y);
+		else if(ship.getTeam() == 2)
+			sprite = new Sprite("wormholeGreen.png", ship.getLocation().x, ship.getLocation().y);
+		else
+			System.out.println("Something went wrong loading a warp hole.");
 		
 		addChild(sprite);
 		

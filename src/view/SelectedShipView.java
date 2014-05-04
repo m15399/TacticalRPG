@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import resources.ImageLibrary;
+import specific_ships_items.WarpGateShip;
 import model.Game;
 import model.GameObject;
 import model.Item;
@@ -101,10 +102,11 @@ public class SelectedShipView extends GameObject {
 		
 		g2.setStroke(new BasicStroke());
 		ImageLibrary images = ImageLibrary.getInstance();
-		Sprite sprite = new Sprite(currentShip.getName().toLowerCase() + ".png", offsetX + 72, offsetY + 82);
-//		Sprite sprite = new Sprite("scout.png", offsetX+72, offsetY + 82);
+		Sprite sprite = new Sprite(currentShip.getFileName(), offsetX + 72, offsetY + 82);
 		sprite.getPosition().setScale(2,2);
 		sprite.draw(g);
+//		Sprite sprite = new Sprite("scout.png", offsetX+72, offsetY + 82);
+		
 //		BufferedImage img = images.getImage("scout.png");
 //		g.drawImage(img, offsetX+40, offsetY + 50, null);
 		BufferedImage item = images.getImage("speedboost.png");
