@@ -11,7 +11,16 @@ public class RandomStrategy implements Strategy{
 	public void doNextAction(Ship ship, Level level){		
 		Random random = new Random();	
 
-		if(ship.getCanMove()){
+		if(ship.getCanAttack()){
+			List<Ship> targets = level.getPossibleTargetsForAI(ship);
+			if(targets.size() >= 1){
+				int randomShip = random.nextInt(targets.size());
+				level.attackShip(ship, targets.get(randomShip));
+			} 
+			ship.setCanAttack(false);
+
+		}
+		else if(ship.getCanMove()){
 			List<Point> potentialMoves = level.getPossibleMovesForAI(ship);
 			
 			while(potentialMoves.size() > 0){
@@ -26,15 +35,7 @@ public class RandomStrategy implements Strategy{
 			}
 			ship.setCanMove(false);
 			
-		} else if(ship.getCanAttack()){
-			List<Ship> targets = level.getPossibleTargetsForAI(ship);
-			if(targets.size() >= 1){
-				int randomShip = random.nextInt(targets.size());
-				level.attackShip(ship, targets.get(randomShip));
-			} 
-			ship.setCanAttack(false);
-
-		} else {
+		}  else {
 			level.waitShip(ship);
 		}
 		
