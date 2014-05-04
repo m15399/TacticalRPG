@@ -27,7 +27,9 @@ import view.ShipOutline;
  */
 public class ShipVisual extends Entity {
 
-	private static double ZOOM_TARGET = 1.75;
+	private static final double ZOOM_TARGET = 1.75;
+	private static final int FIRE_TIME = 20*Game.FPSMUL;
+
 	
 	private Ship ship;
 	private ShipOutline outline;
@@ -161,12 +163,12 @@ public class ShipVisual extends Entity {
 			
 			// when that's done start attack animation
 			public void notified(Observable sender){
-				playAttackAnimation();
+				playAttackAnimation(FIRE_TIME);
 			}
 		}));
 		
 		// wait while attack animation plays
-		q.addAction(new TimerAction(20*Game.FPSMUL, new Observer(){
+		q.addAction(new TimerAction(FIRE_TIME, new Observer(){
 			
 			// then stop attacking 
 			public void notified(Observable sender){
@@ -232,7 +234,7 @@ public class ShipVisual extends Entity {
 		// override
 	}
 	
-	public void playAttackAnimation(){
+	public void playAttackAnimation(int time){
 		// override
 	}
 

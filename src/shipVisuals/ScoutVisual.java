@@ -1,12 +1,10 @@
 package shipVisuals;
 
-import actions.TimerAction;
-import utils.Observable;
-import utils.Observer;
 import view.GunSprite;
 import view.JetSprite;
 import view.Sprite;
 import view.GunSprite.GunSize;
+import view.GunSprite.GunType;
 import view.JetSprite.JetSize;
 import model.Ship;
 
@@ -30,10 +28,9 @@ public class ScoutVisual extends ShipVisual {
 		sprite = new Sprite("scout.png");
 		addChild(sprite);
 
-		gun = new GunSprite(24, 8, this, GunSize.H16);
+		gun = new GunSprite(24, 8, this, GunSize.H16, GunType.CANNON);
 		gun.getPosition().setScale(.8, .8);
 		addChild(gun);
-		gun.setVisible(false);
 		
 		// parent the sprite to the location of the visual
 		sprite.getPosition().setParent(getPosition());
@@ -45,16 +42,8 @@ public class ScoutVisual extends ShipVisual {
 //		System.out.println("moving");
 	}
 	
-	public void playAttackAnimation(){
-		gun.setVisible(true);
-
-		TimerAction timer = new TimerAction(8, new Observer(){
-			public void notified(Observable sender){
-				gun.setVisible(false);
-			}
-		});
-		addChild(timer);
-		timer.start();
+	public void playAttackAnimation(int time){
+		gun.playGunAnimation(6, time);
 	}
 
 	public void playIdleAnimation() {

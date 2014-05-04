@@ -1,14 +1,32 @@
 package view;
 
+import actions.ActionQueue;
+import actions.TimerAction;
+import utils.Observable;
+import utils.Observer;
 import model.Entity;
+import model.GameObject;
 
 public class GunSprite extends AnimatedSprite {
+	
 
+	public enum GunType {
+		CANNON, MACHINE_GUN;
+	}
+	
 	public enum GunSize {
 		H8, H16;
 	}
 	
-	public GunSprite(int x, int y, Entity spatialParent, GunSize size){
+	private static final int FIRE_RATE = 2;
+	private static final int CANNON_TIME = 8;
+	private RapidFirer rapidFirer;
+	
+	private GunType type;
+	
+	public GunSprite(int x, int y, Entity spatialParent, GunSize size, GunType type){
+		
+		this.type = type;
 		
 		getPosition().setLocation(x, y);
 		
@@ -39,6 +57,96 @@ public class GunSprite extends AnimatedSprite {
 		// parent to the entity passed in
 		if(spatialParent != null)
 			setSpatialParent(spatialParent);
+		
+		if(type == GunType.MACHINE_GUN){
+			rapidFirer = new RapidFirer();
+			addChild(rapidFirer);
+			
+		}
+		
+		setVisible(false);
 	}
+	
+	public void playGunAnimation(int delay, int totalTime){
+		if(type == GunType.MACHINE_GUN)
+			playMachineGunAnimation(delay, totalTime);
+		else
+			playCannonAnimation(delay, totalTime);		
+	}
+	
+	private void playMachineGunAnimation(int delay, int totalTime){
+		
+		ActionQueue q = new ActionQueue(null);
+	
+		q.addAction(new TimerAction(delay, new Observer(){
+			public void notified(Observable sender){
+				rapidFirer.start();
+			}
+		}));
+		
+		q.addAction(new TimerAction(totalTime - delay, new Observer(){
+			public void notified(Observable sender){
+				rapidFirer.stop();
+			}
+		}));
+		
+		addChild(q);
+		q.start();
+		
+	}
+	
+	private void playCannonAnimation(int delay, int totalTime){
+		ActionQueue q = new ActionQueue(null);
+		
+		q.addAction(new TimerAction(delay, new Observer(){
+			public void notified(Observable sender){
+				setVisible(true);
+			}
+		}));
+		
+		q.addAction(new TimerAction(CANNON_TIME, new Observer(){
+			public void notified(Observable sender){
+				setVisible(false);
+			}
+		}));
+		
+		addChild(q);
+		q.start();
+	}
+
+	
+	private class RapidFirer extends GameObject {
+				
+		int count;
+		boolean going;
+		
+		public RapidFirer(){
+			count = 0;
+			going = false;
+		}
+		
+		public void start(){
+			going = true;
+			count = 1;
+			setVisible(true);
+		}
+		
+		public void stop(){
+			going = false;
+			setVisible(false);
+		}
+		
+		public void update(){
+			if(going){
+				count++;
+				if(count % FIRE_RATE == 0){
+					setVisible(!getVisible());
+				}
+			}
+			
+		}
+		
+	}
+	
 	
 }

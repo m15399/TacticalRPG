@@ -33,8 +33,6 @@ public class Sprite extends Entity {
 	 * above these so they are easier to find.
 	 */
 	
-	
-	
 	public BufferedImage getImage(){
 		return image;
 	}
