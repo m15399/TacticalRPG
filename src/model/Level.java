@@ -656,6 +656,7 @@ public class Level extends GameObject {
 		enterDefaultState();
 		checkForDestroyedUnits();
 		if(selectedShip.isShipDead()){
+			unselectShip();
 			selectPlayerNextShip();
 		}
 	}

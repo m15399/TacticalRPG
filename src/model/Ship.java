@@ -108,6 +108,7 @@ public class Ship extends GameObject {
 		
 	}
 	
+	
 	public void setIsWaiting(boolean b){
 		isWaiting = b;
 	}
