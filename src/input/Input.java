@@ -38,11 +38,14 @@ public class Input implements MouseMotionListener, MouseListener {
 	private ArrayList<Button> buttons;
 	private Button lastButton;
 
+	private boolean enabled;
+	
 	private Input() {
 		mouseX = mouseY = prevMouseX = prevMouseY = velocityX = velocityY = 0;
 		wasMovedThisFrame = pressed = wasPressedThisFrame = wasReleasedThisFrame = false;
 		buttons = new ArrayList<Button>();
 		lastButton = new Button();
+		enabled = true;
 	}
 
 	public double getX() {
@@ -119,6 +122,9 @@ public class Input implements MouseMotionListener, MouseListener {
 	}
 
 	public void update() {
+		if(!enabled)
+			return;
+		
 		Button currButton;
 
 		// Figure out what the current button is
@@ -172,6 +178,18 @@ public class Input implements MouseMotionListener, MouseListener {
 				currButton.mouseHovered();
 		}
 
+	}
+	
+	public void setEnabled(boolean enabled){
+		this.enabled = enabled;
+	}
+	
+	public boolean getEnabled(){
+		return enabled;
+	}
+	
+	public void printNumButtons(){
+		System.out.println("Input # buttons: " + buttons.size());
 	}
 
 	/*

@@ -8,15 +8,20 @@ import java.awt.Graphics;
 
 import javax.swing.*;
 
+import utils.Observable;
+import utils.Observer;
+
+import actions.FadeToAction;
 
 
 
 
-public class Game extends JPanel implements Runnable {
+
+public class Game extends JPanel implements Runnable, Fadable {
 
 	private static final long serialVersionUID = -7803629994015778818L;
 
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 	
 	public static final int WIDTH = 1024;
 	public static final int HEIGHT = 768;
@@ -25,12 +30,18 @@ public class Game extends JPanel implements Runnable {
 	public static final int FPS = 30 * FPSMUL;
 	
 	public static long frameNumber = 0;
+
+	private static int FADE_TIME = 30*Game.FPSMUL;
+
 	
 	private Thread thread;
 	private GameObject rootObject;
 	
+	private GameObject nextRoot;
+	private double fade;
+	
 	public static void main(String[] args){
-
+		
 		Game game = new Game();
 
 		JFrame window = new JFrame();
@@ -51,6 +62,8 @@ public class Game extends JPanel implements Runnable {
 		addMouseListener(Input.getInstance());
 		addMouseMotionListener(Input.getInstance());
 
+		fade = 0;
+		
 		setRoot(new TitleMenu(this));
 		
 	}
@@ -60,11 +73,41 @@ public class Game extends JPanel implements Runnable {
 		thread.start();
 	}
 	
-	public void setRoot(GameObject o){
+	private void setRoot(GameObject o){
 		if(rootObject != null){
 			rootObject.destroy();
 		}
+		
+		if(DEBUG){
+			Input.getInstance().printNumButtons();
+			
+		}
+		
 		rootObject = o;
+	}
+	
+	
+	public void transitionTo(GameObject o){
+		nextRoot = o;
+		Input.getInstance().setEnabled(false);
+		
+		FadeToAction fadeDown = new FadeToAction(this, 1.0, FADE_TIME, new Observer(){
+			
+			public void notified(Observable sender){
+				
+				setRoot(nextRoot);
+				
+				FadeToAction fadeUp = new FadeToAction(Game.this, 0, FADE_TIME, null);
+				rootObject.addChild(fadeUp);
+				fadeUp.start();
+				
+				Input.getInstance().setEnabled(true);
+				
+			}
+		});
+		
+		rootObject.addChild(fadeDown);
+		fadeDown.start();
 	}
 
 	public void run() {
@@ -92,6 +135,19 @@ public class Game extends JPanel implements Runnable {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
 		rootObject.drawSelfAndChildren(g);
+		
+		// fade
+		g.setColor(new Color(0f,0f,0f,(float)fade));
+		g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
+
+	}
+	
+	public void setFade(double fade){
+		this.fade = fade;
+	}
+	
+	public double getFade(){
+		return fade;
 	}
 	
 }

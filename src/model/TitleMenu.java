@@ -24,21 +24,21 @@ public class TitleMenu extends GameObject {
 		
 		addChild(new TitleMenuButton("GraphicsTest", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
 			public void notified(Observable sender){
-				game.setRoot(new GraphicsTestLevel());
+				game.transitionTo(new GraphicsTestLevel());
 			}
 		}));
 		buttonNumber++;
 
 		addChild(new TitleMenuButton("TestLevel", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
 			public void notified(Observable sender){
-				game.setRoot(new TestLevel());
+				game.transitionTo(new TestLevel());
 			}
 		}));
 		buttonNumber++;
 		
 		addChild(new TitleMenuButton("TestLevelFromFile", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
 			public void notified(Observable sender){
-				game.setRoot(new TestLevelFromFile());
+				game.transitionTo(new TestLevelFromFile());
 			}
 		}));
 		buttonNumber++;
