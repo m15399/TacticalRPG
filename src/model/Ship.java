@@ -428,9 +428,6 @@ public class Ship extends GameObject {
 	public void setCanUseItem(boolean canUseItem) {
 		this.canUseItem = canUseItem;
 	}
-	public List<Item> getItemsList(){
-		return items;
-	}
 	
 	public String getFileName(){
 		return filename;

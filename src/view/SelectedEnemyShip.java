@@ -121,7 +121,7 @@ public class SelectedEnemyShip extends GameObject {
 		g.drawImage(scrapMetal, leftColumn+70, offsetY+232, null);
 		g.drawImage(magneticShield, leftColumn+110, offsetY+225, null);
 		
-		ArrayList<Item> itemList = (ArrayList<Item>) currentShip.getItemsList();
+		ArrayList<Item> itemList = (ArrayList<Item>) currentShip.getItems();
 		int counterSB = 0;
 		int counterMS = 0;
 		int counterSM = 0;

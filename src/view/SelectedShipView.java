@@ -114,7 +114,7 @@ public class SelectedShipView extends GameObject {
 		g.drawImage(speedBoost, offsetX+380, offsetY+138, null);
 		g.drawImage(magneticShield, offsetX+455, offsetY+123, null);
 		
-		ArrayList<Item> itemList = (ArrayList<Item>) currentShip.getItemsList();
+		ArrayList<Item> itemList = (ArrayList<Item>) currentShip.getItems();
 		int counterSB = 0;
 		int counterMS = 0;
 		int counterSM = 0;
