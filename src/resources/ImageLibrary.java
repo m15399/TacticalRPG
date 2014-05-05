@@ -1,6 +1,7 @@
 package resources;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
@@ -91,7 +92,8 @@ public class ImageLibrary {
 	
 	private void loadImage(String filename) {
 		try {
-			BufferedImage img = ImageIO.read(ImageLibrary.class.getResource("/images/" + filename));
+			BufferedImage img = ImageIO.read(new File("images/" + filename));
+//			BufferedImage img = ImageIO.read(ImageLibrary.class.getResource("/images/" + filename));
 			images.put(filename, img);
 		} catch (IOException e) {
 			System.out.println("Error loading image: " + filename);
