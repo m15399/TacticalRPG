@@ -11,7 +11,7 @@ public class RepairShip extends Ship {
 		String description = "Repair ship,\nBattlefield support\ndefenseless.";
 
 		this.constructorAid("RepairShip", 4, 75, 20, 75, 20, 100,
-				description, 0, 0, 1, 1);
+				description, 0, 0, 1, 1, true);
 		addToItems(new SpaceMine());
 
 		setVisual(new ScoutVisual(this));

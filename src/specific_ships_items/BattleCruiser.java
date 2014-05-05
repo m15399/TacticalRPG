@@ -10,7 +10,7 @@ public class BattleCruiser extends Ship {
 		super(newLocation);
 		String description = "Battle Cruiser,\nMade for battle\ncruisin' to victory.";
 		this.constructorAid("BattleCruiser", 2, 150, 30, 150, 30, 75,
-				description, 50, 55, 25, 2);
+				description, 50, 55, 25, 2, true);
 		addToItems(new SpaceMine());
 
 		setVisual(new BomberVisual(this));

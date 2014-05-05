@@ -18,7 +18,7 @@ public class Ship extends GameObject {
 	private List<Item> items;
 	private Ability ability;
 	private String description, name, filename;
-	private boolean canAttack, canMove, canUseAbility, canUseItem, isWaiting;
+	private boolean canAttack, canMove, canUseAbility, canUseItem, isWaiting, isTargetable;
 	private int team;
 	private Level level;
 	
@@ -27,7 +27,7 @@ public class Ship extends GameObject {
 	public Ship(Point newLocation) {
 		location = new Point(newLocation);
 		constructorAid("DefaultShip", 1, 1, 1, 1, 1, 1,
-				"No description available", 1, 1, 1, 1);
+				"No description available", 1, 1, 1, 1, true);
 		items = new ArrayList<Item>();
 		visual = null;
 		team = 0;
@@ -62,7 +62,7 @@ public class Ship extends GameObject {
 	public void constructorAid(String name, int moves, double hull,
 			double shielding, double maxHull, double maxShielding,
 			double accuracy, String description,
-			double minDamage, double maxDamage, double critChance, int range) {
+			double minDamage, double maxDamage, double critChance, int range, boolean isTargetable) {
 		setName(name);
 		setFileName(name.toLowerCase() + ".png");//doubles off of setName
 		setMoves(moves);
@@ -76,6 +76,7 @@ public class Ship extends GameObject {
 		setMaxDamage(maxDamage);
 		setCritChance(critChance);
 		setRange(range);
+		setIsTargetable(isTargetable);
 	}
 
 	
@@ -437,6 +438,14 @@ public class Ship extends GameObject {
 	
 	public void setFileName(String newFileName){
 		filename = newFileName;
+	}
+	
+	public boolean getIsTargetable(){
+		return isTargetable;
+	}
+	
+	public void setIsTargetable(boolean isTargetable){
+		this.isTargetable = isTargetable;
 	}
 	
 	public String itemsToString(){
