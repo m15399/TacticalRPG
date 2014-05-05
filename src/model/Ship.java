@@ -12,16 +12,14 @@ import view.Camera;
 
 public class Ship extends GameObject {
 	private Point location;
-	private int moves, movesLeft, range;
+	private int moves, movesLeft, range, team;
 	private double hull, shielding, maxHull, maxShielding, accuracy, minDamage,
 			maxDamage, critChance;
 	private List<Item> items;
 	private Ability ability;
 	private String description, name, filename;
 	private boolean canAttack, canMove, canUseAbility, canUseItem, isWaiting, isTargetable;
-	private int team;
 	private Level level;
-	
 	private ShipVisual visual;
 
 	public Ship(Point newLocation) {
@@ -32,14 +30,13 @@ public class Ship extends GameObject {
 		visual = null;
 		ability = null;
 	}
-
+	
 	public boolean isShipDead() {
 		if (hull > 0)
 			return false;
 		return true;
 	}
-
-
+	
 	/**
 	 * Helps remind whoever is making a new class of all the values that should
 	 * be declared to avoid them being default
@@ -78,7 +75,6 @@ public class Ship extends GameObject {
 		setIsTargetable(isTargetable);
 		setTeam(team);
 	}
-
 	
 	public void startTurn(){
 		setMovesLeft(moves);
@@ -108,7 +104,6 @@ public class Ship extends GameObject {
 	public void attack(Ship target) {
 		
 	}
-	
 	
 	public void setIsWaiting(boolean b){
 		isWaiting = b;

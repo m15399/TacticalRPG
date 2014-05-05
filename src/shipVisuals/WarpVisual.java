@@ -13,14 +13,7 @@ public class WarpVisual extends ShipVisual{
 		
 		rotateSpeed = .006;
 		
-		if(ship.getTeam() == 0)
-			sprite = new Sprite("wormholeBlue.png");
-		else if(ship.getTeam() == 1)
-			sprite = new Sprite("wormholeRed.png");
-		else if(ship.getTeam() == 2)
-			sprite = new Sprite("wormholeGreen.png");
-		else
-			System.out.println("Something went wrong loading a warp hole.");
+		sprite = new Sprite(ship.getFileName());
 		
 		addChild(sprite);
 		// rotate to a random degree
