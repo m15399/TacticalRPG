@@ -14,7 +14,7 @@ public class Sniper extends Ship {
 		super(newLocation);
 		String description = "Sniper ship,\nFires safely\nfrom the distance.";
 		this.constructorAid("Sniper", 3, 75, 20, 75, 20, 85,
-				description, 40, 45, 25, 8);
+				description, 40, 45, 25, 5);
 		addToItems(new SpaceMine());
 		
 		 setVisual(new BomberVisual(this));
