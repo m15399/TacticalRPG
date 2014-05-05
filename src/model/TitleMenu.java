@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 import levels.*;
+import songPlayer.SongPlayer;
 import utils.Observable;
 import utils.Observer;
 import view.TitleMenuButton;
@@ -15,7 +16,7 @@ public class TitleMenu extends GameObject {
 	
 	public TitleMenu(Game newGame){
 		this.game = newGame;
-		
+		SongPlayer.playFile("./songFiles/space_clips.mp3");
 		int buttonWidth = 400;
 		int buttonHeight = 50;
 		int offsetX = 100;
