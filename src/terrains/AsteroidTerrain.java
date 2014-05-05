@@ -10,7 +10,7 @@ import model.Ship;
  * Asteroids damage passing ships.
  */
 
-public class AsteroidTerrain extends Terrain{
+public class AsteroidTerrain extends Terrain implements TerrainEffects{
 	
 	public AsteroidTerrain(Point newLocation){
 		super(newLocation);
