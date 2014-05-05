@@ -6,9 +6,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
+import resources.ImageLibrary;
 import model.Game;
 import model.GameObject;
+import model.Item;
 import model.Ship;
 
 public class SelectedEnemyShip extends GameObject {
@@ -17,6 +21,7 @@ public class SelectedEnemyShip extends GameObject {
 	static final int HEIGHT = 325;
 	
 	private int x, y;
+	private double displayHealth;
 
 	private Ship currentShip;
 
@@ -108,5 +113,67 @@ public class SelectedEnemyShip extends GameObject {
 		g2.drawString("Items:", leftColumn, 250 + offsetY);
 		
 		g2.setStroke(new BasicStroke());
+		ImageLibrary images = ImageLibrary.getInstance();
+		BufferedImage scrapMetal = images.getImage("scrapmetal.png");
+		BufferedImage magneticShield = images.getImage("MagneticShield.png");
+		BufferedImage speedBoost = images.getImage("speedboost.png");
+		g.drawImage(speedBoost, leftColumn+45, offsetY+240, null);
+		g.drawImage(scrapMetal, leftColumn+70, offsetY+232, null);
+		g.drawImage(magneticShield, leftColumn+110, offsetY+225, null);
+		
+		ArrayList<Item> itemList = (ArrayList<Item>) currentShip.getItemsList();
+		int counterSB = 0;
+		int counterMS = 0;
+		int counterSM = 0;
+		g2.setFont(new Font("Arial", Font.TRUETYPE_FONT, 10));
+		for(int i=0; i<itemList.size(); i++){
+			if(itemList.get(i).getName().equals("Speed Boost")){
+				counterSB++;
+			}
+			else if(itemList.get(i).getName().equals("Magnetic Shield")){
+				counterMS++;
+			}
+			else if(itemList.get(i).getName().equals("Scrap Metal")){
+				counterSM++;
+			}
+		}
+
+
+			g2.drawString("x" + counterSB, leftColumn+60, offsetY+259);
+			g2.drawString("x" + counterMS, leftColumn+140, offsetY+259);
+			g2.drawString("x" + counterSM, offsetX+120, offsetY+259);
+			
+			
+			// health bar
+
+			g2.setStroke(new BasicStroke(0));
+
+			// size
+			int height = 15;
+			int width = 150;
+			// position
+			int x = leftColumn;
+			int y = offsetY+275;
+
+
+			// border
+			g.setColor(Color.white);
+			g.drawRect(x-1, y-1, width+2,
+					height+2);
+
+			// color
+			Color red = new Color(1.0f, .25f, .15f);
+			Color green = new Color(0f, .8f, .0f);
+			g2.setColor(green);
+			displayHealth = currentShip.getHull();
+
+			g.fillRect(x, y,
+					(int) (width * displayHealth / currentShip.getMaxHull()) + 1,
+					height + 1);
+		
+		
+		
+		
+	
 	}
 }

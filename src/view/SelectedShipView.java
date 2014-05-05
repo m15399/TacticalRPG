@@ -15,13 +15,14 @@ import resources.ImageLibrary;
 import model.Game;
 import model.GameObject;
 import model.Item;
+import model.Map;
 import model.Ship;
 
 public class SelectedShipView extends GameObject {
 
 	static final int WIDTH = 500;
 	static final int HEIGHT = 180;
-
+	private double displayHealth;
 	private Ship currentShip;
 	private Button button;
 
@@ -29,6 +30,7 @@ public class SelectedShipView extends GameObject {
 		currentShip = null;
 		button = new Button(0, Game.HEIGHT - HEIGHT, WIDTH, HEIGHT);
 		Input.getInstance().addButton(button);
+		
 	}
 	
 	public void setShip(Ship ship){
@@ -105,39 +107,65 @@ public class SelectedShipView extends GameObject {
 		sprite.getPosition().setScale(2,2);
 		sprite.draw(g);
 		
-		BufferedImage item = images.getImage("speedboost.png");
-		g.drawImage(item, offsetX+380, offsetY+138, null);
+		BufferedImage scrapMetal = images.getImage("scrapmetal.png");
+		BufferedImage magneticShield = images.getImage("MagneticShield.png");
+		BufferedImage speedBoost = images.getImage("speedboost.png");
+		g.drawImage(scrapMetal, offsetX+410, offsetY+130, null);
+		g.drawImage(speedBoost, offsetX+380, offsetY+138, null);
+		g.drawImage(magneticShield, offsetX+455, offsetY+123, null);
 		
 		ArrayList<Item> itemList = (ArrayList<Item>) currentShip.getItemsList();
-//		int counterSB = 0;
-//		int counterMS = 0;
-//		int counterSM = 0;
-//		g2.setFont(new Font("Arial", Font.TRUETYPE_FONT, 4));
-//		for(int i=0; i<itemList.size(); i++){
-//			if(itemList.get(i).getName().equals("Speed Boost")){
-//				counterSB++;
-//			}
-//			else if(itemList.get(i).getName().equals("Magnetic Shield")){
-//				counterMS++;
-//			}
-//			else if(itemList.get(i).getName().equals("Scrap Metal")){
-//				counterSM++;
-//			}
-//		}
-//		if(counterSB > 0){
-//			g.drawImage(item, offsetX+380, offsetY+138, null);
-//			g2.drawString("X" + counterSB, offsetX+380, offsetY+138);
-//		}
-//		if(counterMS > 0){
-//			g.drawImage(item, offsetX+380, offsetY+138, null);
-//			g2.drawString("X" + counterMS, offsetX+380, offsetY+138);
-//		}
-//		if(counterSM > 0){
-//			g.drawImage(item, offsetX+380, offsetY+138, null);
-//			g2.drawString("X" + counterSM, offsetX+380, offsetY+138);
-//		}
+		int counterSB = 0;
+		int counterMS = 0;
+		int counterSM = 0;
+		g2.setFont(new Font("Arial", Font.TRUETYPE_FONT, 10));
+		for(int i=0; i<itemList.size(); i++){
+			if(itemList.get(i).getName().equals("Speed Boost")){
+				counterSB++;
+			}
+			else if(itemList.get(i).getName().equals("Magnetic Shield")){
+				counterMS++;
+			}
+			else if(itemList.get(i).getName().equals("Scrap Metal")){
+				counterSM++;
+			}
+		}
+
+
+			g2.drawString("x" + counterSB, offsetX+395, offsetY+157);
+			g2.drawString("x" + counterMS, offsetX+483, offsetY+157);
+			g2.drawString("x" + counterSM, offsetX+440, offsetY+157);
 		
+
+
+				// health bar
+
+				g2.setStroke(new BasicStroke(0));
+
+				// size
+				int width = 150;
+				int height = 20;
+				// position
+				int x = offsetX+150;
+				int y = offsetY+120;
+
+				// border
+				g.setColor(Color.white);
+				g.drawRect(x-1, y-1, width+2,
+						height+2);
+
+				// color
+				Color red = new Color(1.0f, .25f, .15f);
+				Color green = new Color(0f, .8f, .0f);
+				g2.setColor(green);
+				displayHealth = currentShip.getHull();
+
+				g.fillRect(x, y,
+						(int) (width * displayHealth / currentShip.getMaxHull()) + 1,
+						height + 1);
+			}
 		
 		
 	}
-}
+	
+
