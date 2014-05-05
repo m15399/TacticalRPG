@@ -27,10 +27,9 @@ public class Ship extends GameObject {
 	public Ship(Point newLocation) {
 		location = new Point(newLocation);
 		constructorAid("DefaultShip", 1, 1, 1, 1, 1, 1,
-				"No description available", 1, 1, 1, 1, true);
+				"No description available", 1, 1, 1, 1, true, 0);
 		items = new ArrayList<Item>();
 		visual = null;
-		team = 0;
 		ability = null;
 	}
 
@@ -62,7 +61,7 @@ public class Ship extends GameObject {
 	public void constructorAid(String name, int moves, double hull,
 			double shielding, double maxHull, double maxShielding,
 			double accuracy, String description,
-			double minDamage, double maxDamage, double critChance, int range, boolean isTargetable) {
+			double minDamage, double maxDamage, double critChance, int range, boolean isTargetable, int team) {
 		setName(name);
 		setFileName(name.toLowerCase() + ".png");//doubles off of setName
 		setMoves(moves);
@@ -77,6 +76,7 @@ public class Ship extends GameObject {
 		setCritChance(critChance);
 		setRange(range);
 		setIsTargetable(isTargetable);
+		setTeam(team);
 	}
 
 	
