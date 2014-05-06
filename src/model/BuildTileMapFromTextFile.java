@@ -21,6 +21,7 @@ import specific_ships_items.SpaceMine;
 import specific_ships_items.WarpGateShip;
 import terrains.AsteroidTerrain;
 import terrains.PlanetTerrain2x2;
+import terrains.SpaceWallTerrain;
 import terrains.SpaceWreckageTerrain;
 
 public class BuildTileMapFromTextFile {
@@ -72,6 +73,7 @@ public class BuildTileMapFromTextFile {
 			}
 		}
 		processData(levelInfo, levelWidth, levelHeight);
+		//System.out.println("levelWidth = " + levelWidth + " levelHeight = " + levelHeight);
 	}
 	
 	/*
@@ -93,6 +95,7 @@ public class BuildTileMapFromTextFile {
 	 * P = Planet key
 	 * p = spaces planet bleeds over into
 	 * w = SpaceWreckageTerrain
+	 * -,|,o = SpaceWallTerrain
 	 * 
 	 * Items:
 	 * s = MagneticShield
@@ -102,7 +105,7 @@ public class BuildTileMapFromTextFile {
 	 * Please update this if you make changes
 	 * Remaining Letters and numbers
 	 * DGHIJKLNOQRTUVYZ
-	 * abdefghijklnoqrtuvyz
+	 * abdefghijklnqrtuvyz
 	 * 123456789
 	 * 
 	 * 0 = Default Unoccupied Tile
@@ -169,6 +172,18 @@ public class BuildTileMapFromTextFile {
 				else if(temp == 'w'){
 					SpaceWreckageTerrain terrain = new SpaceWreckageTerrain(new Point(c, r));
 					tiles[c][r] = new Tile(true, terrain);
+				}
+				else if(temp == '|'){
+					SpaceWallTerrain terrain = new SpaceWallTerrain(new Point(c, r));
+					tiles[c][r] = new Tile(false, terrain);
+				}
+				else if(temp == '-'){
+					SpaceWallTerrain terrain = new SpaceWallTerrain(new Point(c, r));
+					tiles[c][r] = new Tile(false, terrain);
+				}
+				else if(temp == 'o'){
+					SpaceWallTerrain terrain = new SpaceWallTerrain(new Point(c, r));
+					tiles[c][r] = new Tile(false, terrain);
 				}
 				//Items
 				else if(temp == 'x'){
