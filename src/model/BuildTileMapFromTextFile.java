@@ -99,7 +99,7 @@ public class BuildTileMapFromTextFile {
 	 * P = Planet key
 	 * p = spaces planet bleeds over into
 	 * w = SpaceWreckageTerrain
-	 * b,h,l,r,t,v = SpaceWallTerrain
+	 * <, >, ^, v, -, | = SpaceWallTerrain
 	 * f = AsteroidFieldTerrain
 	 * G = GasCloudTerrain (horizontal) (Beginning of graphic) Graphic is three Tiles wide, so map should read... Ggg
 	 * g = GasCloudTerrain (horizontal) (Additional graphic tiles)
@@ -118,7 +118,7 @@ public class BuildTileMapFromTextFile {
 	 * Please update this if you make changes
 	 * Remaining Letters and numbers
 	 * DHIJKLNOQRTUVY
-	 * adeijknoquy
+	 * abdehijklnoqrtvuy
 	 * 123456789
 	 * 
 	 * 0 = Default Unoccupied Tile
@@ -214,20 +214,20 @@ public class BuildTileMapFromTextFile {
 					SpaceWreckageTerrain1x3 terrain = new SpaceWreckageTerrain1x3(new Point(c, r), false);
 					tiles[c][r] = new Tile(false, terrain);
 				}
-				else if(temp == 'b' || temp ==  'h' || temp ==  'l' || temp ==  'r' || temp ==  't' || temp ==  'v'){
+				else if(temp == '<' || temp ==  '>' || temp ==  '^' || temp ==  'v' || temp ==  '-' || temp ==  '|'){
 					SpaceWallTerrain terrain = new SpaceWallTerrain(new Point(c, r));
 					switch(temp){
-						case 'b': terrain.setFilename("wall_bottom.png");
+						case 'v': terrain.setFilename("wall_bottom.png");
 						  break;
-						case 'h': terrain.setFilename("wall_horizontal.png");
+						case '-': terrain.setFilename("wall_horizontal.png");
 						  break;
-						case 'l': terrain.setFilename("wall_left.png");
+						case '<': terrain.setFilename("wall_left.png");
 						  break;
-						case 'r': terrain.setFilename("wall_right.png");
+						case '>': terrain.setFilename("wall_right.png");
 						  break;
-						case 't': terrain.setFilename("wall_top.png");
+						case '^': terrain.setFilename("wall_top.png");
 						  break;
-						case 'v': terrain.setFilename("wall_vertical.png");
+						case '|': terrain.setFilename("wall_vertical.png");
 						  break;
 						default: System.out.println("There was an error");
 					}
