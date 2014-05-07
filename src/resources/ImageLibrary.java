@@ -47,7 +47,10 @@ public class ImageLibrary {
 		"wall_top.png",
 		"wall_vertical.png",
 		"asteroidfield.png",
-		"spacewreckage.png"//placeholder image
+		"spacewreckage.png",//placeholder image
+		"gascloud.png",
+		"radioactive.png",
+		"spacewreckage1x3.png"
 		};
 	
 	/*

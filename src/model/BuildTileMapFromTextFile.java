@@ -21,9 +21,12 @@ import specific_ships_items.SpaceMine;
 import specific_ships_items.WarpGateShip;
 import terrains.AsteroidFieldTerrain;
 import terrains.AsteroidTerrain;
+import terrains.GasCloudTerrain;
 import terrains.PlanetTerrain2x2;
+import terrains.RadioactiveTerrain;
 import terrains.SpaceWallTerrain;
 import terrains.SpaceWreckageTerrain;
+import terrains.SpaceWreckageTerrain1x3;
 
 public class BuildTileMapFromTextFile {
 	
@@ -98,6 +101,14 @@ public class BuildTileMapFromTextFile {
 	 * w = SpaceWreckageTerrain
 	 * b,h,l,r,t,v = SpaceWallTerrain
 	 * f = AsteroidFieldTerrain
+	 * G = GasCloudTerrain (horizontal) (Beginning of graphic) Graphic is three Tiles wide, so map should read... Ggg
+	 * g = GasCloudTerrain (horizontal) (Additional graphic tiles)
+	 * Z = RadioactiveTerrain (vertical) (Beginning of graphic) Graphic is three Tiles tall, so map should read... Zzz vertically
+	 * z = RadioactiveTerrain (vertical) (Additional graphic tiles)
+	 *
+	 * this spacewreckage acts as a wall unlike previous wreckage
+	 * N = SpaceWreckageTerrain1x3 (horizontal) (Beginning of graphic) Graphic is three Tiles wide, so map should read... Nnn
+	 * n = SpaceWreckageTerrain1x3 (horizontal) (Additional graphic tiles)
 	 * 
 	 * Items:
 	 * s = MagneticShield
@@ -106,8 +117,8 @@ public class BuildTileMapFromTextFile {
 	 * 
 	 * Please update this if you make changes
 	 * Remaining Letters and numbers
-	 * DGHIJKLNOQRTUVYZ
-	 * adegijknoquyz
+	 * DHIJKLNOQRTUVY
+	 * adeijknoquy
 	 * 123456789
 	 * 
 	 * 0 = Default Unoccupied Tile
@@ -178,6 +189,30 @@ public class BuildTileMapFromTextFile {
 				else if(temp == 'f'){
 					AsteroidFieldTerrain terrain = new AsteroidFieldTerrain(new Point(c, r));
 					tiles[c][r] = new Tile(true, terrain);
+				}
+				else if(temp == 'G'){
+					GasCloudTerrain terrain = new GasCloudTerrain(new Point(c, r), true);
+					tiles[c][r] = new Tile(true, terrain);
+				}
+				else if(temp == 'g'){
+					GasCloudTerrain terrain = new GasCloudTerrain(new Point(c, r), false);
+					tiles[c][r] = new Tile(true, terrain);
+				}
+				else if(temp == 'Z'){
+					RadioactiveTerrain terrain = new RadioactiveTerrain(new Point(c, r), true);
+					tiles[c][r] = new Tile(true, terrain);
+				}
+				else if(temp == 'z'){
+					RadioactiveTerrain terrain = new RadioactiveTerrain(new Point(c, r), false);
+					tiles[c][r] = new Tile(true, terrain);
+				}
+				else if(temp == 'N'){
+					SpaceWreckageTerrain1x3 terrain = new SpaceWreckageTerrain1x3(new Point(c, r), true);
+					tiles[c][r] = new Tile(false, terrain);
+				}
+				else if(temp == 'n'){
+					SpaceWreckageTerrain1x3 terrain = new SpaceWreckageTerrain1x3(new Point(c, r), false);
+					tiles[c][r] = new Tile(false, terrain);
 				}
 				else if(temp == 'b' || temp ==  'h' || temp ==  'l' || temp ==  'r' || temp ==  't' || temp ==  'v'){
 					SpaceWallTerrain terrain = new SpaceWallTerrain(new Point(c, r));
