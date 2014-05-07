@@ -10,12 +10,23 @@ import java.util.Scanner;
 import specific_ships_items.BattleCruiser;
 import specific_ships_items.Bomber;
 import specific_ships_items.Fighter;
+import specific_ships_items.MagneticShield;
+import specific_ships_items.MineShip;
 import specific_ships_items.Mothership;
 import specific_ships_items.RepairShip;
 import specific_ships_items.Scout;
+import specific_ships_items.ScrapMetal;
+import specific_ships_items.Sniper;
+import specific_ships_items.SpaceMine;
 import specific_ships_items.WarpGateShip;
+import terrains.AsteroidFieldTerrain;
 import terrains.AsteroidTerrain;
+import terrains.GasCloudTerrain;
 import terrains.PlanetTerrain2x2;
+import terrains.RadioactiveTerrain;
+import terrains.SpaceWallTerrain;
+import terrains.SpaceWreckageTerrain;
+import terrains.SpaceWreckageTerrain1x3;
 
 public class BuildTileMapFromTextFile {
 	
@@ -66,22 +77,51 @@ public class BuildTileMapFromTextFile {
 			}
 		}
 		processData(levelInfo, levelWidth, levelHeight);
+		//System.out.println("levelWidth = " + levelWidth + " levelHeight = " + levelHeight);
 	}
 	
 	/*
-	 * Breakdown of what letters mean.  Please don't delete commented println's since they can be used to debug in the future.
+	 * Breakdown of what letters mean.  
+	 * Please don't delete commented println's since they can be used to debug in the future.
+	 * Ships:
 	 * S = Scout
 	 * F = Fighter
 	 * B = Bomber
-	 * C = Cruiser
+	 * C = BattleCruiser
 	 * M = Mothership
-	 * E = Engineer
+	 * E = RepairShip
 	 * X = Sniper
+	 * W = WarpGateShip
+	 * m = MineShip
+	 * 
+	 * Terrain:
 	 * A = Asteroid
-	 * P = Planet
-	 * p = Planet (used for extending planet graphic beyond 1 tile)
-	 * 0 = Unoccupied Tile
-	 * W = WarpGateTerrain
+	 * P = Planet key
+	 * p = spaces planet bleeds over into
+	 * w = SpaceWreckageTerrain
+	 * <, >, ^, v, -, | = SpaceWallTerrain
+	 * f = AsteroidFieldTerrain
+	 * G = GasCloudTerrain (horizontal) (Beginning of graphic) Graphic is three Tiles wide, so map should read... Ggg
+	 * g = GasCloudTerrain (horizontal) (Additional graphic tiles)
+	 * Z = RadioactiveTerrain (vertical) (Beginning of graphic) Graphic is three Tiles tall, so map should read... Zzz vertically
+	 * z = RadioactiveTerrain (vertical) (Additional graphic tiles)
+	 *
+	 * this spacewreckage acts as a wall unlike previous wreckage
+	 * N = SpaceWreckageTerrain1x3 (horizontal) (Beginning of graphic) Graphic is three Tiles wide, so map should read... Nnn
+	 * n = SpaceWreckageTerrain1x3 (horizontal) (Additional graphic tiles)
+	 * 
+	 * Items:
+	 * s = MagneticShield
+	 * c = ScrapMetal
+	 * x = SpaceMine
+	 * 
+	 * Please update this if you make changes
+	 * Remaining Letters and numbers
+	 * DHIJKLNOQRTUVY
+	 * abdehijklnoqrtvuy
+	 * 123456789
+	 * 
+	 * 0 = Default Unoccupied Tile
 	 */
 	
 	private void processData(String levelInfo, int levelWidth, int levelHeight){
@@ -93,6 +133,7 @@ public class BuildTileMapFromTextFile {
 			for(int c = 0; c < levelWidth; c++){
 				//System.out.println("[" + r + "," + c + "]");
 				char temp = levelInfo.charAt(counter);
+				//Ships
 				if(temp == 'S'){
 					Scout ship = new Scout(new Point(c, r));
 					tiles[c][r] = new Tile(ship);
@@ -117,13 +158,22 @@ public class BuildTileMapFromTextFile {
 					RepairShip ship = new RepairShip(new Point(c, r));
 					tiles[c][r] = new Tile(ship);
 				}
-//				else if(temp == 'X'){
-//					Sniper ship = new Sniper(new Point(c, r));
-//					tiles[c][r] = new Tile(ship);
-//				}
+				else if(temp == 'X'){
+					Sniper ship = new Sniper(new Point(c, r));
+					tiles[c][r] = new Tile(ship);
+				}
+				else if(temp == 'W'){
+					WarpGateShip ship = new WarpGateShip(new Point(c, r));
+					tiles[c][r] = new Tile(ship);
+				}
+				else if(temp == 'm'){
+					MineShip ship = new MineShip(new Point(c, r));
+					tiles[c][r] = new Tile(ship);
+				}
+				//Terrain
 				else if(temp == 'A'){
 					AsteroidTerrain terrain = new AsteroidTerrain(new Point(c, r));
-					tiles[c][r] = new Tile(true, terrain);
+					tiles[c][r] = new Tile(false, terrain);
 				}
 				else if(temp == 'P'){
 					PlanetTerrain2x2 terrain = new PlanetTerrain2x2(new Point(c, r));
@@ -132,13 +182,76 @@ public class BuildTileMapFromTextFile {
 				else if(temp == 'p'){
 					tiles[c][r] = new Tile(false, c, r);
 				}
+				else if(temp == 'w'){
+					SpaceWreckageTerrain terrain = new SpaceWreckageTerrain(new Point(c, r));
+					tiles[c][r] = new Tile(true, terrain);
+				}
+				else if(temp == 'f'){
+					AsteroidFieldTerrain terrain = new AsteroidFieldTerrain(new Point(c, r));
+					tiles[c][r] = new Tile(true, terrain);
+				}
+				else if(temp == 'G'){
+					GasCloudTerrain terrain = new GasCloudTerrain(new Point(c, r), true);
+					tiles[c][r] = new Tile(true, terrain);
+				}
+				else if(temp == 'g'){
+					GasCloudTerrain terrain = new GasCloudTerrain(new Point(c, r), false);
+					tiles[c][r] = new Tile(true, terrain);
+				}
+				else if(temp == 'Z'){
+					RadioactiveTerrain terrain = new RadioactiveTerrain(new Point(c, r), true);
+					tiles[c][r] = new Tile(true, terrain);
+				}
+				else if(temp == 'z'){
+					RadioactiveTerrain terrain = new RadioactiveTerrain(new Point(c, r), false);
+					tiles[c][r] = new Tile(true, terrain);
+				}
+				else if(temp == 'N'){
+					SpaceWreckageTerrain1x3 terrain = new SpaceWreckageTerrain1x3(new Point(c, r), true);
+					tiles[c][r] = new Tile(false, terrain);
+				}
+				else if(temp == 'n'){
+					SpaceWreckageTerrain1x3 terrain = new SpaceWreckageTerrain1x3(new Point(c, r), false);
+					tiles[c][r] = new Tile(false, terrain);
+				}
+				else if(temp == '<' || temp ==  '>' || temp ==  '^' || temp ==  'v' || temp ==  '-' || temp ==  '|'){
+					SpaceWallTerrain terrain = new SpaceWallTerrain(new Point(c, r));
+					switch(temp){
+						case 'v': terrain.setFilename("wall_bottom.png");
+						  break;
+						case '-': terrain.setFilename("wall_horizontal.png");
+						  break;
+						case '<': terrain.setFilename("wall_left.png");
+						  break;
+						case '>': terrain.setFilename("wall_right.png");
+						  break;
+						case '^': terrain.setFilename("wall_top.png");
+						  break;
+						case '|': terrain.setFilename("wall_vertical.png");
+						  break;
+						default: System.out.println("There was an error");
+					}
+					terrain.setVisual();
+					tiles[c][r] = new Tile(false, terrain);
+				}
+				//Items
+				else if(temp == 'x'){
+					tiles[c][r] = new Tile(c, r);
+					tiles[c][r].getItems().add(new SpaceMine());
+				}
+				else if(temp == 's'){
+					tiles[c][r] = new Tile(c, r);
+					tiles[c][r].getItems().add(new MagneticShield());
+				}
+				else if(temp == 'c'){
+					tiles[c][r] = new Tile(c, r);
+					tiles[c][r].getItems().add(new ScrapMetal());
+				}
+				//Default Tile
 				else if(temp == '0'){
 					tiles[c][r] = new Tile(c, r);
 				}
-				else if(temp == 'W'){
-					WarpGateShip warpgate = new WarpGateShip(new Point(c, r));
-					tiles[c][r] = new Tile(warpgate);
-				}
+				
 				else{
 					System.out.println("Error processing a character.  Set as empty tile.");
 					tiles[c][r] = new Tile(c, r);

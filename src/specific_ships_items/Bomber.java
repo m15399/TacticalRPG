@@ -10,7 +10,7 @@ public class Bomber extends Ship {
 		super(newLocation);
 		String description = "Bomber ship,\nstrong against\nnon-mobile targets.";
 		this.constructorAid("Bomber", 4, 100, 30, 100, 30, 75, 
-				description, 40, 45, 15, 1);
+				description, 40, 45, 15, 1, true, 0);
 		addToItems(new SpaceMine());
 
 		setVisual(new BomberVisual(this));

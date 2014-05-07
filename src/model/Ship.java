@@ -12,35 +12,31 @@ import view.Camera;
 
 public class Ship extends GameObject {
 	private Point location;
-	private int moves, movesLeft, range;
+	private int moves, movesLeft, range, team;
 	private double hull, shielding, maxHull, maxShielding, accuracy, minDamage,
 			maxDamage, critChance;
 	private List<Item> items;
 	private Ability ability;
 	private String description, name, filename;
-	private boolean canAttack, canMove, canUseAbility, canUseItem, isWaiting;
-	private int team;
+	private boolean canAttack, canMove, canUseAbility, canUseItem, isWaiting, isTargetable;
 	private Level level;
-	
 	private ShipVisual visual;
 
 	public Ship(Point newLocation) {
 		location = new Point(newLocation);
 		constructorAid("DefaultShip", 1, 1, 1, 1, 1, 1,
-				"No description available", 1, 1, 1, 1);
+				"No description available", 1, 1, 1, 1, true, 0);
 		items = new ArrayList<Item>();
 		visual = null;
-		team = 0;
 		ability = null;
 	}
-
+	
 	public boolean isShipDead() {
 		if (hull > 0)
 			return false;
 		return true;
 	}
-
-
+	
 	/**
 	 * Helps remind whoever is making a new class of all the values that should
 	 * be declared to avoid them being default
@@ -62,7 +58,7 @@ public class Ship extends GameObject {
 	public void constructorAid(String name, int moves, double hull,
 			double shielding, double maxHull, double maxShielding,
 			double accuracy, String description,
-			double minDamage, double maxDamage, double critChance, int range) {
+			double minDamage, double maxDamage, double critChance, int range, boolean isTargetable, int team) {
 		setName(name);
 		setFileName(name.toLowerCase() + ".png");//doubles off of setName
 		setMoves(moves);
@@ -76,8 +72,9 @@ public class Ship extends GameObject {
 		setMaxDamage(maxDamage);
 		setCritChance(critChance);
 		setRange(range);
+		setIsTargetable(isTargetable);
+		setTeam(team);
 	}
-
 	
 	public void startTurn(){
 		setMovesLeft(moves);
@@ -107,7 +104,6 @@ public class Ship extends GameObject {
 	public void attack(Ship target) {
 		
 	}
-	
 	
 	public void setIsWaiting(boolean b){
 		isWaiting = b;
@@ -427,9 +423,6 @@ public class Ship extends GameObject {
 	public void setCanUseItem(boolean canUseItem) {
 		this.canUseItem = canUseItem;
 	}
-	public List<Item> getItemsList(){
-		return items;
-	}
 	
 	public String getFileName(){
 		return filename;
@@ -437,6 +430,14 @@ public class Ship extends GameObject {
 	
 	public void setFileName(String newFileName){
 		filename = newFileName;
+	}
+	
+	public boolean getIsTargetable(){
+		return isTargetable;
+	}
+	
+	public void setIsTargetable(boolean isTargetable){
+		this.isTargetable = isTargetable;
 	}
 	
 	public String itemsToString(){

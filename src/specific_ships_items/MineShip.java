@@ -13,7 +13,7 @@ public class MineShip extends Ship {
 		
 		String description = "Mine that can explode, \ndealing damage to nearby \nenemies.";
 		this.constructorAid("Mine", 0, 999, 999, 999, 999, 0,
-				description, 0, 0, 0, 0);
+				description, 0, 0, 0, 0, false, 0);
 		
 		setVisual(new FighterVisual(this));
 		

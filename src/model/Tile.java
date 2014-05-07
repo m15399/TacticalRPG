@@ -3,6 +3,8 @@ package model;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 import specific_ships_items.BattleCruiser;
 import specific_ships_items.Bomber;
@@ -37,6 +39,9 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	private Tile prev;
 	private int distance;
 	
+	//Variable allowing items to be stored with a Tile instead of a Ship.  Think space mines that have been placed.
+	List<Item> items;
+	
 	/*
 	 * highlight colors
 	 */
@@ -65,6 +70,7 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		setEmpty();
 		this.mapX = mapX;
 		this.mapY = mapY;
+		items = new ArrayList<Item>();
 	}
 
 	/**
@@ -77,6 +83,7 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		mapX = newShip.getLocation().x;
 		mapY = newShip.getLocation().y;
 		setHasShip(true, newShip);
+		items = new ArrayList<Item>();
 	}
 
 	/**
@@ -87,6 +94,7 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		mapX = newTerrain.getLocation().x;
 		mapY = newTerrain.getLocation().y;
 		setTerrain(trueIfTerrainCanBeOccupied, newTerrain);
+		items = new ArrayList<Item>();
 	}
 	
 	/**
@@ -98,6 +106,7 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		mapY = y;
 		setIsOccupied(true);
 		setHasTerrain(true);
+		items = new ArrayList<Item>();
 	}
 
 	public void draw(Graphics g) {
@@ -256,6 +265,35 @@ public class Tile extends GameObject implements Comparable<Tile>{
 
 	public Point getLocation(){
 		return new Point(mapX, mapY);
+	}
+	
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void addToItems(Item newItem) {
+		items.add(newItem);
+		//newItem.setOwner(this); left this since I'm sure we'll probably have to add an ownership element to items. maybe give them a team?
+		addChild(newItem);
+	}
+
+	public String itemsToString(){
+		String itemsString = "";
+		for(int i = 0; i < items.size(); i++){
+			if(i == items.size()-1){
+				itemsString += items.get(i).getName();
+			}
+			else{
+			itemsString += items.get(i).getName() + ", ";
+			}
+		}
+		return itemsString;
+	}
+	
+	public void removeFromItems(Item itemUsed) {
+		items.remove(itemUsed);
+		itemUsed.setOwner(null);
+		removeChild(itemUsed);
 	}
 	
 	@Override

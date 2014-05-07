@@ -16,10 +16,4 @@ public class AsteroidTerrain extends Terrain{
 		super(newLocation);
 		this.setVisual(new AsteroidVisual(this));
 	}
-
-	public void applyEffect(Ship ship) {
-		Random random = new Random();
-		int damage = random.nextInt(100) + 1; //1-100 damage
-		ship.updateHull(-damage);
-	}
 }
