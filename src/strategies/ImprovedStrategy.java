@@ -61,6 +61,7 @@ public class ImprovedStrategy implements Strategy{
 			double minDistance = this.getClosestDistance(s, potentialMoves);
 			if(minDistance <= closestDistance){
 				closestShip = s;
+				closestDistance=minDistance;
 			}		
 		}
 		Point moveTo = closestMovablePoint(closestShip, potentialMoves);
