@@ -33,6 +33,10 @@ public class SelectedShipView extends GameObject {
 		
 	}
 	
+	public void onDestroy(){
+		Input.getInstance().removeButton(button);
+	}
+	
 	public void setShip(Ship ship){
 		currentShip = ship;
 	}

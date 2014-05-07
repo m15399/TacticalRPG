@@ -32,19 +32,20 @@ public class TitleMenu extends GameObject {
 
 		addChild(new TitleMenuButton("TestLevel", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
 			public void notified(Observable sender){
-				game.transitionTo(new TestLevel());
+				game.transitionTo(new TestLevel(game));
 			}
 		}));
 		buttonNumber++;
 		
 		addChild(new TitleMenuButton("TestLevelFromFile", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
 			public void notified(Observable sender){
-				game.transitionTo(new TestLevelFromFile());
+				game.transitionTo(new TestLevelFromFile(game));
 			}
 		}));
 		buttonNumber++;
 
 	}
+	
 	
 	public void draw(Graphics g){
 		g.setFont(new Font("Arial", Font.BOLD, 72));

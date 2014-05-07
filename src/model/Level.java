@@ -39,6 +39,9 @@ public class Level extends GameObject {
 
 	private TurnState state;
 
+	private Game game;
+	private boolean isOver;
+	
 	private Map map;
 	private Starfield starfield;
 	private Camera camera;
@@ -68,15 +71,19 @@ public class Level extends GameObject {
 	private Ship shipWarpingIn;
 	private WarpGateShip warper;
 
-	public Level(int width, int height) {
+	public Level(Game game, int width, int height) {
 
+		this.game = game;
+		
 		map = new Map(width, height);
 
 		init();
 	}
 
-	public Level(String filename) {
+	public Level(Game game, String filename) {
 
+		this.game = game;
+		
 		BuildTileMapFromTextFile builtMap = new BuildTileMapFromTextFile(
 				filename);
 
@@ -106,6 +113,8 @@ public class Level extends GameObject {
 	}
 
 	private void init() {
+		isOver = false;
+		
 		selectedShip = null;
 		tileHovered = null;
 		currentTeam = 0;
@@ -178,6 +187,11 @@ public class Level extends GameObject {
 
 	public void onDestroy() {
 		Input.getInstance().removeButton(levelButton);
+	}
+	
+	public void exitLevel(GameObject nextRoot){
+		isOver = true;
+		game.transitionTo(nextRoot);
 	}
 
 	public void updateButtons() {
@@ -947,4 +961,11 @@ public class Level extends GameObject {
 		return list;
 	}
 
+	public Game getGame(){
+		return game;
+	}
+	
+	public boolean getIsOver(){
+		return isOver;
+	}
 }
