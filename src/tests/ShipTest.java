@@ -65,5 +65,24 @@ public class ShipTest {
 		bomber.addToItems(new MagneticShield());
 		System.out.print(bomber.shipStatus());
 	}
+	private double getMinDistance(Point point1, Point point2){
+		double x1 = point1.getX();
+		double x2 = point2.getX();
+		double y1 = point1.getY();
+		double y2 = point2.getY();
+		
+		double distance = Math.sqrt(Math.pow((x2-x1), 2)+Math.pow((y2-y1), 2));
+		return distance;
+	}
+	
+	@Test
+	public void testGetMinDistance(){
+		Point one = new Point(0,0);
+		Point two = new Point(5,5);
+		double distance = getMinDistance(one,two);
+		double distance2 = getMinDistance(two,one);
+		
+		System.out.print("" + distance + ", " + distance2);
+	}
 	
 }

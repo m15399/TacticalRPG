@@ -10,6 +10,7 @@ import java.util.List;
 import actions.TimerAction;
 import model.Tile.Highlight;
 import specific_ships_items.WarpGateShip;
+import strategies.ImprovedStrategy;
 import strategies.RandomStrategy;
 import strategies.Strategy;
 import terrains.Terrain;
@@ -155,7 +156,7 @@ public class Level extends GameObject {
 		Input.getInstance().addButton(levelButton);
 
 		// AI
-		aiStrategy = new RandomStrategy();
+		aiStrategy = new ImprovedStrategy();
 
 		// test zoom buttons
 		if(Game.DEBUG){
