@@ -3,6 +3,7 @@ package terrains;
 import java.awt.Point;
 
 import specific_ships_items.ScrapMetal;
+import terrainVisuals.SpaceWreckageVisual;
 import model.Ship;
 
 /*
@@ -16,7 +17,7 @@ public class SpaceWreckageTerrain extends Terrain implements TerrainEffects{
 
 	public SpaceWreckageTerrain(Point newLocation) {
 		super(newLocation);
-		//this.setVisual(new SpaceWreckageVisual(this);
+		this.setVisual(new SpaceWreckageVisual(this));
 	}
 
 	@Override

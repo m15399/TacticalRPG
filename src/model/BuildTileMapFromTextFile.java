@@ -19,6 +19,7 @@ import specific_ships_items.ScrapMetal;
 import specific_ships_items.Sniper;
 import specific_ships_items.SpaceMine;
 import specific_ships_items.WarpGateShip;
+import terrains.AsteroidFieldTerrain;
 import terrains.AsteroidTerrain;
 import terrains.PlanetTerrain2x2;
 import terrains.SpaceWallTerrain;
@@ -96,6 +97,7 @@ public class BuildTileMapFromTextFile {
 	 * p = spaces planet bleeds over into
 	 * w = SpaceWreckageTerrain
 	 * b,h,l,r,t,v = SpaceWallTerrain
+	 * f = AsteroidFieldTerrain
 	 * 
 	 * Items:
 	 * s = MagneticShield
@@ -105,7 +107,7 @@ public class BuildTileMapFromTextFile {
 	 * Please update this if you make changes
 	 * Remaining Letters and numbers
 	 * DGHIJKLNOQRTUVYZ
-	 * adefgijknoquyz
+	 * adegijknoquyz
 	 * 123456789
 	 * 
 	 * 0 = Default Unoccupied Tile
@@ -160,7 +162,7 @@ public class BuildTileMapFromTextFile {
 				//Terrain
 				else if(temp == 'A'){
 					AsteroidTerrain terrain = new AsteroidTerrain(new Point(c, r));
-					tiles[c][r] = new Tile(true, terrain);
+					tiles[c][r] = new Tile(false, terrain);
 				}
 				else if(temp == 'P'){
 					PlanetTerrain2x2 terrain = new PlanetTerrain2x2(new Point(c, r));
@@ -171,6 +173,10 @@ public class BuildTileMapFromTextFile {
 				}
 				else if(temp == 'w'){
 					SpaceWreckageTerrain terrain = new SpaceWreckageTerrain(new Point(c, r));
+					tiles[c][r] = new Tile(true, terrain);
+				}
+				else if(temp == 'f'){
+					AsteroidFieldTerrain terrain = new AsteroidFieldTerrain(new Point(c, r));
 					tiles[c][r] = new Tile(true, terrain);
 				}
 				else if(temp == 'b' || temp ==  'h' || temp ==  'l' || temp ==  'r' || temp ==  't' || temp ==  'v'){

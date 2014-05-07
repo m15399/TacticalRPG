@@ -45,7 +45,9 @@ public class ImageLibrary {
 		"wall_left.png",
 		"wall_right.png",
 		"wall_top.png",
-		"wall_vertical.png"
+		"wall_vertical.png",
+		"asteroidfield.png",
+		"spacewreckage.png"//placeholder image
 		};
 	
 	/*
