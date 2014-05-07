@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Graphics;
+import java.util.Random;
 
 /*
  * Sprite that runs an animation from a sprite sheet
@@ -30,6 +31,15 @@ public class AnimatedSprite extends Sprite {
 		delay = delayLeft = numberFrames = currentFrame = 0;
 		frameIndicies = null;
 		visible = true;
+	}
+	
+	public void setRandomFrame(){
+		Random random = new Random();
+		int rand = random.nextInt(numberFrames);
+		int[] indicies = {0};
+		indicies[0] = rand;
+		setDelay(10);
+		setFrameIndicies(indicies);
 	}
 
 	public void update() {

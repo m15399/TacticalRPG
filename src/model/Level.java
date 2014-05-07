@@ -11,7 +11,6 @@ import actions.TimerAction;
 import model.Tile.Highlight;
 import specific_ships_items.WarpGateShip;
 import strategies.ImprovedStrategy;
-import strategies.RandomStrategy;
 import strategies.Strategy;
 import terrains.Terrain;
 import utils.Direction;
@@ -63,8 +62,6 @@ public class Level extends GameObject {
 	private SelectedEnemyShip hoveredShipView;
 	private SelectedShipButtons shipButtons;
 	private ShipSelectionScreen shipSelectionScreen;
-
-	private Observer enterDefaultStateObserver;
 
 	private Strategy aiStrategy;
 
@@ -173,13 +170,6 @@ public class Level extends GameObject {
 				}
 			});
 		}
-		
-
-		enterDefaultStateObserver = new Observer() {
-			public void notified(Observable sender) {
-				enterDefaultState();
-			}
-		};
 
 		map.checkTileLocations();
 

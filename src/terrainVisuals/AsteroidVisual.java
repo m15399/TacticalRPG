@@ -1,17 +1,19 @@
 package terrainVisuals;
 
-import resources.ImageLibrary;
 import terrains.AsteroidTerrain;
-import view.Sprite;
+import view.AnimatedSprite;
 
 public class AsteroidVisual extends TerrainVisual{
 
-	private Sprite sprite;
+	private AnimatedSprite sprite;
 	
 	public AsteroidVisual(AsteroidTerrain terrain) {
 		super(terrain);
-		sprite = new Sprite();
-		sprite.setImage(ImageLibrary.getInstance().getRandomImageFromSheet("asteroids.png"));
+		sprite = new AnimatedSprite("asteroids.png");
+		sprite.setFrameSize(64, 64);
+		sprite.setNumberFrames(3);
+		sprite.setRandomFrame();
+//		sprite.setImage(ImageLibrary.getInstance().getRandomImageFromSheet("asteroids.png"));
 		addChild(sprite);
 		
 		// rotate to a random degree
