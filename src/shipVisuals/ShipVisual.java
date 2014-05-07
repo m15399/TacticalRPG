@@ -267,35 +267,38 @@ public class ShipVisual extends Entity {
 
 	public void draw(Graphics g1) {
 
-		// health bar
-		Graphics2D g = (Graphics2D) g1;
-		g.setStroke(new BasicStroke(0));
+		if(ship.getIsTargetable()){
+			// health bar
+			Graphics2D g = (Graphics2D) g1;
+			g.setStroke(new BasicStroke(0));
 
-		// size
-		int width = Map.TILESIZE - 6;
-		int height = 3;
+			// size
+			int width = Map.TILESIZE - 6;
+			int height = 3;
 
-		// position
-		int ox = (int) (getPosition().getX());
-		int oy = (int) (getPosition().getY() + Map.TILESIZE / 2 - height + 3);
+			// position
+			int ox = (int) (getPosition().getX());
+			int oy = (int) (getPosition().getY() + Map.TILESIZE / 2 - height + 3);
 
-		// border
-		g.setColor(Color.white);
-		g.drawRect(ox - width / 2 - 1, oy - height / 2 - 1, width + 2,
-				height + 2);
+			// border
+			g.setColor(Color.white);
+			g.drawRect(ox - width / 2 - 1, oy - height / 2 - 1, width + 2,
+					height + 2);
 
-		// color
-		Color red = new Color(1.0f, .25f, .15f);
-		Color green = new Color(0f, .8f, .0f);
-		if (ship.getTeam() == 0) {
-			g.setColor(green);
-		} else {
-			g.setColor(red);
+			// color
+			Color red = new Color(1.0f, .25f, .15f);
+			Color green = new Color(0f, .8f, .0f);
+			if (ship.getTeam() == 0) {
+				g.setColor(green);
+			} else {
+				g.setColor(red);
+			}
+
+			g.fillRect(ox - width / 2, oy - height / 2,
+					(int) (width * displayHealth / ship.getMaxHull()) + 1,
+					height + 1);
 		}
-
-		g.fillRect(ox - width / 2, oy - height / 2,
-				(int) (width * displayHealth / ship.getMaxHull()) + 1,
-				height + 1);
+		
 	}
 
 }

@@ -25,7 +25,7 @@ public class MineAbility extends Ability {
 		if(getOwner().getTeam() == 0)
 			team = 1;
 		
-		List<Ship> enemies = getOwner().getLevel().getShipsWithinCircularArea(getOwner(), RANGE, team);
+		List<Ship> enemies = getOwner().getLevel().getTargettableShipsWithinCircularArea(getOwner(), RANGE, team);
 		for(Ship s : enemies){
 			s.updateHull(-DAMAGE);
 			s.getVisual().updateDisplayHealth();

@@ -333,7 +333,7 @@ public class Level extends GameObject {
 		List<Ship> enemies = getShips(0); // get player's ships
 
 		for (Ship e : enemies) {
-			if (tiles.contains(map.getTile(e.getLocation()))) {
+			if (e.getIsTargetable() && tiles.contains(map.getTile(e.getLocation()))) {
 				targets.add(e);
 			}
 		}
@@ -764,7 +764,7 @@ public class Level extends GameObject {
 			Ship ship = tile.getShip();
 
 			if (state == TurnState.CASTING
-					&& tile.getHighlight() != Tile.Highlight.NONE
+					&& ship.getIsTargetable() && tile.getHighlight() != Tile.Highlight.NONE
 					&& ((currentCastable.getTargetType() == Castable.TargetType.ALLY && ship
 							.getTeam() == currentTeam) || (currentCastable
 							.getTargetType() == Castable.TargetType.ENEMY && ship
@@ -780,7 +780,7 @@ public class Level extends GameObject {
 				}
 			} else {
 				if (state == TurnState.ATTACKING
-						&& tile.getHighlight() != Tile.Highlight.NONE) {
+						&& ship.getIsTargetable() && tile.getHighlight() != Tile.Highlight.NONE) {
 					attackShip(selectedShip, ship);
 
 				} else {
@@ -931,7 +931,7 @@ public class Level extends GameObject {
 		return list;
 	}
 	
-	public List<Ship> getShipsWithinCircularArea(Ship src, int range, int team){
+	public List<Ship> getTargettableShipsWithinCircularArea(Ship src, int range, int team){
 		List<GameObject> ships;
 		if (team == 0) {
 			ships = shipHolder.getChildren();
@@ -943,6 +943,8 @@ public class Level extends GameObject {
 
 		for (GameObject o : ships) {
 			Ship s = (Ship) o;
+			if(!s.getIsTargetable())
+				continue;
 			
 			double dx = src.getLocation().x - s.getLocation().x;
 			double dy = src.getLocation().y - s.getLocation().y;
