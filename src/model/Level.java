@@ -235,6 +235,16 @@ public class Level extends GameObject {
 
 	}
 
+	public void shipFlyingThroughTile(Ship ship, int mapX, int mapY){
+		Tile tile = map.getTile(mapX, mapY);
+		if(tile.getHasTerrain()){
+			Terrain terrain = tile.getTerrain();
+			terrain.applyEffect(ship);
+						
+//			System.out.println("flying through terrain: " + terrain.toString());
+		}
+	}
+	
 	/*
 	 * 
 	 * Turn logic
@@ -564,7 +574,19 @@ public class Level extends GameObject {
 		Tile newTile = map.getTile(mapX, mapY);
 
 		// move the ship and pass in the observer
-		ship.moveWithDirections(enterDefaultStateObserver, mapX, mapY,
+		ship.moveWithDirections(new Observer(){
+
+			public void notified(Observable sender) {
+				checkForDestroyedUnits();
+				if(selectedShip.isShipDead()){
+					unselectShip();
+					selectPlayerNextShip();
+				}
+				enterDefaultState();
+				
+			}
+			
+		}, mapX, mapY,
 				map.shortestPath(ship.getLocation(), new Point(mapX, mapY)),
 				camera);
 

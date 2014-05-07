@@ -4,8 +4,9 @@ import java.awt.Point;
 
 import terrainVisuals.TerrainVisual;
 import model.GameObject;
+import model.Ship;
 
-public abstract class Terrain extends GameObject{
+public abstract class Terrain extends GameObject implements TerrainEffects {
 	private Point location;
 	private TerrainVisual visual;
 	
@@ -31,5 +32,9 @@ public abstract class Terrain extends GameObject{
 	
 	public TerrainVisual getVisual(){
 		return visual;
+	}
+	
+	public void applyEffect(Ship ship){
+		
 	}
 }

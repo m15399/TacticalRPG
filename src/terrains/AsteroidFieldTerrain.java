@@ -8,6 +8,8 @@ import model.Ship;
 
 public class AsteroidFieldTerrain extends Terrain implements TerrainEffects{
 
+	private static int MAX_DAMAGE = 10;
+	
 	public AsteroidFieldTerrain(Point newLocation) {
 		super(newLocation);
 		this.setVisual(new AsteroidFieldVisual(this));
@@ -16,7 +18,7 @@ public class AsteroidFieldTerrain extends Terrain implements TerrainEffects{
 	@Override
 	public void applyEffect(Ship ship) {
 		Random random = new Random();
-		int damage = random.nextInt(100) + 1; //1-100 damage
+		int damage = random.nextInt(MAX_DAMAGE) + 1; // damage
 		ship.updateHull(-damage);
 	}
 }

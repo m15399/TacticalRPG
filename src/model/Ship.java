@@ -90,10 +90,12 @@ public class Ship extends GameObject {
 	 * Plays the move animation 
 	 */
 	public void moveWithDirections(Observer notifyWhenDone, int x, int y, List<Direction> directions, Camera camera){
+		Point originalPoint = new Point(getLocation());
+		
 		setLocation(new Point(x, y));
 		ShipVisual visual = getVisual();
 		if(visual != null){
-			visual.moveWithDirections(notifyWhenDone, directions, camera);
+			visual.moveWithDirections(originalPoint, notifyWhenDone, directions, camera);
 		}
 		updateMovesLeft(-directions.size());
 	}

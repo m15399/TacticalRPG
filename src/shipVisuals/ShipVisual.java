@@ -68,10 +68,26 @@ public class ShipVisual extends Entity {
 		return outline;
 	}
 
+	private class ShipFlyingThroughTileObserver implements Observer {
+		
+		private Ship ship;
+		private int mapX, mapY;
+		
+		public ShipFlyingThroughTileObserver(Ship ship, int mapX, int mapY){
+			this.ship = ship;
+			this.mapX = mapX;
+			this.mapY = mapY;
+		}
+
+		public void notified(Observable sender) {
+			ship.getLevel().shipFlyingThroughTile(ship, mapX, mapY);
+		}
+	}
+	
 	/*
 	 * Create a queue of Actions that move the ship to the required location
 	 */
-	public void moveWithDirections(Observer notifyWhenDone,
+	public void moveWithDirections(Point originalPoint, Observer notifyWhenDone,
 			List<Direction> directions, Camera camera) {
 		ActionQueue q = new ActionQueue(notifyWhenDone);
 
@@ -91,25 +107,32 @@ public class ShipVisual extends Entity {
 
 		Position currPosition = new Position(getPosition().getX(),
 				getPosition().getY());
+		int currMapX = originalPoint.x;
+		int currMapY = originalPoint.y;
+
 		for (Direction d : directions) {
 
 			switch (d) {
 			case UP:
 				currPosition.moveBy(0, -distance);
+				currMapY--;
 				break;
 			case DOWN:
 				currPosition.moveBy(0, distance);
+				currMapY++;
 				break;
 			case LEFT:
 				currPosition.moveBy(-distance, 0);
+				currMapX--;
 				break;
 			case RIGHT:
 				currPosition.moveBy(distance, 0);
+				currMapX++;
 				break;
 
 			}
 			q.addAction(new MoveEntityToAction(this,
-					new Position(currPosition), time, null));
+					new Position(currPosition), time, new ShipFlyingThroughTileObserver(ship, currMapX, currMapY)));
 		}
 
 		q.addAction(new Action(null) {
