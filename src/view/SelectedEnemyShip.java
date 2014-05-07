@@ -164,7 +164,7 @@ public class SelectedEnemyShip extends GameObject {
 			// color
 			Color red = new Color(1.0f, .25f, .15f);
 			Color green = new Color(0f, .8f, .0f);
-			g2.setColor(green);
+			g2.setColor(red);
 			displayHealth = currentShip.getHull();
 
 			g.fillRect(x, y,

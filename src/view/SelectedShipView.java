@@ -154,12 +154,17 @@ public class SelectedShipView extends GameObject {
 				g.drawRect(x-1, y-1, width+2,
 						height+2);
 
-				// color
-				Color red = new Color(1.0f, .25f, .15f);
+				// colorColor red = new Color(1.0f, .25f, .15f);
 				Color green = new Color(0f, .8f, .0f);
-				g2.setColor(green);
+				Color red = new Color(1.0f, .25f, .15f);
+				if (currentShip.getTeam() == 0) {
+					g2.setColor(green);
+				} else {
+					g2.setColor(red);
+				}
+				
 				displayHealth = currentShip.getHull();
-
+				
 				g.fillRect(x, y,
 						(int) (width * displayHealth / currentShip.getMaxHull()) + 1,
 						height + 1);
