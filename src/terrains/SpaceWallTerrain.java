@@ -10,6 +10,7 @@ public class SpaceWallTerrain extends Terrain{
 	
 	public SpaceWallTerrain(Point newLocation) {
 		super(newLocation);
+		filename = "wall_bottom.png";
 		this.setVisual(new SpaceWallVisual(this));
 	}
 	
@@ -19,5 +20,9 @@ public class SpaceWallTerrain extends Terrain{
 	
 	public void setFilename(String newFileName){
 		filename = newFileName;
+	}
+	
+	public void setVisual(){
+		this.setVisual(new SpaceWallVisual(this));
 	}
 }

@@ -39,7 +39,13 @@ public class ImageLibrary {
 		"wormholeGreen.png",
 		"scrapmetal.png",
 		"MagneticShield.png",
-		"planet2x2.png" //Courtesy of Nasa -- http://www.ehdwalls.com/1280x1024/space/nasa_-_neptune/
+		"planet2x2.png", //Courtesy of Nasa -- http://www.ehdwalls.com/1280x1024/space/nasa_-_neptune/
+		"wall_bottom.png",
+		"wall_horizontal.png",
+		"wall_left.png",
+		"wall_right.png",
+		"wall_top.png",
+		"wall_vertical.png"
 		};
 	
 	/*

@@ -188,10 +188,9 @@ public class BuildTileMapFromTextFile {
 						  break;
 						case 'v': terrain.setFilename("wall_vertical.png");
 						  break;
-						  
-						  default: System.out.println("There was an error");
-						  break;
+						default: System.out.println("There was an error");
 					}
+					terrain.setVisual();
 					tiles[c][r] = new Tile(false, terrain);
 				}
 				//Items
