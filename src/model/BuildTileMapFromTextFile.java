@@ -95,7 +95,7 @@ public class BuildTileMapFromTextFile {
 	 * P = Planet key
 	 * p = spaces planet bleeds over into
 	 * w = SpaceWreckageTerrain
-	 * -,|,o = SpaceWallTerrain
+	 * b,h,l,r,t,v = SpaceWallTerrain
 	 * 
 	 * Items:
 	 * s = MagneticShield
@@ -105,7 +105,7 @@ public class BuildTileMapFromTextFile {
 	 * Please update this if you make changes
 	 * Remaining Letters and numbers
 	 * DGHIJKLNOQRTUVYZ
-	 * abdefghijklnqrtuvyz
+	 * adefgijknoquyz
 	 * 123456789
 	 * 
 	 * 0 = Default Unoccupied Tile
@@ -173,16 +173,25 @@ public class BuildTileMapFromTextFile {
 					SpaceWreckageTerrain terrain = new SpaceWreckageTerrain(new Point(c, r));
 					tiles[c][r] = new Tile(true, terrain);
 				}
-				else if(temp == '|'){
+				else if(temp == 'b' || temp ==  'h' || temp ==  'l' || temp ==  'r' || temp ==  't' || temp ==  'v'){
 					SpaceWallTerrain terrain = new SpaceWallTerrain(new Point(c, r));
-					tiles[c][r] = new Tile(false, terrain);
-				}
-				else if(temp == '-'){
-					SpaceWallTerrain terrain = new SpaceWallTerrain(new Point(c, r));
-					tiles[c][r] = new Tile(false, terrain);
-				}
-				else if(temp == 'o'){
-					SpaceWallTerrain terrain = new SpaceWallTerrain(new Point(c, r));
+					switch(temp){
+						case 'b': terrain.setFilename("wall_bottom.png");
+						  break;
+						case 'h': terrain.setFilename("wall_horizontal.png");
+						  break;
+						case 'l': terrain.setFilename("wall_left.png");
+						  break;
+						case 'r': terrain.setFilename("wall_right.png");
+						  break;
+						case 't': terrain.setFilename("wall_top.png");
+						  break;
+						case 'v': terrain.setFilename("wall_vertical.png");
+						  break;
+						  
+						  default: System.out.println("There was an error");
+						  break;
+					}
 					tiles[c][r] = new Tile(false, terrain);
 				}
 				//Items
