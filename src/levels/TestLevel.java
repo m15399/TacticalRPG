@@ -2,6 +2,7 @@ package levels;
 
 import java.awt.Point;
 
+import specific_ships_items.AISpawner;
 import specific_ships_items.Bomber;
 import specific_ships_items.Fighter;
 import specific_ships_items.MagneticShield;
@@ -75,6 +76,9 @@ public class TestLevel extends Level {
 		Bomber ebomber = new Bomber(new Point(13, 9)); //was 15,11
 		ebomber.addToItems(new MagneticShield());
 		addEnemyShipToMap(ebomber);
+		
+		AISpawner spawner = new AISpawner(new Point(13, 0));
+		addEnemyShipToMap(spawner);
 						
 		startTurn(0);
 	}

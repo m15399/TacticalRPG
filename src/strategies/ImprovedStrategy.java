@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import specific_ships_items.AISpawner;
+
 import model.Level;
 import model.Ship;
 
@@ -34,7 +36,12 @@ public class ImprovedStrategy implements Strategy{
 			}
 			ship.setCanMove(false);
 			
-		}  else {
+		} else if (ship instanceof AISpawner && ship.getCanUseAbility() && ship.getAbility().getCooldownLeft() == 0){
+			// spawn ship
+			level.useEnemyAbility(ship);
+
+			
+		} else {
 			level.waitShip(ship);
 		}
 		

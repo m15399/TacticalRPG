@@ -671,6 +671,11 @@ public class Level extends GameObject {
 		addChild(timer);
 		timer.start();
 	}
+	
+	public void useEnemyAbility(Ship ship){
+		currentCastable = ship.getAbility();
+		useCastableWithoutTarget();
+	}
 
 	private void useCastableStart() {
 		enterAnimatingState();
@@ -959,6 +964,29 @@ public class Level extends GameObject {
 		}
 
 		return list;
+	}
+	
+	public List<Tile> getEmptyTilesWithinCircularArea(Ship src, int range){
+		List<Tile> tiles = new ArrayList<Tile>();
+		
+		Tile[][] mapTiles = map.getTiles();
+		for(int i = 0; i < mapTiles.length; i++){
+			for(int j = 0; j < mapTiles[0].length; j++){
+				
+				Tile ct = mapTiles[i][j];
+				
+				double dx = src.getLocation().x - i;
+				double dy = src.getLocation().y - j;
+				double distance = Math.sqrt(dx * dx + dy * dy);
+				
+				if(distance <= range && !ct.getIsOccupied()){
+					tiles.add(ct);
+				}
+					
+			}
+		}
+		
+		return tiles;
 	}
 
 	public Game getGame(){
