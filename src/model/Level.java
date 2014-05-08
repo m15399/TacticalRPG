@@ -17,6 +17,7 @@ import utils.Direction;
 import utils.Observable;
 import utils.Observer;
 import view.Camera;
+import view.Explosion;
 import view.SelectedEnemyShip;
 import view.ShipOutline;
 import view.EndOfLevelGraphic.WinnerType;
@@ -359,6 +360,7 @@ public class Level extends GameObject {
 	public void checkForDestroyedUnits() {
 		for (Ship s : getShips()) {
 			if (s.isShipDead()) {
+				camera.addChild(new Explosion(2.0, 20, s.getVisual()));
 				removeShipFromMap(s);
 			}
 		}

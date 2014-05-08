@@ -3,7 +3,6 @@ package levels;
 import model.Game;
 import model.GameObject;
 import model.Level;
-import model.TitleMenu;
 
 public class TestLevelFromFile extends Level {
 

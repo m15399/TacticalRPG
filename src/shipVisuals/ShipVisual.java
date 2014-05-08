@@ -19,6 +19,7 @@ import utils.Observable;
 import utils.Observer;
 import utils.Position;
 import view.Camera;
+import view.Explosion;
 import view.ShipOutline;
 
 /*
@@ -42,6 +43,7 @@ public class ShipVisual extends Entity {
 	public ShipVisual(Ship ship) {
 		this.ship = ship;
 		
+		displayHealth = -1;
 		updateDisplayHealth();
 		
 		outline = new ShipOutline();
@@ -52,7 +54,13 @@ public class ShipVisual extends Entity {
 	}
 	
 	public void updateDisplayHealth(){
-		displayHealth = ship.getHull();
+		double newHealth = ship.getHull();
+		
+		if(newHealth < displayHealth){
+			addChild(new Explosion(1.0, 5, this));
+		}
+		
+		displayHealth = newHealth;
 	}
 
 	/*
@@ -249,9 +257,7 @@ public class ShipVisual extends Entity {
 		
 	}
 
-	public void explode(Observer notifyWhenDone) {
-
-	}
+	
 
 	public void playMoveAnimation() {
 		// override
