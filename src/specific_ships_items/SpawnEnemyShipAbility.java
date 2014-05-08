@@ -20,24 +20,29 @@ public class SpawnEnemyShipAbility extends Ability {
 	public void useWithoutTarget(Observer notifyWhenDone){
 		List<Tile> tiles = getOwner().getLevel().getEmptyTilesWithinCircularArea(getOwner(), 1);
 		Random random = new Random();
-		Tile t = tiles.get(random.nextInt(tiles.size()));
 		
-		Ship s = null;
-		
-		int rand = random.nextInt(3);
-		switch(rand){
-		case 0:
-			s = new Scout(t.getLocation());
-			break;
-		case 1:
-			s = new Fighter(t.getLocation());
-			break;
-		case 2:
-			s = new Bomber(t.getLocation());
-			break;
+		if(tiles.size() > 0){
+			Tile t = tiles.get(random.nextInt(tiles.size()));
+			
+			Ship s = null;
+			
+			int rand = random.nextInt(3);
+			switch(rand){
+			case 0:
+				s = new Scout(t.getLocation());
+				break;
+			case 1:
+				s = new Fighter(t.getLocation());
+				break;
+			case 2:
+				s = new Bomber(t.getLocation());
+				break;
+			}
+			
+			
+			getOwner().getLevel().addEnemyShipToMap(s);
 		}
 		
-		getOwner().getLevel().addEnemyShipToMap(s);
 		
 		// placeholder animation
 		TimerAction timer = new TimerAction(30, notifyWhenDone);
