@@ -89,6 +89,7 @@ public class ShipVisual extends Entity {
 
 		public void notified(Observable sender) {
 			ship.getLevel().shipFlyingThroughTile(ship, mapX, mapY);
+			updateDisplayHealth();
 		}
 	}
 	
