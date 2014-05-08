@@ -16,7 +16,6 @@ public class TitleMenu extends GameObject {
 	
 	public TitleMenu(Game newGame){
 		this.game = newGame;
-		SongPlayer.playFile("./songFiles/space_clips.mp3");
 		int buttonWidth = 400;
 		int buttonHeight = 50;
 		int offsetX = 100;

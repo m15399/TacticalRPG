@@ -11,8 +11,8 @@ import specific_ships_items.ScrapMetal;
 import specific_ships_items.SpaceMine;
 import specific_ships_items.WarpGateShip;
 import model.Game;
+import model.GameObject;
 import model.Level;
-import model.TitleMenu;
 
 public class TestLevel extends Level {
 
@@ -82,23 +82,9 @@ public class TestLevel extends Level {
 						
 		startTurn(0);
 	}
-		
-	public void update(){
-		super.update();
-		
-		if(!getIsOver()){
-			// check objective
-			if(getShips(0).size() == 0){
-				System.out.println("\n\n\nYou lose!!");
-				exitLevel(new TitleMenu(getGame()));
-			}
-			if(getShips(1).size() == 0){
-				System.out.println("\n\n\nYou win!!");
-				exitLevel(new TitleMenu(getGame()));
-			}
-		}
-		
-		
+	
+	public GameObject getNextRoot(){
+		return new TestLevelFromFile(getGame());
 	}
 
 }

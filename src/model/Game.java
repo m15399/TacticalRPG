@@ -8,6 +8,7 @@ import java.awt.Graphics;
 
 import javax.swing.*;
 
+import songPlayer.SongPlayer;
 import utils.Observable;
 import utils.Observer;
 
@@ -71,6 +72,9 @@ public class Game extends JPanel implements Runnable, Fadable {
 	public void startGame(){
 		thread = new Thread(this);
 		thread.start();
+		
+		SongPlayer.playFile("./songFiles/space_clips.mp3");
+
 	}
 	
 	private void setRoot(GameObject o){

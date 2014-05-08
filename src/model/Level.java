@@ -19,7 +19,9 @@ import utils.Observer;
 import view.Camera;
 import view.SelectedEnemyShip;
 import view.ShipOutline;
+import view.EndOfLevelGraphic.WinnerType;
 import view.ShipOutline.SelectionType;
+import view.EndOfLevelGraphic;
 import view.SelectedShipButtons;
 import view.SelectedShipView;
 import view.ShipSelectionScreen;
@@ -54,6 +56,7 @@ public class Level extends GameObject {
 
 	private int currentTeam;
 	private int numHumans;
+	private int winner;
 
 	private Tile tileHovered;
 
@@ -70,6 +73,8 @@ public class Level extends GameObject {
 
 	private Ship shipWarpingIn;
 	private WarpGateShip warper;
+	
+	private List<Button> debugButtons;
 
 	public Level(Game game, int width, int height) {
 
@@ -165,19 +170,43 @@ public class Level extends GameObject {
 		aiStrategy = new ImprovedStrategy();
 
 		// test zoom buttons
+		debugButtons = new ArrayList<Button>();
 		if(Game.DEBUG){
 			int bsize = 20;
 			final double sfac = 2;
-			Input.getInstance().addButton(new Button(0, 0, bsize, bsize) {
+			
+			Button b1 = new Button(0, 0, bsize, bsize) {
 				public void mouseReleased() {
 					camera.setZoomTarget(camera.getZoom() * sfac);
 				}
-			});
-			Input.getInstance().addButton(new Button(0, bsize, bsize, bsize) {
+			};
+			Input.getInstance().addButton(b1);
+			debugButtons.add(b1); 
+			
+			Button b2 = new Button(0, bsize, bsize, bsize) {
 				public void mouseReleased() {
 					camera.setZoomTarget(camera.getZoom() / sfac);
 				}
-			});
+			};
+			Input.getInstance().addButton(b2);
+			debugButtons.add(b2); 
+			
+			Button b3 = new Button(Game.WIDTH - bsize, 0, bsize, bsize){
+				public void mouseReleased(){
+					onTeamWin(0);
+				}
+			};
+			Input.getInstance().addButton(b3);
+			debugButtons.add(b3); 
+			
+			Button b4 = new Button(Game.WIDTH - bsize, bsize, bsize, bsize){
+				public void mouseReleased(){
+					onTeamWin(1);
+				}
+			};
+			Input.getInstance().addButton(b4);
+			debugButtons.add(b4); 
+			
 		}
 
 		map.checkTileLocations();
@@ -187,11 +216,21 @@ public class Level extends GameObject {
 
 	public void onDestroy() {
 		Input.getInstance().removeButton(levelButton);
+		for(Button b : debugButtons){
+			Input.getInstance().removeButton(b);
+		}
 	}
 	
-	public void exitLevel(GameObject nextRoot){
+	public void exitLevel(){
 		isOver = true;
-		game.transitionTo(nextRoot);
+		
+		TimerAction timer = new TimerAction(90, new Observer(){
+			public void notified(Observable sender){
+				game.transitionTo(getNextRoot());
+			}
+		});
+		addChild(timer);
+		timer.start();
 	}
 
 	public void updateButtons() {
@@ -237,8 +276,44 @@ public class Level extends GameObject {
 			}
 		}
 
+		
+		
 	}
 
+	public int getWinner(){
+		return winner;
+	}
+	
+	public void onTeamWin(int team){
+		
+		winner = team;
+		
+		isOver = true;
+
+		WinnerType wt = WinnerType.SINGLEPLAYER;
+		
+		if(numHumans == 2){
+			if(team == 0)
+				wt = WinnerType.PLAYER1;
+			else
+				wt = WinnerType.PLAYER2;
+		} else {
+			if(team == 0)
+				wt = WinnerType.SINGLEPLAYER;
+			else
+				wt = WinnerType.ENEMY;
+		}
+		
+		addChild(new EndOfLevelGraphic(wt));
+		
+		exitLevel();
+
+	}
+	
+	public GameObject getNextRoot(){
+		return new TitleMenu(game);
+	}
+	
 	public void shipFlyingThroughTile(Ship ship, int mapX, int mapY){
 		Tile tile = map.getTile(mapX, mapY);
 		if(tile.getHasTerrain()){
@@ -285,6 +360,14 @@ public class Level extends GameObject {
 		for (Ship s : getShips()) {
 			if (s.isShipDead()) {
 				removeShipFromMap(s);
+			}
+		}
+		if(!getIsOver()){
+			// check objective
+			if(getTargettableShips(1).size() == 0){
+				onTeamWin(0);
+			} else if(getTargettableShips(0).size() == 0){
+				onTeamWin(1);
 			}
 		}
 	}
@@ -924,6 +1007,25 @@ public class Level extends GameObject {
 
 		return list;
 	}
+	
+	public List<Ship> getTargettableShips(int team){
+		List<GameObject> ships;
+		if (team == 0) {
+			ships = shipHolder.getChildren();
+		} else {
+			ships = enemyShipHolder.getChildren();
+		}
+
+		List<Ship> list = new ArrayList<Ship>();
+
+		for (GameObject o : ships) {
+			Ship s = (Ship) o;
+			if(s.getIsTargetable())
+				list.add(s);
+		}
+
+		return list;
+	}
 
 	public List<Ship> getShips() {
 		List<Ship> ships;
@@ -996,4 +1098,6 @@ public class Level extends GameObject {
 	public boolean getIsOver(){
 		return isOver;
 	}
+	
+	
 }

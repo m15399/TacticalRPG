@@ -1,6 +1,7 @@
 package levels;
 
 import model.Game;
+import model.GameObject;
 import model.Level;
 import model.TitleMenu;
 
@@ -13,20 +14,11 @@ public class TestLevelFromFile extends Level {
 
 	}
 	
-	public void update(){
-		super.update();
-		
-		if(!getIsOver()){
-			// check objective
-			if(getShips(0).size() == 0){
-				System.out.println("\n\n\nYou lose!!");
-				exitLevel(new TitleMenu(getGame()));
-			}
-			if(getShips(1).size() == 0){
-				System.out.println("\n\n\nYou win!!");
-				exitLevel(new TitleMenu(getGame()));
-			}
-		}
+	public GameObject getNextRoot(){
+		if(getWinner() == 0)
+			return new TestLevel(getGame());
+		else
+			return new TestLevelFromFile(getGame());
 	}
 	
 }
