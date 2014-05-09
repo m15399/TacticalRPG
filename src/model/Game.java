@@ -8,10 +8,11 @@ import java.awt.Graphics;
 
 import javax.swing.*;
 
+import songPlayer.EndOfSongEvent;
+import songPlayer.EndOfSongListener;
 import songPlayer.SongPlayer;
 import utils.Observable;
 import utils.Observer;
-
 import actions.FadeToAction;
 
 
@@ -72,10 +73,34 @@ public class Game extends JPanel implements Runnable, Fadable {
 	public void startGame(){
 		thread = new Thread(this);
 		thread.start();
-		
-		SongPlayer.playFile("./songFiles/space_clips.mp3");
 
+		// play song and loop
+		ObjectWaitingForSongToEnd waiter = new ObjectWaitingForSongToEnd();
+		SongPlayer.playFile(waiter, baseDir + "space_clips.mp3");
 	}
+	
+	  /**
+	   * An inner class that allows an instance of this to receive a
+	   * songFinishedPlaying when the audio file has been played. Note: static was
+	   * added here because it is called from main.
+	   */
+	private static class ObjectWaitingForSongToEnd implements EndOfSongListener {
+		public void songFinishedPlaying(EndOfSongEvent eosEvent) {
+			System.out.print("Finished " + eosEvent.fileName());
+			ObjectWaitingForSongToEnd waiter = new ObjectWaitingForSongToEnd();
+			SongPlayer.playFile(waiter, baseDir + "space_clips.mp3");
+	    }
+	  }
+	  
+	  /**
+	   * baseDir will be the fully qualified path to the directory in which this
+	   * program is running on any machine. System.getProperty("file.separator")
+	   * returns "\" when running on Unix or "/" when running on windows.
+	   */
+	  public static String baseDir = System.getProperty("user.dir")
+	      + System.getProperty("file.separator") + "songfiles"
+	      + System.getProperty("file.separator");
+
 	
 	private void setRoot(GameObject o){
 		if(rootObject != null){
