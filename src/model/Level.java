@@ -18,6 +18,7 @@ import utils.Observable;
 import utils.Observer;
 import view.Camera;
 import view.Explosion;
+import view.FoundItemsPopupScreen;
 import view.SelectedEnemyShip;
 import view.ShipOutline;
 import view.EndOfLevelGraphic.WinnerType;
@@ -70,6 +71,7 @@ public class Level extends GameObject {
 	private SelectedEnemyShip hoveredShipView;
 	private SelectedShipButtons shipButtons;
 	private ShipSelectionScreen shipSelectionScreen;
+	private FoundItemsPopupScreen foundItemsScreen;
 	private String fileName;
 
 	private Strategy aiStrategy;
@@ -164,6 +166,10 @@ public class Level extends GameObject {
 		// Ship Selection View
 		shipSelectionScreen = new ShipSelectionScreen(this);
 		addChild(shipSelectionScreen);
+		
+		//Found Items View
+		foundItemsScreen = new FoundItemsPopupScreen();
+		addChild(foundItemsScreen);
 
 		// Background button for mouse input on the map
 		levelButton = new LevelBackgroundButton(this);
@@ -323,6 +329,7 @@ public class Level extends GameObject {
 		if(tile.getItems().size() > 0){
 			//System.out.println("Items before addition: " + ship.getItems().size());
 			ship.getItems().addAll(tile.getItems());
+			foundItemsScreen.setVisible(true);
 			tile.getItems().clear();
 			//System.out.println("Items after addition: " + ship.getItems().size());
 		}
