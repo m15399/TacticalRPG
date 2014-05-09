@@ -6,6 +6,27 @@ import shipVisuals.BomberVisual;
 
 public class BattleCruiser extends Ship {
 
+	/**
+	 * Reminder on what things constructorAid sets to help in balancing
+	 * 
+	 * @param name
+	 * @param moves
+	 *            - meant as max movement range
+	 * @param hull
+	 * @param shielding
+	 * @param maxHull
+	 * @param maxShielding
+	 * @param accuracy
+	 * @param description
+	 * @param minDamage
+	 * @param maxDamage
+	 * @param critChance
+	 * @param range
+	 *            - meant as ship's attack range
+	 * @param isTargetable
+	 * @param team
+	 */
+
 	public BattleCruiser(Point newLocation) {
 		super(newLocation);
 		String description = "Battle Cruiser,\nMade for battle\ncruisin' to victory.";
@@ -14,7 +35,7 @@ public class BattleCruiser extends Ship {
 		addToItems(new SpaceMine());
 
 		setVisual(new BomberVisual(this));
-		
+
 		// ability - deal true damage to target mothership
 		setAbility(new PlaceFighterAbility());
 	}
@@ -25,21 +46,24 @@ public class BattleCruiser extends Ship {
 
 	@Override
 	public void attack(Ship target) {
-		double damage = this.getDamage();
-		if (!target.getName().equals("Scout")) {
-			if (target.getHull() - target.getFinalDamage(damage) > 0)
-				target.setHull(target.getHull()
-						- target.getFinalDamage(damage));
-			else
-				target.setHull(0);
+		if (this.isHit()) {
+			double damage = this.getDamage();
+			if (!target.getName().equals("Scout")) {
+				if (target.getHull() - target.getFinalDamage(damage) > 0)
+					target.setHull(target.getHull()
+							- target.getFinalDamage(damage));
+				else
+					target.setHull(0);
+			} else {
+				if (target.getHull() - damage > 0)
+					target.setHull(target.getHull() - damage);
+				else
+					target.setHull(0);
+			}
 		} else {
-			if (target.getHull() - damage > 0)
-				target.setHull(target.getHull() - damage);
-			else
-				target.setHull(0);
+			System.out.println("missed");
 		}
 		this.setCanAttack(false);
 	}
-
 
 }

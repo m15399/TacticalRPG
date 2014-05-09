@@ -6,6 +6,25 @@ import shipVisuals.ShipVisual;
 
 public class Mothership extends Ship{
 
+	/**
+	 * Reminder on what things constructorAid sets to help in balancing
+	 * 
+	 * @param name
+	 * @param moves - meant as max movement range
+	 * @param hull
+	 * @param shielding
+	 * @param maxHull
+	 * @param maxShielding
+	 * @param accuracy
+	 * @param description
+	 * @param minDamage
+	 * @param maxDamage
+	 * @param critChance
+	 * @param range - meant as ship's attack range
+	 * @param isTargetable
+	 * @param team
+	 */		
+	
 	public Mothership(Point newLocation) {
 		super(newLocation);
 		String description = "Grand mothership,\nstationary and capable\nof unit production.";

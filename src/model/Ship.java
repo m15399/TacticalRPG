@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import shipVisuals.ShipVisual;
 import utils.Direction;
@@ -21,6 +22,7 @@ public class Ship extends GameObject {
 	private boolean canAttack, canMove, canUseAbility, canUseItem, isWaiting, isTargetable;
 	private Level level;
 	private ShipVisual visual;
+	private Random random = new Random();
 
 	public Ship(Point newLocation) {
 		location = new Point(newLocation);
@@ -53,6 +55,8 @@ public class Ship extends GameObject {
 	 * @param maxDamage
 	 * @param critChance
 	 * @param range - meant as ship's attack range
+	 * @param isTargetable
+	 * @param team
 	 */
 
 	public void constructorAid(String name, int moves, double hull,
@@ -440,6 +444,13 @@ public class Ship extends GameObject {
 	
 	public void setIsTargetable(boolean isTargetable){
 		this.isTargetable = isTargetable;
+	}
+	
+	public boolean isHit() {
+		if (random.nextInt(100) < getAccuracy()) {
+			return true;
+		}
+		else return false;
 	}
 	
 	public String itemsToString(){
