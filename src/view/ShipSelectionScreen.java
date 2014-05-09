@@ -20,6 +20,7 @@ import model.Ship;
 public class ShipSelectionScreen extends GameObject{
 	static final int WIDTH = 200;
 	static final int HEIGHT = 300;
+	static final int LIMITEDHEIGHT = 210;
 	
 	private boolean visible;
 	private Level level;
@@ -27,6 +28,7 @@ public class ShipSelectionScreen extends GameObject{
 	private Tooltip tooltip;
 	
 	private ArrayList<Button> buttons;
+	private String levelFileName;
 	
 	public ShipSelectionScreen(Level newLevel){
 		level = newLevel;
@@ -40,6 +42,38 @@ public class ShipSelectionScreen extends GameObject{
 		backgroundButton.getPosition().setZ(10);
 		addButton(backgroundButton);
 		
+		levelFileName = newLevel.getFileName();
+		if(levelFileName.equals("maps/mission1")){
+			addLimitedSelectionButtons();
+		}
+		else{
+			addNormalSelectionButtons();
+		}
+	}
+	
+	private abstract class SelectionButton extends Button{
+		
+		public SelectionButton(int x, int y, int bwidth, int bheight){
+			super(x, y, bwidth, bheight);
+		}
+		
+		public abstract Ship getANewShip();
+		
+		public void mouseHovered(){
+			tooltip.setText(getANewShip().getDescription());
+			tooltip.setVisible(true);
+		}
+		
+		public void mouseExited(){
+			tooltip.setVisible(false);
+		}
+		
+		public void mouseReleased(){
+			level.warpInPlayerShip(getANewShip());
+		}
+	}
+	
+	public void addNormalSelectionButtons(){
 		addButton(new SelectionButton(5, 50, 64, 64) {
 			public Ship getANewShip() {
 				return new Scout(new Point(-1, -1));
@@ -70,31 +104,30 @@ public class ShipSelectionScreen extends GameObject{
 				return new Sniper(new Point(-1, -1));
 			}
 		});
-		
 	}
 	
-	private abstract class SelectionButton extends Button{
-		
-		public SelectionButton(int x, int y, int bwidth, int bheight){
-			super(x, y, bwidth, bheight);
-		}
-		
-		public abstract Ship getANewShip();
-		
-		public void mouseHovered(){
-			tooltip.setText(getANewShip().getDescription());
-			tooltip.setVisible(true);
-		}
-		
-		public void mouseExited(){
-			tooltip.setVisible(false);
-		}
-		
-		public void mouseReleased(){
-			level.warpInPlayerShip(getANewShip());
-		}
+	public void addLimitedSelectionButtons(){
+		addButton(new SelectionButton(5, 50, 64, 64) {
+			public Ship getANewShip() {
+				return new Scout(new Point(-1, -1));
+			}
+		});
+		addButton(new SelectionButton(105, 50, 64, 64) {
+			public Ship getANewShip() {
+				return new Fighter(new Point(-1, -1));
+			}
+		});
+		addButton(new SelectionButton(5, 140, 64, 64) {
+			public Ship getANewShip() {
+				return new Bomber(new Point(-1, -1));
+			}
+		});
+		addButton(new SelectionButton(105, 140, 64, 64) {
+			public Ship getANewShip() {
+				return new RepairShip(new Point(-1, -1));
+			}
+		});
 	}
-	
 	
 	public void update(){
 		
@@ -135,6 +168,15 @@ public class ShipSelectionScreen extends GameObject{
 		if(!visible)
 			return;
 				
+		if(levelFileName.equals("maps/mission1")){
+			drawLimitedSelectionScreen(g);
+		}
+		else{
+			drawSelectionScreen(g);
+		}
+	}
+	
+	public void drawSelectionScreen(Graphics g){
 		int offsetX = 0;
 		int offsetY = 0;
 		
@@ -169,5 +211,38 @@ public class ShipSelectionScreen extends GameObject{
 		g2.drawImage(ImageLibrary.getInstance().getImage("sniper.png"), 5, 225, null);
 		g2.drawString("Sniper", 110, 220);
 		g2.drawImage(ImageLibrary.getInstance().getImage("battlecruiser.png"), 105, 225, null);
+	}
+	
+	public void drawLimitedSelectionScreen(Graphics g){
+		int offsetX = 0;
+		int offsetY = 0;
+		
+		Graphics2D g2 = (Graphics2D) g;
+		
+		g2.setStroke(new BasicStroke(2));
+		
+		// Draw a black rect first as a background
+		g2.setColor(Color.black);
+		g2.fillRect(offsetX, offsetY, WIDTH, LIMITEDHEIGHT);
+		
+		// Draw a border (I just put the top right half for now)
+		g2.setColor(Color.white);
+		g2.drawLine(offsetX, offsetY + LIMITEDHEIGHT, WIDTH + offsetX, offsetY + LIMITEDHEIGHT);
+		g2.drawLine(WIDTH + offsetX, offsetY, WIDTH + offsetX, LIMITEDHEIGHT + offsetY);
+		
+		//Draw title of screen
+		Font font = g2.getFont();
+		float f = 18.0f;
+		g2.setFont(font.deriveFont(f));
+		g2.drawString("Ship Selection Screen", 10, 20);
+		g2.setFont(font);
+		g2.drawString("Scout", 10, 40);
+		g2.drawImage(ImageLibrary.getInstance().getImage("scout.png"), 5, 45, null);
+		g2.drawString("Fighter", 110, 40);
+		g2.drawImage(ImageLibrary.getInstance().getImage("fighter.png"), 105, 45, null);
+		g2.drawString("Bomber", 10, 130);
+		g2.drawImage(ImageLibrary.getInstance().getImage("bomber.png"), 5, 135, null);
+		g2.drawString("Repair Ship", 110, 130);
+		g2.drawImage(ImageLibrary.getInstance().getImage("repairship.png"), 105, 135, null);
 	}
 }

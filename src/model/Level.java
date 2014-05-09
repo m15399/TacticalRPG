@@ -70,6 +70,7 @@ public class Level extends GameObject {
 	private SelectedEnemyShip hoveredShipView;
 	private SelectedShipButtons shipButtons;
 	private ShipSelectionScreen shipSelectionScreen;
+	private String fileName;
 
 	private Strategy aiStrategy;
 
@@ -95,7 +96,7 @@ public class Level extends GameObject {
 				filename);
 
 		Tile[][] tiles = builtMap.getTiles();
-
+		fileName = filename;
 		map = new Map(tiles);
 		init();
 
@@ -1135,5 +1136,8 @@ public class Level extends GameObject {
 		numHumans = 2;
 	}
 	
+	public String getFileName(){
+		return fileName;
+	}
 	
 }
