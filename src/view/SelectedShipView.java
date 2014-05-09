@@ -21,7 +21,7 @@ import model.Ship;
 public class SelectedShipView extends GameObject {
 
 	static final int WIDTH = 500;
-	static final int HEIGHT = 180;
+	static final int HEIGHT = 190;
 	private double displayHealth;
 	private Ship currentShip;
 	private Button button;
