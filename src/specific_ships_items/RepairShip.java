@@ -1,17 +1,39 @@
 package specific_ships_items;
 
 import java.awt.Point;
+
 import model.Ship;
 import shipVisuals.ScoutVisual;
 
 public class RepairShip extends Ship {
 
+	/**
+	 * Reminder on what things constructorAid sets to help in balancing
+	 * 
+	 * @param name
+	 * @param moves
+	 *            - meant as max movement range
+	 * @param hull
+	 * @param shielding
+	 * @param maxHull
+	 * @param maxShielding
+	 * @param accuracy
+	 * @param description
+	 * @param minDamage
+	 * @param maxDamage
+	 * @param critChance
+	 * @param range
+	 *            - meant as ship's attack range
+	 * @param isTargetable
+	 * @param team
+	 */	
+	
 	public RepairShip(Point newLocation) {
 		super(newLocation);
-		String description = "Repair ship,\nBattlefield support\ndefenseless.";
+		String description = "Repair ship,\nSupport not designed\nfor heavy combat.";
 
-		this.constructorAid("RepairShip", 4, 75, 20, 75, 20, 100,
-				description, 0, 0, 1, 1, true, 0);
+		this.constructorAid("RepairShip", 4, 75, 20, 75, 20, 90,
+				description, 25, 30, 10, 1, true, 0);
 		addToItems(new SpaceMine());
 
 		setVisual(new ScoutVisual(this));
@@ -27,13 +49,15 @@ public class RepairShip extends Ship {
 
 	@Override
 	public void attack(Ship target) {
-		if(target.getHull() + target.getMaxHull() * (1/3) > target.getMaxHull()) {
-			target.setHull(target.getMaxHull());
-		}
-		else {
-			target.setHull(target.getHull() + target.getMaxHull() * (1/3));
+		if (this.isHit()) {
+			double damage = this.getDamage();
+			if (target.getHull() - target.getFinalDamage(damage) > 0)
+				target.setHull(target.getHull() - target.getFinalDamage(damage));
+			else
+				target.setHull(0);
+		} else {
+			System.out.println("missed");
 		}
 		this.setCanAttack(false);
 	}
-
 }
