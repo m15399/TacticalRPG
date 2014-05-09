@@ -319,12 +319,16 @@ public class Level extends GameObject {
 	
 	public void shipFlyingThroughTile(Ship ship, int mapX, int mapY){
 		Tile tile = map.getTile(mapX, mapY);
+		//System.out.println("# Tile Items: " + tile.getItems().size());
+		if(tile.getItems().size() > 0){
+			//System.out.println("Items before addition: " + ship.getItems().size());
+			ship.getItems().addAll(tile.getItems());
+			tile.getItems().clear();
+			//System.out.println("Items after addition: " + ship.getItems().size());
+		}
 		if(tile.getHasTerrain()){
 			Terrain terrain = tile.getTerrain();
 			terrain.applyEffect(ship);
-			if(tile.getItems().size() > 0){
-				ship.getItems().addAll(tile.getItems());
-			}
 //			System.out.println("flying through terrain: " + terrain.toString());
 		}
 	}
