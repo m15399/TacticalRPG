@@ -12,6 +12,7 @@ import specific_ships_items.Fighter;
 import specific_ships_items.Mothership;
 import specific_ships_items.RepairShip;
 import specific_ships_items.Scout;
+import specific_ships_items.Sniper;
 import specific_ships_items.WarpGateShip;
 import terrains.AsteroidTerrain;
 import terrains.PlanetTerrain2x2;
@@ -354,9 +355,9 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		else if(hasShip && ship instanceof WarpGateShip){
 			result += "W";
 		}
-//		else if(hasShip && ship instanceof Sniper){
-//			result += "X";
-//		}
+		else if(hasShip && ship instanceof Sniper){
+			result += "X";
+		}
 		else if(hasTerrain && terrain instanceof AsteroidTerrain){
 			result += "A";
 		}

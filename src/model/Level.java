@@ -322,7 +322,9 @@ public class Level extends GameObject {
 		if(tile.getHasTerrain()){
 			Terrain terrain = tile.getTerrain();
 			terrain.applyEffect(ship);
-						
+			if(tile.getItems().size() > 0){
+				ship.getItems().addAll(tile.getItems());
+			}
 //			System.out.println("flying through terrain: " + terrain.toString());
 		}
 	}
