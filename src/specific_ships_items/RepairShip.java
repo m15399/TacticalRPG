@@ -55,8 +55,9 @@ public class RepairShip extends Ship {
 				target.setHull(target.getHull() - target.getFinalDamage(damage));
 			else
 				target.setHull(0);
+			setDidMiss(false);
 		} else {
-			System.out.println("missed");
+			setDidMiss(true);
 		}
 		this.setCanAttack(false);
 	}

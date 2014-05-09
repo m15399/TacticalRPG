@@ -48,6 +48,7 @@ public class Mothership extends Ship{
 		else
 			target.setHull(0);
 		this.setCanAttack(false);
+		setDidMiss(false);
 	}
 
 

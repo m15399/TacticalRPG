@@ -144,14 +144,14 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		}
 		
 		// terrain debugging
-		if(Game.DEBUG){
-			if(hasTerrain && isOccupied){
-				g.setColor(new Color(.5f, .5f, .5f, .4f));
-
-				Point px = Map.mapToPixelCoords(new Point(mapX, mapY));
-				g.fillRect((int) px.getX(), (int) px.getY(), Map.TILESIZE,Map.TILESIZE);
-			}
-		}
+//		if(Game.DEBUG){
+//			if(hasTerrain && isOccupied){
+//				g.setColor(new Color(.5f, .5f, .5f, .4f));
+//
+//				Point px = Map.mapToPixelCoords(new Point(mapX, mapY));
+//				g.fillRect((int) px.getX(), (int) px.getY(), Map.TILESIZE,Map.TILESIZE);
+//			}
+//		}
 		
 	}
 	

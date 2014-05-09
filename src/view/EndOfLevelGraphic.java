@@ -4,19 +4,35 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
+import actions.TimerAction;
+
+import utils.*;
+
 import model.Game;
 import model.GameObject;
 
 public class EndOfLevelGraphic extends GameObject {
 
 	public enum WinnerType {
-		SINGLEPLAYER, PLAYER1, PLAYER2, ENEMY;
+		SINGLEPLAYER, PLAYER1, PLAYER2, ENEMY, STARTBLUETURN, STARTREDTURN;
 	}
 	
 	private WinnerType winnerType;
 	
 	public EndOfLevelGraphic(WinnerType winnerType){
 		this.winnerType = winnerType;
+	}
+	
+	public EndOfLevelGraphic(WinnerType winnerType, int duration){
+		this.winnerType = winnerType;
+		
+		TimerAction timer = new TimerAction(duration, new Observer(){
+			public void notified(Observable sender){
+				destroy();
+			}
+		});
+		addChild(timer);
+		timer.start();
 	}
 	
 	public void draw(Graphics g){
@@ -40,6 +56,12 @@ public class EndOfLevelGraphic extends GameObject {
 			break;
 		case ENEMY:
 			s = "Mission Failed!";
+			break;
+		case STARTBLUETURN:
+			s = "BLUE'S TURN";
+			break;
+		case STARTREDTURN:
+			s = "RED'S TURN";
 			break;
 			
 		}

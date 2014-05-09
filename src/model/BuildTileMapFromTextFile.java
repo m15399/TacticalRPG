@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
+import specific_ships_items.AISpawner;
 import specific_ships_items.BattleCruiser;
 import specific_ships_items.Bomber;
 import specific_ships_items.Fighter;
@@ -92,6 +93,8 @@ public class BuildTileMapFromTextFile {
 	 * E = RepairShip
 	 * X = Sniper
 	 * W = WarpGateShip
+	 * 2 = WarpGateShip (player 2)
+	 * * = AISpawner (enemy warpgate)
 	 * m = MineShip
 	 * 
 	 * Terrain:
@@ -119,7 +122,7 @@ public class BuildTileMapFromTextFile {
 	 * Remaining Letters and numbers
 	 * DHIJKLNOQRTUVY
 	 * abdehijklnoqrtvuy
-	 * 123456789
+	 * 13456789
 	 * 
 	 * 0 = Default Unoccupied Tile
 	 */
@@ -164,6 +167,15 @@ public class BuildTileMapFromTextFile {
 				}
 				else if(temp == 'W'){
 					WarpGateShip ship = new WarpGateShip(new Point(c, r));
+					tiles[c][r] = new Tile(ship);
+				}
+				else if(temp == '2'){
+					WarpGateShip ship = new WarpGateShip(new Point(c, r));
+					ship.setTeam(1);
+					tiles[c][r] = new Tile(ship);
+				}
+				else if(temp == '*'){
+					AISpawner ship = new AISpawner(new Point(c, r));
 					tiles[c][r] = new Tile(ship);
 				}
 				else if(temp == 'm'){

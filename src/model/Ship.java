@@ -23,6 +23,8 @@ public class Ship extends GameObject {
 	private Level level;
 	private ShipVisual visual;
 	private Random random = new Random();
+	
+	private boolean didMiss;
 
 	public Ship(Point newLocation) {
 		location = new Point(newLocation);
@@ -31,6 +33,8 @@ public class Ship extends GameObject {
 		items = new ArrayList<Item>();
 		visual = null;
 		ability = null;
+		
+		didMiss = false;
 	}
 	
 	public boolean isShipDead() {
@@ -451,6 +455,14 @@ public class Ship extends GameObject {
 			return true;
 		}
 		else return false;
+	}
+	
+	public boolean getDidMiss(){
+		return didMiss;
+	}
+	
+	public void setDidMiss(boolean miss){
+		didMiss = miss;
 	}
 	
 	public String itemsToString(){

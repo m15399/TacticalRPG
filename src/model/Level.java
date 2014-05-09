@@ -22,6 +22,7 @@ import view.SelectedEnemyShip;
 import view.ShipOutline;
 import view.EndOfLevelGraphic.WinnerType;
 import view.ShipOutline.SelectionType;
+import view.BouncingStat;
 import view.EndOfLevelGraphic;
 import view.SelectedShipButtons;
 import view.SelectedShipView;
@@ -107,7 +108,7 @@ public class Level extends GameObject {
 				if (t.getHasShip()) {
 
 					Ship ship = t.getShip();
-					if (ship instanceof WarpGateShip) {
+					if (ship instanceof WarpGateShip && ship.getTeam() == 0) {
 						addShipToMap(ship);
 					} else {
 						addEnemyShipToMap(ship);
@@ -346,6 +347,18 @@ public class Level extends GameObject {
 		if (!isAITurn()) {
 			selectPlayerNextShip();
 		}
+		
+		if(numHumans > 1){
+			int time = 90;
+			if(currentTeam == 0){
+				addChild(new EndOfLevelGraphic(WinnerType.STARTBLUETURN, time));
+			} else {
+				addChild(new EndOfLevelGraphic(WinnerType.STARTREDTURN, time));
+
+			}
+		}
+			
+
 	}
 
 	public void endTurn() {
@@ -697,11 +710,25 @@ public class Level extends GameObject {
 			public void notified(Observable sender) {
 				enterDefaultState();
 			}
-		}, new Observer() {
-			public void notified(Observable sender) {
-				checkForDestroyedUnits();
+		}, new NotifyWhenAttackedObserver(attacker, defender), defender, 0, false, false, camera);
+	}
+	
+	private class NotifyWhenAttackedObserver implements Observer{
+		Ship attacker;
+		Ship defender;
+		
+		public NotifyWhenAttackedObserver(Ship a, Ship d){
+			attacker = a;
+			defender = d;
+		}
+		
+		public void notified(Observable sender) {
+			checkForDestroyedUnits();
+			if(attacker.getDidMiss()){
+				camera.addChild(new BouncingStat("Missed!", defender.getVisual()));
 			}
-		}, defender, 0, false, false, camera);
+		}
+		
 	}
 
 	public void waitShip(Ship ship) {
@@ -746,7 +773,10 @@ public class Level extends GameObject {
 		TimerAction timer = new TimerAction(30, new Observer() {
 			public void notified(Observable sender) {
 				removeShipFromMap(warper);
-				addShipToMap(shipWarpingIn);
+				if(shipWarpingIn.getTeam() == 0)
+					addShipToMap(shipWarpingIn);
+				else
+					addEnemyShipToMap(shipWarpingIn);
 
 				enterDefaultState();
 				if (!isAITurn())
@@ -1099,6 +1129,10 @@ public class Level extends GameObject {
 	
 	public boolean getIsOver(){
 		return isOver;
+	}
+	
+	public void setToMultiplayer(){
+		numHumans = 2;
 	}
 	
 	

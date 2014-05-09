@@ -71,8 +71,9 @@ public class Fighter extends Ship {
 				else
 					target.setHull(0);
 			}
+			setDidMiss(false);
 		} else {
-			System.out.println("missed");
+			setDidMiss(true);
 		}
 		this.setCanAttack(false);
 	}
