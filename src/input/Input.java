@@ -22,7 +22,7 @@ public class Input implements MouseMotionListener, MouseListener {
 	 */
 	private static Input instance = null;
 
-	public static Input getInstance() {
+	public static synchronized Input getInstance() {
 		if (instance == null) {
 			instance = new Input();
 		}
@@ -46,6 +46,19 @@ public class Input implements MouseMotionListener, MouseListener {
 		buttons = new ArrayList<Button>();
 		lastButton = new Button();
 		enabled = true;
+	}
+
+	public void setButtons(ArrayList<Button> newButtons){
+		for(Button b : buttons){
+			removeButton(b);
+		}
+		for(Button b : newButtons){
+			addButton(b);
+		}
+	}
+	
+	public ArrayList<Button> getButtons(){
+		return buttons;
 	}
 
 	public double getX() {

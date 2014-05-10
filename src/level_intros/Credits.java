@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
-import model.Game;
 import model.GameObject;
 import model.TitleMenu;
 
@@ -15,9 +14,6 @@ public class Credits extends LevelIntro {
 	 */
 	private static final long serialVersionUID = 8330133783986559569L;
 
-	public Credits(Game game){
-		super(game);
-	}
 	
 	public void draw(Graphics g){
 		
@@ -42,7 +38,7 @@ public class Credits extends LevelIntro {
 
 	@Override
 	public GameObject getNextRoot() {
-		return new TitleMenu(getGame());
+		return new TitleMenu();
 	}
 	
 }

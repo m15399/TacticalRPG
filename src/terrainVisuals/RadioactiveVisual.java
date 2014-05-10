@@ -1,6 +1,5 @@
 package terrainVisuals;
 
-import resources.ImageLibrary;
 import terrains.Terrain;
 import view.Sprite;
 
@@ -15,7 +14,7 @@ public class RadioactiveVisual extends TerrainVisual{
 	public RadioactiveVisual(Terrain terrain) {
 		super(terrain);
 		sprite = new Sprite();
-		sprite.setImage(ImageLibrary.getInstance().getImage("radioactive.png"));
+		sprite.setImage("radioactive.png");
 		sprite.getPosition().setLocation(0, 64);
 		addChild(sprite);
 		

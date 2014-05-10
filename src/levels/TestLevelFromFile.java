@@ -1,6 +1,5 @@
 package levels;
 
-import model.Game;
 import model.GameObject;
 import model.Level;
 
@@ -11,8 +10,8 @@ public class TestLevelFromFile extends Level {
 	 */
 	private static final long serialVersionUID = 164431663622928217L;
 
-	public TestLevelFromFile(Game game){
-		super(game, "maps/testTileMap");
+	public TestLevelFromFile(){
+		super("maps/testTileMap");
 		
 		startTurn(0);
 
@@ -20,9 +19,9 @@ public class TestLevelFromFile extends Level {
 	
 	public GameObject getNextRoot(){
 		if(getWinner() == 0)
-			return new TestLevel(getGame());
+			return new TestLevel();
 		else
-			return new TestLevelFromFile(getGame());
+			return new TestLevelFromFile();
 	}
 	
 }

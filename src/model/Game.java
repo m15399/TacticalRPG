@@ -1,10 +1,18 @@
 package model;
 
 
+import input.Button;
 import input.Input;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -44,7 +52,7 @@ public class Game extends JPanel implements Runnable, Fadable {
 	
 	public static void main(String[] args){
 		
-		Game game = new Game();
+		Game game = Game.getInstance();
 
 		JFrame window = new JFrame();
 		window.setSize(WIDTH, HEIGHT);
@@ -57,6 +65,15 @@ public class Game extends JPanel implements Runnable, Fadable {
 		game.startGame();
 	}
 	
+	public static Game game = null;
+	public static synchronized Game getInstance(){
+		if(game == null){
+			game = new Game();
+		}
+		return game;
+	}
+	
+	
 	public Game(){
 		rootObject = null;
 		thread = null;
@@ -66,7 +83,7 @@ public class Game extends JPanel implements Runnable, Fadable {
 
 		fade = 0;
 		
-		setRoot(new TitleMenu(this));
+		setRoot(new TitleMenu());
 		
 	}
 	
@@ -107,10 +124,10 @@ public class Game extends JPanel implements Runnable, Fadable {
 			rootObject.destroy();
 		}
 		
-		if(DEBUG){
+//		if(DEBUG){
 			Input.getInstance().printNumButtons();
 			
-		}
+//		}
 		
 		rootObject = o;
 	}
@@ -177,6 +194,61 @@ public class Game extends JPanel implements Runnable, Fadable {
 	
 	public double getFade(){
 		return fade;
+	}
+	
+	public void saveGame(){
+		System.out.println("saving");
+		FileOutputStream foutput = null;
+		try {
+			foutput = new FileOutputStream("save");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(foutput);
+			
+			out.writeObject(rootObject);
+			out.writeObject(Input.getInstance().getButtons());
+			
+			out.close();
+			foutput.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void loadGame(){
+		System.out.println("loading");
+		FileInputStream finput = null;
+		try {
+			finput = new FileInputStream("save");
+			
+			ObjectInputStream in = new ObjectInputStream(finput);
+			
+			GameObject newRoot = (GameObject) in.readObject();
+			setRoot(newRoot);
+			
+			@SuppressWarnings("unchecked")
+			ArrayList<Button> buttons = (ArrayList<Button>) in.readObject();
+			Input.getInstance().setButtons(buttons);
+			
+			in.close();
+			finput.close();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

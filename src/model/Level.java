@@ -50,7 +50,6 @@ public class Level extends GameObject {
 
 	private TurnState state;
 
-	private Game game;
 	private boolean isOver;
 	
 	private Map map;
@@ -89,10 +88,8 @@ public class Level extends GameObject {
 	
 	private List<Button> debugButtons;
 
-	public Level(Game game, int width, int height) {
+	public Level(int width, int height) {
 
-		this.game = game;
-		
 		map = new Map(width, height);
 		
 		fileName = "";
@@ -100,9 +97,7 @@ public class Level extends GameObject {
 		init();
 	}
 
-	public Level(Game game, String filename) {
-
-		this.game = game;
+	public Level(String filename) {
 		
 		BuildTileMapFromTextFile builtMap = new BuildTileMapFromTextFile(
 				filename);
@@ -246,6 +241,18 @@ public class Level extends GameObject {
 			Input.getInstance().addButton(b4);
 			debugButtons.add(b4); 
 			
+			Button b5 = new Button(Game.WIDTH - bsize, Game.HEIGHT - bsize*5, bsize, bsize*5){
+
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = -2435342331607024084L;
+				public void mouseReleased(){
+					Game.getInstance().saveGame();
+				}
+			};
+			Input.getInstance().addButton(b5);
+			debugButtons.add(b5); 
 		}
 
 		map.checkTileLocations();
@@ -265,7 +272,7 @@ public class Level extends GameObject {
 		
 		TimerAction timer = new TimerAction(90, new Observer(){
 			public void notified(Observable sender){
-				game.transitionTo(getNextRoot());
+				Game.getInstance().transitionTo(getNextRoot());
 			}
 		});
 		addChild(timer);
@@ -350,7 +357,7 @@ public class Level extends GameObject {
 	}
 	
 	public GameObject getNextRoot(){
-		return new TitleMenu(game);
+		return new TitleMenu();
 	}
 	
 	public void shipFlyingThroughTile(Ship ship, int mapX, int mapY){
@@ -1278,10 +1285,6 @@ public class Level extends GameObject {
 		return tiles;
 	}
 
-	public Game getGame(){
-		return game;
-	}
-	
 	public boolean getIsOver(){
 		return isOver;
 	}

@@ -3,6 +3,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import model.GameObject;
@@ -17,7 +18,11 @@ public class Starfield extends GameObject {
 	 */
 	private static final long serialVersionUID = -1065618840062260350L;
 
-	private class Star {
+	private class Star implements Serializable{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 3309447625964200037L;
 		double x, y, z, size;
 
 		public Star(double x, double y, double z, double size) {

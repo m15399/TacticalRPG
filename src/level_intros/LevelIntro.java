@@ -14,11 +14,9 @@ public abstract class LevelIntro extends GameObject {
 	 * 
 	 */
 	private static final long serialVersionUID = -4346807789304208553L;
-	private Game game;
 	private Button button;
 	
-	public LevelIntro(Game newGame){
-		this.game = newGame;
+	public LevelIntro(){
 		
 		button = new Button(0,0,Game.WIDTH, Game.HEIGHT){
 			/**
@@ -27,7 +25,7 @@ public abstract class LevelIntro extends GameObject {
 			private static final long serialVersionUID = 1043605337380741641L;
 
 			public void mouseReleased(){
-				game.transitionTo(getNextRoot());
+				Game.getInstance().transitionTo(getNextRoot());
 			}
 		};
 		
@@ -42,10 +40,6 @@ public abstract class LevelIntro extends GameObject {
 		});
 		addChild(timer);
 		timer.start();
-	}
-	
-	public Game getGame(){
-		return game;
 	}
 	
 	public void onDestroy(){

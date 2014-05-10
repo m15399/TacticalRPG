@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.Random;
 
 /*
@@ -157,8 +158,12 @@ public class AnimatedSprite extends Sprite {
 		numberFrames = indicies.length;
 	}
 
-	private class Size {
+	private class Size implements Serializable{
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -4314896165222015097L;
 		private int width, height;
 
 		public Size(int newWidth, int newHeight) {
@@ -182,4 +187,6 @@ public class AnimatedSprite extends Sprite {
 			height = newHeight;
 		}
 	}
+	
+	
 }

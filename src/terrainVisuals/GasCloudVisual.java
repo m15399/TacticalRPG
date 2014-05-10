@@ -1,6 +1,5 @@
 package terrainVisuals;
 
-import resources.ImageLibrary;
 import terrains.Terrain;
 import view.Sprite;
 
@@ -15,7 +14,7 @@ public class GasCloudVisual extends TerrainVisual{
 	public GasCloudVisual(Terrain terrain) {
 		super(terrain);
 		sprite = new Sprite();
-		sprite.setImage(ImageLibrary.getInstance().getImage("gascloud.png"));
+		sprite.setImage("gascloud.png");
 		sprite.getPosition().setLocation(64, 0);
 		addChild(sprite);
 		

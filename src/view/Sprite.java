@@ -2,6 +2,9 @@ package view;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import resources.ImageLibrary;
 
@@ -12,7 +15,8 @@ public class Sprite extends Entity {
 	 * 
 	 */
 	private static final long serialVersionUID = -816486410686236510L;
-	protected BufferedImage image;
+	protected transient BufferedImage image;
+	private String filename;
 	
 	public Sprite(){
 		image = null;
@@ -41,12 +45,14 @@ public class Sprite extends Entity {
 		return image;
 	}
 	
-	public void setImage(BufferedImage newImage){
-		image = newImage;
+	public String getFilename(){
+		return filename;
 	}
 	
 	public void setImage(String filename){
 		image = ImageLibrary.getInstance().getImage(filename);
+		this.filename = filename;
+
 	}
 	
 	public void draw(Graphics g){
@@ -55,6 +61,15 @@ public class Sprite extends Entity {
 		g.drawImage(image, -image.getWidth()/2,-image.getHeight()/2, null);
 		
 		getPosition().untransform(g);
+	}
+	
+	private void writeObject(ObjectOutputStream s) throws IOException{
+		s.defaultWriteObject();
+	}
+	
+	private void readObject(ObjectInputStream s) throws ClassNotFoundException, IOException{
+		s.defaultReadObject();
+		setImage(filename);
 	}
 	
 	

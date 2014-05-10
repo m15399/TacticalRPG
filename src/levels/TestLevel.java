@@ -9,7 +9,6 @@ import specific_ships_items.MagneticShield;
 import specific_ships_items.Scout;
 import specific_ships_items.ScrapMetal;
 import specific_ships_items.WarpGateShip;
-import model.Game;
 import model.GameObject;
 import model.Level;
 
@@ -20,8 +19,8 @@ public class TestLevel extends Level {
 	 */
 	private static final long serialVersionUID = -5206578761391762646L;
 
-	public TestLevel(Game game) {
-		super(game, 16, 12);
+	public TestLevel() {
+		super(16, 12);
 		
 		// Ship Testing
 		
@@ -82,7 +81,7 @@ public class TestLevel extends Level {
 	}
 	
 	public GameObject getNextRoot(){
-		return new TestLevelFromFile(getGame());
+		return new TestLevelFromFile();
 	}
 
 }

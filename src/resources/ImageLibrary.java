@@ -56,7 +56,7 @@ public class ImageLibrary {
 	 * Singleton class (only one instance in program)
 	 */
 	private static ImageLibrary instance = null;
-	public static ImageLibrary getInstance() {
+	public static synchronized ImageLibrary getInstance() {
 		if (instance == null) {
 			instance = new ImageLibrary();
 		}

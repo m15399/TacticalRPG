@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 import levels.Mission1;
-import model.Game;
 import model.GameObject;
 
 public class TestIntro extends LevelIntro {
@@ -15,9 +14,6 @@ public class TestIntro extends LevelIntro {
 	 */
 	private static final long serialVersionUID = 8620885094576078851L;
 
-	public TestIntro(Game game){
-		super(game);
-	}
 	
 	public void draw(Graphics g){
 		
@@ -37,7 +33,7 @@ public class TestIntro extends LevelIntro {
 
 	@Override
 	public GameObject getNextRoot() {
-		return new Mission1(getGame());
+		return new Mission1();
 	}
 	
 }

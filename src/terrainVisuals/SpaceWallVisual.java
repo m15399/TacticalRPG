@@ -1,6 +1,5 @@
 package terrainVisuals;
 
-import resources.ImageLibrary;
 import terrains.SpaceWallTerrain;
 import view.Sprite;
 
@@ -15,7 +14,7 @@ public class SpaceWallVisual extends TerrainVisual{
 	public SpaceWallVisual(SpaceWallTerrain terrain) {
 		super(terrain);
 		sprite = new Sprite();
-		sprite.setImage(ImageLibrary.getInstance().getImage(terrain.getFileName()));
+		sprite.setImage(terrain.getFileName());
 		addChild(sprite);
 		
 		// parent the sprite to the location of the visual

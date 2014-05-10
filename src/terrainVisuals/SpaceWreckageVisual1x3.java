@@ -15,7 +15,7 @@ public class SpaceWreckageVisual1x3 extends TerrainVisual{
 	public SpaceWreckageVisual1x3(Terrain terrain) {
 		super(terrain);
 		sprite = new Sprite();
-		sprite.setImage(ImageLibrary.getInstance().getImage("spacewreckage1x3.png"));
+		sprite.setImage("spacewreckage1x3.png");
 		sprite.getPosition().setLocation(64, 0);
 		addChild(sprite);
 		

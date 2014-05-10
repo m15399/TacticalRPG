@@ -1,6 +1,5 @@
 package terrainVisuals;
 
-import resources.ImageLibrary;
 import terrains.Terrain;
 import view.Sprite;
 
@@ -15,7 +14,7 @@ public class PlanetVisual2x2 extends TerrainVisual{
 	public PlanetVisual2x2(Terrain terrain) {
 		super(terrain);
 		sprite = new Sprite();
-		sprite.setImage(ImageLibrary.getInstance().getImage("planet2x2.png"));
+		sprite.setImage("planet2x2.png");
 		sprite.getPosition().setLocation(35, 33);
 		addChild(sprite);
 		
