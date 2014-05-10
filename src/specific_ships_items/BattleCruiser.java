@@ -29,7 +29,7 @@ public class BattleCruiser extends Ship {
 
 	public BattleCruiser(Point newLocation) {
 		super(newLocation);
-		String description = "Battle Cruiser,\nMade for battle\ncruisin' to victory.";
+		String description = "Battle Cruiser,\nMade for battle\ncruisin' to victory.\nCan periodically\nspawn a fighter.";
 		this.constructorAid("BattleCruiser", 2, 150, 30, 150, 30, 75,
 				description, 50, 55, 25, 2, true, 0);
 

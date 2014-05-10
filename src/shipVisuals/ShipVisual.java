@@ -257,7 +257,21 @@ public class ShipVisual extends Entity {
 		
 		
 	}
-
+	
+	public void cast(Observer notifyWhenDone, Observer notifyWhenCasting, Camera camera){
+		
+		ActionQueue q = new ActionQueue(notifyWhenDone);
+		
+		q.addAction(new WaitForCameraAction(camera, notifyWhenCasting));
+		
+		q.addAction(new TimerAction(60, notifyWhenDone));
+		
+		
+		addChild(q);
+		q.start();
+		
+		
+	}
 	
 
 	public void playMoveAnimation() {

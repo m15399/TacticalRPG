@@ -42,7 +42,7 @@ public class Fighter extends Ship {
 
 	public Fighter(Point newLocation) {
 		super(newLocation);
-		String description = "Anti-air fighter,\ncapable of long\nrange attacks.";
+		String description = "Anti-air fighter,\ncapable of long\nrange attacks.\nCan move after \nattacking.";
 		this.constructorAid("Fighter", 5, 55, 20, 55, 25, 80, description, 40,
 				50, 25, 2, true, 0);
 

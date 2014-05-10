@@ -86,6 +86,8 @@ public class Level extends GameObject {
 		this.game = game;
 		
 		map = new Map(width, height);
+		
+		fileName = "";
 
 		init();
 	}
@@ -823,12 +825,16 @@ public class Level extends GameObject {
 
 	public void useCastableWithoutTarget() {
 		useCastableStart();
-
-		selectedShip.useAbilityWithoutTarget(new Observer() {
+		
+		selectedShip.getVisual().cast(new Observer() {
 			public void notified(Observable sender) {
 				useCastableEnd();
 			}
-		});
+		}, new Observer(){
+			public void notified(Observable sender){
+				selectedShip.useAbilityWithoutTarget(null);
+			}
+		}, camera);
 	}
 
 	public void useCastableOnShip(Ship ship) {
