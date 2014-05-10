@@ -48,7 +48,7 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	 * highlight colors
 	 */
 	public enum Highlight {
-		NONE, BLUE, RED, GREEN;
+		NONE, BLUE, RED, GREEN, MOVECOLOR;
 	}
 
 	private static float highlightAlpha = .4f;
@@ -59,6 +59,8 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	private static Color lightRedColor = new Color(1f, .5f, .5f, highlightAlpha);
 	private static Color greenColor = new Color(0f, .8f, .3f, highlightAlpha);
 	private static Color lightGreenColor = new Color(.5f, 1f, .5f,
+			highlightAlpha);
+	private static Color moveColor = new Color(.5f, .5f, 1f,
 			highlightAlpha);
 
 	/*
@@ -136,6 +138,8 @@ public class Tile extends GameObject implements Comparable<Tile>{
 				g.setColor(greenColor);
 			}
 			break;
+		case MOVECOLOR:
+			g.setColor(moveColor);
 
 		}
 		

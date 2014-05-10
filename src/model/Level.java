@@ -1070,7 +1070,7 @@ public class Level extends GameObject {
 				list = map.shortestPath(selectedShip.getLocation(),
 						tileHovered.getLocation());
 				map.highlightTilesWithoutClearingPrevious(
-						convertDirectionsToPoints(list), Highlight.GREEN);
+						convertDirectionsToPoints(list), Highlight.MOVECOLOR);
 			}
 		}
 

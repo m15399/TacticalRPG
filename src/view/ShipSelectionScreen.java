@@ -30,6 +30,9 @@ public class ShipSelectionScreen extends GameObject{
 	private ArrayList<Button> buttons;
 	private String levelFileName;
 	
+	private int count;
+	private boolean blink;
+	
 	public ShipSelectionScreen(Level newLevel){
 		level = newLevel;
 		visible = false;
@@ -49,6 +52,9 @@ public class ShipSelectionScreen extends GameObject{
 		else{
 			addNormalSelectionButtons();
 		}
+		
+		count = 0;
+		blink = true;
 	}
 	
 	private abstract class SelectionButton extends Button{
@@ -130,7 +136,9 @@ public class ShipSelectionScreen extends GameObject{
 	}
 	
 	public void update(){
-		
+		count++;
+		if(count % 40 == 0)
+			blink = !blink;
 	}
 	
 	public void onDestroy(){
@@ -197,7 +205,8 @@ public class ShipSelectionScreen extends GameObject{
 		Font font = g2.getFont();
 		float f = 18.0f;
 		g2.setFont(font.deriveFont(f));
-		g2.drawString("Ship Selection Screen", 10, 20);
+		if(blink)
+			g2.drawString("Select a Ship:", 10, 20);
 		g2.setFont(font);
 		g2.drawString("Scout", 10, 40);
 		g2.drawImage(ImageLibrary.getInstance().getImage("scout.png"), 5, 45, null);
@@ -234,7 +243,8 @@ public class ShipSelectionScreen extends GameObject{
 		Font font = g2.getFont();
 		float f = 18.0f;
 		g2.setFont(font.deriveFont(f));
-		g2.drawString("Ship Selection Screen", 10, 20);
+		if(blink)
+			g2.drawString("Select a Ship:", 10, 20);
 		g2.setFont(font);
 		g2.drawString("Scout", 10, 40);
 		g2.drawImage(ImageLibrary.getInstance().getImage("scout.png"), 5, 45, null);

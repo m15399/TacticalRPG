@@ -297,7 +297,7 @@ public class Map extends GameObject {
 	public void colorGreenHighlightsToBlue(){
 		for(int r = 0; r < tiles.length; r++){
 			for(int c = 0; c < tiles[r].length; c++){
-				if(tiles[r][c].getHighlight() == Highlight.GREEN){
+				if(tiles[r][c].getHighlight() == Highlight.MOVECOLOR){
 					tiles[r][c].setHighlight(Highlight.BLUE);
 				}
 			}
