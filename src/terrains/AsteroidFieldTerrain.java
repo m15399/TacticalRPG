@@ -8,7 +8,7 @@ import model.Ship;
 
 public class AsteroidFieldTerrain extends Terrain implements TerrainEffects{
 
-	private static int MAX_DAMAGE = 10;
+	private static final int MAX_DAMAGE = 8;
 	
 	public AsteroidFieldTerrain(Point newLocation) {
 		super(newLocation);
