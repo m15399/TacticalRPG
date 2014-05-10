@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
+import level_intros.TestIntro;
 import levels.*;
 import utils.Observable;
 import utils.Observer;
@@ -44,7 +45,7 @@ public class TitleMenu extends GameObject {
 		
 		addChild(new TitleMenuButton("Campaign", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
 			public void notified(Observable sender){
-				game.transitionTo(new Mission1(game));
+				game.transitionTo(new TestIntro(game));
 			}
 		}));
 		buttonNumber++;
