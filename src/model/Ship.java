@@ -23,6 +23,7 @@ public class Ship extends GameObject {
 	private Level level;
 	private ShipVisual visual;
 	private Random random = new Random();
+	DecimalFormat df = new DecimalFormat("#.#");  
 	
 	private boolean didMiss;
 
@@ -235,8 +236,7 @@ public class Ship extends GameObject {
 		location = newLocation;
 	}
 
-	public double getHull() {
-		DecimalFormat df = new DecimalFormat("#.#");      
+	public double getHull() {    
 		hull = Double.valueOf(df.format(hull));
 		return hull;
 	}
@@ -254,7 +254,7 @@ public class Ship extends GameObject {
 	}
 
 	public double getShielding() {
-		return shielding;
+		return Double.valueOf(df.format(shielding));
 	}
 
 	public void setShielding(double newShieldingValue) {
