@@ -4,20 +4,19 @@ import actions.TimerAction;
 import utils.Observer;
 import model.Castable;
 import model.Item;
-import model.Ship;
 
 public class Speedboost extends Item {
 
 	private int speedBoost;
 
 	public Speedboost() {
-		super("Speed Boost", "Increases the ship's move range for one turn.",
-				Castable.TargetType.ALLY, 2);
+		super("Afterburner", "Increases the ship's \nmove range for one \bturn.",
+				Castable.TargetType.NONE, 0);
 		speedBoost = 4;
 	}
 
-	public void useOnShip(Ship ship, Observer notifyWhenDone) {
-		ship.setMovesLeft(ship.getMovesLeft() + speedBoost);
+	public void useWithoutTarget(Observer notifyWhenDone) {
+		getOwner().setMovesLeft(getOwner().getMovesLeft() + speedBoost);
 
 		// placeholder animation
 		TimerAction timer = new TimerAction(30, notifyWhenDone);

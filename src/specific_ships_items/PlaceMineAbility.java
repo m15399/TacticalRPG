@@ -12,7 +12,7 @@ import model.Tile;
 public class PlaceMineAbility extends Ability {
 
 	public PlaceMineAbility() {
-		super("Mine", "Places a mine at\n the target location.", Castable.TargetType.TILE, 2, 3);
+		super("Mine", "Places a mine at\nthe target location.", Castable.TargetType.TILE, 2, 3);
 		
 	}
 	

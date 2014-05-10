@@ -133,6 +133,21 @@ public class Ship extends GameObject {
 		setCanUseItem(false);
 	}
 	
+	public void useItemOnShip(Item item, Ship ship, Observer notifyWhenDone){
+		item.useOnShip(ship, notifyWhenDone);
+		itemUsed(item);
+	}
+	
+	public void useItemOnTile(Item item, Tile tile, Observer notifyWhenDone){
+		item.useOnTile(tile, notifyWhenDone);
+		itemUsed(item);
+	}
+	
+	public void useItemWithoutTarget(Item item, Observer notifyWhenDone){
+		item.useWithoutTarget(notifyWhenDone);
+		itemUsed(item);
+	}
+	
 	/*
 	 * Ability
 	 */
@@ -426,7 +441,7 @@ public class Ship extends GameObject {
 		this.canUseAbility = canUseAbility;
 	}
 
-	public boolean isCanUseItem() {
+	public boolean getCanUseItem() {
 		return canUseItem;
 	}
 

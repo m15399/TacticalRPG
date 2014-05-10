@@ -9,7 +9,7 @@ public class MagneticShield extends Item{
 	private double shieldingBoost ;
 	
 	public MagneticShield() {
-		super("Magnetic Shield", "Gives the ship a shield boost of 15%", Castable.TargetType.ALLY, 0);
+		super("Magnetizer", "Gives the ship a \nshield boost of 15%", Castable.TargetType.NONE, 0);
 		shieldingBoost = 1.15;
 	}
 

@@ -29,6 +29,7 @@ import view.SelectedShipButtons;
 import view.SelectedShipView;
 import view.ShipSelectionScreen;
 import view.Starfield;
+import view.Tooltip;
 
 /*
  * Root object for the main gameplay
@@ -65,6 +66,8 @@ public class Level extends GameObject {
 
 	private Ship selectedShip;
 	private Castable currentCastable;
+	private Ship currentShipTarget;
+	private Tile currentTileTarget;
 
 	// UI elements
 	private SelectedShipView selectedShipView;
@@ -330,9 +333,16 @@ public class Level extends GameObject {
 		//System.out.println("# Tile Items: " + tile.getItems().size());
 		if(tile.getItems().size() > 0){
 			//System.out.println("Items before addition: " + ship.getItems().size());
-			ship.getItems().addAll(tile.getItems());
+			ArrayList<Item> tileItems = new ArrayList<Item>();
+			for(Item i : tile.getItems()){
+				tileItems.add(i);
+			}
+			for(Item i : tileItems){
+				tile.removeFromItems(i);
+				ship.addToItems(i);
+			}
+			
 			foundItemsScreen.setVisible(true);
-			tile.getItems().clear();
 			//System.out.println("Items after addition: " + ship.getItems().size());
 		}
 		if(tile.getHasTerrain()){
@@ -490,6 +500,7 @@ public class Level extends GameObject {
 			shipButtons.setShip(selectedShip);
 		} else {
 			hoveredShipView.setShip(null);
+			shipButtons.setShip(null);
 		}
 		updateButtons();
 		shipSelectionScreen.setVisible(false);
@@ -498,7 +509,7 @@ public class Level extends GameObject {
 
 		if (isAITurn())
 			takeNextAIMove();
-
+		
 		if (selectedShip != null) {
 
 			if (selectedShip instanceof WarpGateShip) {
@@ -525,12 +536,7 @@ public class Level extends GameObject {
 						String name = selectedShip.getAbility().getName();
 
 						if (ability.getCooldownLeft() == 0) {
-							shipButtons.addButton(name, new Button() {
-								public void mouseReleased() {
-									currentCastable = selectedShip.getAbility();
-									enterCastingState();
-								}
-							});
+							shipButtons.addButton(name, new CastableButton(selectedShip.getAbility()));
 
 						} else {
 							shipButtons
@@ -543,6 +549,30 @@ public class Level extends GameObject {
 						}
 
 					}
+				}
+				if(selectedShip.getCanUseItem() && selectedShip.getItems().size() > 0){
+					
+					shipButtons.addButton("Items", new Button(){
+						public void mouseReleased(){
+							
+							shipButtons.setShip(selectedShip);
+							
+							for(Item i : selectedShip.getItems()){
+								
+								shipButtons.addButton(i.getName(), new CastableButton(i));
+								
+							}
+							
+							shipButtons.addButton("Cancel", new Button(){
+								public void mouseReleased(){
+									enterDefaultState();
+								}
+							});
+							
+						}
+					});
+					
+					
 				}
 				shipButtons.addButton("Wait", new Button() {
 					public void mouseReleased() {
@@ -557,6 +587,33 @@ public class Level extends GameObject {
 		map.clearHighLights();
 		state = TurnState.DEFAULT;
 
+	}
+	
+	private class CastableButton extends Button{
+		
+		Tooltip tooltip;
+		Castable castable;
+		
+		public CastableButton(Castable castable){
+			tooltip = new Tooltip();
+			tooltip.setText(castable.getDescription());
+			addChild(tooltip);
+			this.castable = castable;
+		}
+		
+		public void mouseHovered(){
+			tooltip.setVisible(true);
+		}
+		
+		public void mouseExited(){
+			tooltip.setVisible(false);
+		}
+		
+		public void mouseReleased(){
+			currentCastable = castable;
+			enterCastingState();
+		}
+		
 	}
 
 	/*
@@ -832,29 +889,53 @@ public class Level extends GameObject {
 			}
 		}, new Observer(){
 			public void notified(Observable sender){
-				selectedShip.useAbilityWithoutTarget(null);
+				if(currentCastable instanceof Ability){
+					selectedShip.useAbilityWithoutTarget(null);					
+				} else {
+					selectedShip.useItemWithoutTarget((Item)currentCastable, null);
+				}
 			}
 		}, camera);
 	}
 
 	public void useCastableOnShip(Ship ship) {
 		useCastableStart();
+		
+		currentShipTarget = ship;
 
-		selectedShip.useAbilityOnShip(ship, new Observer() {
+		selectedShip.getVisual().cast(new Observer() {
 			public void notified(Observable sender) {
 				useCastableEnd();
 			}
-		});
+		}, new Observer(){
+			public void notified(Observable sender){
+				if(currentCastable instanceof Ability){
+					selectedShip.useAbilityOnShip(currentShipTarget, null);					
+				} else {
+					selectedShip.useItemOnShip((Item)currentCastable,currentShipTarget, null);
+				}
+			}
+		}, camera);
 	}
 
 	public void useCastableOnTile(Tile tile) {
 		useCastableStart();
 
-		selectedShip.useAbilityOnTile(tile, new Observer() {
+		currentTileTarget = tile;
+
+		selectedShip.getVisual().cast(new Observer() {
 			public void notified(Observable sender) {
 				useCastableEnd();
 			}
-		});
+		}, new Observer(){
+			public void notified(Observable sender){
+				if(currentCastable instanceof Ability){
+					selectedShip.useAbilityOnTile(currentTileTarget, null);					
+				} else {
+					selectedShip.useItemOnTile((Item)currentCastable,currentTileTarget, null);
+				}
+			}
+		}, camera);
 	}
 
 	public void removeShipFromMap(Ship ship) {

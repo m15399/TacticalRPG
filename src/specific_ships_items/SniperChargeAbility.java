@@ -8,7 +8,7 @@ import model.Ability;
 public class SniperChargeAbility extends Ability {
 
 	public SniperChargeAbility(){
-		super("Charge", "Charges up its next attack\nfor bonus damage.", TargetType.NONE, 0, 3);
+		super("Charge", "Charges up its next \nattack for bonus \ndamage.", TargetType.NONE, 0, 3);
 	}
 	
 	public void useWithoutTarget(Observer notifyWhenDone){

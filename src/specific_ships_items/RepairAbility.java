@@ -11,7 +11,7 @@ public class RepairAbility extends Ability {
 	private static final int HEAL_AMOUNT = 25;
 
 	public RepairAbility() {
-		super("Repair", "Repairs a ship's hull for " + HEAL_AMOUNT + " points",
+		super("Repair", "Repairs a ship's hull for \n" + HEAL_AMOUNT + " points",
 				Castable.TargetType.ALLY, 2, 2);
 
 	}

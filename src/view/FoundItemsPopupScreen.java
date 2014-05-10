@@ -54,7 +54,7 @@ public class FoundItemsPopupScreen extends GameObject{
 		g2.drawLine(offsetX, offsetY, offsetX + WIDTH, offsetY);
 		
 		//Draw Message
-		Font font = g2.getFont();
+		Font font = new Font("Arial", Font.PLAIN, 14);
 		float titleFontSize = 18.0f;
 		g2.setFont(font.deriveFont(titleFontSize));
 		g2.drawString(title, offsetX + 40, offsetY + 20);

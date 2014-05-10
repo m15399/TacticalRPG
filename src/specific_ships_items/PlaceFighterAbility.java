@@ -12,7 +12,7 @@ import actions.TimerAction;
 public class PlaceFighterAbility extends Ability {
 	
 	public PlaceFighterAbility() {
-		super("Deploy", "Spawns a Fighter at\n the target location.", Castable.TargetType.TILE, 1, 8);
+		super("Deploy", "Spawns a Fighter at\nthe target location.", Castable.TargetType.TILE, 1, 8);
 		
 	}
 	

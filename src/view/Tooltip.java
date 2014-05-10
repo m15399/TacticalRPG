@@ -40,10 +40,10 @@ public class Tooltip extends GameObject {
 		for (@SuppressWarnings("unused") String line : text.split("\n"))
 			ysize += 14;
 		
-		setSize(140, ysize);
+		setSize(0, ysize);
 	}
 	
-	private void drawString(Graphics g, String text, int x, int y) {
+	private void drawString(Graphics g, String text, int x, int y) {		
 		for (String line : text.split("\n"))
 			g.drawString(line, x, y += g.getFontMetrics().getHeight());
 	}
@@ -63,6 +63,16 @@ public class Tooltip extends GameObject {
 		int offsetY = (int)Input.getInstance().getY() + 20;
 		int maxOffsetY = Game.HEIGHT - height - 25;
 		offsetY = Math.min(offsetY, maxOffsetY);
+		
+		
+		// figure out width
+		int maxWidth = 0;
+		for(String line : text.split("\n")){
+			int currWidth = g.getFontMetrics().stringWidth(line);
+			if(currWidth > maxWidth)
+				maxWidth = currWidth;
+		}
+		setSize(maxWidth + 35 , height);
 		
 		// Draw a black rect first as a background
 		g.setColor(Color.black);

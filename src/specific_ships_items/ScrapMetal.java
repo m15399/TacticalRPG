@@ -11,13 +11,14 @@ public class ScrapMetal extends Item {
 	private double hullBoost;
 
 	public ScrapMetal() {
-		super("Scrap Metal", "Heals the ship's hull for 100 points",
+		super("Scrap Metal", "Heals the ship's hull for \n100 points",
 				Castable.TargetType.ALLY, 2);
 		hullBoost = 100;
 	}
 
 	public void useOnShip(Ship ship, Observer notifyWhenDone) {
 		ship.updateHull(hullBoost);
+		ship.getVisual().updateDisplayHealth();
 
 		// placeholder animation
 		TimerAction timer = new TimerAction(30, notifyWhenDone);
