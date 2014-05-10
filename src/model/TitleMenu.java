@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
+import level_intros.Credits;
 import level_intros.TestIntro;
 import levels.*;
 import utils.Observable;
@@ -74,6 +75,13 @@ public class TitleMenu extends GameObject {
 		addChild(new TitleMenuButton("Multiplayer Mark", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
 			public void notified(Observable sender){
 				game.transitionTo(new MultiplayerLevel(game, 3));
+			}
+		}));
+		buttonNumber++;
+		
+		addChild(new TitleMenuButton("Credits", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
+			public void notified(Observable sender){
+				game.transitionTo(new Credits(game));
 			}
 		}));
 		buttonNumber++;
