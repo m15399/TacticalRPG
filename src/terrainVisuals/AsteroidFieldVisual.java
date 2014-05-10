@@ -5,6 +5,10 @@ import view.AnimatedSprite;
 
 public class AsteroidFieldVisual extends TerrainVisual{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -374341137030007009L;
 	private AnimatedSprite sprite;
 	
 	public AsteroidFieldVisual(AsteroidFieldTerrain terrain) {

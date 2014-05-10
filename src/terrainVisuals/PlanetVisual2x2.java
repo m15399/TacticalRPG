@@ -6,6 +6,10 @@ import view.Sprite;
 
 public class PlanetVisual2x2 extends TerrainVisual{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1777455285874731277L;
 	private Sprite sprite;
 	
 	public PlanetVisual2x2(Terrain terrain) {

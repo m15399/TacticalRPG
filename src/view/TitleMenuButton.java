@@ -11,6 +11,11 @@ import model.GameObject;
 
 public class TitleMenuButton extends GameObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 230941741528334962L;
+
 	private static final int FONTSIZE = 36;
 	
 	private Button button;
@@ -25,6 +30,10 @@ public class TitleMenuButton extends GameObject {
 		hovered = false;
 				
 		button = new Button(x, y, width, FONTSIZE + 10){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -7350608698110868762L;
 			public void mouseHovered(){
 				hovered = true;
 			}

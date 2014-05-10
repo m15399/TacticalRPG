@@ -20,6 +20,10 @@ import model.Ship;
 
 public class SelectedShipView extends GameObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1173911439667779392L;
 	static final int WIDTH = 500;
 	static final int HEIGHT = 190;
 	private double displayHealth;

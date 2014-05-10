@@ -5,6 +5,10 @@ import utils.Observer;
 
 public class FadeToAction extends Action {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9021591895528773080L;
 	private double targetFade;
 	private int timeLeft;
 	private Fadable fadable;

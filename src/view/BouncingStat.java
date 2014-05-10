@@ -13,6 +13,10 @@ import model.Entity;
 
 public class BouncingStat extends Entity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -969354159664514454L;
 	private String text;
 	private double yv;
 	

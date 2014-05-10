@@ -8,6 +8,10 @@ import model.Entity;
  */
 public class MirrorEntityAction extends Action {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5704410929881124150L;
 	Entity entity;
 	
 	public MirrorEntityAction(Entity e, Observer o){

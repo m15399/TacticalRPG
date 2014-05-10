@@ -15,6 +15,10 @@ import model.GameObject;
 
 public class FoundItemsPopupScreen extends GameObject{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8286783058846194177L;
 	static final int WIDTH = 200;
 	static final int HEIGHT = 150;
 	
@@ -85,11 +89,21 @@ public class FoundItemsPopupScreen extends GameObject{
 	public void addSelectionButtons(){
 		//Magic numbers should be equal to the button offset values in the draw method.  (offsetButtonX, and offsetButtonY)
 		//Second set of values equate to the size of the button
-		addButton(new SelectionButton(240, 250, 120, 40) {});
+		addButton(new SelectionButton(240, 250, 120, 40) {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7487049400603439224L;});
 	}
 	
 	private abstract class SelectionButton extends Button{
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -3833470122825450514L;
+
 		public SelectionButton(int x, int y, int bwidth, int bheight){
 			super(x, y, bwidth, bheight);
 		}

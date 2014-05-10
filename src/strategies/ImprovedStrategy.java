@@ -1,7 +1,7 @@
 package strategies;
 
 import java.awt.Point;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 import specific_ships_items.AISpawner;
@@ -9,7 +9,12 @@ import specific_ships_items.AISpawner;
 import model.Level;
 import model.Ship;
 
-public class ImprovedStrategy implements Strategy {
+public class ImprovedStrategy implements Strategy, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3404921377767380697L;
 
 	@Override
 	public void doNextAction(Ship ship, Level level) {

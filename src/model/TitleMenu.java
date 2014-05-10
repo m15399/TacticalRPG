@@ -13,6 +13,10 @@ import view.TitleMenuButton;
 
 public class TitleMenu extends GameObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 680403353714047262L;
 	private Game game;
 	
 	public TitleMenu(Game newGame){

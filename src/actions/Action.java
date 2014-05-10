@@ -11,6 +11,10 @@ import model.GameObject;
  */
 public class Action extends GameObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8717528151348192013L;
 	Observable observable;
 	boolean started;
 	

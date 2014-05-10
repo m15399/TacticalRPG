@@ -8,6 +8,11 @@ import shipVisuals.FighterVisual;
 public class Fighter extends Ship {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7632558783302141777L;
+
+	/**
 	 * Reminder on what things constructorAid sets to help in balancing
 	 * 
 	 * @param name

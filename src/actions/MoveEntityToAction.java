@@ -9,6 +9,11 @@ import model.Entity;
  */
 public class MoveEntityToAction extends Action {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1254197152612129793L;
+
 	Entity entity;
 	
 	double endX, endY;

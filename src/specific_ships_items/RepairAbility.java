@@ -8,6 +8,10 @@ import model.Ship;
 
 public class RepairAbility extends Ability {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6139154918871946441L;
 	private static final int HEAL_AMOUNT = 25;
 
 	public RepairAbility() {

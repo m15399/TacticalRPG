@@ -8,6 +8,11 @@ import model.Map;
 
 public class ShipOutline extends Entity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8296402299924899111L;
+
 	public enum SelectionType {
 		NONE, SELECTED, HOVER, ACTIONSLEFT;
 	}

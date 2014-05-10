@@ -8,6 +8,10 @@ import resources.ImageLibrary;
 import model.Entity;
 
 public class Sprite extends Entity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -816486410686236510L;
 	protected BufferedImage image;
 	
 	public Sprite(){

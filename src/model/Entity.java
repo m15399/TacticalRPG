@@ -8,6 +8,10 @@ import utils.Position;
  */
 public class Entity extends GameObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8962361879638817771L;
 	private Position position;
 	
 	public Entity(){

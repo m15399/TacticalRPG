@@ -36,6 +36,11 @@ import view.Tooltip;
  */
 public class Level extends GameObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3739455927210352402L;
+
 	/*
 	 * Current state - attacking, moving, etc
 	 */
@@ -190,6 +195,11 @@ public class Level extends GameObject {
 			final double sfac = 2;
 			
 			Button b1 = new Button(0, 0, bsize, bsize) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 4749604349270799816L;
+
 				public void mouseReleased() {
 					camera.setZoomTarget(camera.getZoom() * sfac);
 				}
@@ -198,6 +208,11 @@ public class Level extends GameObject {
 			debugButtons.add(b1); 
 			
 			Button b2 = new Button(0, bsize, bsize, bsize) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = -4460365434247909711L;
+
 				public void mouseReleased() {
 					camera.setZoomTarget(camera.getZoom() / sfac);
 				}
@@ -206,6 +221,11 @@ public class Level extends GameObject {
 			debugButtons.add(b2); 
 			
 			Button b3 = new Button(Game.WIDTH - bsize, 0, bsize, bsize){
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 6366047185169964945L;
+
 				public void mouseReleased(){
 					onTeamWin(0);
 				}
@@ -214,6 +234,11 @@ public class Level extends GameObject {
 			debugButtons.add(b3); 
 			
 			Button b4 = new Button(Game.WIDTH - bsize, bsize, bsize, bsize){
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = -4272063537944131233L;
+
 				public void mouseReleased(){
 					onTeamWin(1);
 				}
@@ -518,6 +543,11 @@ public class Level extends GameObject {
 			} else {
 				if (selectedShip.getCanMove()) {
 					shipButtons.addButton("Move", new Button() {
+						/**
+						 * 
+						 */
+						private static final long serialVersionUID = 995893818981725034L;
+
 						public void mouseReleased() {
 							enterMoveState();
 						}
@@ -525,6 +555,11 @@ public class Level extends GameObject {
 				}
 				if (selectedShip.getCanAttack()) {
 					shipButtons.addButton("Attack", new Button() {
+						/**
+						 * 
+						 */
+						private static final long serialVersionUID = 385166472218886539L;
+
 						public void mouseReleased() {
 							enterAttackState();
 						}
@@ -553,6 +588,11 @@ public class Level extends GameObject {
 				if(selectedShip.getCanUseItem() && selectedShip.getItems().size() > 0){
 					
 					shipButtons.addButton("Items", new Button(){
+						/**
+						 * 
+						 */
+						private static final long serialVersionUID = -8756795294514804779L;
+
 						public void mouseReleased(){
 							
 							shipButtons.setShip(selectedShip);
@@ -564,6 +604,11 @@ public class Level extends GameObject {
 							}
 							
 							shipButtons.addButton("Cancel", new Button(){
+								/**
+								 * 
+								 */
+								private static final long serialVersionUID = 435054519683331258L;
+
 								public void mouseReleased(){
 									enterDefaultState();
 								}
@@ -575,6 +620,11 @@ public class Level extends GameObject {
 					
 				}
 				shipButtons.addButton("Wait", new Button() {
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 432444498290154821L;
+
 					public void mouseReleased() {
 						waitShip(selectedShip);
 					}
@@ -591,6 +641,10 @@ public class Level extends GameObject {
 	
 	private class CastableButton extends Button{
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1879859896822376397L;
 		Tooltip tooltip;
 		Castable castable;
 		

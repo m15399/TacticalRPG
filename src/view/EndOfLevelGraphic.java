@@ -13,6 +13,11 @@ import model.GameObject;
 
 public class EndOfLevelGraphic extends GameObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9017947871279307544L;
+
 	public enum WinnerType {
 		SINGLEPLAYER, PLAYER1, PLAYER2, ENEMY, STARTBLUETURN, STARTREDTURN;
 	}

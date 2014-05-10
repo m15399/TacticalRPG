@@ -10,6 +10,10 @@ import model.GameObject;
 
 public abstract class LevelIntro extends GameObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4346807789304208553L;
 	private Game game;
 	private Button button;
 	
@@ -17,6 +21,11 @@ public abstract class LevelIntro extends GameObject {
 		this.game = newGame;
 		
 		button = new Button(0,0,Game.WIDTH, Game.HEIGHT){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1043605337380741641L;
+
 			public void mouseReleased(){
 				game.transitionTo(getNextRoot());
 			}

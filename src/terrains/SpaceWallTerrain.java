@@ -6,6 +6,10 @@ import terrainVisuals.SpaceWallVisual;
 
 public class SpaceWallTerrain extends Terrain{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2612205335032657329L;
 	private String filename;
 	
 	public SpaceWallTerrain(Point newLocation) {

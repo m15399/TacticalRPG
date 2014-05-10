@@ -17,6 +17,11 @@ import utils.Direction;
  */
 public class Map extends GameObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5276250003654331852L;
+
 	public static final int TILESIZE = 64;
 
 	private Tile[][] tiles;

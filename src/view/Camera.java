@@ -18,6 +18,10 @@ import model.Map;
  */
 public class Camera extends GameObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1168494059308354873L;
 	private double centerOffsetY;
 	private double positionX, positionY, prevPositionX, prevPositionY;
 	private double minX, minY, maxX, maxY;

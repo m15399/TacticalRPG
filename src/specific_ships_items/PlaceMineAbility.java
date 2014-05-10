@@ -11,6 +11,11 @@ import model.Tile;
 
 public class PlaceMineAbility extends Ability {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3965263051491507798L;
+
 	public PlaceMineAbility() {
 		super("Mine", "Places a mine at\nthe target location.", Castable.TargetType.TILE, 2, 3);
 		

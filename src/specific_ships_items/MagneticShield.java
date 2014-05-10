@@ -6,6 +6,10 @@ import model.Castable;
 import model.Item;
 
 public class MagneticShield extends Item{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2335142587348028030L;
 	private double shieldingBoost ;
 	
 	public MagneticShield() {

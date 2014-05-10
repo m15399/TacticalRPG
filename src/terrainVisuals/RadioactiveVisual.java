@@ -6,6 +6,10 @@ import view.Sprite;
 
 public class RadioactiveVisual extends TerrainVisual{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7469442948618993755L;
 	private Sprite sprite;
 	
 	public RadioactiveVisual(Terrain terrain) {

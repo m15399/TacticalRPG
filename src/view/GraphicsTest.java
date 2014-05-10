@@ -11,6 +11,10 @@ import model.*;
 
 public class GraphicsTest extends GameObject implements Observer {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1889498898171168514L;
 	Sprite testSprite, testSprite2, testSprite3;
 	
 	public GraphicsTest(){

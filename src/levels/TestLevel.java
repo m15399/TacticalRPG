@@ -15,6 +15,11 @@ import model.Level;
 
 public class TestLevel extends Level {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5206578761391762646L;
+
 	public TestLevel(Game game) {
 		super(game, 16, 12);
 		

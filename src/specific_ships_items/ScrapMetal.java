@@ -8,6 +8,10 @@ import model.Ship;
 
 public class ScrapMetal extends Item {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 156796015261170894L;
 	private double hullBoost;
 
 	public ScrapMetal() {

@@ -13,6 +13,10 @@ import utils.Observer;
  */
 public class ActionQueue extends Action implements Observer {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4315545058583576547L;
 	Queue<Action> queue; 
 	
 	public ActionQueue(Observer o){

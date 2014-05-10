@@ -8,6 +8,10 @@ import terrainVisuals.GasCloudVisual;
 
 public class GasCloudTerrain extends Terrain implements TerrainEffects{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4192307710658189728L;
 	private static final int MAX_DAMAGE = 8;
 	
 	public GasCloudTerrain(Point newLocation, boolean trueIfBeginningOfGraphic) {

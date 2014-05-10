@@ -18,6 +18,10 @@ import model.Level;
 import model.Ship;
 
 public class ShipSelectionScreen extends GameObject{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3102298403585336668L;
 	static final int WIDTH = 200;
 	static final int HEIGHT = 300;
 	static final int LIMITEDHEIGHT = 210;
@@ -59,6 +63,11 @@ public class ShipSelectionScreen extends GameObject{
 	
 	private abstract class SelectionButton extends Button{
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 964645507538207347L;
+
 		public SelectionButton(int x, int y, int bwidth, int bheight){
 			super(x, y, bwidth, bheight);
 		}
@@ -81,31 +90,61 @@ public class ShipSelectionScreen extends GameObject{
 	
 	public void addNormalSelectionButtons(){
 		addButton(new SelectionButton(5, 50, 64, 64) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1268827975675296096L;
+
 			public Ship getANewShip() {
 				return new Scout(new Point(-1, -1));
 			}
 		});
 		addButton(new SelectionButton(105, 50, 64, 64) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8087173238058455824L;
+
 			public Ship getANewShip() {
 				return new Fighter(new Point(-1, -1));
 			}
 		});
 		addButton(new SelectionButton(5, 140, 64, 64) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8228955844389950709L;
+
 			public Ship getANewShip() {
 				return new Bomber(new Point(-1, -1));
 			}
 		});
 		addButton(new SelectionButton(105, 140, 64, 64) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -495592822536264783L;
+
 			public Ship getANewShip() {
 				return new RepairShip(new Point(-1, -1));
 			}
 		});
 		addButton(new SelectionButton(5, 230, 64, 64) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -5623089346887608357L;
+
 			public Ship getANewShip() {
 				return new BattleCruiser(new Point(-1, -1));
 			}
 		});
 		addButton(new SelectionButton(105, 230, 64, 64) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 5369998606744884021L;
+
 			public Ship getANewShip() {
 				return new Sniper(new Point(-1, -1));
 			}
@@ -114,21 +153,41 @@ public class ShipSelectionScreen extends GameObject{
 	
 	public void addLimitedSelectionButtons(){
 		addButton(new SelectionButton(5, 50, 64, 64) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 8919730048975882607L;
+
 			public Ship getANewShip() {
 				return new Scout(new Point(-1, -1));
 			}
 		});
 		addButton(new SelectionButton(105, 50, 64, 64) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 8480664852745950570L;
+
 			public Ship getANewShip() {
 				return new Fighter(new Point(-1, -1));
 			}
 		});
 		addButton(new SelectionButton(5, 140, 64, 64) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1435448701359450020L;
+
 			public Ship getANewShip() {
 				return new Bomber(new Point(-1, -1));
 			}
 		});
 		addButton(new SelectionButton(105, 140, 64, 64) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7328712900930906491L;
+
 			public Ship getANewShip() {
 				return new RepairShip(new Point(-1, -1));
 			}

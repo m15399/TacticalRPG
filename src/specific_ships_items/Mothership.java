@@ -7,6 +7,11 @@ import shipVisuals.ShipVisual;
 public class Mothership extends Ship{
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2810332910910250251L;
+
+	/**
 	 * Reminder on what things constructorAid sets to help in balancing
 	 * 
 	 * @param name

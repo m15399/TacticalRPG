@@ -7,6 +7,11 @@ import model.TitleMenu;
 
 public class Mission3 extends Level {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 961227008648367354L;
+
 	public Mission3(Game game){
 		super(game, "maps/mission3");
 		

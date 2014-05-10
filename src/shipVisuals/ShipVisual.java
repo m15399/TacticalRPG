@@ -28,6 +28,10 @@ import view.ShipOutline;
  */
 public class ShipVisual extends Entity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 621819537126071037L;
 	private static final double ZOOM_TARGET = 1.75;
 	private static final int FIRE_TIME = 20*Game.FPSMUL;
 
@@ -103,6 +107,11 @@ public class ShipVisual extends Entity {
 		q.addAction(new WaitForCameraAction(camera, null));
 
 		q.addAction(new Action(null) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 3686690698534528856L;
+
 			public void update() {
 				if (getStarted()) {
 					playMoveAnimation();
@@ -145,6 +154,11 @@ public class ShipVisual extends Entity {
 		}
 
 		q.addAction(new Action(null) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7122410263172743338L;
+
 			public void update() {
 				if (getStarted()) {
 					playIdleAnimation();

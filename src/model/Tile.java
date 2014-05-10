@@ -30,6 +30,10 @@ import view.Sprite;
 
 public class Tile extends GameObject implements Comparable<Tile>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9158101009441237032L;
 	private boolean isOccupied, hasTerrain, hasShip;
 	private Highlight highlight;
 	private boolean mousedOver;

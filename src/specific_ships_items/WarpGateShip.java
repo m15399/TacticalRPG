@@ -7,6 +7,11 @@ import shipVisuals.WarpVisual;
 
 public class WarpGateShip extends Ship {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7499370162619467007L;
+
 	public WarpGateShip(Point newLocation){
 		super(newLocation);
 		String description = "Faster-than-light\ntransport.";

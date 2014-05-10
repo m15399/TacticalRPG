@@ -7,6 +7,10 @@ import model.Ship;
 
 public class Sniper extends Ship {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3978318903134958929L;
 	private boolean charged;
 
 	/**

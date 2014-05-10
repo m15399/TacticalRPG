@@ -1,13 +1,19 @@
 package strategies;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
 import model.Level;
 import model.Ship;
 
-public class RandomStrategy implements Strategy{
+public class RandomStrategy implements Strategy, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6935141353152725294L;
+
 	public void doNextAction(Ship ship, Level level){		
 		Random random = new Random();	
 

@@ -12,6 +12,11 @@ import model.GameObject;
  */
 public class Starfield extends GameObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1065618840062260350L;
+
 	private class Star {
 		double x, y, z, size;
 

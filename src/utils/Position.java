@@ -11,6 +11,10 @@ import java.awt.geom.AffineTransform;
  */
 public class Position extends Observable implements Observer {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1783632758151936666L;
 	private double localX, localY, localZ, globalX, globalY, globalZ;
 	private double localScaleX, localScaleY, globalScaleX, globalScaleY;
 	// private double localRot, globalRot;

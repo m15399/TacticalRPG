@@ -19,6 +19,10 @@ import model.Ship;
  */
 public class SelectedShipButtons extends Entity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4486828265161490021L;
 	private static final int WIDTH = 130;
 	private static final int HEIGHT = 31;
 

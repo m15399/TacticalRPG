@@ -1,12 +1,18 @@
 package input;
 
+import java.io.Serializable;
+
 import utils.Position;
 
 /*
  * Bounding box that can receive mouse inputs
  */
-public class Button {
+public class Button implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -665811486838955958L;
 	private Position position;
 	private boolean enabled;
 	

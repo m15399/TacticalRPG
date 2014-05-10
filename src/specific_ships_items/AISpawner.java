@@ -11,6 +11,11 @@ import shipVisuals.WarpVisual;
  */
 public class AISpawner extends Ship {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5118342767920923227L;
+
 	public AISpawner(Point newLocation){
 		super(newLocation);
 		String description = "Faster-than-light\ntransport.";

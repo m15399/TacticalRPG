@@ -6,6 +6,11 @@ import model.Level;
 
 public class Mission2 extends Level {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 122195458674410630L;
+
 	public Mission2(Game game){
 		super(game, "maps/mission2");
 		

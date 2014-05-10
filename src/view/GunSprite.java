@@ -10,6 +10,12 @@ import model.GameObject;
 public class GunSprite extends AnimatedSprite {
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5435813892729073891L;
+
+
 	public enum GunType {
 		CANNON, MACHINE_GUN;
 	}
@@ -117,6 +123,10 @@ public class GunSprite extends AnimatedSprite {
 	
 	private class RapidFirer extends GameObject {
 				
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 25151812920092619L;
 		int count;
 		boolean going;
 		

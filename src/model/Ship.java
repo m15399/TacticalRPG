@@ -12,6 +12,10 @@ import utils.Observer;
 import view.Camera;
 
 public class Ship extends GameObject {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8213832845187238588L;
 	private Point location;
 	private int moves, movesLeft, range, team;
 	private double hull, shielding, maxHull, maxShielding, accuracy, minDamage,

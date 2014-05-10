@@ -10,6 +10,11 @@ import model.GameObject;
 
 public class TestIntro extends LevelIntro {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8620885094576078851L;
+
 	public TestIntro(Game game){
 		super(game);
 	}

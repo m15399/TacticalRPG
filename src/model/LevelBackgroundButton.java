@@ -10,6 +10,11 @@ import java.awt.Point;
  */
 public class LevelBackgroundButton extends Button {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8816166403833522598L;
+
 	Level level;
 	
 	private double distanceDraggedSinceClick;

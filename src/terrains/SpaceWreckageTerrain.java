@@ -15,6 +15,11 @@ import model.Ship;
 
 public class SpaceWreckageTerrain extends Terrain implements TerrainEffects{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5886097809816229937L;
+
 	public SpaceWreckageTerrain(Point newLocation) {
 		super(newLocation);
 		this.setVisual(new SpaceWreckageVisual(this));

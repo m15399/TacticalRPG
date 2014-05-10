@@ -8,6 +8,10 @@ import terrainVisuals.RadioactiveVisual;
 
 public class RadioactiveTerrain extends Terrain implements TerrainEffects{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4391821538944174149L;
 	private static final int MAX_DAMAGE = 8;
 	
 	public RadioactiveTerrain(Point newLocation, boolean trueIfBeginningOfGraphic) {

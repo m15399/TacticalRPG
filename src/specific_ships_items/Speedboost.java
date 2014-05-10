@@ -7,6 +7,10 @@ import model.Item;
 
 public class Speedboost extends Item {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8799209495814661932L;
 	private int speedBoost;
 
 	public Speedboost() {

@@ -8,6 +8,11 @@ import shipVisuals.ScoutVisual;
 public class RepairShip extends Ship {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8249724005336054758L;
+
+	/**
 	 * Reminder on what things constructorAid sets to help in balancing
 	 * 
 	 * @param name

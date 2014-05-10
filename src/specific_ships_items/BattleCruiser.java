@@ -7,6 +7,11 @@ import shipVisuals.BomberVisual;
 public class BattleCruiser extends Ship {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7719840939455565674L;
+
+	/**
 	 * Reminder on what things constructorAid sets to help in balancing
 	 * 
 	 * @param name

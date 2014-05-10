@@ -12,6 +12,11 @@ import model.Tile;
 
 public class SpawnEnemyShipAbility extends Ability {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3874097256449753393L;
+
 	public SpawnEnemyShipAbility() {
 		super("Spawn", "How are you even reading this?", Castable.TargetType.NONE, 1, 2);
 		

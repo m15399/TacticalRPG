@@ -8,6 +8,10 @@ import model.Ship;
 
 public class AsteroidFieldTerrain extends Terrain implements TerrainEffects{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6914481105273488129L;
 	private static final int MAX_DAMAGE = 8;
 	
 	public AsteroidFieldTerrain(Point newLocation) {

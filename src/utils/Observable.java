@@ -1,9 +1,14 @@
 package utils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Observable {
+public class Observable implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1123129087048329727L;
 	ArrayList<Observer> observers;
 	
 	public Observable(){

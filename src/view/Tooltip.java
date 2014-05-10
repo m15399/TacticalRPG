@@ -13,6 +13,10 @@ import model.GameObject;
 
 public class Tooltip extends GameObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2110102144546554106L;
 	private int width, height;
 	private String text;
 	private boolean visible;

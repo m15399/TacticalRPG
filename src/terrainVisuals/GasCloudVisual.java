@@ -6,6 +6,10 @@ import view.Sprite;
 
 public class GasCloudVisual extends TerrainVisual{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5568924890887812207L;
 	private Sprite sprite;
 	
 	public GasCloudVisual(Terrain terrain) {

@@ -7,6 +7,10 @@ import java.util.Random;
  * Sprite that runs an animation from a sprite sheet
  */
 public class AnimatedSprite extends Sprite {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1219984226392226186L;
 	private Size frameSize;
 	private int delay, delayLeft, numberFrames, currentFrame;
 	private int[] frameIndicies;

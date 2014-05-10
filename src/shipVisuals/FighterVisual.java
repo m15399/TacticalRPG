@@ -14,6 +14,10 @@ import model.Ship;
 public class FighterVisual extends ShipVisual {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4714056168501536680L;
 	private Sprite sprite;
 	private JetSprite[] jets;
 	private GunSprite gun;

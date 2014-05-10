@@ -4,6 +4,11 @@ import utils.Observer;
 
 public abstract class Castable extends GameObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5311342057545579843L;
+
 	public enum TargetType{
 		NONE, ALLY, ENEMY, TILE;
 	}

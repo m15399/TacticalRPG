@@ -7,6 +7,11 @@ import model.Entity;
  */
 public class JetSprite extends AnimatedSprite {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1721748538985737001L;
+
 	public enum JetSize {
 		H8, H16;
 	}

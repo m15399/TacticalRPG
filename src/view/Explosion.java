@@ -15,6 +15,11 @@ import model.Entity;
 
 public class Explosion extends Entity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7302845028475446125L;
+
 	private List<Particle> particles;
 	
 	private double size;

@@ -8,6 +8,11 @@ import model.Ship;
 
 public class MineShip extends Ship {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7638781214134803915L;
+
 	public MineShip(Point newLocation) {
 		super(newLocation);
 		

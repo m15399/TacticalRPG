@@ -31,6 +31,10 @@ public class GameObjectTest {
 	}
 	
 	private class TestObject extends GameObject{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 4628215354157145956L;
 		int updates;
 		int draws;
 		boolean destroyDuringUpdate;

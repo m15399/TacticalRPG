@@ -5,6 +5,10 @@ import view.Sprite;
 
 public class BomberVisual extends ShipVisual {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5482847056354702080L;
 	Sprite sprite;
 	
 	public BomberVisual(Ship ship) {

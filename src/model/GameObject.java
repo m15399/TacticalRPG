@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +11,11 @@ import java.util.List;
  * updated and drawn each frame, has a list of children
  * and can update them and their children recursively
  */
-public class GameObject {
+public class GameObject implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3254478697710882542L;
 	private List<GameObject> children;
 	private GameObject parent;
 

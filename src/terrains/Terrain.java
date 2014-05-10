@@ -7,6 +7,10 @@ import model.GameObject;
 import model.Ship;
 
 public abstract class Terrain extends GameObject implements TerrainEffects {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2518691690606422876L;
 	private Point location;
 	private TerrainVisual visual;
 	

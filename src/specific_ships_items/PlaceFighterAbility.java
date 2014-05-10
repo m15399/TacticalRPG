@@ -11,6 +11,11 @@ import actions.TimerAction;
 
 public class PlaceFighterAbility extends Ability {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7024110394144269323L;
+
 	public PlaceFighterAbility() {
 		super("Deploy", "Spawns a Fighter at\nthe target location.", Castable.TargetType.TILE, 1, 8);
 		

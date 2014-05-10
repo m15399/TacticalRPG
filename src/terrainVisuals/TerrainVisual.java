@@ -8,6 +8,10 @@ import model.Map;
 
 public class TerrainVisual extends Entity{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5993689681861636467L;
 	private Terrain terrain;
 	
 	public TerrainVisual(Terrain terrain){

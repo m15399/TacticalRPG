@@ -7,6 +7,11 @@ import model.Ability;
 
 public class SniperChargeAbility extends Ability {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7518999580161860727L;
+
 	public SniperChargeAbility(){
 		super("Charge", "Charges up its next \nattack for bonus \ndamage.", TargetType.NONE, 0, 3);
 	}

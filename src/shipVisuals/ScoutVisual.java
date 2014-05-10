@@ -13,6 +13,10 @@ import model.Ship;
  */
 public class ScoutVisual extends ShipVisual {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5835336483165552490L;
 	private Sprite sprite;
 	private JetSprite jet;
 	private GunSprite gun;

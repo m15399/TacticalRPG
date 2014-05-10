@@ -17,6 +17,10 @@ import model.Ship;
 
 public class SelectedEnemyShip extends GameObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2485810466409874682L;
 	static final int WIDTH = 210;
 	static final int HEIGHT = 325;
 	

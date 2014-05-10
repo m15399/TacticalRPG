@@ -10,6 +10,10 @@ import model.Ship;
 
 public class MineAbility extends Ability {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5829288804288134273L;
 	private static int DAMAGE = 35;
 	private static int RANGE = 3;
 

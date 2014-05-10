@@ -7,6 +7,10 @@ import utils.Observer;
  */
 public class TimerAction extends Action {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7719089758969244336L;
 	private int timeLeft;
 
 	public TimerAction(int time, Observer observer){

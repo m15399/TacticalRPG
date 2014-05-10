@@ -6,6 +6,10 @@ import view.Sprite;
 
 public class SpaceWallVisual extends TerrainVisual{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2240364667891486589L;
 	private Sprite sprite;
 	//b,h,l,r,t,v
 	public SpaceWallVisual(SpaceWallTerrain terrain) {
