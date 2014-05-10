@@ -6,18 +6,18 @@ import model.Castable;
 import model.Item;
 import model.Ship;
 
-public class ScrapMetal extends Item {
+public class Speedboost extends Item {
 
-	private double hullBoost;
+	private int speedBoost;
 
-	public ScrapMetal() {
-		super("Scrap Metal", "Heals the ship's hull for 100 points",
+	public Speedboost() {
+		super("Speed Boost", "Increases the ship's move range for one turn.",
 				Castable.TargetType.ALLY, 2);
-		hullBoost = 100;
+		speedBoost = 4;
 	}
 
 	public void useOnShip(Ship ship, Observer notifyWhenDone) {
-		ship.updateHull(hullBoost);
+		ship.setMovesLeft(ship.getMovesLeft() + speedBoost);
 
 		// placeholder animation
 		TimerAction timer = new TimerAction(30, notifyWhenDone);
@@ -26,7 +26,7 @@ public class ScrapMetal extends Item {
 	}
 	
 	public String getFilename(){
-		return "scrapmetal.png";
+		return "speedboost.png";
 	}
 
 }

@@ -8,7 +8,6 @@ import specific_ships_items.Fighter;
 import specific_ships_items.MagneticShield;
 import specific_ships_items.Scout;
 import specific_ships_items.ScrapMetal;
-import specific_ships_items.SpaceMine;
 import specific_ships_items.WarpGateShip;
 import model.Game;
 import model.GameObject;
@@ -27,9 +26,6 @@ public class TestLevel extends Level {
 		
 		//Scout
 		Scout scout = new Scout(new Point(4, 4));
-		scout.addToItems(new SpaceMine());
-		scout.addToItems(new SpaceMine());
-		scout.addToItems(new SpaceMine());
 		addShipToMap(scout);
 		
 		//Fighter
@@ -56,10 +52,7 @@ public class TestLevel extends Level {
 		 */
 		
 		//Scout
-		Scout escout = new Scout(new Point(10, 6)); //was 12, 8
-		escout.addToItems(new SpaceMine());
-		escout.addToItems(new SpaceMine());
-		escout.addToItems(new SpaceMine());
+		Scout escout = new Scout(new Point(10, 6)); 
 		addEnemyShipToMap(escout);
 		
 		//Fighter

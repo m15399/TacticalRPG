@@ -17,6 +17,7 @@ import specific_ships_items.WarpGateShip;
 import terrains.AsteroidTerrain;
 import terrains.PlanetTerrain2x2;
 import terrains.Terrain;
+import view.Sprite;
 
 /**
  * Tried to wrap all the Tile classes into one class to simplify things and cut
@@ -138,8 +139,9 @@ public class Tile extends GameObject implements Comparable<Tile>{
 
 		}
 		
+		Point px = Map.mapToPixelCoords(new Point(mapX, mapY));
+
 		if (highlight != Highlight.NONE) {
-			Point px = Map.mapToPixelCoords(new Point(mapX, mapY));
 			g.fillRect((int) px.getX(), (int) px.getY(), Map.TILESIZE,
 					Map.TILESIZE);
 		}
@@ -154,6 +156,14 @@ public class Tile extends GameObject implements Comparable<Tile>{
 //			}
 //		}
 		
+		if(getItems().size() > 0){
+			Item item = getItems().get(0);
+			Sprite s = new Sprite(item.getFilename());
+			double scale = .6;
+			s.getPosition().setScale(scale, scale);
+			s.getPosition().setLocation(px.getX() + Map.TILESIZE/2, px.getY() + Map.TILESIZE/2);
+			s.draw(g);
+		}
 	}
 	
 	/**

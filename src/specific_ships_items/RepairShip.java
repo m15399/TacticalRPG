@@ -34,7 +34,6 @@ public class RepairShip extends Ship {
 
 		this.constructorAid("RepairShip", 4, 75, 20, 75, 20, 90,
 				description, 25, 30, 10, 1, true, 0);
-		addToItems(new SpaceMine());
 
 		setVisual(new ScoutVisual(this));
 		

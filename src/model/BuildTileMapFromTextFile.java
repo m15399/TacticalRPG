@@ -18,7 +18,7 @@ import specific_ships_items.RepairShip;
 import specific_ships_items.Scout;
 import specific_ships_items.ScrapMetal;
 import specific_ships_items.Sniper;
-import specific_ships_items.SpaceMine;
+import specific_ships_items.Speedboost;
 import specific_ships_items.WarpGateShip;
 import terrains.AsteroidFieldTerrain;
 import terrains.AsteroidTerrain;
@@ -116,7 +116,7 @@ public class BuildTileMapFromTextFile {
 	 * Items:
 	 * s = MagneticShield
 	 * c = ScrapMetal
-	 * x = SpaceMine
+	 * x = Speedboost
 	 * 
 	 * Please update this if you make changes
 	 * Remaining Letters and numbers
@@ -249,7 +249,7 @@ public class BuildTileMapFromTextFile {
 				//Items
 				else if(temp == 'x'){
 					tiles[c][r] = new Tile(c, r);
-					tiles[c][r].getItems().add(new SpaceMine());
+					tiles[c][r].getItems().add(new Speedboost());
 				}
 				else if(temp == 's'){
 					tiles[c][r] = new Tile(c, r);

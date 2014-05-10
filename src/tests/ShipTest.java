@@ -9,7 +9,6 @@ import org.junit.Test;
 import specific_ships_items.Bomber;
 import specific_ships_items.MagneticShield;
 import specific_ships_items.ScrapMetal;
-import specific_ships_items.SpaceMine;
 import model.Ship;
 
 public class ShipTest {
@@ -61,7 +60,6 @@ public class ShipTest {
 		Ship bomber = new Bomber(new Point(1,1));
 	
 		bomber.addToItems(new ScrapMetal());
-		bomber.addToItems(new SpaceMine());
 		bomber.addToItems(new MagneticShield());
 		System.out.print(bomber.shipStatus());
 	}

@@ -22,5 +22,8 @@ public class MagneticShield extends Item{
 		timer.start();
 	}
 
+	public String getFilename(){
+		return "MagneticShield.png";
+	}
 
 }

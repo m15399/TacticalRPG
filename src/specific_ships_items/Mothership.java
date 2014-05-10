@@ -29,7 +29,6 @@ public class Mothership extends Ship{
 		super(newLocation);
 		String description = "Grand mothership,\nstationary and capable\nof unit production.";
 		this.constructorAid("Mothership", 0, 500, 50, 500, 50, 100, description, 0, 0, 0, 1, true, 0);
-		addToItems(new SpaceMine());
 		
 		setVisual(new ShipVisual(this));
 		

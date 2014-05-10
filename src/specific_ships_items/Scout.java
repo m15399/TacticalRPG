@@ -34,7 +34,6 @@ public class Scout extends Ship {
 
 		this.constructorAid("Scout", 5, 50, 20, 50, 20, 70, description, 30,
 				35, 15, 3, true, 0);
-		addToItems(new SpaceMine());
 
 		setVisual(new ScoutVisual(this));
 
