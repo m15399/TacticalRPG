@@ -11,6 +11,7 @@ import levels.*;
 import utils.Observable;
 import utils.Observer;
 import view.MultiplayerMapSelectionView;
+import view.Starfield;
 import view.TitleMenuButton;
 
 public class TitleMenu extends GameObject {
@@ -21,16 +22,19 @@ public class TitleMenu extends GameObject {
 	private static final long serialVersionUID = 680403353714047262L;
 	
 	private MultiplayerMapSelectionView mapView;
+	private Starfield starfield;
 	
 	public TitleMenu(){
 		int buttonWidth = 400;
 		int buttonHeight = 50;
 		int offsetX = 100;
-		int offsetY = 470;
+		int offsetY = 430;
 		int buttonNumber = 0;
 		
 		mapView = null;
 		
+		starfield = new Starfield(Game.WIDTH, Game.HEIGHT, 7, 100, 22, 27, 300);
+		addChild(starfield);
 		
 		if(Game.DEBUG){
 			buttonNumber -= 2;
@@ -86,6 +90,13 @@ public class TitleMenu extends GameObject {
 		}));
 		buttonNumber++;
 
+		addChild(new TitleMenuButton("Quit", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
+			public void notified(Observable sender){
+				System.exit(0);
+			}
+		}));
+		buttonNumber++;
+
 		
 		
 		
@@ -93,6 +104,9 @@ public class TitleMenu extends GameObject {
 		
 	}
 	
+	public void update(){
+		starfield.scrollBy(0, 2);
+	}
 	
 	public void draw(Graphics g){
 		g.setFont(new Font("Arial", Font.BOLD, 72));
