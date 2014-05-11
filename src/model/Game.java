@@ -230,11 +230,14 @@ public class Game extends JPanel implements Runnable, Fadable {
 			ObjectInputStream in = new ObjectInputStream(finput);
 			
 			GameObject newRoot = (GameObject) in.readObject();
-			setRoot(newRoot);
+
 			
 			@SuppressWarnings("unchecked")
 			ArrayList<Button> buttons = (ArrayList<Button>) in.readObject();
 			Input.getInstance().setButtons(buttons);
+			
+			transitionTo(newRoot);
+
 			
 			in.close();
 			finput.close();

@@ -49,7 +49,8 @@ public class Input implements MouseMotionListener, MouseListener {
 	}
 
 	public void setButtons(ArrayList<Button> newButtons){
-		for(Button b : buttons){
+		ArrayList<Button> buttonsCopy = new ArrayList<Button>(buttons);
+		for(Button b : buttonsCopy){
 			removeButton(b);
 		}
 		for(Button b : newButtons){

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import model.Game;
 import model.GameObject;
+import model.TitleMenu;
 
 public class PauseMenu extends GameObject {
 
@@ -21,7 +22,7 @@ public class PauseMenu extends GameObject {
 	private static final long serialVersionUID = -9115838445775394948L;
 
 	private static final int WIDTH = 200;
-	private static final int HEIGHT = 250;
+	private static final int HEIGHT = 310;
 	private static final int BHEIGHT = -10;
 	
 
@@ -38,7 +39,9 @@ public class PauseMenu extends GameObject {
 		
 		int w = 120;
 		int h = 42;
-		Button continueButton = new Button(Game.WIDTH/2 - w/2, Game.HEIGHT/2 - h/2 - 25, w, h){
+		int oy = -28;
+		
+		Button continueButton = new Button(Game.WIDTH/2 - w/2, Game.HEIGHT/2 - h/2 - 25 + oy, w, h){
 
 			/**
 			 * 
@@ -56,7 +59,30 @@ public class PauseMenu extends GameObject {
 		continueButton.getPosition().setZ(BHEIGHT);
 		addButton(continueButton);
 		
-		Button quitButton = new Button(Game.WIDTH/2 - w/2, Game.HEIGHT/2 - h/2 + 35, w, h){
+		Button saveAndQuitButton = new Button(Game.WIDTH/2 - w/2, Game.HEIGHT/2 - h/2 + 35 + oy, w, h){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -3544795303633587413L;
+
+			public void mouseHovered(){
+//				System.out.println("save");
+			}
+			
+			public void mouseReleased(){
+				// safe bet that animations aren't happening
+				if(!camera.getIsMoving()){
+					destroy();
+					Game.getInstance().saveGame();
+					
+					Game.getInstance().transitionTo(new TitleMenu());
+				}
+			}
+		};
+		saveAndQuitButton.getPosition().setZ(BHEIGHT);
+		addButton(saveAndQuitButton);
+		
+		Button quitButton = new Button(Game.WIDTH/2 - w/2, Game.HEIGHT/2 - h/2 + 95 + oy, w, h){
 			/**
 			 * 
 			 */
@@ -69,9 +95,8 @@ public class PauseMenu extends GameObject {
 			public void mouseReleased(){
 				// safe bet that animations aren't happening
 				if(!camera.getIsMoving()){
-					destroy();
-					Game.getInstance().saveGame();
-					System.exit(0);
+					destroy();					
+					Game.getInstance().transitionTo(new TitleMenu());
 				}
 			}
 		};
@@ -135,8 +160,20 @@ public class PauseMenu extends GameObject {
 		g2.drawLine(offsetButtonX + 120, offsetButtonY+ oy2, offsetButtonX + 120,
 				offsetButtonY + 40+ oy2);
 		
+		int oy3 = oy2 * 2;
+		
+		g2.drawLine(offsetButtonX, offsetButtonY+ oy3, offsetButtonX + 120,
+				offsetButtonY+ oy3);
+		g2.drawLine(offsetButtonX, offsetButtonY+ oy3, offsetButtonX,
+				offsetButtonY + 40+ oy3);
+		g2.drawLine(offsetButtonX, offsetButtonY+ oy3 + 40, offsetButtonX + 120,
+				offsetButtonY + 40+ oy3);
+		g2.drawLine(offsetButtonX + 120, offsetButtonY+ oy3, offsetButtonX + 120,
+				offsetButtonY + 40+ oy3);
+		
 		g2.drawString("Resume", offsetButtonX + 24, offsetButtonY + 25);
 		g2.drawString("Save & Quit", offsetButtonX + 9, offsetButtonY + 25 + oy2);
+		g2.drawString("Quit", offsetButtonX + 41, offsetButtonY + 25 + oy3);
 	}
 
 	public void onDestroy() {

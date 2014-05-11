@@ -54,7 +54,12 @@ public class ImageLibrary {
 		"spacewreckage.png",//placeholder image
 		"gascloud.png",
 		"radioactive.png",
-		"spacewreckage1x3.png"
+		"spacewreckage1x3.png",
+		"map1.jpg",
+		"map2.jpg",
+		"map3.jpg",
+		"map4.jpg"
+		
 		};
 	
 	/*
