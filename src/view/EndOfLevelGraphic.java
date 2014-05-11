@@ -23,9 +23,11 @@ public class EndOfLevelGraphic extends GameObject {
 	}
 	
 	private WinnerType winnerType;
+	private String reason;
 	
-	public EndOfLevelGraphic(WinnerType winnerType){
+	public EndOfLevelGraphic(WinnerType winnerType, String reason){
 		this.winnerType = winnerType;
+		this.reason = reason;
 	}
 	
 	public EndOfLevelGraphic(WinnerType winnerType, int duration){
@@ -73,7 +75,15 @@ public class EndOfLevelGraphic extends GameObject {
 		
 		int width = g.getFontMetrics().stringWidth(s);
 
-		g.drawString(s, Game.WIDTH/2 - width/2, Game.HEIGHT/2);
+		g.drawString(s, Game.WIDTH/2 - width/2, Game.HEIGHT/2-30);
+		
+		g.setFont(new Font("Arial", Font.BOLD, 48));
+		
+		int width2 = g.getFontMetrics().stringWidth(reason);
+		
+		g.drawString(reason, Game.WIDTH/2 - width2/2, Game.HEIGHT/2+ 40);
+
+		
 		
 	}
 	

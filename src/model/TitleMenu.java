@@ -65,7 +65,7 @@ public class TitleMenu extends GameObject {
 			buttonNumber++;
 		}
 		
-		addChild(new TitleMenuButton("New Game", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
+		addChild(new TitleMenuButton("New Campaign", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
 			public void notified(Observable sender){
 				Game.getInstance().transitionTo(new Mission1Intro());
 			}

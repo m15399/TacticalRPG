@@ -229,7 +229,7 @@ public class Level extends GameObject {
 				private static final long serialVersionUID = 6366047185169964945L;
 
 				public void mouseReleased(){
-					onTeamWin(0);
+					onTeamWin(0, "You cheated!");
 				}
 			};
 			Input.getInstance().addButton(b3);
@@ -242,7 +242,7 @@ public class Level extends GameObject {
 				private static final long serialVersionUID = -4272063537944131233L;
 
 				public void mouseReleased(){
-					onTeamWin(1);
+					onTeamWin(1, "You cheated against yourself!");
 				}
 			};
 			Input.getInstance().addButton(b4);
@@ -326,7 +326,7 @@ public class Level extends GameObject {
 		return winner;
 	}
 	
-	public void onTeamWin(int team){
+	public void onTeamWin(int team, String reason){
 		
 		winner = team;
 		
@@ -346,7 +346,7 @@ public class Level extends GameObject {
 				wt = WinnerType.ENEMY;
 		}
 		
-		addChild(new EndOfLevelGraphic(wt));
+		addChild(new EndOfLevelGraphic(wt, reason));
 		
 		exitLevel();
 
@@ -434,9 +434,9 @@ public class Level extends GameObject {
 		if(!getIsOver()){
 			// check objective
 			if(getTargettableShips(1).size() == 0){
-				onTeamWin(0);
+				onTeamWin(0, "All Units Destroyed");
 			} else if(getTargettableShips(0).size() == 0){
-				onTeamWin(1);
+				onTeamWin(1, "All Units Destroyed");
 			}
 		}
 	}
