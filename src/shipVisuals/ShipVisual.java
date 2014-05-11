@@ -11,6 +11,7 @@ import actions.*;
 
 import model.Entity;
 import model.Game;
+import model.GameObject;
 import model.Map;
 import model.Ship;
 
@@ -21,6 +22,7 @@ import utils.Position;
 import view.Camera;
 import view.Explosion;
 import view.ShipOutline;
+import view.Sprite;
 
 /*
  * Controls the appearance of ships, 
@@ -41,6 +43,9 @@ public class ShipVisual extends Entity {
 	private double displayHealth;
 	private Camera currCamera;
 	
+	private Sprite sprite;
+	private GameObject belowSprite;
+	
 	private Ship enemy; 
 	private transient Observer notifyWhenAttacking;
 	
@@ -55,8 +60,29 @@ public class ShipVisual extends Entity {
 		addChild(outline);
 
 		setPositionToShipCoords();
+		
+		belowSprite = new GameObject();
+		addChild(belowSprite);
+		
+		sprite = new Sprite();
+		sprite.setSpatialParent(this);
+		addChild(sprite);
+		
+		refreshSprite();
 	}
 	
+	public void refreshSprite(){
+		sprite.setImage(ship.getFileName());
+	}
+	
+	public Sprite getSprite(){
+		return sprite;
+	}
+	
+	public void addChildBelowSprite(GameObject o){
+		belowSprite.addChild(o);
+	}
+		
 	public void updateDisplayHealth(){
 		double newHealth = ship.getHull();
 		
@@ -336,4 +362,8 @@ public class ShipVisual extends Entity {
 		
 	}
 
+	public Ship getShip(){
+		return ship;
+	}
+	
 }

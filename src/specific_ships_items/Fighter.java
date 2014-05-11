@@ -53,7 +53,7 @@ public class Fighter extends Ship {
 
 		setVisual(new FighterVisual(this));
 	}
-
+	
 	/*
 	 * Ship basic attack. 1.5 damage against bombers
 	 */

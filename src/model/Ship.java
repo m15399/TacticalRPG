@@ -23,12 +23,13 @@ public class Ship extends GameObject {
 	private List<Item> items;
 	private Ability ability;
 	private String description, name, filename;
-	private boolean canAttack, canMove, canUseAbility, canUseItem, isWaiting, isTargetable;
+	private boolean canAttack, canMove, canUseAbility, canUseItem, isWaiting,
+			isTargetable;
 	private Level level;
 	private ShipVisual visual;
 	private Random random = new Random();
-	DecimalFormat df = new DecimalFormat("#.#");  
-	
+	DecimalFormat df = new DecimalFormat("#.#");
+
 	private boolean didMiss;
 
 	public Ship(Point newLocation) {
@@ -38,22 +39,23 @@ public class Ship extends GameObject {
 		items = new ArrayList<Item>();
 		visual = null;
 		ability = null;
-		
+
 		didMiss = false;
 	}
-	
+
 	public boolean isShipDead() {
 		if (hull > 0)
 			return false;
 		return true;
 	}
-	
+
 	/**
 	 * Helps remind whoever is making a new class of all the values that should
 	 * be declared to avoid them being default
 	 * 
 	 * @param name
-	 * @param moves - meant as max movement range
+	 * @param moves
+	 *            - meant as max movement range
 	 * @param hull
 	 * @param shielding
 	 * @param maxHull
@@ -63,17 +65,19 @@ public class Ship extends GameObject {
 	 * @param minDamage
 	 * @param maxDamage
 	 * @param critChance
-	 * @param range - meant as ship's attack range
+	 * @param range
+	 *            - meant as ship's attack range
 	 * @param isTargetable
 	 * @param team
 	 */
 
 	public void constructorAid(String name, int moves, double hull,
 			double shielding, double maxHull, double maxShielding,
-			double accuracy, String description,
-			double minDamage, double maxDamage, double critChance, int range, boolean isTargetable, int team) {
+			double accuracy, String description, double minDamage,
+			double maxDamage, double critChance, int range,
+			boolean isTargetable, int team) {
 		setName(name);
-		setFileName(name.toLowerCase() + ".png");//doubles off of setName
+		setFileName();// doubles off of setName
 		setMoves(moves);
 		setMaxHull(maxHull);
 		setHull(hull);
@@ -88,109 +92,112 @@ public class Ship extends GameObject {
 		setIsTargetable(isTargetable);
 		setTeam(team);
 	}
-	
-	public void startTurn(){
+
+	public void startTurn() {
 		setMovesLeft(moves);
 		setCanAttack(true);
 		setCanUseItem(true);
 		setCanUseAbility(true);
 		setIsWaiting(false);
-		if(ability != null)
+		if (ability != null)
 			ability.startTurn();
 	}
-	
+
 	/*
-	 * Plays the move animation 
+	 * Plays the move animation
 	 */
-	public void moveWithDirections(Observer notifyWhenDone, int x, int y, List<Direction> directions, Camera camera){
+	public void moveWithDirections(Observer notifyWhenDone, int x, int y,
+			List<Direction> directions, Camera camera) {
 		Point originalPoint = new Point(getLocation());
-		
+
 		setLocation(new Point(x, y));
 		ShipVisual visual = getVisual();
-		if(visual != null){
-			visual.moveWithDirections(originalPoint, notifyWhenDone, directions, camera);
+		if (visual != null) {
+			visual.moveWithDirections(originalPoint, notifyWhenDone,
+					directions, camera);
 		}
 		updateMovesLeft(-directions.size());
 	}
-	
+
 	/*
 	 * Attack
 	 */
 	public void attack(Ship target) {
-		
+
 	}
-	
-	public void setIsWaiting(boolean b){
+
+	public void setIsWaiting(boolean b) {
 		isWaiting = b;
 	}
-	
-	public boolean getIsWaiting(){
+
+	public boolean getIsWaiting() {
 		return isWaiting;
 	}
-	
+
 	/*
 	 * Items
 	 */
-	
-	public void itemUsed(Item item){
+
+	public void itemUsed(Item item) {
 		removeFromItems(item);
 		setCanUseItem(false);
 	}
-	
-	public void useItemOnShip(Item item, Ship ship, Observer notifyWhenDone){
+
+	public void useItemOnShip(Item item, Ship ship, Observer notifyWhenDone) {
 		item.useOnShip(ship, notifyWhenDone);
 		itemUsed(item);
 	}
-	
-	public void useItemOnTile(Item item, Tile tile, Observer notifyWhenDone){
+
+	public void useItemOnTile(Item item, Tile tile, Observer notifyWhenDone) {
 		item.useOnTile(tile, notifyWhenDone);
 		itemUsed(item);
 	}
-	
-	public void useItemWithoutTarget(Item item, Observer notifyWhenDone){
+
+	public void useItemWithoutTarget(Item item, Observer notifyWhenDone) {
 		item.useWithoutTarget(notifyWhenDone);
 		itemUsed(item);
 	}
-	
+
 	/*
 	 * Ability
 	 */
-	
-	private void abilityUsed(){
+
+	private void abilityUsed() {
 		setCanUseAbility(false);
 		ability.resetCooldown();
 	}
-	
-	public void useAbilityOnShip(Ship ship, Observer notifyWhenDone){
+
+	public void useAbilityOnShip(Ship ship, Observer notifyWhenDone) {
 		abilityUsed();
 		ability.useOnShip(ship, notifyWhenDone);
 	}
-	
-	public void useAbilityOnTile(Tile tile, Observer notifyWhenDone){
+
+	public void useAbilityOnTile(Tile tile, Observer notifyWhenDone) {
 		abilityUsed();
 		ability.useOnTile(tile, notifyWhenDone);
 	}
-	
-	public void useAbilityWithoutTarget(Observer notifyWhenDone){
+
+	public void useAbilityWithoutTarget(Observer notifyWhenDone) {
 		abilityUsed();
 		ability.useWithoutTarget(notifyWhenDone);
 	}
-		
+
 	/*
 	 * Returns a random damage amount between the min and max damage values.
-	 * Remember nextInt returns a value between 0 inclusive and some value exclusive.
+	 * Remember nextInt returns a value between 0 inclusive and some value
+	 * exclusive.
 	 */
-	
-	public double getDamage(){
+
+	public double getDamage() {
 		double dmgModifier = Math.random();
-		return (maxDamage-minDamage)*dmgModifier + minDamage;
+		return (maxDamage - minDamage) * dmgModifier + minDamage;
 	}
-	
+
 	/*
 	 * Returns final damage after basic shielding calculations
 	 */
-	
-	public double getFinalDamage(double initialDamage){
+
+	public double getFinalDamage(double initialDamage) {
 		if (initialDamage * ((100 - shielding) / 100) <= 0)
 			return 0;
 		else
@@ -201,52 +208,53 @@ public class Ship extends GameObject {
 	 * Setters and Getters for private instance variables. Please add other
 	 * methods above these so they are easier to find.
 	 */
-	
-	public void setLevel(Level level){
+
+	public void setLevel(Level level) {
 		this.level = level;
 	}
-	
-	public Level getLevel(){
+
+	public Level getLevel() {
 		return level;
 	}
-	
-	public void setAbility(Ability ability){
+
+	public void setAbility(Ability ability) {
 		this.ability = ability;
 		ability.setOwner(this);
 		addChild(ability);
 	}
-	
-	public Ability getAbility(){
+
+	public Ability getAbility() {
 		return ability;
 	}
-	
-	public void setTeam(int newTeam){
+
+	public void setTeam(int newTeam) {
 		team = newTeam;
+		setFileName();
 	}
-	
-	public int getTeam(){
+
+	public int getTeam() {
 		return team;
 	}
 
-	public void setVisual(ShipVisual newVisual){
-		if(visual != null)
+	public void setVisual(ShipVisual newVisual) {
+		if (visual != null)
 			visual.destroy();
 		addChild(newVisual);
 		visual = newVisual;
 	}
-	
-	public ShipVisual getVisual(){
+
+	public ShipVisual getVisual() {
 		return visual;
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
-	
-	public void setName(String newName){
+
+	public void setName(String newName) {
 		name = newName;
 	}
-	
+
 	public Point getLocation() {
 		return location;
 	}
@@ -255,16 +263,16 @@ public class Ship extends GameObject {
 		location = newLocation;
 	}
 
-	public double getHull() {    
+	public double getHull() {
 		hull = Double.valueOf(df.format(hull));
 		return hull;
 	}
 
 	public void setHull(double newHullTotal) {
 		hull = newHullTotal;
-		if(hull < 0)
+		if (hull < 0)
 			hull = 0;
-		if(hull > maxHull)
+		if (hull > maxHull)
 			hull = maxHull;
 	}
 
@@ -315,21 +323,21 @@ public class Ship extends GameObject {
 	public void setMoves(int newMoveTotal) {
 		moves = newMoveTotal;
 	}
-	
-	public int getMovesLeft(){
+
+	public int getMovesLeft() {
 		return movesLeft;
 	}
-	
-	public void setMovesLeft(int newMovesLeft){
+
+	public void setMovesLeft(int newMovesLeft) {
 		movesLeft = newMovesLeft;
-		if(movesLeft > 0){
+		if (movesLeft > 0) {
 			setCanMove(true);
 		} else {
 			setCanMove(false);
 		}
 	}
-	
-	public void updateMovesLeft(int valueToAdjustBy){
+
+	public void updateMovesLeft(int valueToAdjustBy) {
 		setMovesLeft(getMovesLeft() + valueToAdjustBy);
 	}
 
@@ -404,21 +412,21 @@ public class Ship extends GameObject {
 	public void updateCritChance(double valueToAdjustBy) {
 		critChance += valueToAdjustBy;
 	}
-	
-	public int getRange(){
+
+	public int getRange() {
 		return range;
 	}
-	
-	public void setRange(int newRange){
+
+	public void setRange(int newRange) {
 		range = newRange;
 	}
-	
-	public void updateRange(int valueToAdjustBy){
+
+	public void updateRange(int valueToAdjustBy) {
 		range += valueToAdjustBy;
 	}
-	
+
 	public boolean getCanAttack() {
-		if(range == 0)
+		if (range == 0)
 			return false;
 		return canAttack;
 	}
@@ -428,7 +436,7 @@ public class Ship extends GameObject {
 	}
 
 	public boolean getCanMove() {
-		if(movesLeft == 0)
+		if (movesLeft == 0)
 			return false;
 		return canMove;
 	}
@@ -452,52 +460,62 @@ public class Ship extends GameObject {
 	public void setCanUseItem(boolean canUseItem) {
 		this.canUseItem = canUseItem;
 	}
-	
-	public String getFileName(){
+
+	public String getFileName() {
 		return filename;
 	}
-	
-	public void setFileName(String newFileName){
-		filename = newFileName;
+
+	public void setFileName() {
+
+		String s = name.toLowerCase();
+		if(getTeam() == 1)
+			s += "_red";
+		s += ".png";
+		setFileName(s);
 	}
-	
-	public boolean getIsTargetable(){
+
+	private void setFileName(String newFileName) {
+		filename = newFileName;
+		if(visual != null)
+			visual.refreshSprite();
+	}
+
+	public boolean getIsTargetable() {
 		return isTargetable;
 	}
-	
-	public void setIsTargetable(boolean isTargetable){
+
+	public void setIsTargetable(boolean isTargetable) {
 		this.isTargetable = isTargetable;
 	}
-	
+
 	public boolean isHit() {
 		if (random.nextInt(100) < getAccuracy()) {
 			return true;
-		}
-		else return false;
+		} else
+			return false;
 	}
-	
-	public boolean getDidMiss(){
+
+	public boolean getDidMiss() {
 		return didMiss;
 	}
-	
-	public void setDidMiss(boolean miss){
+
+	public void setDidMiss(boolean miss) {
 		didMiss = miss;
 	}
-	
-	public String itemsToString(){
+
+	public String itemsToString() {
 		String itemsString = "";
-		for(int i = 0; i < items.size(); i++){
-			if(i == items.size()-1){
+		for (int i = 0; i < items.size(); i++) {
+			if (i == items.size() - 1) {
 				itemsString += items.get(i).getName();
-			}
-			else{
-			itemsString += items.get(i).getName() + ", ";
+			} else {
+				itemsString += items.get(i).getName() + ", ";
 			}
 		}
 		return itemsString;
 	}
-	
-	public String shipStatus(){
+
+	public String shipStatus() {
 		String shipStatus = "";
 		shipStatus += this.getName();
 		shipStatus += "\n";
@@ -511,8 +529,8 @@ public class Ship extends GameObject {
 		shipStatus += "\n";
 		return shipStatus;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return shipStatus();
 	}
 }

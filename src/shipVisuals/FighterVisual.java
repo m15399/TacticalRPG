@@ -2,7 +2,6 @@ package shipVisuals;
 
 import view.GunSprite;
 import view.JetSprite;
-import view.Sprite;
 import view.GunSprite.GunSize;
 import view.GunSprite.GunType;
 import view.JetSprite.JetSize;
@@ -18,7 +17,6 @@ public class FighterVisual extends ShipVisual {
 	 * 
 	 */
 	private static final long serialVersionUID = -4714056168501536680L;
-	private Sprite sprite;
 	private JetSprite[] jets;
 	private GunSprite gun;
 	
@@ -32,30 +30,22 @@ public class FighterVisual extends ShipVisual {
 		
 		JetSprite jet = new JetSprite(ox, 1, this, JetSize.H8);
 		jet.setVisible(false);
-		addChild(jet);
+		addChildBelowSprite(jet);
 		jets[0] = jet;
 		
 		jet = new JetSprite(ox-1, -3, this, JetSize.H8);
 		jet.setVisible(false);
-		addChild(jet);
+		addChildBelowSprite(jet);
 		jets[1] = jet;
 		
 		jet = new JetSprite(ox, 0, this, JetSize.H8);
 		jet.setVisible(false);
-		addChild(jet);
+		addChildBelowSprite(jet);
 		jets[2] = jet;
 		
 				
-		
-		sprite = new Sprite("fighter.png");
-		addChild(sprite);
-
 		gun = new GunSprite(13, 7, this, GunSize.H8, GunType.MACHINE_GUN);
-		addChild(gun);
-		
-		// parent the sprite to the location of the visual
-		sprite.getPosition().setParent(getPosition());
-		
+		addChild(gun);		
 		
 	}
 

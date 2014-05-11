@@ -45,6 +45,7 @@ public class Scout extends Ship {
 		// ability - possibly be untargetable for one turn / use mine
 		setAbility(new PlaceMineAbility());
 	}
+	
 
 	/*
 	 * Ship basic attack.

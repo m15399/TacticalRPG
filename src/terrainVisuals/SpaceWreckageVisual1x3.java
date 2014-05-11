@@ -1,6 +1,5 @@
 package terrainVisuals;
 
-import resources.ImageLibrary;
 import terrains.Terrain;
 import view.Sprite;
 
