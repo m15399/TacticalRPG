@@ -20,9 +20,7 @@ public class SpaceWreckageTerrain extends Terrain implements TerrainEffects{
 
 	@Override
 	public void applyEffect(Ship ship) {
-		double random = Math.random();
-		System.out.println("random number test is random: " + random);
-		if(random > .5f){
+		if(Math.random() > .5){
 			ship.addToItems(new ScrapMetal());
 		}
 	}
