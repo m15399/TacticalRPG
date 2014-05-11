@@ -6,13 +6,6 @@ import specific_ships_items.ScrapMetal;
 import terrainVisuals.SpaceWreckageVisual;
 import model.Ship;
 
-/*
- * TODO's:
- * Add graphic in resources
- * Create Visual for this class then uncomment out line in constructor
- * Give letter code for this class for level generator
- */
-
 public class SpaceWreckageTerrain extends Terrain implements TerrainEffects{
 
 	/**
@@ -27,7 +20,11 @@ public class SpaceWreckageTerrain extends Terrain implements TerrainEffects{
 
 	@Override
 	public void applyEffect(Ship ship) {
-		ship.addToItems(new ScrapMetal());
+		double random = Math.random();
+		System.out.println("random number test is random: " + random);
+		if(random > .5f){
+			ship.addToItems(new ScrapMetal());
+		}
 	}
 
 }
