@@ -1,8 +1,8 @@
 package levels;
 
+import level_intros.Credits;
 import model.GameObject;
 import model.Level;
-import model.TitleMenu;
 
 public class Mission3 extends Level {
 
@@ -20,7 +20,7 @@ public class Mission3 extends Level {
 	
 	public GameObject getNextRoot(){
 		if(getWinner() == 0)
-			return new TitleMenu();
+			return new Credits();
 		else
 			return new Mission3();
 	}

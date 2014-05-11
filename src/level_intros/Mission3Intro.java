@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
-import levels.Mission1;
+import levels.Mission3;
 import model.GameObject;
 
-public class TestIntro extends LevelIntro {
+public class Mission3Intro extends LevelIntro {
 
 	/**
 	 * 
@@ -23,17 +23,17 @@ public class TestIntro extends LevelIntro {
 		g.setColor(Color.white);
 		
 		g.setFont(new Font("Arial", Font.BOLD, 48));
-		g.drawString("Mission 1:", ox, oy);
+		g.drawString("Mission 3:", ox, oy);
 		
 		g.setFont(new Font("Arial", Font.BOLD, 24));
-		g.drawString("Objective: Reach the end zone.", ox, oy + 60);
+		g.drawString("Objective: Destroy the Mothership.", ox, oy + 60);
 		g.drawString("Secondary Objective: Destroy all units.", ox, oy + 100);
 		
 	}
 
 	@Override
 	public GameObject getNextRoot() {
-		return new Mission1();
+		return new Mission3();
 	}
 	
 }

@@ -1,5 +1,6 @@
 package levels;
 
+import level_intros.Mission2Intro;
 import model.GameObject;
 import model.Level;
 
@@ -19,7 +20,7 @@ public class Mission1 extends Level {
 	
 	public GameObject getNextRoot(){
 		if(getWinner() == 0)
-			return new Mission2();
+			return new Mission2Intro();
 		else
 			return new Mission1();
 	}

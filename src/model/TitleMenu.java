@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.io.File;
 
 import level_intros.Credits;
-import level_intros.TestIntro;
+import level_intros.Mission1Intro;
 import levels.*;
 import utils.Observable;
 import utils.Observer;
@@ -60,7 +60,7 @@ public class TitleMenu extends GameObject {
 		
 		addChild(new TitleMenuButton("Campaign", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
 			public void notified(Observable sender){
-				Game.getInstance().transitionTo(new TestIntro());
+				Game.getInstance().transitionTo(new Mission1Intro());
 			}
 		}));
 		buttonNumber++;
