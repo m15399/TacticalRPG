@@ -61,6 +61,8 @@ public class TitleMenu extends GameObject {
 				}
 			}));
 			buttonNumber++;
+		} else {
+			buttonNumber++;
 		}
 		
 		addChild(new TitleMenuButton("New Game", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
