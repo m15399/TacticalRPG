@@ -242,7 +242,7 @@ public class ShipSelectionScreen extends GameObject{
 			drawSelectionScreen(g);
 		}
 	}
-	
+		
 	public void drawSelectionScreen(Graphics g){
 		int offsetX = 0;
 		int offsetY = 0;

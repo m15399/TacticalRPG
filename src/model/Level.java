@@ -1014,7 +1014,7 @@ public class Level extends GameObject {
 	}
 	
 	public void addShipToMap(Ship ship) {
-		// ship.setTeam(0); // not sure if needed? 
+		ship.setTeam(0); // not sure if needed? 
 		addShipHelper(ship);
 		shipHolder.addChild(ship);
 	}
