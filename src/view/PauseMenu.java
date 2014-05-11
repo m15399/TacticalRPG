@@ -135,7 +135,7 @@ public class PauseMenu extends GameObject {
 		g2.drawLine(offsetButtonX + 120, offsetButtonY+ oy2, offsetButtonX + 120,
 				offsetButtonY + 40+ oy2);
 		
-		g2.drawString("Continue", offsetButtonX + 20, offsetButtonY + 25);
+		g2.drawString("Resume", offsetButtonX + 24, offsetButtonY + 25);
 		g2.drawString("Save & Quit", offsetButtonX + 9, offsetButtonY + 25 + oy2);
 	}
 
