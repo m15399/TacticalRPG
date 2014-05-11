@@ -19,12 +19,14 @@ import utils.Observer;
 import view.Camera;
 import view.Explosion;
 import view.FoundItemsPopupScreen;
+import view.MenuButton;
 import view.SelectedEnemyShip;
 import view.ShipOutline;
 import view.EndOfLevelGraphic.WinnerType;
 import view.ShipOutline.SelectionType;
 import view.BouncingStat;
 import view.EndOfLevelGraphic;
+import view.PauseMenu;
 import view.SelectedShipButtons;
 import view.SelectedShipView;
 import view.ShipSelectionScreen;
@@ -87,6 +89,7 @@ public class Level extends GameObject {
 	private WarpGateShip warper;
 	
 	private List<Button> debugButtons;
+	private MenuButton menuButton;
 
 	public Level(int width, int height) {
 
@@ -182,6 +185,11 @@ public class Level extends GameObject {
 
 		// AI
 		aiStrategy = new ImprovedStrategy();
+		
+		// menu button
+		menuButton = new MenuButton(camera);
+		addChild(menuButton);
+		
 
 		// test zoom buttons
 		debugButtons = new ArrayList<Button>();
@@ -240,19 +248,8 @@ public class Level extends GameObject {
 			};
 			Input.getInstance().addButton(b4);
 			debugButtons.add(b4); 
-			
-			Button b5 = new Button(Game.WIDTH - bsize, Game.HEIGHT - bsize*5, bsize, bsize*5){
 
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = -2435342331607024084L;
-				public void mouseReleased(){
-					Game.getInstance().saveGame();
-				}
-			};
-			Input.getInstance().addButton(b5);
-			debugButtons.add(b5); 
+			
 		}
 
 		map.checkTileLocations();
@@ -529,6 +526,7 @@ public class Level extends GameObject {
 	public void enterDefaultState() {
 		if (!isAITurn()) {
 			levelButton.enable();
+			menuButton.enable();
 			shipButtons.setShip(selectedShip);
 		} else {
 			hoveredShipView.setShip(null);
@@ -683,6 +681,7 @@ public class Level extends GameObject {
 	public void enterAnimatingState() {
 		map.clearHighLights();
 		levelButton.disable();
+		menuButton.disable();
 		hoveredShipView.setShip(null);
 		shipSelectionScreen.setVisible(false);
 		state = TurnState.ANIMATING;
@@ -1296,5 +1295,5 @@ public class Level extends GameObject {
 	public String getFileName(){
 		return fileName;
 	}
-	
+		
 }

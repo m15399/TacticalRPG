@@ -105,6 +105,9 @@ public class Camera extends GameObject {
 	}
 	
 	public boolean getIsMoving(){
+		if(getFollowTarget() == null)
+			return false;
+		
 		Position p = getFollowTarget().getPosition();
 		double x = p.getX();
 		double y = p.getY();

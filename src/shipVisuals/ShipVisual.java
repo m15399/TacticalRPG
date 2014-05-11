@@ -42,7 +42,7 @@ public class ShipVisual extends Entity {
 	private Camera currCamera;
 	
 	private Ship enemy; 
-	private Observer notifyWhenAttacking;
+	private transient Observer notifyWhenAttacking;
 	
 	public ShipVisual(Ship ship) {
 		this.ship = ship;
