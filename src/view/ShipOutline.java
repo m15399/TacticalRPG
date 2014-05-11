@@ -1,7 +1,9 @@
 package view;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import model.Entity;
 import model.Map;
@@ -46,6 +48,8 @@ public class ShipOutline extends Entity {
 		} else {
 			g.setColor(Color.gray);
 		}
+		
+		((Graphics2D) g).setStroke(new BasicStroke(1.3f));
 		
 		g.drawRect(-width/2+border, -height/2+border, width-border*2, height-border*2);
 		

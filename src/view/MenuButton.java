@@ -21,7 +21,7 @@ public class MenuButton extends Entity {
 	private Button button;
 	
 	public MenuButton(Camera ncamera){
-		super(Game.WIDTH - 60, Game.HEIGHT - 60);
+		super(Game.WIDTH - 65, Game.HEIGHT - 60);
 		
 		this.camera = ncamera;
 		
