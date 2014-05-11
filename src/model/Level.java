@@ -369,8 +369,9 @@ public class Level extends GameObject {
 				tile.removeFromItems(i);
 				ship.addToItems(i);
 			}
-			
-			foundItemsScreen.setVisible(true);
+			if(ship.getTeam() == 0){
+				foundItemsScreen.setVisible(true);
+			}
 			//System.out.println("Items after addition: " + ship.getItems().size());
 		}
 		if(tile.getHasTerrain()){
