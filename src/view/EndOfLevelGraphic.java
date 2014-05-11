@@ -30,8 +30,10 @@ public class EndOfLevelGraphic extends GameObject {
 		this.reason = reason;
 	}
 	
-	public EndOfLevelGraphic(WinnerType winnerType, int duration){
+	public EndOfLevelGraphic(WinnerType winnerType, String reason, int duration){
 		this.winnerType = winnerType;
+		
+		this.reason = reason;
 		
 		TimerAction timer = new TimerAction(duration, new Observer(){
 			public void notified(Observable sender){

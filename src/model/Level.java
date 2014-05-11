@@ -405,9 +405,9 @@ public class Level extends GameObject {
 		if(numHumans > 1){
 			int time = 90;
 			if(currentTeam == 0){
-				addChild(new EndOfLevelGraphic(WinnerType.STARTBLUETURN, time));
+				addChild(new EndOfLevelGraphic(WinnerType.STARTBLUETURN, "", time));
 			} else {
-				addChild(new EndOfLevelGraphic(WinnerType.STARTREDTURN, time));
+				addChild(new EndOfLevelGraphic(WinnerType.STARTREDTURN, "", time));
 
 			}
 		}
