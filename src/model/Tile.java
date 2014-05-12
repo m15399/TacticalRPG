@@ -113,7 +113,6 @@ public class Tile extends GameObject implements Comparable<Tile>{
 		mapX = x;
 		mapY = y;
 		setIsOccupied(true);
-		setHasTerrain(true);
 		items = new ArrayList<Item>();
 	}
 
