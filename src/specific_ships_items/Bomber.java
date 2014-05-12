@@ -37,7 +37,7 @@ public class Bomber extends Ship {
 		super(newLocation);
 		String description = "Bomber ship,\nstrong against\nnon-mobile targets.";
 		this.constructorAid("Bomber", 4, 100, 30, 100, 30, 75, description, 50,
-				55, 10, 1, true, 0);
+				55, 100, 1, true, 0);
 
 		setVisual(new BomberVisual(this));
 

@@ -62,7 +62,7 @@ public class VictoryArea extends Entity{
 		
 		// border
 		g.setColor(new Color(.3f, 1f, .3f, .3f));
-				
+		
 		
 		((Graphics2D) g).setStroke(new BasicStroke(1.3f));
 		g.fillRect(border, border, width-border*2, height-border*2);
