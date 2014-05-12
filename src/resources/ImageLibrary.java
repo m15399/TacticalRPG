@@ -15,9 +15,6 @@ public class ImageLibrary {
 
 	// files to load at startup
 	private static final String[] files = {
-		"test.png",
-		"test2.png",
-		"smurf_sprite.png",
 		"scout.png",
 		"scout_red.png",
 		"fighter.png",
@@ -30,6 +27,7 @@ public class ImageLibrary {
 		"sniper_red.png",
 		"repairship.png",
 		"repairship_red.png",
+		"healbeam.png",
 		"mothership_red.png",
 		"mine.png",
 		"mine_red.png",

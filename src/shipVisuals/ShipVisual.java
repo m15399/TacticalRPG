@@ -304,7 +304,7 @@ public class ShipVisual extends Entity {
 		
 		q.addAction(new WaitForCameraAction(camera, notifyWhenCasting));
 		
-		q.addAction(new TimerAction(60, notifyWhenDone));
+		q.addAction(new TimerAction(60, null));
 		
 		
 		addChild(q);
@@ -325,7 +325,7 @@ public class ShipVisual extends Entity {
 	public void playIdleAnimation() {
 		// override
 	}
-
+	
 	public void draw(Graphics g1) {
 
 		if(ship.getIsTargetable()){

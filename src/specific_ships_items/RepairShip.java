@@ -3,7 +3,7 @@ package specific_ships_items;
 import java.awt.Point;
 
 import model.Ship;
-import shipVisuals.ScoutVisual;
+import shipVisuals.RepairShipVisual;
 
 public class RepairShip extends Ship {
 
@@ -38,9 +38,9 @@ public class RepairShip extends Ship {
 		String description = "Repair ship,\nSupport not designed\nfor heavy combat.";
 
 		this.constructorAid("RepairShip", 4, 75, 20, 75, 20, 90,
-				description, 25, 30, 10, 1, true, 0);
+				description, 25, 30, 10, 3, true, 0);
 
-		setVisual(new ScoutVisual(this));
+		setVisual(new RepairShipVisual(this));
 		
 		// ability - either let unit attack twice or disable target for a turn
 		// i thought its ability was to heal though?
