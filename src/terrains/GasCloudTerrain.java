@@ -6,7 +6,7 @@ import java.util.Random;
 import model.Ship;
 import terrainVisuals.GasCloudVisual;
 
-public class GasCloudTerrain extends Terrain implements TerrainEffects{
+public class GasCloudTerrain extends Terrain implements TerrainPopup{
 
 	/**
 	 * 
@@ -27,5 +27,17 @@ public class GasCloudTerrain extends Terrain implements TerrainEffects{
 		int damage = random.nextInt(MAX_DAMAGE) + 1; // damage
 		ship.updateHull(-damage);
 //		ship.updateShielding(-Math.random());
+	}
+
+	@Override
+	public String getName() {
+		String name = "Gas Cloud";
+		return name;
+	}
+
+	@Override
+	public String getDescription() {
+		String description = "Damages passing ships.";
+		return description;
 	}
 }

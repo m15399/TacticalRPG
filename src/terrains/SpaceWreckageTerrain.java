@@ -6,7 +6,7 @@ import specific_ships_items.ScrapMetal;
 import terrainVisuals.SpaceWreckageVisual;
 import model.Ship;
 
-public class SpaceWreckageTerrain extends Terrain implements TerrainEffects{
+public class SpaceWreckageTerrain extends Terrain implements TerrainPopup{
 
 	/**
 	 * 
@@ -25,4 +25,15 @@ public class SpaceWreckageTerrain extends Terrain implements TerrainEffects{
 		}
 	}
 
+	@Override
+	public String getName() {
+		String name = "Space Wreckage";
+		return name;
+	}
+
+	@Override
+	public String getDescription() {
+		String description = "Move a ship onto this for a\nchance of getting scrap metal.\nShip cannot sit on terrain for\nadditional chances.";
+		return description;
+	}
 }

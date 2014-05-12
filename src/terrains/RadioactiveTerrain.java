@@ -6,7 +6,7 @@ import java.util.Random;
 import model.Ship;
 import terrainVisuals.RadioactiveVisual;
 
-public class RadioactiveTerrain extends Terrain implements TerrainEffects{
+public class RadioactiveTerrain extends Terrain  implements TerrainPopup{
 	
 	/**
 	 * 
@@ -28,5 +28,17 @@ public class RadioactiveTerrain extends Terrain implements TerrainEffects{
 		ship.updateHull(-damage);
 //		ship.updateShielding(-Math.random());
 //		ship.updateRange(-1); //Radioactivity messes with components lowering range of ship
+	}
+
+	@Override
+	public String getName() {
+		String name = "Radioactive Field";
+		return name;
+	}
+
+	@Override
+	public String getDescription() {
+		String description = "Damages passing ships.";
+		return description;
 	}
 }
