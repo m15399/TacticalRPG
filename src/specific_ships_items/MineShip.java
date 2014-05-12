@@ -2,7 +2,7 @@ package specific_ships_items;
 
 import java.awt.Point;
 
-import shipVisuals.FighterVisual;
+import shipVisuals.MineVisual;
 
 import model.Ship;
 
@@ -20,7 +20,7 @@ public class MineShip extends Ship {
 		this.constructorAid("Mine", 0, 999, 999, 999, 999, 0,
 				description, 0, 0, 0, 0, false, 0);
 		
-		setVisual(new FighterVisual(this));
+		setVisual(new MineVisual(this));
 		
 		setAbility(new MineAbility());
 		

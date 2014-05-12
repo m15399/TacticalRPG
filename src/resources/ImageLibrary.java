@@ -33,6 +33,8 @@ public class ImageLibrary {
 		"mothership_red.png",
 		"mine.png",
 		"mine_red.png",
+		"mine_top_on.png",
+		"mine_top_off.png",
 		"warpgate.png",
 		"warpgate_red.png",
 		"jet_37x16.png",
