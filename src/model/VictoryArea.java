@@ -17,6 +17,8 @@ public class VictoryArea extends Entity{
 		upY = upperLeftBoundY;
 		rightX = lowerRightBoundX;
 		downY = lowerRightBoundY;
+		
+		getPosition().setLocation(leftX * Map.TILESIZE, upY * Map.TILESIZE);
 	}
 	
 	public boolean checkIfAllShipsAreInVictoryArea(List<Ship> shipsToCheck){
@@ -50,19 +52,20 @@ public class VictoryArea extends Entity{
 	}
 
 	public void draw(Graphics g) {
-		//TODO: Not quite sure how to get it to draw itself onto the map.
-//		int width = Map.TILESIZE * (rightX - leftX);
-//		int height = Map.TILESIZE * (upY - downY);
-//		
-//		getPosition().transform(g);
-//		
-//		int border = 3;
-//		
-//		// border
-//		g.setColor(Color.BLUE);
-//		
-//		((Graphics2D) g).setStroke(new BasicStroke(1.3f));
-//		g.drawRect(-width/2+border, -height/2+border, width-border*2, height-border*2);
-//		getPosition().untransform(g);
+		
+		int width = Map.TILESIZE * (rightX - leftX);
+		int height = Map.TILESIZE * (downY - upY);
+		
+		getPosition().transform(g);
+		
+		int border = 4;
+		
+		// border
+		g.setColor(new Color(.3f, 1f, .3f, .3f));
+				
+		
+		((Graphics2D) g).setStroke(new BasicStroke(1.3f));
+		g.fillRect(border, border, width-border*2, height-border*2);
+		getPosition().untransform(g);
 	}
 }
