@@ -6,7 +6,7 @@ import terrainVisuals.TerrainVisual;
 import model.GameObject;
 import model.Ship;
 
-public abstract class Terrain extends GameObject implements TerrainEffects {
+public abstract class Terrain extends GameObject{
 	/**
 	 * 
 	 */
@@ -38,7 +38,14 @@ public abstract class Terrain extends GameObject implements TerrainEffects {
 		return visual;
 	}
 	
-	public void applyEffect(Ship ship){
-		
+	public abstract void applyEffect(Ship ship);
+	
+	public boolean isTerrainPopup(){
+		if(this instanceof TerrainPopup){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 }

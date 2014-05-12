@@ -2,6 +2,7 @@ package terrains;
 
 import java.awt.Point;
 
+import model.Ship;
 import terrainVisuals.SpaceWreckageVisual1x3;
 
 public class SpaceWreckageTerrain1x3 extends Terrain{
@@ -18,4 +19,9 @@ public class SpaceWreckageTerrain1x3 extends Terrain{
 		}
 	}
 
+	@Override
+	public void applyEffect(Ship ship) {
+		// TODO Auto-generated method stub
+		
+	}
 }

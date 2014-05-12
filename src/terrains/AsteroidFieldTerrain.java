@@ -6,7 +6,7 @@ import java.util.Random;
 import terrainVisuals.AsteroidFieldVisual;
 import model.Ship;
 
-public class AsteroidFieldTerrain extends Terrain implements TerrainEffects{
+public class AsteroidFieldTerrain extends Terrain implements TerrainPopup{
 
 	/**
 	 * 
@@ -24,5 +24,17 @@ public class AsteroidFieldTerrain extends Terrain implements TerrainEffects{
 		Random random = new Random();
 		int damage = random.nextInt(MAX_DAMAGE) + 1; // damage
 		ship.updateHull(-damage);
+	}
+
+	@Override
+	public String getName() {
+		String name = "Asteroid Field";
+		return name;
+	}
+
+	@Override
+	public String getDescription() {
+		String description = "Damages passing ships.";
+		return description;
 	}
 }

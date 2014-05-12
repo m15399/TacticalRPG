@@ -13,6 +13,7 @@ import specific_ships_items.WarpGateShip;
 import strategies.ImprovedStrategy;
 import strategies.Strategy;
 import terrains.Terrain;
+import terrains.TerrainPopup;
 import utils.Direction;
 import utils.Observable;
 import utils.Observer;
@@ -30,6 +31,7 @@ import view.SelectedShipButtons;
 import view.SelectedShipView;
 import view.ShipSelectionScreen;
 import view.Starfield;
+import view.TerrainInfoGraphic;
 import view.Tooltip;
 
 /*
@@ -80,6 +82,7 @@ public class Level extends GameObject {
 	private SelectedShipButtons shipButtons;
 	private ShipSelectionScreen shipSelectionScreen;
 	private FoundItemsPopupScreen foundItemsScreen;
+	private TerrainInfoGraphic hoveredTerrainView;
 	private String fileName;
 
 	private Strategy aiStrategy;
@@ -173,6 +176,10 @@ public class Level extends GameObject {
 		// Ship Selection View
 		shipSelectionScreen = new ShipSelectionScreen(this);
 		addChild(shipSelectionScreen);
+		
+		//TerrainInfoGraphic View
+		hoveredTerrainView = new TerrainInfoGraphic();
+		addChild(hoveredTerrainView);
 		
 		//Found Items View
 		foundItemsScreen = new FoundItemsPopupScreen();
@@ -531,6 +538,7 @@ public class Level extends GameObject {
 		} else {
 			hoveredShipView.setShip(null);
 			shipButtons.setShip(null);
+			hoveredTerrainView.setTerrain(null);
 		}
 		updateButtons();
 		shipSelectionScreen.setVisible(false);
@@ -683,6 +691,7 @@ public class Level extends GameObject {
 		levelButton.disable();
 		menuButton.disable();
 		hoveredShipView.setShip(null);
+		hoveredTerrainView.setTerrain(null);
 		shipSelectionScreen.setVisible(false);
 		state = TurnState.ANIMATING;
 	}
@@ -1119,6 +1128,15 @@ public class Level extends GameObject {
 						.mapToPixelCoords(new Point(x + 1, y)));
 				hoveredShipView.setLocation((int) p.getX(), (int) p.getY());
 			}
+		}
+		
+		hoveredTerrainView.setTerrain(null);
+		if(tile != null && tile.getHasTerrain() && tile.getTerrain().isTerrainPopup()){
+			Terrain terrain = tile.getTerrain();
+			hoveredTerrainView.setTerrain((TerrainPopup) terrain);
+			Point p = camera.convertFromCameraSpace(Map
+					.mapToPixelCoords(new Point(x + 1, y)));
+			hoveredTerrainView.setLocation((int) p.getX(), (int) p.getY());
 		}
 
 		if (state == TurnState.MOVING) {
