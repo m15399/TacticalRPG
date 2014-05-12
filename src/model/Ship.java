@@ -30,7 +30,7 @@ public class Ship extends GameObject {
 	private Random random = new Random();
 	DecimalFormat df = new DecimalFormat("#.#");
 
-	private boolean didMiss;
+	private boolean didMiss, didCrit;
 
 	public Ship(Point newLocation) {
 		location = new Point(newLocation);
@@ -190,7 +190,13 @@ public class Ship extends GameObject {
 
 	public double getDamage() {
 		double dmgModifier = Math.random();
-		return (maxDamage - minDamage) * dmgModifier + minDamage;
+		if (random.nextInt(100) < getCritChance()) {
+			setDidCrit(true);
+			return 2 * ((maxDamage - minDamage) * dmgModifier + minDamage);
+		} else {
+			setDidCrit(false);
+			return (maxDamage - minDamage) * dmgModifier + minDamage;
+		}
 	}
 
 	/*
@@ -468,7 +474,7 @@ public class Ship extends GameObject {
 	public void setFileName() {
 
 		String s = name.toLowerCase();
-		if(getTeam() == 1)
+		if (getTeam() == 1)
 			s += "_red";
 		s += ".png";
 		setFileName(s);
@@ -476,7 +482,7 @@ public class Ship extends GameObject {
 
 	private void setFileName(String newFileName) {
 		filename = newFileName;
-		if(visual != null)
+		if (visual != null)
 			visual.refreshSprite();
 	}
 
@@ -503,6 +509,14 @@ public class Ship extends GameObject {
 		didMiss = miss;
 	}
 
+	public boolean getDidCrit() {
+		return didCrit;
+	}
+
+	public void setDidCrit(boolean crit) {
+		didCrit = crit;
+	}	
+	
 	public String itemsToString() {
 		String itemsString = "";
 		for (int i = 0; i < items.size(); i++) {
@@ -533,4 +547,5 @@ public class Ship extends GameObject {
 	public String toString() {
 		return shipStatus();
 	}
+
 }

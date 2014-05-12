@@ -37,8 +37,8 @@ public class Scout extends Ship {
 		super(newLocation);
 		String description = "Mobile scouting ship,\ngenerates and places\nmines.";
 
-		this.constructorAid("Scout", 5, 50, 20, 50, 20, 70, description, 30,
-				35, 15, 3, true, 0);
+		this.constructorAid("Scout", 5, 50, 20, 50, 20, 70, description, 20,
+				25, 15, 3, true, 0);
 
 		setVisual(new ScoutVisual(this));
 
