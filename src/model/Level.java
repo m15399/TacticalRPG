@@ -880,6 +880,9 @@ public class Level extends GameObject {
 			if(attacker.getDidMiss()){
 				camera.addChild(new BouncingStat("Missed!", defender.getVisual()));
 			}
+			if(attacker.getDidCrit()){
+				camera.addChild(new BouncingStat("Crit!", defender.getVisual()));
+			}			
 		}
 		
 	}
