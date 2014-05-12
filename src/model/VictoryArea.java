@@ -30,6 +30,17 @@ public class VictoryArea extends Entity{
 		return true;
 	}
 	
+	public boolean checkIfAShipsIsInVictoryArea(List<Ship> shipsToCheck){
+		Point pt;
+		for(Ship ship: shipsToCheck){
+			pt = ship.getLocation();
+			if(pt.x >= leftX && pt.x <= rightX && pt.y >= upY && pt.y <= downY){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void onDestroy() {
 		// override
 	}
