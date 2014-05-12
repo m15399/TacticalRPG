@@ -24,6 +24,7 @@ public class SniperChargeAbility extends Ability {
 		TimerAction timer = new TimerAction(30, notifyWhenDone);
 		addChild(timer);
 		timer.start();
+		
 	}
 	
 }

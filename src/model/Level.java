@@ -259,6 +259,8 @@ public class Level extends GameObject {
 
 		map.checkTileLocations();
 
+		
+		
 		enterDefaultState();
 	}
 

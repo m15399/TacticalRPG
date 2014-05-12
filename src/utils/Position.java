@@ -208,8 +208,8 @@ public class Position extends Observable implements Observer {
 	public void transform(Graphics g){
 		Graphics2D g2 = (Graphics2D) g;
 		saved = g2.getTransform();
-				
-		g2.translate((int)getX(), (int)getY());
+		
+		g2.translate(getX(), getY());
 		g2.rotate(getRotation());
 		g2.scale(getScaleX()* (getMirrored() ? -1 : 1), getScaleY());
 		

@@ -2,7 +2,7 @@ package specific_ships_items;
 
 import java.awt.Point;
 
-import shipVisuals.BomberVisual;
+import shipVisuals.SniperVisual;
 import model.Ship;
 
 public class Sniper extends Ship {
@@ -40,7 +40,7 @@ public class Sniper extends Ship {
 		this.constructorAid("Sniper", 3, 75, 20, 75, 20, 85, description, 30,
 				35, 25, 5, true, 0);
 
-		setVisual(new BomberVisual(this));
+		setVisual(new SniperVisual(this));
 
 		charged = false;
 
@@ -55,6 +55,12 @@ public class Sniper extends Ship {
 	public void setCharged(boolean charged) {
 		this.charged = charged;
 		this.setCanUseAbility(charged);
+		
+		SniperVisual visual = (SniperVisual)getVisual();
+		if(charged)
+			visual.chargeRings();
+		else
+			visual.dimRings();
 	}
 
 	/*
@@ -63,11 +69,15 @@ public class Sniper extends Ship {
 
 	@Override
 	public void attack(Ship target) {
+		
+		SniperVisual visual = (SniperVisual) getVisual();
+		visual.setTarget(target.getVisual().getPosition());
+		
 		if (this.isHit()) {
 			double damage = this.getDamage();
 			if (charged) {
 				damage *= 1.5;
-				charged = false;
+				setCharged(false);
 			}
 
 			if (this.getCanUseAbility() == true) {

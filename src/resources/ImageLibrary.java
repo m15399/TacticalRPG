@@ -25,6 +25,7 @@ public class ImageLibrary {
 		"bomber_red.png",
 		"sniper.png",
 		"sniper_red.png",
+		"sniperbeam.png",
 		"repairship.png",
 		"repairship_red.png",
 		"healbeam.png",
