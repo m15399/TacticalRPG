@@ -286,7 +286,7 @@ public class ShipVisual extends Entity {
 		}));
 		
 		// wait for camera again
-		q.addAction(new WaitForCameraAction(camera, null));
+		q.addAction(new TimerAction(10,null));
 		
 		
 		addChild(q);

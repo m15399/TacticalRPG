@@ -150,8 +150,10 @@ public class Explosion extends Entity {
 				g.setColor(Color.gray);
 			}
 			
+			int s = (int) size;
+			int s2 = s/2;
 						
-			g.fillArc((int)x,(int) y, (int)size, (int)size, 0, 360);
+			g.fillArc((int)x-s2,(int) y-s2, s, s, 0, 360);
 		}
 		
 	}

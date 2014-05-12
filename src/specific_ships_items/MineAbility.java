@@ -3,6 +3,7 @@ package specific_ships_items;
 import java.util.List;
 
 import utils.Observer;
+import view.Explosion;
 import actions.TimerAction;
 import model.Ability;
 import model.Castable;
@@ -15,7 +16,7 @@ public class MineAbility extends Ability {
 	 */
 	private static final long serialVersionUID = 5829288804288134273L;
 	private static int DAMAGE = 35;
-	private static int RANGE = 3;
+	public static int RANGE = 3;
 
 	public MineAbility() {
 		super("Explode", "Mine explodes, dealing\n" + DAMAGE
@@ -40,6 +41,8 @@ public class MineAbility extends Ability {
 		TimerAction timer = new TimerAction(30, notifyWhenDone);
 		addChild(timer);
 		timer.start();
+		
+		addChild(new Explosion(4, 15, getOwner().getVisual()));
 	}
 
 }

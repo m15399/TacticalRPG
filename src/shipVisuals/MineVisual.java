@@ -1,6 +1,13 @@
 package shipVisuals;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
+import specific_ships_items.MineAbility;
 import view.Sprite;
+import model.Map;
 import model.Ship;
 
 public class MineVisual extends ShipVisual {
@@ -40,5 +47,15 @@ public class MineVisual extends ShipVisual {
 			on = !on;
 			updateTopImage();
 		}
+	}
+	
+	public void draw(Graphics g){		
+		getPosition().transform(g);
+		((Graphics2D) g).setStroke(new BasicStroke(1.5f));
+		float b = .7f;
+		g.setColor(new Color(b,b,b, .2f));
+		int s = Map.TILESIZE * MineAbility.RANGE + 5;
+		g.drawArc(-s, -s, s*2, s*2, 0, 360);
+		getPosition().untransform(g);
 	}
 }

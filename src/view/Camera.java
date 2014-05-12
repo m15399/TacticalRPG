@@ -27,8 +27,10 @@ public class Camera extends GameObject {
 	private double minX, minY, maxX, maxY;
 	private Entity followTarget;
 //	private double targetDistanceX, targetDistanceY;
-	double zoom, zoomTarget;
-
+	private double zoom, zoomTarget;
+	private int ramp;
+	
+	
 	public Camera(int mapWidth, int mapHeight) {
 		positionX = positionY = prevPositionX = prevPositionY = 0;
 //		targetDistanceX = targetDistanceY = 0;
@@ -45,6 +47,8 @@ public class Camera extends GameObject {
 	}
 	
 	public void update(){
+		ramp++;
+		
 		prevPositionX = positionX;
 		prevPositionY = positionY;
 		
@@ -83,20 +87,31 @@ public class Camera extends GameObject {
 			double distance = Math.sqrt(dx * dx + dy * dy);
 			double distancef = Math.sqrt(dxf * dxf + dyf * dyf);
 			
+			double dxbr, dybr;
+			
 			if(distance < min || distancef < min){
-				moveBy(dx, dy);
+				dxbr = dx;
+				dybr = dy;
 				
 			} else if(distancef > max){ 
 				dxf /= distancef;
 				dxf *= max;
 				dyf /= distancef;
 				dyf *= max;
-				moveBy(dxf, dyf);
+				
+				dxbr = dxf;
+				dybr = dyf;
 				
 			} else {
-				moveBy(dxf, dyf);
-
+				dxbr = dxf;
+				dybr = dyf;
 			}
+			
+			double rampFac = ramp / 10.0;
+			if(rampFac > 1)
+				rampFac = 1;
+			
+			moveBy(dxbr * rampFac, dybr * rampFac);
 			
 			
 			
@@ -138,7 +153,12 @@ public class Camera extends GameObject {
 	}
 	
 	public void setFollowTarget(Entity target){
-		followTarget = target;
+		if(followTarget != target){
+			ramp = 0;
+			followTarget = target;
+		}
+		
+		
 	}
 
 	public void setPosition(double x, double y) {
