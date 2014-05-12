@@ -68,6 +68,7 @@ public class Level extends GameObject {
 	private int currentTeam;
 	private int numHumans;
 	private int winner;
+	private VictoryArea victoryArea;
 
 	private Tile tileHovered;
 
@@ -129,7 +130,12 @@ public class Level extends GameObject {
 				}
 			}
 		}
-
+		
+		if(fileName.equals("maps/mission1")){
+			//Set bounds for Victory Area
+			victoryArea = new VictoryArea(7, 12, map.getWidth(), map.getHeight());
+			addChild(victoryArea);
+		}
 	}
 
 	private void init() {
@@ -196,7 +202,6 @@ public class Level extends GameObject {
 		menuButton = new MenuButton(camera);
 		addChild(menuButton);
 		
-
 		// test zoom buttons
 		debugButtons = new ArrayList<Button>();
 		if(Game.DEBUG){
@@ -822,6 +827,9 @@ public class Level extends GameObject {
 
 			public void notified(Observable sender) {
 				checkForDestroyedUnits();
+				if(victoryArea != null && victoryArea.checkIfAllShipsAreInVictoryArea(getShips(0))){
+					onTeamWin(0, "Your ships reached the objective.");
+				}
 				if(selectedShip.isShipDead()){
 					unselectShip();
 					selectPlayerNextShip();
@@ -866,6 +874,9 @@ public class Level extends GameObject {
 		
 		public void notified(Observable sender) {
 			checkForDestroyedUnits();
+			if(victoryArea != null && victoryArea.checkIfAllShipsAreInVictoryArea(getShips(0))){
+				onTeamWin(0, "Your ships reached the objective.");
+			}
 			if(attacker.getDidMiss()){
 				camera.addChild(new BouncingStat("Missed!", defender.getVisual()));
 			}
@@ -943,6 +954,9 @@ public class Level extends GameObject {
 	private void useCastableEnd() {
 		enterDefaultState();
 		checkForDestroyedUnits();
+		if(victoryArea != null && victoryArea.checkIfAllShipsAreInVictoryArea(getShips(0))){
+			onTeamWin(0, "Your ships reached the objective.");
+		}
 		if(selectedShip.isShipDead()){
 			unselectShip();
 			selectPlayerNextShip();
