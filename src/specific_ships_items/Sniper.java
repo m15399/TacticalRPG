@@ -87,6 +87,9 @@ public class Sniper extends Ship {
 		} else {
 			setDidMiss(true);
 		}
+		this.setCanMove(false);
+		this.setCanUseAbility(false);
+		this.setCanUseItem(false);
 		this.setCanAttack(false);
 	}
 

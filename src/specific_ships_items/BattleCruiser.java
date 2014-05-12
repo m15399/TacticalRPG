@@ -36,7 +36,7 @@ public class BattleCruiser extends Ship {
 		super(newLocation);
 		String description = "Made for battle\ncruisin' to victory.\nCan periodically\nspawn a fighter.";
 		this.constructorAid("BattleCruiser", 2, 150, 30, 150, 30, 75,
-				description, 50, 55, 25, 2, true, 0);
+				description, 45, 50, 25, 2, true, 0);
 
 		setVisual(new BomberVisual(this));
 
@@ -70,6 +70,9 @@ public class BattleCruiser extends Ship {
 
 		}
 		this.setCanAttack(false);
+		this.setCanMove(false);
+		this.setCanUseAbility(false);
+		this.setCanUseItem(false);
 	}
 
 }

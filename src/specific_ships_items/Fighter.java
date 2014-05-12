@@ -80,6 +80,9 @@ public class Fighter extends Ship {
 			setDidMiss(true);
 		}
 		this.setCanAttack(false);
+		this.setCanMove(false);
+		this.setCanUseAbility(false);
+		this.setCanUseItem(false);
 	}
 
 }
