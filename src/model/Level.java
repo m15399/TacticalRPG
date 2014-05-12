@@ -717,6 +717,7 @@ public class Level extends GameObject {
 		// turn off buttons
 		shipButtons.setShip(null);
 		shipSelectionScreen.setVisible(false);
+		foundItemsScreen.setVisible(false);
 
 		state = TurnState.MOVING;
 
