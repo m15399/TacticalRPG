@@ -3,10 +3,8 @@ package model;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.io.File;
 
-import resources.ImageLibrary;
 import level_intros.Credits;
 import level_intros.Mission1Intro;
 import levels.*;
@@ -104,7 +102,13 @@ public class TitleMenu extends GameObject {
 
 		
 		
-		
+		Sprite sprite = new Sprite("title2.png", 500, 130);
+		sprite.getPosition().setScale(2,2);
+		addChild(sprite);
+		Sprite sprite2 = new Sprite("shiptitlemenu2.png", 700, 500);
+		addChild(sprite2);
+		Sprite sprite3 = new Sprite("thegame.png", 500, 225);
+		addChild(sprite3);
 		
 		
 	}
@@ -116,15 +120,9 @@ public class TitleMenu extends GameObject {
 	public void draw(Graphics g){
 		g.setFont(new Font("Arial", Font.BOLD, 72));
 		g.setColor(Color.white);
-		Sprite sprite = new Sprite("title2.png", 500, 130);
-		sprite.getPosition().setScale(2,2);
-		sprite.draw(g);
-		Sprite sprite2 = new Sprite("shiptitlemenu2.png", 700, 500);
-		sprite2.draw(g);
-		Sprite sprite3 = new Sprite("thegame.png", 500, 225);
-		sprite3.draw(g);
+		
 
-		int t = 180;
+//		int t = 180;
 		
 //		g.drawString("Spaceballs", 320, t);
 //		g.setFont(new Font("Arial", Font.BOLD, 48));
