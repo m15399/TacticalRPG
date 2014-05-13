@@ -3,8 +3,10 @@ package model;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
+import resources.ImageLibrary;
 import level_intros.Credits;
 import level_intros.Mission1Intro;
 import levels.*;
@@ -121,7 +123,7 @@ public class TitleMenu extends GameObject {
 		sprite2.draw(g);
 		Sprite sprite3 = new Sprite("thegame.png", 500, 225);
 		sprite3.draw(g);
-		
+
 		int t = 180;
 		
 //		g.drawString("Spaceballs", 320, t);
