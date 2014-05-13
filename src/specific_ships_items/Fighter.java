@@ -48,8 +48,8 @@ public class Fighter extends Ship {
 	public Fighter(Point newLocation) {
 		super(newLocation);
 		String description = "Anti-air fighter\nthat can move after \nattacking.";
-		this.constructorAid("Fighter", 5, 55, 20, 55, 25, 80, description, 30,
-				35, 25, 2, true, 0);
+		this.constructorAid("Fighter", 5, 55, 25, 55, 25, 80, description, 30,
+				35, 15, 2, true, 0);
 
 		setVisual(new FighterVisual(this));
 	}

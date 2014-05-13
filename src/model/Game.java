@@ -124,10 +124,10 @@ public class Game extends JPanel implements Runnable, Fadable {
 			rootObject.destroy();
 		}
 		
-//		if(DEBUG){
+		if(DEBUG){
 			Input.getInstance().printNumButtons();
 			
-//		}
+		}
 		
 		rootObject = o;
 	}
