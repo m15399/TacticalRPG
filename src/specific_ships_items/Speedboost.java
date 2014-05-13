@@ -4,8 +4,9 @@ import actions.TimerAction;
 import utils.Observer;
 import model.Castable;
 import model.Item;
+import model.Popup;
 
-public class Speedboost extends Item {
+public class Speedboost extends Item implements Popup{
 
 	/**
 	 * 
@@ -14,7 +15,7 @@ public class Speedboost extends Item {
 	private int speedBoost;
 
 	public Speedboost() {
-		super("Afterburner", "Increases the ship's \nmove range for one \bturn.",
+		super("Afterburner", "Increases the ship's \nmove range for one turn.",
 				Castable.TargetType.NONE, 0);
 		speedBoost = 4;
 	}

@@ -8,10 +8,11 @@ import java.awt.Graphics2D;
 
 import model.Game;
 import model.GameObject;
+import model.Item;
+import model.Popup;
 import terrains.SpaceWreckageTerrain;
-import terrains.TerrainPopup;
 
-public class TerrainInfoGraphic extends GameObject{
+public class TerrainOrItemInfoGraphic extends GameObject{
 
 	private static final long serialVersionUID = 4697017267822991397L;
 	private static final int WIDTH = 150;
@@ -19,18 +20,18 @@ public class TerrainInfoGraphic extends GameObject{
 	
 	private int x, y;
 
-	private TerrainPopup currentTerrain;
+	private Popup currentItemOrTerrain;
 
-	public TerrainInfoGraphic(){
-		currentTerrain = null;
+	public TerrainOrItemInfoGraphic(){
+		currentItemOrTerrain = null;
 	}
 	
-	public TerrainInfoGraphic(TerrainPopup hoveredTerrain) {
-		currentTerrain = hoveredTerrain;
+	public TerrainOrItemInfoGraphic(Popup hoveredTerrain) {
+		currentItemOrTerrain = hoveredTerrain;
 	}
 	
-	public void setTerrain(TerrainPopup hoveredTerrain){
-		currentTerrain = hoveredTerrain;
+	public void setTerrainOrItem(Popup hoveredTerrain){
+		currentItemOrTerrain = hoveredTerrain;
 	}
 	
 	public void setLocation(int x, int y){
@@ -58,7 +59,7 @@ public class TerrainInfoGraphic extends GameObject{
 	}
 
 	public void draw(Graphics g) {
-		if(currentTerrain == null)
+		if(currentItemOrTerrain == null)
 			return;
 		
 		// I added these offsets to all the coordinates so that we can move it
@@ -71,9 +72,20 @@ public class TerrainInfoGraphic extends GameObject{
 		
 		// Draw a black rect first as a background
 		g2.setColor(Color.black);
-		if(currentTerrain instanceof SpaceWreckageTerrain){
+		if(currentItemOrTerrain instanceof SpaceWreckageTerrain){
 			int moreOffsetX = 30;
 			int moreOffsetY = 43;
+			g2.fillRect(offsetX, offsetY, WIDTH + moreOffsetX, HEIGHT + moreOffsetY);
+			// Draw a border (I just put the top right half for now)
+			g2.setColor(Color.white);
+			g2.drawLine(offsetX, offsetY, WIDTH + offsetX + moreOffsetX, offsetY);
+			g2.drawLine(WIDTH + offsetX + moreOffsetX, offsetY, WIDTH + offsetX + moreOffsetX, HEIGHT + offsetY + moreOffsetY);
+			g2.drawLine(offsetX, offsetY, offsetX, offsetY + HEIGHT + moreOffsetY);
+			g2.drawLine(offsetX, offsetY + HEIGHT + moreOffsetY, WIDTH + offsetX + moreOffsetX, HEIGHT + offsetY + moreOffsetY);
+		}
+		else if(currentItemOrTerrain instanceof Item){
+			int moreOffsetX = -10;
+			int moreOffsetY = 13;
 			g2.fillRect(offsetX, offsetY, WIDTH + moreOffsetX, HEIGHT + moreOffsetY);
 			// Draw a border (I just put the top right half for now)
 			g2.setColor(Color.white);
@@ -96,10 +108,10 @@ public class TerrainInfoGraphic extends GameObject{
 		Font font = g2.getFont();
 		float titleFontSize = 12.0f;
 		g2.setFont(font.deriveFont(titleFontSize));
-		drawString(g2, currentTerrain.getName(), offsetX + 5, offsetY);
+		drawString(g2, currentItemOrTerrain.getName(), offsetX + 5, offsetY);
 //		float normalFontSize = 10.0f;
 //		g2.setFont(font.deriveFont(normalFontSize));
 		//g2.setFont(font);
-		drawString(g2, currentTerrain.getDescription(), offsetX + 5, offsetY + 18);
+		drawString(g2, currentItemOrTerrain.getDescription(), offsetX + 5, offsetY + 18);
 	}
 }

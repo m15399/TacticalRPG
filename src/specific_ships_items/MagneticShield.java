@@ -4,8 +4,9 @@ import actions.TimerAction;
 import utils.Observer;
 import model.Castable;
 import model.Item;
+import model.Popup;
 
-public class MagneticShield extends Item{
+public class MagneticShield extends Item implements Popup{
 	/**
 	 * 
 	 */

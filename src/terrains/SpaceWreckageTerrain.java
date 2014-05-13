@@ -4,9 +4,10 @@ import java.awt.Point;
 
 import specific_ships_items.ScrapMetal;
 import terrainVisuals.SpaceWreckageVisual;
+import model.Popup;
 import model.Ship;
 
-public class SpaceWreckageTerrain extends Terrain implements TerrainPopup{
+public class SpaceWreckageTerrain extends Terrain implements Popup{
 
 	/**
 	 * 

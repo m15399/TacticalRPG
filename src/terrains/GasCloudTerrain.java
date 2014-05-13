@@ -3,10 +3,11 @@ package terrains;
 import java.awt.Point;
 import java.util.Random;
 
+import model.Popup;
 import model.Ship;
 import terrainVisuals.GasCloudVisual;
 
-public class GasCloudTerrain extends Terrain implements TerrainPopup{
+public class GasCloudTerrain extends Terrain implements Popup{
 
 	/**
 	 * 

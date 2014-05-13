@@ -4,9 +4,10 @@ import actions.TimerAction;
 import utils.Observer;
 import model.Castable;
 import model.Item;
+import model.Popup;
 import model.Ship;
 
-public class ScrapMetal extends Item {
+public class ScrapMetal extends Item implements Popup{
 
 	/**
 	 * 

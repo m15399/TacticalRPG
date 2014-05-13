@@ -13,7 +13,6 @@ import specific_ships_items.WarpGateShip;
 import strategies.ImprovedStrategy;
 import strategies.Strategy;
 import terrains.Terrain;
-import terrains.TerrainPopup;
 import utils.Direction;
 import utils.Observable;
 import utils.Observer;
@@ -31,7 +30,7 @@ import view.SelectedShipButtons;
 import view.SelectedShipView;
 import view.ShipSelectionScreen;
 import view.Starfield;
-import view.TerrainInfoGraphic;
+import view.TerrainOrItemInfoGraphic;
 import view.Tooltip;
 import view.TurnCounter;
 
@@ -83,7 +82,7 @@ public class Level extends GameObject {
 	private SelectedShipButtons shipButtons;
 	private ShipSelectionScreen shipSelectionScreen;
 	private FoundItemsPopupScreen foundItemsScreen;
-	private TerrainInfoGraphic hoveredTerrainView;
+	private TerrainOrItemInfoGraphic hoveredTerrainOrItemView;
 	private TurnCounter turnCounterView;
 	private String fileName;
 
@@ -179,8 +178,8 @@ public class Level extends GameObject {
 		addChild(shipSelectionScreen);
 		
 		//TerrainInfoGraphic View
-		hoveredTerrainView = new TerrainInfoGraphic();
-		addChild(hoveredTerrainView);
+		hoveredTerrainOrItemView = new TerrainOrItemInfoGraphic();
+		addChild(hoveredTerrainOrItemView);
 		
 		//Found Items View
 		foundItemsScreen = new FoundItemsPopupScreen();
@@ -558,7 +557,7 @@ public class Level extends GameObject {
 		} else {
 			hoveredShipView.setShip(null);
 			shipButtons.setShip(null);
-			hoveredTerrainView.setTerrain(null);
+			hoveredTerrainOrItemView.setTerrainOrItem(null);
 		}
 		updateButtons();
 		shipSelectionScreen.setVisible(false);
@@ -711,7 +710,7 @@ public class Level extends GameObject {
 		levelButton.disable();
 		menuButton.disable();
 		hoveredShipView.setShip(null);
-		hoveredTerrainView.setTerrain(null);
+		hoveredTerrainOrItemView.setTerrainOrItem(null);
 		shipSelectionScreen.setVisible(false);
 		state = TurnState.ANIMATING;
 	}
@@ -1161,13 +1160,19 @@ public class Level extends GameObject {
 			}
 		}
 		
-		hoveredTerrainView.setTerrain(null);
+		hoveredTerrainOrItemView.setTerrainOrItem(null);
 		if(tile != null && tile.getHasTerrain() && tile.getTerrain().isTerrainPopup()){
 			Terrain terrain = tile.getTerrain();
-			hoveredTerrainView.setTerrain((TerrainPopup) terrain);
+			hoveredTerrainOrItemView.setTerrainOrItem((Popup) terrain);
 			Point p = camera.convertFromCameraSpace(Map
 					.mapToPixelCoords(new Point(x + 1, y)));
-			hoveredTerrainView.setLocation((int) p.getX(), (int) p.getY());
+			hoveredTerrainOrItemView.setLocation((int) p.getX(), (int) p.getY());
+		}else if(tile != null && tile.getItems() != null && tile.getItems().size() > 0){
+			Item item = tile.getItems().get(0);
+			hoveredTerrainOrItemView.setTerrainOrItem((Popup) item); 
+			Point p = camera.convertFromCameraSpace(Map
+					.mapToPixelCoords(new Point(x + 1, y)));
+			hoveredTerrainOrItemView.setLocation((int) p.getX(), (int) p.getY());
 		}
 
 		if (state == TurnState.MOVING) {

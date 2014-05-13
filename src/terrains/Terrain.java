@@ -4,6 +4,7 @@ import java.awt.Point;
 
 import terrainVisuals.TerrainVisual;
 import model.GameObject;
+import model.Popup;
 import model.Ship;
 
 public abstract class Terrain extends GameObject{
@@ -41,7 +42,7 @@ public abstract class Terrain extends GameObject{
 	public abstract void applyEffect(Ship ship);
 	
 	public boolean isTerrainPopup(){
-		if(this instanceof TerrainPopup){
+		if(this instanceof Popup){
 			return true;
 		}
 		else{

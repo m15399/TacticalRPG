@@ -4,9 +4,10 @@ import java.awt.Point;
 import java.util.Random;
 
 import terrainVisuals.AsteroidFieldVisual;
+import model.Popup;
 import model.Ship;
 
-public class AsteroidFieldTerrain extends Terrain implements TerrainPopup{
+public class AsteroidFieldTerrain extends Terrain implements Popup{
 
 	/**
 	 * 

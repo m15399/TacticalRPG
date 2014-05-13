@@ -1,6 +1,6 @@
-package terrains;
+package model;
 
-public interface TerrainPopup {
+public interface Popup {
 	public String getName();
 	public String getDescription();
 }
