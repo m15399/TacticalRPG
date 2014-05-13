@@ -59,7 +59,10 @@ public class ImageLibrary {
 		"map1.jpg",
 		"map2.jpg",
 		"map3.jpg",
-		"map4.jpg"
+		"map4.jpg",
+		"shiptitlemenu2.png",
+		"title2.png",
+		"thegame.png"
 		
 		};
 	

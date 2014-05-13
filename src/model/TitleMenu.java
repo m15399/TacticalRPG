@@ -11,6 +11,7 @@ import levels.*;
 import utils.Observable;
 import utils.Observer;
 import view.MultiplayerMapSelectionView;
+import view.Sprite;
 import view.Starfield;
 import view.TitleMenuButton;
 
@@ -113,12 +114,19 @@ public class TitleMenu extends GameObject {
 	public void draw(Graphics g){
 		g.setFont(new Font("Arial", Font.BOLD, 72));
 		g.setColor(Color.white);
+		Sprite sprite = new Sprite("title2.png", 500, 130);
+		sprite.getPosition().setScale(2,2);
+		sprite.draw(g);
+		Sprite sprite2 = new Sprite("shiptitlemenu2.png", 700, 500);
+		sprite2.draw(g);
+		Sprite sprite3 = new Sprite("thegame.png", 500, 225);
+		sprite3.draw(g);
 		
 		int t = 180;
 		
-		g.drawString("Spaceballs", 320, t);
-		g.setFont(new Font("Arial", Font.BOLD, 48));
-		g.drawString("The Game", 388, t + 60);
+//		g.drawString("Spaceballs", 320, t);
+//		g.setFont(new Font("Arial", Font.BOLD, 48));
+//		g.drawString("The Game", 388, t + 60);
 
 	}
 	
