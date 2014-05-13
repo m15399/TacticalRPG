@@ -33,7 +33,7 @@ public abstract class LevelIntro extends GameObject {
 		button.disable();
 		
 		// disable the button for a second at first
-		TimerAction timer = new TimerAction(60, new Observer(){
+		TimerAction timer = new TimerAction(30, new Observer(){
 			public void notified(Observable sender){
 				button.enable();
 			}

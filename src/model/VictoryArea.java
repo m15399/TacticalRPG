@@ -2,6 +2,7 @@ package model;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -66,6 +67,14 @@ public class VictoryArea extends Entity{
 		
 		((Graphics2D) g).setStroke(new BasicStroke(1.3f));
 		g.fillRect(border, border, width-border*2, height-border*2);
+		
+		int oy = -4;
+		
+		g.setFont(new Font("Arial", Font.PLAIN, 14));
+		g.setColor(Color.white);
+		g.drawString("Move all your ships to this", 140, height/2 + oy);
+		g.drawString("area to win the mission", 148, height/2 + 20 + oy);
+		
 		getPosition().untransform(g);
 	}
 }

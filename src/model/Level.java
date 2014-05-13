@@ -187,7 +187,7 @@ public class Level extends GameObject {
 		addChild(foundItemsScreen);
 
 		//Turn Counter View
-		turnCounterView = new TurnCounter(0);
+		turnCounterView = new TurnCounter(-1);
 		addChild(turnCounterView);
 		
 		// Background button for mouse input on the map
@@ -436,6 +436,10 @@ public class Level extends GameObject {
 		int nextTeam = currentTeam + 1;
 		if (nextTeam > 1)
 			nextTeam = 0;
+		
+		if(numHumans == 1 && getTurnNumber() == 0 && nextTeam == 1){
+			nextTeam = 0;
+		}
 
 		startTurn(nextTeam);
 	}
@@ -445,8 +449,10 @@ public class Level extends GameObject {
 			if (s.isShipDead()) {
 				camera.addChild(new Explosion(2.0, 20, s.getVisual()));
 				removeShipFromMap(s);
+				onUnitDestroyed(s);
 			}
 		}
+		
 		if(!getIsOver()){
 			// check objective
 			if(getTargettableShips(1).size() == 0){
@@ -455,6 +461,11 @@ public class Level extends GameObject {
 				onTeamWin(1, "All Units Destroyed");
 			}
 		}
+		
+	}
+	
+	public void onUnitDestroyed(Ship s){
+		// override
 	}
 
 	private Ship getNextShipWithMoves() {
