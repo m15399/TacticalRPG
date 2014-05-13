@@ -33,12 +33,10 @@ public class SniperVisual extends ShipVisual {
 		ring2 = new SniperRing(2.75, this);
 		addChild(ring2);
 		
-		jet = new JetSprite(-25, 0, this, JetSize.H8);
+		jet = new JetSprite(-32, 2, this, JetSize.H8);
 		jet.setVisible(false);
 		addChildBelowSprite(jet);
-		
-		getSprite().getPosition().setScale(.5, .5);
-		
+				
 	}
 	
 	public void chargeRings(){
@@ -53,11 +51,12 @@ public class SniperVisual extends ShipVisual {
 	
 	public void update(){
 		sinVar += .015;
-		double offset = Math.sin(sinVar) * 6;
-		double ox = -6;
+		double offset = Math.sin(sinVar) * 5;
+		double ox = -13;
+		double oy = 0;
 		
-		ring1.getPosition().setLocation(offset+ox, 0);
-		ring2.getPosition().setLocation(-offset+ox, 0);
+		ring1.getPosition().setLocation(offset+ox, oy);
+		ring2.getPosition().setLocation(-offset+ox, oy);
 		
 	}
 	
@@ -69,15 +68,18 @@ public class SniperVisual extends ShipVisual {
 	public void playAttackAnimation(int time){
 		double x = getPosition().getX();
 		double y = getPosition().getY();
-		double dx = ex - x;
-		double dy = ey - y;
-		double length = Math.sqrt(dx * dx + dy * dy);
 		
-		double ox = 10;
+		
+		double ox = 26;
 		double oy = 0;
 		
-		double vx = getPosition().getX() + (getPosition().getMirrored() ? -ox : ox);
-		double vy = getPosition().getY() + oy;
+		double vx = x + (getPosition().getMirrored() ? -ox : ox);
+		double vy = y + oy;
+		
+		double dx = ex - vx;
+		double dy = ey - vy;
+		double length = Math.sqrt(dx * dx + dy * dy);
+
 		
 		double angle = utils.Utilities.angleBetween(vx , vy, ex, ey);
 		getShip().getLevel().getCamera().addChild(new SniperBeam(ox, oy, angle, length, this));

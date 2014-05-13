@@ -17,9 +17,9 @@ public class SniperRing extends Entity implements Fadable {
 	 */
 	private static final long serialVersionUID = 8458786760744094361L;
 	
-	private static final double HIGH_FADE = .6;
+	private static final double HIGH_FADE = .55;
 	private static final double LOW_FADE = .2;
-	private static final int FADE_TIME = 40;
+	private static final int FADE_TIME = 30;
 	
 	private double fade;
 	
@@ -29,7 +29,7 @@ public class SniperRing extends Entity implements Fadable {
 		
 		getPosition().setParent(spatialParent.getPosition());
 		
-		getPosition().setScale(size/2, size);
+		getPosition().setScale(size/2.6, size);
 		
 	}
 	
@@ -52,19 +52,22 @@ public class SniperRing extends Entity implements Fadable {
 		
 		Graphics2D g2 = (Graphics2D) g;
 		
-		float strokeWidth = (float)(Math.pow(fade / LOW_FADE, .5) * 2 / getPosition().getScaleX());
+		double sx = getPosition().getScaleX();
 		
+		float strokeWidth = (float)(Math.pow(fade / LOW_FADE, .5) * 2 / sx);
 		
 		int s = 10;
 		
-		int gap = 80;
+		int gap = 90;
+		int topGap = gap/2;
+		int left = 360-gap-10;
 
-		g2.setStroke(new BasicStroke(strokeWidth));
-		g.drawArc(-s/2, -s/2, s,s, gap/2, 360-gap);
+		g2.setStroke(new BasicStroke(strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));
+		g.drawArc(-s/2, -s/2, s,s, topGap, left);
 		g2.setStroke(new BasicStroke(strokeWidth * .6f));
-		g.drawArc(-s/2, -s/2, s,s, gap/2, 360-gap);
+		g.drawArc(-s/2, -s/2, s,s, topGap, left);
 		g2.setStroke(new BasicStroke(strokeWidth * .4f));
-		g.drawArc(-s/2, -s/2, s,s, gap/2, 360-gap);
+		g.drawArc(-s/2, -s/2, s,s, topGap, left);
 		
 		getPosition().untransform(g);
 

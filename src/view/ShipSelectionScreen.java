@@ -276,9 +276,9 @@ public class ShipSelectionScreen extends GameObject{
 		g2.drawString("Repair Ship", 110, 130);
 		g2.drawImage(ImageLibrary.getInstance().getImage("repairship.png"), 105, 135, null);
 		g2.drawString("Battle Cruiser", 10, 220);
-		g2.drawImage(ImageLibrary.getInstance().getImage("sniper.png"), 5, 225, null);
+		g2.drawImage(ImageLibrary.getInstance().getImage("battlecruiser.png"), 5, 225, null);
 		g2.drawString("Sniper", 110, 220);
-		g2.drawImage(ImageLibrary.getInstance().getImage("battlecruiser.png"), 105, 225, null);
+		g2.drawImage(ImageLibrary.getInstance().getImage("sniper.png"), 105, 225, null);
 	}
 	
 	public void drawLimitedSelectionScreen(Graphics g){

@@ -53,14 +53,19 @@ public class Sniper extends Ship {
 	}
 
 	public void setCharged(boolean charged) {
-		this.charged = charged;
-		this.setCanUseAbility(charged);
 		
-		SniperVisual visual = (SniperVisual)getVisual();
-		if(charged)
-			visual.chargeRings();
-		else
-			visual.dimRings();
+		if(charged != this.charged){
+			SniperVisual visual = (SniperVisual)getVisual();
+			if(charged)
+				visual.chargeRings();
+			else
+				visual.dimRings();
+			
+			this.charged = charged;
+			this.setCanUseAbility(charged);
+		}
+		
+
 	}
 
 	/*
@@ -77,7 +82,6 @@ public class Sniper extends Ship {
 			double damage = this.getDamage();
 			if (charged) {
 				damage *= 1.5;
-				setCharged(false);
 			}
 
 			if (this.getCanUseAbility() == true) {
@@ -101,6 +105,10 @@ public class Sniper extends Ship {
 		this.setCanUseAbility(false);
 		this.setCanUseItem(false);
 		this.setCanAttack(false);
+		
+		if(charged){
+			setCharged(false);
+		}
 	}
 
 }

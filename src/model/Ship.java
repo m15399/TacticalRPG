@@ -192,7 +192,7 @@ public class Ship extends GameObject {
 		double dmgModifier = Math.random();
 		if (random.nextInt(100) < getCritChance()) {
 			setDidCrit(true);
-			return 2 * ((maxDamage - minDamage) * dmgModifier + minDamage);
+			return 1.5 * ((maxDamage - minDamage) * dmgModifier + minDamage);
 		} else {
 			setDidCrit(false);
 			return (maxDamage - minDamage) * dmgModifier + minDamage;
