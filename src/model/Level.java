@@ -1289,7 +1289,7 @@ public class Level extends GameObject {
 		return list;
 	}
 	
-	public List<Tile> getEmptyTilesWithinCircularArea(Ship src, int range){
+	public List<Tile> getEmptyTilesWithinCircularArea(Ship src, double d){
 		List<Tile> tiles = new ArrayList<Tile>();
 		
 		Tile[][] mapTiles = map.getTiles();
@@ -1302,7 +1302,7 @@ public class Level extends GameObject {
 				double dy = src.getLocation().y - j;
 				double distance = Math.sqrt(dx * dx + dy * dy);
 				
-				if(distance <= range && !ct.getIsOccupied()){
+				if(distance <= d && !ct.getIsOccupied()){
 					tiles.add(ct);
 				}
 					

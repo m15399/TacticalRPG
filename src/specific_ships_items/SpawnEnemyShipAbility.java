@@ -23,7 +23,7 @@ public class SpawnEnemyShipAbility extends Ability {
 	}
 	
 	public void useWithoutTarget(Observer notifyWhenDone){
-		List<Tile> tiles = getOwner().getLevel().getEmptyTilesWithinCircularArea(getOwner(), 1);
+		List<Tile> tiles = getOwner().getLevel().getEmptyTilesWithinCircularArea(getOwner(), 1.5);
 		Random random = new Random();
 		
 		if(tiles.size() > 0){
