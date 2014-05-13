@@ -78,7 +78,7 @@ public class ImprovedStrategy implements Strategy, Serializable {
 	}
 
 	private Point closestMovablePoint(Ship s, List<Point> potentialMoves) {
-		Point closestMovablePoint = potentialMoves.get(3);
+		Point closestMovablePoint = potentialMoves.get(0);
 		double shortestDistance = 10000;
 		for (Point p : potentialMoves) {
 			double distance = this.getDistance(s.getLocation(), p);
