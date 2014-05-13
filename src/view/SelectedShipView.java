@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import resources.ImageLibrary;
+import specific_ships_items.Mothership;
 import model.Game;
 import model.GameObject;
 import model.Item;
@@ -112,7 +113,10 @@ public class SelectedShipView extends GameObject {
 		g2.setStroke(new BasicStroke());
 		ImageLibrary images = ImageLibrary.getInstance();
 		Sprite sprite = new Sprite(currentShip.getFileName(), offsetX + 72, offsetY + 82);
-		sprite.getPosition().setScale(2,2);
+		if(currentShip instanceof Mothership)
+			sprite.getPosition().setScale(2.0/5, 2.0/5);
+		else 
+			sprite.getPosition().setScale(2,2);
 		sprite.draw(g);
 		
 		BufferedImage scrapMetal = images.getImage("scrapmetal.png");

@@ -2,8 +2,11 @@ package specific_ships_items;
 
 import java.awt.Point;
 
+import model.Level;
+import model.Map;
 import model.Ship;
-import shipVisuals.ShipVisual;
+import model.Tile;
+import shipVisuals.MothershipVisual;
 
 public class Mothership extends Ship{
 
@@ -36,13 +39,55 @@ public class Mothership extends Ship{
 	public Mothership(Point newLocation) {
 		super(newLocation);
 		String description = "Grand mothership,\nstationary and capable\nof unit production.";
-		this.constructorAid("Mothership", 0, 500, 50, 500, 50, 100, description, 0, 0, 0, 1, true, 0);
+		this.constructorAid("Mothership", 0, 500, 50, 500, 50, 100, description, 30, 35, 10, 5, true, 0);
 		
-		setVisual(new ShipVisual(this));
+		setVisual(new MothershipVisual(this));
 		
+	}
+	
+	public void onAddedToLevel(){
 		
-		// ability - possibly create scout or other unit
+		Level level = getLevel();
 
+		int x = getLocation().x;
+		int y = getLocation().y;
+		
+		Turret t1 = new Turret(new Point(x - 3, y));
+		Turret t2 = new Turret(new Point(x + 3, y));
+		
+		Map map = level.getMap();
+		Point p = new Point(x-2, y-1);
+		map.setTile(p, new Tile(false, p.x, p.y));
+		p = new Point(x-1, y-1);
+		map.setTile(p, new Tile(false, p.x, p.y));
+		p = new Point(x, y-1);
+		map.setTile(p, new Tile(false, p.x, p.y));
+		p = new Point(x+1, y-1);
+		map.setTile(p, new Tile(false, p.x, p.y));
+		p = new Point(x+2, y-1);
+		map.setTile(p, new Tile(false, p.x, p.y));
+		p = new Point(x-1, y-2);
+		map.setTile(p, new Tile(false, p.x, p.y));
+		p = new Point(x, y-2);
+		map.setTile(p, new Tile(false, p.x, p.y));
+		p = new Point(x+1, y-2);
+		map.setTile(p, new Tile(false, p.x, p.y));
+		p = new Point(x-2, y);
+		map.setTile(p, new Tile(false, p.x, p.y));
+		p = new Point(x+2, y);
+		map.setTile(p, new Tile(false, p.x, p.y));
+		
+		if(getTeam() == 1){
+			level.addEnemyShipToMap(t1);
+			level.addEnemyShipToMap(t2);
+			setAbility(new SpawnEnemyShipAbility());
+
+		} else {
+			level.addShipToMap(t1);
+			level.addShipToMap(t2);
+			setAbility(new PlaceFighterAbility());
+		}
+		
 	}
 	
 	/*

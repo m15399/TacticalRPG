@@ -298,6 +298,7 @@ public class Level extends GameObject {
 			shipButtons.setLocation((int) p.getX(), (int) p.getY());
 
 		}
+		
 	}
 
 	public void update() {
@@ -1055,12 +1056,14 @@ public class Level extends GameObject {
 		ship.setTeam(0); // not sure if needed? 
 		addShipHelper(ship);
 		shipHolder.addChild(ship);
+		ship.onAddedToLevel();
 	}
 
 	public void addEnemyShipToMap(Ship ship) {
 		ship.setTeam(1);
 		addShipHelper(ship);
 		enemyShipHolder.addChild(ship);
+		ship.onAddedToLevel();
 	}
 	
 	public void addTerrainToMap(Terrain terrain){
@@ -1344,6 +1347,10 @@ public class Level extends GameObject {
 	
 	public int getTurnNumber(){
 		return turnCounterView.getTurns();
+	}
+	
+	public boolean isMultiplayer(){
+		return numHumans == 2;
 	}
 		
 }

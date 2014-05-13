@@ -2,7 +2,7 @@ package specific_ships_items;
 
 import java.awt.Point;
 import model.Ship;
-import shipVisuals.BomberVisual;
+import shipVisuals.BattleCruiserVisual;
 
 public class BattleCruiser extends Ship {
 
@@ -38,7 +38,7 @@ public class BattleCruiser extends Ship {
 		this.constructorAid("BattleCruiser", 2, 150, 30, 150, 30, 75,
 				description, 45, 50, 25, 2, true, 0);
 
-		setVisual(new BomberVisual(this));
+		setVisual(new BattleCruiserVisual(this));
 
 		// ability - deal true damage to target mothership
 		setAbility(new PlaceFighterAbility());

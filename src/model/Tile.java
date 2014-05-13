@@ -243,6 +243,10 @@ public class Tile extends GameObject implements Comparable<Tile>{
 	 * Automatically handles the tile being occupied.
 	 */
 	public void setHasShip(boolean newHasShip, Ship theShip) {
+		if(hasShip && newHasShip && ship != theShip){
+			System.out.println("Warning: Looks like you are trying to place a ship on top of another ship.");
+		}
+		
 		hasShip = newHasShip;
 		ship = theShip;
 		setIsOccupied(newHasShip);

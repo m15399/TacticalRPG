@@ -102,6 +102,10 @@ public class Ship extends GameObject {
 		if (ability != null)
 			ability.startTurn();
 	}
+	
+	public void onAddedToLevel(){
+		// override
+	}
 
 	/*
 	 * Plays the move animation

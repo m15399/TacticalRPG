@@ -17,7 +17,7 @@ public class Turret extends Ship {
 		super(newLocation);
 		String description = "Long range defenses\nof Mothership.";
 
-		this.constructorAid("Turret", 0, 1, 0, 1, 0, 70, description, 40, 45, 10, 7, false, getTeam());
+		this.constructorAid("Turret", 0, 1, 0, 1, 0, 70, description, 30, 35, 10, 7, false, getTeam());
 
 		setVisual(new TurretVisual(this));
 

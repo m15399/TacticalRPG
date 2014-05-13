@@ -1,5 +1,8 @@
 package levels;
 
+import java.awt.Point;
+
+import specific_ships_items.Mothership;
 import level_intros.Mission3Intro;
 import model.GameObject;
 import model.Level;
@@ -14,11 +17,15 @@ public class Mission2 extends Level {
 	public Mission2(){
 		super("maps/mission2");
 		
+		addShipToMap(new Mothership(new Point(15,3)));
+		
 		startTurn(0);
 
 	}
 	
 	public void update(){
+		super.update();
+		
 		if(!getIsOver() && getTurnNumber() == 10){
 			onTeamWin(0, "You defended against the alien attack.");
 		}

@@ -315,8 +315,17 @@ public class Map extends GameObject {
 	 */
 
 	public void setTile(int x, int y, Tile tile) {
+		
+		if(getTile(x, y) != null){
+			if(getTile(x, y).getIsOccupied()){
+				System.out.println("Warning: Looks like you are overwriting an occupied tile.");
+			}
+			
+			getTile(x, y).destroy();
+		}
 		if (x >= 0 && x < width && y >= 0 && y < height) {
 			tiles[x][y] = tile;
+			addChild(tile);
 		}
 	}
 
