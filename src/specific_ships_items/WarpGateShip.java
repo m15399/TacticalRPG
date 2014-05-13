@@ -15,7 +15,7 @@ public class WarpGateShip extends Ship {
 	public WarpGateShip(Point newLocation){
 		super(newLocation);
 		String description = "Faster-than-light\ntransport.";
-		this.constructorAid("WarpGate", 0, 100, 20, 100, 20, 0, description, 0, 0, 0, 0, false, 0);
+		this.constructorAid("WarpGate", 0, 1, 0, 1, 0, 0, description, 0, 0, 0, 0, false, 0);
 		
 		setVisual(new WarpVisual(this));
 	}
