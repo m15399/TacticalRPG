@@ -18,6 +18,12 @@ public class Mission2 extends Level {
 
 	}
 	
+	public void update(){
+		if(!getIsOver() && getTurnNumber() == 10){
+			onTeamWin(0, "You defended against the alien attack.");
+		}
+	}
+	
 	public GameObject getNextRoot(){
 		if(getWinner() == 0)
 			return new Mission3Intro();

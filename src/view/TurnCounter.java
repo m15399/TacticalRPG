@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import model.Game;
 import model.GameObject;
 
 public class TurnCounter extends GameObject{
@@ -56,7 +57,7 @@ public class TurnCounter extends GameObject{
 	public void draw(Graphics g) {
 		// I added these offsets to all the coordinates so that we can move it
 		// around more easily
-		int offsetX = 500;
+		int offsetX = Game.WIDTH/2-WIDTH/2;
 		int offsetY = 0;
 
 		Graphics2D g2 = (Graphics2D) g;
@@ -75,11 +76,11 @@ public class TurnCounter extends GameObject{
 		g2.drawLine(offsetX, offsetY+HEIGHT, WIDTH + offsetX, HEIGHT+offsetY);
 		
 		// Draw message
-		Font font = g2.getFont();
+		Font font = new Font("Arial", Font.PLAIN, 14);
 		float titleFontSize = 18.0f;
 		g2.setFont(font.deriveFont(titleFontSize));
-		drawString(g2, "Turn Counter", offsetX + 20, offsetY);
-		drawString(g2, turns + "", offsetX + 65, offsetY + 20);
+		drawString(g2, "Turn Counter", offsetX + 24, offsetY);
+		drawString(g2, turns + "", offsetX + 68, offsetY + 20);
 	}
 }
 

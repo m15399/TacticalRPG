@@ -1330,5 +1330,9 @@ public class Level extends GameObject {
 	public String getFileName(){
 		return fileName;
 	}
+	
+	public int getTurnNumber(){
+		return turnCounterView.getTurns();
+	}
 		
 }
