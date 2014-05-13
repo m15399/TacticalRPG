@@ -33,6 +33,7 @@ import view.ShipSelectionScreen;
 import view.Starfield;
 import view.TerrainInfoGraphic;
 import view.Tooltip;
+import view.TurnCounter;
 
 /*
  * Root object for the main gameplay
@@ -83,6 +84,7 @@ public class Level extends GameObject {
 	private ShipSelectionScreen shipSelectionScreen;
 	private FoundItemsPopupScreen foundItemsScreen;
 	private TerrainInfoGraphic hoveredTerrainView;
+	private TurnCounter turnCounterView;
 	private String fileName;
 
 	private Strategy aiStrategy;
@@ -139,7 +141,6 @@ public class Level extends GameObject {
 		tileHovered = null;
 		currentTeam = 0;
 		numHumans = 1;
-
 		// Camera / Starfield
 		camera = new Camera(map.getWidth(), map.getHeight());
 		camera.setPosition(0, 0);
@@ -185,6 +186,10 @@ public class Level extends GameObject {
 		foundItemsScreen = new FoundItemsPopupScreen();
 		addChild(foundItemsScreen);
 
+		//Turn Counter View
+		turnCounterView = new TurnCounter(0);
+		addChild(turnCounterView);
+		
 		// Background button for mouse input on the map
 		levelButton = new LevelBackgroundButton(this);
 		Input.getInstance().addButton(levelButton);
@@ -404,7 +409,9 @@ public class Level extends GameObject {
 		for (Ship s : ships) {
 			s.startTurn();
 		}
-
+		if(currentTeam == 0){
+			turnCounterView.incrementTurns();
+		}
 		enterDefaultState();
 
 		if (!isAITurn()) {
