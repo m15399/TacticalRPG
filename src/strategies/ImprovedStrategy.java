@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.io.Serializable;
 import java.util.List;
 
-import specific_ships_items.AISpawner;
+import specific_ships_items.SpawnEnemyShipAbility;
 
 import model.Level;
 import model.Ship;
@@ -40,7 +40,7 @@ public class ImprovedStrategy implements Strategy, Serializable {
 			level.moveShipTo(ship, move.x, move.y);
 			ship.setCanMove(false);
 
-		} else if (ship instanceof AISpawner && ship.getCanUseAbility()
+		} else if (ship.getAbility() instanceof SpawnEnemyShipAbility && ship.getCanUseAbility()
 				&& ship.getAbility().getCooldownLeft() == 0) {
 			// spawn ship
 			level.useEnemyAbility(ship);
