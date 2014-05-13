@@ -40,6 +40,10 @@ public class TurnCounter extends GameObject{
 		turns = newTurnNumber;
 	}
 	
+	public int getTurns(){
+		return turns;
+	}
+	
 	public void resetTurnsToZero(){
 		turns = 0;
 	}
