@@ -31,6 +31,8 @@ public class ImageLibrary {
 		"healbeam.png",
 		"mothership.png",
 		"mothership_red.png",
+		"turret.png",
+		"turret_red.png",
 		"mine.png",
 		"mine_red.png",
 		"mine_top_on.png",

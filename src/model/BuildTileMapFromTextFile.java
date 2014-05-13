@@ -19,6 +19,7 @@ import specific_ships_items.Scout;
 import specific_ships_items.ScrapMetal;
 import specific_ships_items.Sniper;
 import specific_ships_items.Speedboost;
+import specific_ships_items.Turret;
 import specific_ships_items.WarpGateShip;
 import terrains.AsteroidFieldTerrain;
 import terrains.AsteroidTerrain;
@@ -90,6 +91,7 @@ public class BuildTileMapFromTextFile {
 	 * B = Bomber
 	 * C = BattleCruiser
 	 * M = Mothership
+	 * t = Mothership turret
 	 * E = RepairShip
 	 * X = Sniper
 	 * W = WarpGateShip
@@ -121,7 +123,7 @@ public class BuildTileMapFromTextFile {
 	 * Please update this if you make changes
 	 * Remaining Letters and numbers
 	 * DHIJKLNOQRTUVY
-	 * abdehijklnoqrtvuy
+	 * abdehijklnoqrvuy
 	 * 13456789
 	 * 
 	 * 0 = Default Unoccupied Tile
@@ -155,6 +157,10 @@ public class BuildTileMapFromTextFile {
 				}
 				else if(temp == 'M'){
 					Mothership ship = new Mothership(new Point(c, r));
+					tiles[c][r] = new Tile(ship);
+				}
+				else if(temp == 't'){
+					Turret ship = new Turret(new Point(c, r));
 					tiles[c][r] = new Tile(ship);
 				}
 				else if(temp == 'E'){

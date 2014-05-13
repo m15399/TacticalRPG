@@ -8,6 +8,7 @@ import specific_ships_items.Fighter;
 import specific_ships_items.MagneticShield;
 import specific_ships_items.Scout;
 import specific_ships_items.ScrapMetal;
+import specific_ships_items.Turret;
 import specific_ships_items.WarpGateShip;
 import model.GameObject;
 import model.Level;
@@ -31,6 +32,10 @@ public class TestLevel extends Level {
 		//Scout
 		Scout scout = new Scout(new Point(4, 4));
 		addShipToMap(scout);
+		
+		// Turret
+		Turret turret = new Turret(new Point(6,6));
+		addShipToMap(turret);
 		
 		//Fighter
 		Fighter fighter = new Fighter(new Point(1, 3));
