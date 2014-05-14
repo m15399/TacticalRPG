@@ -1,7 +1,9 @@
 package levels;
 
+import songPlayer.SongPlayer;
 import specific_ships_items.Mothership;
 import level_intros.Credits;
+import model.Game.ObjectWaitingForSongToEnd;
 import model.GameObject;
 import model.Level;
 import model.Ship;
@@ -16,6 +18,11 @@ public class Mission3 extends Level {
 	public Mission3(){
 		super("maps/mission3");
 		
+		SongPlayer.stopFile();
+		ObjectWaitingForSongToEnd waiter = new ObjectWaitingForSongToEnd();
+		SongPlayer.playFile(waiter, System.getProperty("user.dir")
+			      + System.getProperty("file.separator") + "songfiles"
+			      + System.getProperty("file.separator") + "space_clips.mp3");
 		
 		startTurn(0);
 

@@ -2,7 +2,9 @@ package levels;
 
 import java.awt.Point;
 
-import specific_ships_items.AISpawner;
+import songPlayer.EndOfSongEvent;
+import songPlayer.EndOfSongListener;
+import songPlayer.SongPlayer;
 import specific_ships_items.Mothership;
 import level_intros.Mission3Intro;
 import model.GameObject;
@@ -18,11 +20,27 @@ public class Mission2 extends Level {
 	public Mission2(){
 		super("maps/mission2");
 		
+		SongPlayer.stopFile();
+		ObjectWaitingForSongToEnd2 waiter = new ObjectWaitingForSongToEnd2();
+		SongPlayer.playFile(waiter, System.getProperty("user.dir")
+			      + System.getProperty("file.separator") + "songfiles"
+			      + System.getProperty("file.separator") + "mission2.mp3");
+		
 		addShipToMap(new Mothership(new Point(16,7)));
 		
 		startTurn(0);
 
 	}
+	
+	private static class ObjectWaitingForSongToEnd2 implements EndOfSongListener {
+		public void songFinishedPlaying(EndOfSongEvent eosEvent) {
+			System.out.print("Finished " + eosEvent.fileName());
+			ObjectWaitingForSongToEnd2 waiter = new ObjectWaitingForSongToEnd2();
+			SongPlayer.playFile(waiter, System.getProperty("user.dir")
+				      + System.getProperty("file.separator") + "songfiles"
+				      + System.getProperty("file.separator") + "mission2.mp3");
+	    }
+	  }
 	
 	public void update(){
 		super.update();

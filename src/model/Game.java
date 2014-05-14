@@ -101,7 +101,7 @@ public class Game extends JPanel implements Runnable, Fadable {
 	   * songFinishedPlaying when the audio file has been played. Note: static was
 	   * added here because it is called from main.
 	   */
-	private static class ObjectWaitingForSongToEnd implements EndOfSongListener {
+	public static class ObjectWaitingForSongToEnd implements EndOfSongListener {
 		public void songFinishedPlaying(EndOfSongEvent eosEvent) {
 			System.out.print("Finished " + eosEvent.fileName());
 			ObjectWaitingForSongToEnd waiter = new ObjectWaitingForSongToEnd();
