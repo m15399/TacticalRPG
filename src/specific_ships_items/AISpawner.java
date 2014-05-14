@@ -19,7 +19,7 @@ public class AISpawner extends Ship {
 	public AISpawner(Point newLocation){
 		super(newLocation);
 		String description = "Faster-than-light\ntransport.";
-		this.constructorAid("WarpGate", 0, 1, 0, 1, 0, 0, description, 0, 0, 0, 0, true, 1);
+		this.constructorAid("WarpGate", 0, 100, 0, 100, 0, 0, description, 0, 0, 0, 0, true, 1);
 		
 		setAbility(new SpawnEnemyShipAbility());
 		
