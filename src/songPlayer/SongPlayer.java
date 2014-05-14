@@ -12,6 +12,9 @@ package songPlayer;
  */
 
 public class SongPlayer {
+	private static AudioFilePlayer player;
+	private static Thread playerThread;
+	
   /**
    * Play the audio file stored in audioFileName
    * 
@@ -19,7 +22,8 @@ public class SongPlayer {
    *          The name of the file to be written to your output device.
    */
   public static void playFile(String audioFileName) {
-    AudioFilePlayer player = new AudioFilePlayer(audioFileName);
+	  player = new AudioFilePlayer(audioFileName);
+    //AudioFilePlayer player = new AudioFilePlayer(audioFileName);
     // AudioFilePlayer extends Thread. When start is called,
     // the overridden run method in AudioFilePlayer executes.
     // If the song is not played in a separate thread, your GUI stops working
@@ -36,13 +40,18 @@ public class SongPlayer {
    *          The name of the file to be written to your output device.
    */
   public static void playFile(EndOfSongListener waiter, String audioFileName) {
-    Thread player = new AudioFilePlayer(audioFileName);
-
-    ((AudioFilePlayer) player).addEndOfSongListener(waiter);
+    //Thread player = new AudioFilePlayer(audioFileName);
+	  playerThread = new AudioFilePlayer(audioFileName);
+    ((AudioFilePlayer) playerThread).addEndOfSongListener(waiter);
 
     // AudioFilePlayer extends Thread. When start is called,
     // the overridden run method in AudioFilePlayer executes.
     // If the song is not played in a separate thread, your GUI stops working
-    player.start();
+    playerThread.start();
+  }
+  
+  @SuppressWarnings("deprecation")
+public static void stopFile() {
+	  playerThread.stop();
   }
 }
