@@ -15,7 +15,7 @@ public class RepairAbility extends Ability {
 	 * 
 	 */
 	private static final long serialVersionUID = -6139154918871946441L;
-	private static final int HEAL_AMOUNT = 25;
+	private static final int HEAL_AMOUNT = 35;
 
 	public RepairAbility() {
 		super("Repair", "Repairs a ship's hull for \n" + HEAL_AMOUNT + " points",
