@@ -39,7 +39,7 @@ public class Mothership extends Ship{
 	public Mothership(Point newLocation) {
 		super(newLocation);
 		String description = "Grand mothership,\nstationary and capable\nof unit production.";
-		this.constructorAid("Mothership", 0, 500, 50, 500, 50, 100, description, 30, 35, 10, 5, true, 0);
+		this.constructorAid("Mothership", 0, 350, 50, 350, 50, 100, description, 30, 35, 10, 5, true, 0);
 		
 		setVisual(new MothershipVisual(this));
 		

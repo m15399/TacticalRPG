@@ -60,9 +60,8 @@ public class Bomber extends Ship {
 				else
 					target.setHull(0);
 			} else {
-				if (target.getHull() - target.getFinalDamage(damage) > 0)
-					target.setHull(target.getHull()
-							- target.getFinalDamage(damage));
+				if (target.getHull() - damage > 0)
+					target.setHull(target.getHull() - damage);
 				else
 					target.setHull(0);
 			}
