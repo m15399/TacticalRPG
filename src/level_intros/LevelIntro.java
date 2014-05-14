@@ -34,16 +34,16 @@ public abstract class LevelIntro extends GameObject {
 		};
 		
 		Input.getInstance().addButton(button);
-		button.disable();
+//		button.disable();
 		
-		// disable the button for a second at first
-		TimerAction timer = new TimerAction(30, new Observer(){
-			public void notified(Observable sender){
-				button.enable();
-			}
-		});
-		addChild(timer);
-		timer.start();
+//		// disable the button for a second at first
+//		TimerAction timer = new TimerAction(30, new Observer(){
+//			public void notified(Observable sender){
+//				button.enable();
+//			}
+//		});
+//		addChild(timer);
+//		timer.start();
 	}
 	
 	public void onDestroy(){
