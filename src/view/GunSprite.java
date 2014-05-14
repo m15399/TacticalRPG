@@ -25,7 +25,7 @@ public class GunSprite extends AnimatedSprite {
 	}
 	
 	private static final int FIRE_RATE = 2;
-	private static final int CANNON_TIME = 8;
+	private static final int CANNON_TIME = 10;
 	private RapidFirer rapidFirer;
 	
 	private GunType type;

@@ -29,6 +29,7 @@ public class BattleCruiserVisual extends ShipVisual {
 
 	public void playAttackAnimation(int time) {
 
+
 	}
 
 	public void playIdleAnimation() {
