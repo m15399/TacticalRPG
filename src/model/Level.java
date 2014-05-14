@@ -312,6 +312,8 @@ public class Level extends GameObject {
 		// }
 
 		updateButtons();
+		if(isAITurn())
+			shipButtons.setShip(null);
 
 		// figure out how to outline ships
 		List<Ship> ships = getShips();
