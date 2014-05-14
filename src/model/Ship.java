@@ -27,12 +27,15 @@ public class Ship extends GameObject {
 			isTargetable;
 	private Level level;
 	private ShipVisual visual;
-	private Random random = new Random();
-	DecimalFormat df = new DecimalFormat("#.#");
+	private Random random;
+	private DecimalFormat df;
 
 	private boolean didMiss, didCrit;
 
 	public Ship(Point newLocation) {
+		df = new DecimalFormat("#.#");
+		random = new Random();
+		
 		location = new Point(newLocation);
 		constructorAid("DefaultShip", 1, 1, 1, 1, 1, 1,
 				"No description available", 1, 1, 1, 1, true, 0);
