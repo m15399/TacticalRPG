@@ -66,8 +66,8 @@ public class ImageLibrary {
 		"shiptitlemenu2.png",
 		"title2.png",
 		"thegame.png",
-//		"MPMapLuis.jpg"
-		
+//		"MPMapLuis.jpg",
+		"flipped_fighter.png"
 		};
 	
 	/*
