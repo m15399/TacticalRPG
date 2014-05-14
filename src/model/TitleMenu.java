@@ -43,76 +43,6 @@ public class TitleMenu extends GameObject {
 		starfield = new Starfield(Game.WIDTH, Game.HEIGHT, 7, 100, 22, 27, 300);
 		addChild(starfield);
 		
-		if(Game.DEBUG){
-			buttonNumber -= 2;
-			addChild(new TitleMenuButton("TestLevel", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
-				public void notified(Observable sender){
-					Game.getInstance().transitionTo(new TestLevel());
-				}
-			}));
-			buttonNumber++;
-			
-			addChild(new TitleMenuButton("TestLevelFromFile", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
-				public void notified(Observable sender){
-					Game.getInstance().transitionTo(new TestLevelFromFile());
-				}
-			}));
-			buttonNumber++;
-		}
-		
-		File f = new File("save");
-		if(f.exists() && !f.isDirectory()) { 
-			addChild(new TitleMenuButton("Continue", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
-				public void notified(Observable sender){
-					Game.getInstance().loadGame();
-				}
-			}));
-			buttonNumber++;
-		} else {
-			buttonNumber++;
-		}
-		
-		addChild(new TitleMenuButton("New Campaign", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
-			public void notified(Observable sender){
-				Game.getInstance().transitionTo(new Mission1Intro());
-			}
-		}));
-		buttonNumber++;
-		
-		addChild(new TitleMenuButton("Multiplayer", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
-			public void notified(Observable sender){
-				if(mapView == null){
-					mapView = new MultiplayerMapSelectionView();
-					addChild(mapView);
-				} else{
-					mapView.destroy();
-					mapView = null;
-				}
-			}
-		}));
-		buttonNumber++;
-		
-		addChild(new TitleMenuButton("Credits", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
-			public void notified(Observable sender){
-				Game.getInstance().transitionTo(new Credits());
-			}
-		}));
-		buttonNumber++;
-
-		addChild(new TitleMenuButton("Quit", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
-			public void notified(Observable sender){
-				System.exit(0);
-			}
-		}));
-		buttonNumber++;
-
-		
-		
-		Sprite sprite = new Sprite("title2.png", 500, 130);
-		sprite.getPosition().setScale(2,2);
-		addChild(sprite);
-//		Sprite sprite2 = new Sprite("shiptitlemenu2.png", 700, 500);
-//		addChild(sprite2);
 		Sprite fighter = new Sprite("flipped_fighter.png", 1000, 30);
 		Sprite fighter2 = new Sprite("flipped_fighter.png", 990, 60);
 		Sprite fighter3 = new Sprite("flipped_fighter.png", 980, 90);
@@ -190,6 +120,75 @@ public class TitleMenu extends GameObject {
 		secondShipList.add(rfighter11);
 		secondShipList.add(rfighter12);
 		
+		if(Game.DEBUG){
+			buttonNumber -= 2;
+			addChild(new TitleMenuButton("TestLevel", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
+				public void notified(Observable sender){
+					Game.getInstance().transitionTo(new TestLevel());
+				}
+			}));
+			buttonNumber++;
+			
+			addChild(new TitleMenuButton("TestLevelFromFile", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
+				public void notified(Observable sender){
+					Game.getInstance().transitionTo(new TestLevelFromFile());
+				}
+			}));
+			buttonNumber++;
+		}
+		
+		File f = new File("save");
+		if(f.exists() && !f.isDirectory()) { 
+			addChild(new TitleMenuButton("Continue", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
+				public void notified(Observable sender){
+					Game.getInstance().loadGame();
+				}
+			}));
+			buttonNumber++;
+		} else {
+			buttonNumber++;
+		}
+		
+		addChild(new TitleMenuButton("New Campaign", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
+			public void notified(Observable sender){
+				Game.getInstance().transitionTo(new Mission1Intro());
+			}
+		}));
+		buttonNumber++;
+		
+		addChild(new TitleMenuButton("Multiplayer", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
+			public void notified(Observable sender){
+				if(mapView == null){
+					mapView = new MultiplayerMapSelectionView();
+					addChild(mapView);
+				} else{
+					mapView.destroy();
+					mapView = null;
+				}
+			}
+		}));
+		buttonNumber++;
+		
+		addChild(new TitleMenuButton("Credits", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
+			public void notified(Observable sender){
+				Game.getInstance().transitionTo(new Credits());
+			}
+		}));
+		buttonNumber++;
+
+		addChild(new TitleMenuButton("Quit", offsetX, offsetY+buttonHeight*buttonNumber, buttonWidth, new Observer(){
+			public void notified(Observable sender){
+				System.exit(0);
+			}
+		}));
+		buttonNumber++;
+
+		
+		
+		Sprite sprite = new Sprite("title2.png", 500, 130);
+		sprite.getPosition().setScale(2,2);
+		addChild(sprite);	
+		
 		Sprite sprite3 = new Sprite("thegame.png", 500, 225);
 		addChild(sprite3);
 		
@@ -204,25 +203,25 @@ public class TitleMenu extends GameObject {
 		g.setFont(new Font("Arial", Font.BOLD, 72));
 		g.setColor(Color.white);
 		
-		if(shipList.get(0).getPosition().getX() >= -1000){
+		if(shipList.get(0).getPosition().getX() >= -2000){
 			for(Sprite ship: shipList){
 				ship.getPosition().moveBy(-5, 0);
 			}
 		}
 		else{
 			for(Sprite ship: shipList){
-				ship.getPosition().moveBy(+2000, 0);
+				ship.getPosition().moveBy(+3300, 0);
 			}
 		}
 		
-		if(shipList.get(0).getPosition().getX() <= 1000){
+		if(secondShipList.get(0).getPosition().getX() <= 1000){
 			for(Sprite ship: secondShipList){
 				ship.getPosition().moveBy(5, 0);
 			}
 		}
 		else{
 			for(Sprite ship: secondShipList){
-				ship.getPosition().moveBy(-2000, 0);
+				ship.getPosition().moveBy(-3000, 0);
 			}
 		}
 		
