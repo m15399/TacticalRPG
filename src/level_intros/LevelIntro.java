@@ -10,15 +10,19 @@ import model.GameObject;
 
 public abstract class LevelIntro extends GameObject {
 
+
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4346807789304208553L;
+	private static final long serialVersionUID = 7308373378020584182L;
 	private Button button;
 	
 	public LevelIntro(){
 		
 		button = new Button(0,0,Game.WIDTH, Game.HEIGHT){
+			
+
 			/**
 			 * 
 			 */
