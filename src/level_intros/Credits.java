@@ -17,8 +17,8 @@ public class Credits extends LevelIntro {
 	
 	public void draw(Graphics g){
 		
-		int ox = 300;
-		int oy = 350;
+		int ox = 340;
+		int oy = 340;
 		
 		g.setColor(Color.white);
 		
