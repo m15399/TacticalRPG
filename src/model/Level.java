@@ -200,11 +200,32 @@ public class Level extends GameObject {
 		menuButton = new MenuButton(camera);
 		addChild(menuButton);
 		
-		// test zoom buttons
+
+
 		debugButtons = new ArrayList<Button>();
+
+		int bsize = 20;
+		int cbsize = 2;
+		if(Game.DEBUG)
+			cbsize = bsize;
+		final double sfac = 2;
+		
+		Button b3 = new Button(Game.WIDTH - cbsize, 0, cbsize,cbsize){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 6366047185169964945L;
+
+			public void mouseReleased(){
+				onTeamWin(0, "You cheated!");
+			}
+		};
+		Input.getInstance().addButton(b3);
+		debugButtons.add(b3); 
+		
+		
 		if(Game.DEBUG){
-			int bsize = 20;
-			final double sfac = 2;
+			
 			
 			Button b1 = new Button(0, 0, bsize, bsize) {
 				/**
@@ -232,18 +253,7 @@ public class Level extends GameObject {
 			Input.getInstance().addButton(b2);
 			debugButtons.add(b2); 
 			
-			Button b3 = new Button(Game.WIDTH - bsize, 0, bsize, bsize){
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 6366047185169964945L;
-
-				public void mouseReleased(){
-					onTeamWin(0, "You cheated!");
-				}
-			};
-			Input.getInstance().addButton(b3);
-			debugButtons.add(b3); 
+			
 			
 			Button b4 = new Button(Game.WIDTH - bsize, bsize, bsize, bsize){
 				/**
@@ -895,8 +905,7 @@ public class Level extends GameObject {
 			checkForDestroyedUnits();
 			if(attacker.getDidMiss()){
 				camera.addChild(new BouncingStat("Missed!", defender.getVisual()));
-			}
-			if(attacker.getDidCrit()){
+			} else if(attacker.getDidCrit()){
 				camera.addChild(new BouncingStat("Crit!", defender.getVisual()));
 			}			
 		}
